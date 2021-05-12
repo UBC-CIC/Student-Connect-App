@@ -1,0 +1,110 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >
+  "UBCO Student Engagement App Backend Resources."
+
+Globals:
+  Function:
+    Runtime: python3.8
+    Timeout: 180
+    Environment:
+      Variables:
+        DEBUG_MODE: True
+
+Parameters:
+  deploymentBucketName:
+    Type: String
+    Description: The name of the S3 bucket that contains the zipped lambda deployment packages
+  eventsTable:
+    Type: String
+    Default: eventsTable
+    Description: The name of the DynamoDB Table where the events will be saved (Ensure you do not have a table with this name already).
+  deploymentFilesPath:
+    Type: String
+    Default: deployment/
+    Description: The path to the zipped lambda files in the bucket provided in existingS3BucketName
+
+Outputs:
+  LambdaFunctionArn:
+    Value: !GetAtt getEventsData.Arn
+    Description: The Lambda ARN just for test purposes
+  eventsDDBTable:
+    Value: !GetAtt eventsDDBTable.Arn
+    Description: ARN of the DynamoDB table that contains the events data
+
+Resources:
+  EventsLambdaIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: eventspolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:Scan"
+                  - "dynamodb:GetItem"
+                  - "dynamodb:PutItem"
+                  - "dynamodb:UpdateItem"
+                  - "dynamodb:GetRecords"
+                  - "dynamodb:GetShardIterator"
+                  - "dynamodb:DescribeStream"
+                  - "dynamodb:ListStreams"
+                Resource:
+                  - !Sub ${eventsDDBTable.Arn}
+
+  getEventsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: getEventsData.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO Events page
+      MemorySize: 256
+      Timeout: 30
+      CodeUri: ./functions
+      Role: !GetAtt EventsLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          table_name: !Ref eventsTable
+
+  eventsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref eventsTable
+      AttributeDefinitions:
+        - AttributeName: "EventId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "EventId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+      TimeToLiveSpecification:
+        AttributeName: "ExpiresOn"
+        Enabled: True
