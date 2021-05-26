@@ -1,58 +1,52 @@
-/*eslint-disable*/
-import React from "react";
-import PropTypes from "prop-types";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import ListItem from "@material-ui/core/ListItem";
-import List from "@material-ui/core/List";
-// core components
-import styles from "assets/jss/material-dashboard-react/components/footerStyle.js";
+/*!
 
-const useStyles = makeStyles(styles);
+=========================================================
+* Light Bootstrap Dashboard React - v2.0.0
+=========================================================
 
-export default function Footer(props) {
-  const classes = useStyles();
-  return (
-    <footer className={classes.footer}>
-      <div className={classes.container}>
-        <div className={classes.left}>
-          <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#home" className={classes.block}>
-                Home
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#company" className={classes.block}>
-                Company
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#portfolio" className={classes.block}>
-                Portfolio
-              </a>
-            </ListItem>
-            <ListItem className={classes.inlineBlock}>
-              <a href="#blog" className={classes.block}>
-                Blog
-              </a>
-            </ListItem>
-          </List>
-        </div>
-        <p className={classes.right}>
-          <span>
-            &copy; {1900 + new Date().getYear()}{" "}
-            <a
-              href="https://www.creative-tim.com?ref=mdr-footer"
-              target="_blank"
-              className={classes.a}
-            >
-              Creative Tim
-            </a>
-            , made with love for a better web
-          </span>
-        </p>
-      </div>
-    </footer>
-  );
+* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
+
+* Coded by Creative Tim
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import React, { Component } from "react";
+import { Container } from "react-bootstrap";
+
+class Footer extends Component {
+  render() {
+    return (
+      <footer className="footer px-0 px-lg-3">
+        <Container fluid>
+          <p className="copyright text-right">
+            © {new Date().getFullYear()}{" "}
+            <a href="https://cic.ubc.ca/" target={"_blank"}>UBC CIC</a>
+          </p>
+
+          <nav>
+            <ul className="footer-menu">
+
+              <li>
+                <a target={"_blank"} href="https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/LICENSE.md" >
+                  MIT License
+                </a>
+              </li>
+              <li>
+                <a target={"_blank"} href="https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/ATTRIBUTIONS.md">
+                  Attributions
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </Container>
+      </footer>
+    );
+  }
 }
+
+export default Footer;

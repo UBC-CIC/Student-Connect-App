@@ -1,12 +1,12 @@
 /*!
 
 =========================================================
-* Material Dashboard React - v1.10.0
+* Light Bootstrap Dashboard React - v2.0.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/material-dashboard-react/blob/master/LICENSE.md)
+* Product Page: https://www.creative-tim.com/product/light-bootstrap-dashboard-react
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
 
 * Coded by Creative Tim
 
@@ -17,19 +17,21 @@
 */
 import React from "react";
 import ReactDOM from "react-dom";
+
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-// core components
-import Admin from "layouts/Admin.js";
-import RTL from "layouts/RTL.js";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./assets/css/animate.min.css";
+import "./assets/scss/light-bootstrap-dashboard-react.scss?v=2.0.0";
+import "./assets/css/demo.css";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import "assets/css/material-dashboard-react.css?v=1.10.0";
+import AdminLayout from "layouts/Admin.js";
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/admin" component={Admin} />
-      <Route path="/rtl" component={RTL} />
+      <Route path="/admin" render={(props) => <AdminLayout {...props} />} />
       <Redirect from="/" to="/admin/dashboard" />
     </Switch>
   </BrowserRouter>,
