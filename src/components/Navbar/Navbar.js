@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Container} from "@material-ui/core";
+import {Button, Container} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import EventIcon from '@material-ui/icons/Event';
@@ -84,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         padding: theme.spacing(3),
     },
+    signOutButton:{
+        float: 'right'
+    }
 }));
 
 export default function MiniDrawer() {
@@ -108,21 +111,30 @@ export default function MiniDrawer() {
                     [classes.appBarShift]: open,
                 })}
             >
+
                 <Toolbar>
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        onClick={handleDrawerOpen}
-                        edge="start"
-                        className={clsx(classes.menuButton, {
-                            [classes.hide]: open,
-                        })}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Typography variant="h6" noWrap>
-                        Student Engagement App
-                    </Typography>
+                        <IconButton
+                            color="inherit"
+                            aria-label="open drawer"
+                            onClick={handleDrawerOpen}
+                            edge="start"
+                            className={clsx(classes.menuButton, {
+                                [classes.hide]: open,
+                            })}
+                        >
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography variant="h6" noWrap>
+                            Student Engagement App
+                        </Typography>
+
+                    <Container>
+                        <Button className={classes.signOutButton} color={'secondary'} variant={'contained'} >
+                            Sign out
+                        </Button>
+                    </Container>
+
+
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -166,14 +178,10 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<EventIcon />}</ListItemIcon>
                         <ListItemText primary={"Events"} />
                     </ListItem>
-
                 </List>
             </Drawer>
             <main className={classes.content}>
                 <div className={classes.toolbar} />
-                <Container>
-
-                </Container>
             </main>
         </div>
     );

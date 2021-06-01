@@ -29,11 +29,11 @@ export default function EventCard (props){
 
     return (
         <Card className={classes.root} >
-                <Container className={classes.iconArea}>
-                <Icon>
-                    <LocalOfferIcon color={'primary'}></LocalOfferIcon>
-                </Icon>
-                </Container>
+                {/*<Container className={classes.iconArea}>*/}
+                {/*<Icon>*/}
+                {/*    <LocalOfferIcon color={'primary'}></LocalOfferIcon>*/}
+                {/*</Icon>*/}
+                {/*</Container>*/}
                 <CardMedia
                     component="img"
                     height="140"

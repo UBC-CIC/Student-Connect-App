@@ -51,7 +51,7 @@ function Events(){
                     />
                 </FormControl>
             </Container>
-            <Container className={classes.cardGrid} maxWidth="md">
+            <Container className={classes.cardGrid}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={6} md={4}>
                     <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
