@@ -1,9 +1,10 @@
 import EventCard from "../components/Cards/EventCard";
 import Container from "@material-ui/core/Container";
-import {InputBase} from "@material-ui/core";
+import {FormControl, Input, InputAdornment, InputBase, InputLabel} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
 
 function Events(){
     const useStyles = makeStyles((theme) => ({
@@ -24,24 +25,60 @@ function Events(){
             height: 28,
             margin: 4,
         },
+        cardGrid: {
+            paddingTop: theme.spacing(8),
+            paddingBottom: theme.spacing(8),
+            paddingLeft: theme.spacing(10),
+            paddingRight: theme.spacing(10)
+
+        },
+
     }));
     const classes = useStyles()
     return(
         <div>
             <h1>Events</h1>
             <Container>
-                <InputBase
-                    className={classes.input}
-                    placeholder="Search"
-                    inputProps={{ 'aria-label': 'Search' }}
-                />
-                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                    <SearchIcon />
-                </IconButton>
-
+                <FormControl >
+                    <Input
+                        id="input-with-icon-adornment"
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <SearchIcon />
+                            </InputAdornment>
+                        }
+                        placeholder={"Search"}
+                    />
+                </FormControl>
             </Container>
-            <Container>
-                <EventCard title={"Event"} description={"Hello"}/>
+            <Container className={classes.cardGrid} maxWidth="md">
+                <Grid container spacing={4}>
+                    <Grid item xs={12} sm={6} md={4}>
+                    <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                 location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                                   location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                                   location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                                   location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                                   location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+                    <Grid item xs={12} sm={6} md={4}>
+                        <EventCard title={"Event"} description={"Hello"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
+                                   location={'Vancouver, BC'} date={'2021/05/29'} category={'Music'}/>
+                    </Grid>
+
+                </Grid>
             </Container>
 
         </div>
