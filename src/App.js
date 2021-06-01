@@ -16,9 +16,9 @@ function App() {
         <Redirect to="/home" />
         <Navbar/>
         <Route path ='/home' exact component={Home}/>
-        {/*<Route path ='/clubs' exact component={Clubs}/>*/}
+        <Route path ='/clubs' exact component={Clubs}/>
         <Route path ='/events' exact component={Events}/>
-        {/*<Route path ='/profile' exact component={Profile}/>*/}
+        <Route path ='/profile' exact component={Profile}/>
         <Footer/>
         </Router>
 

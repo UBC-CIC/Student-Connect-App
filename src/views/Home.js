@@ -31,6 +31,8 @@ export default function Home() {
     return (
         <React.Fragment>
             <CssBaseline />
+            <h1>Home</h1>
+
         </React.Fragment>
     );
 }

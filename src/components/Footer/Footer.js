@@ -10,16 +10,16 @@ import Grid from '@material-ui/core/Grid';
 import StarIcon from '@material-ui/icons/StarBorder';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
+import { Link } from "@material-ui/core";
 
 function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
-            <Link color="inherit" href="https://material-ui.com/">
+            <Link color="inherit" href="https://cic.ubc.ca/" target = "_blank" >
                 UBC CIC
             </Link>{' '}
             {new Date().getFullYear()}
@@ -49,17 +49,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 const footers = [
     {
-        title: 'Company',
+        title: 'UBC CIC',
+        link: 'https://cic.ubc.ca/'
     },
     {
         title: 'MIT License',
+        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/LICENSE.md'
     },
     {
         title: 'Attribution',
-    },
-    {
-        title: 'Legal',
-    },
+        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/ATTRIBUTIONS.md'
+    }
 ];
 
 export default function Footer() {
@@ -73,8 +73,11 @@ export default function Footer() {
                 <Grid container spacing={4} justify="space-evenly">
                     {footers.map((footer) => (
                         <Grid item xs={6} sm={3} key={footer.title}>
-                            <Typography variant="h7" color="textPrimary" gutterBottom>
-                                {footer.title}
+                            <Typography variant="h7" color="textPrimary" gutterBottom  >
+                                <Link href={footer.link} target = "_blank" >
+                                    {footer.title}
+
+                                </Link>
                             </Typography>
                         </Grid>
                     ))}
