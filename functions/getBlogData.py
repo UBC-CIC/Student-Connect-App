@@ -59,7 +59,7 @@ def blog_parser(blog_json):
     try:
         image_links = get_blog_thumbnail(blog_json["_links"]["wp:featuredmedia"][0]["href"])
     except KeyError as e:
-        LOGGER.debug(json.dumps(e, indent=4))
+        LOGGER.debug(f"No image in blog_item {blog_json['id']}")
         image_links = "None"
     parsed_blog = {
         "blogId": str(blog_json["id"]),
@@ -99,7 +99,6 @@ def lambda_handler(event, context):
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="BlogsQueryTime")["Parameter"]["Value"]
         blogs = get_all_blogs(blogs_url)
-        LOGGER.debug(json.dumps(blogs, indent=4))
 
         # Filter the news to keep the ones since the last query
         for blog_item in blogs:
@@ -114,14 +113,15 @@ def lambda_handler(event, context):
     except Exception as error:
         detailed_exception(LOGGER)
 
-    LOGGER.debug(json.dumps(blogs, indent=4))
-    LOGGER.debug(json.dumps(newly_updated_blogs, indent=4))
+    LOGGER.debug(f"Original Blogs: {json.dumps(blogs, indent=4)}")
+    LOGGER.info(f"Time filtered Blogs: {json.dumps(newly_updated_blogs, indent=4)}")
 
     table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
     # Create one month TTL for each item and insert into DynamoDB
     for blog_item in newly_updated_blogs:
         blog_item["expiresOn"] = get_adjusted_unix_time(blog_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                         EXPIRY_DAYS_OFFSET * 24)
-        table.put_item(Item=blog_item)
+        response = table.put_item(Item=blog_item)
+        LOGGER.info(response)
 
     return {'status': "completed"}

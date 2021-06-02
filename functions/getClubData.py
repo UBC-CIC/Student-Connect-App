@@ -8,15 +8,12 @@ from bs4 import BeautifulSoup
 from common_lib import detailed_exception
 
 
-sys.setrecursionlimit(1500)
+sys.setrecursionlimit(3000)
 
 # Log level
 logging.basicConfig()
 LOGGER = logging.getLogger()
-if os.environ["DEBUG_MODE"] == "true":
-    LOGGER.setLevel(logging.DEBUG)
-else:
-    LOGGER.setLevel(logging.INFO)
+LOGGER.setLevel(logging.INFO)
 
 
 CLUBS_TABLE = os.environ["CLUBS_TABLE_NAME"]
@@ -77,6 +74,7 @@ def get_all_clubs(url):
             club_html_nodes.append(club_soup.find("div", {"class": "club-item-content"}))
 
         club_result.extend(parse_club_html_nodes(club_html_nodes))
+        club_html_nodes = []
     return club_result
 
 
@@ -88,9 +86,10 @@ def lambda_handler(event, context):
     clubs = []
     try:
         clubs = get_all_clubs(base_url)
-        LOGGER.debug(json.dumps(clubs, indent=4))
+        LOGGER.info(f"There are {len(clubs)} clubs: {json.dumps(clubs, indent=4)}")
         table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
-        for club_item in clubs:
+        for index, club_item in enumerate(clubs):
+            club_item["clubId"] = str(index)
             table.put_item(Item=club_item)
         return {"status": "completed"}
 
