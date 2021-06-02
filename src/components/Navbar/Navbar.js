@@ -21,6 +21,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import EventIcon from '@material-ui/icons/Event';
 import GroupIcon from '@material-ui/icons/Group';
 import { Link } from "react-router-dom";
+import RssFeedIcon from '@material-ui/icons/RssFeed';
 
 const drawerWidth = 240;
 
@@ -157,7 +158,7 @@ export default function MiniDrawer() {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem component={Link} to="/profile">
+                    <ListItem component={Link} to="/settings">
                         <ListItemIcon>{<PersonIcon />}</ListItemIcon>
                         <ListItemText primary={"Profile"} />
                     </ListItem>
@@ -178,6 +179,12 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<EventIcon />}</ListItemIcon>
                         <ListItemText primary={"Events"} />
                     </ListItem>
+
+                    <ListItem component={Link} to="/news">
+                        <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
+                        <ListItemText primary={"News and blogs"} />
+                    </ListItem>
+
                 </List>
             </Drawer>
             <main className={classes.content}>

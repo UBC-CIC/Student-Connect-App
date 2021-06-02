@@ -8,9 +8,11 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import {Icon} from "@material-ui/core";
+import {ButtonBase, Icon, IconButton} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Grid from "@material-ui/core/Grid";
+import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 const useStyles = makeStyles((theme) => ({
     root: {
         maxWidth: 345,
@@ -19,6 +21,11 @@ const useStyles = makeStyles((theme) => ({
         height: 35,
         alignItems:"left",
         paddingTop: theme.spacing(5)
+    },
+    heartIcon:{
+        position: "flex", top: "50%",alignItems:'center', margin:'7px 0px 0px 0px '},
+    icons:{
+        float:'right'
     }
 }));
 
@@ -42,23 +49,36 @@ export default function EventCard (props){
                     title="Event image"
                 />
                 <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2" align={'left'}>
-                        {title}
-                    </Typography>
+                    <Grid container>
+                        <Grid item xs={7}>
+
+                        <Typography gutterBottom variant="h5" component="h2" align={'left'} className={classes.heartIcon}>
+                            {title}
+                        </Typography>
+                        </Grid>
+                        <Grid item xs={5} className={classes.icons} >
+                            <IconButton >
+                                <MoreHorizIcon/>
+                            </IconButton>
+                            <IconButton >
+                                <FavoriteBorderIcon/>
+                            </IconButton>
+
+                        </Grid>
+                    </Grid>
+
                     <Typography color={'error'} variant="body2"  align={'left'} >
                         {date}
                     </Typography>
-                    <Typography variant="body2" color="textPrimary" component="p" align={'left'}>
-                        {"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit "}
+                    <Typography  variant="body2"  align={'left'} >
+                        {location}
                     </Typography>
+                    <Typography variant="body2" color="textPrimary" component="p" align={'left'}>
+                        {description}
+                    </Typography>
+
                 </CardContent>
             <CardActions>
-                <Button size="small" color="primary">
-                    Interested
-                </Button>
-                <Button size="small" color="primary">
-                    Learn More
-                </Button>
             </CardActions>
         </Card>
     );

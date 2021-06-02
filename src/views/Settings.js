@@ -16,13 +16,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function Profile(){
+function Settings(){
     const classes = useStyles();
 
     return(
 
         <div>
-            <h1>Preferences</h1>
+            <h1>Settings</h1>
             <Container>
             <Card className={classes.card}>
                 <Grid container spacing={3} className={classes.root} >
@@ -74,4 +74,4 @@ function Profile(){
 
 }
 
-export default Profile
+export default Settings

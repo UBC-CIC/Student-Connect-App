@@ -7,7 +7,7 @@ import Home from "./views/Home";
 import {BrowserRouter as Router, Switch,Route,Redirect} from 'react-router-dom';
 import Clubs from './views/Clubs'
 import Events from "./views/Events";
-import Profile from "./views/Profile";
+import Settings from "./views/Settings";
 import ResponsiveLayout from "./views/Components";
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
         <Route path ='/home' exact component={Home}/>
         <Route path ='/clubs' exact component={Clubs}/>
         <Route path ='/events' exact component={Events}/>
-        <Route path ='/profile' exact component={Profile}/>
+        <Route path ='/settings' exact component={Settings}/>
         <Footer/>
         </Router>
 

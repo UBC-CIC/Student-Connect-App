@@ -54,6 +54,8 @@ function ClubCard (props){
                                         </Typography>
                                     </Grid>
 
+
+
                                     <Grid item alignItems={'left'}>
                                         <IconButton>
                                             <EmailIcon/>
