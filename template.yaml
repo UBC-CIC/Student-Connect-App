@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: 'AWS::Serverless-2016-10-31'
 Description: >
-  "UBCO Student Engagement App Backend Resources."
+  "Student Engagement App Backend Resources"
 
 Globals:
   Function:
@@ -17,12 +17,28 @@ Parameters:
     Description: The name of the S3 bucket that contains the zipped lambda deployment packages
   eventsTable:
     Type: String
-    Default: eventsTable
-    Description: The name of the DynamoDB Table where the events will be saved (Ensure you do not have a table with this name already).
-  deploymentFilesPath:
+    Default: EventsTable
+    Description: DynamoDB Table name for events (Ensure you do not have a table with this name already).
+  newsTable:
     Type: String
-    Default: deployment/
-    Description: The path to the zipped lambda files in the bucket provided in existingS3BucketName
+    Default: NewsTable
+    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
+  blogsTable:
+    Type: String
+    Default: BlogsTable
+    Description: DynamoDB Table name for blogs (Ensure you do not have a table with this name already).
+  clubsTable:
+    Type: String
+    Default: ClubsTable
+    Description: DynamoDB Table name for clubs (Ensure you do not have a table with this name already).
+  articleExpiryDays:
+    Type: String
+    Default: 30
+    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+  eventsExpiryDays:
+    Type: String
+    Default: 2
+    Description: Number of days after an event's end time after which the event item is automatically deleted from DynamoDB
 
 Outputs:
   LambdaFunctionArn:
@@ -33,7 +49,7 @@ Outputs:
     Description: ARN of the DynamoDB table that contains the events data
 
 Resources:
-  EventsLambdaIAMRole:
+  DataGrabberLambdaIAMRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -47,7 +63,7 @@ Resources:
               - "sts:AssumeRole"
       Path: "/"
       Policies:
-        - PolicyName: eventspolicy
+        - PolicyName: DataGrabberPolicy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
@@ -65,12 +81,16 @@ Resources:
                   - "dynamodb:GetItem"
                   - "dynamodb:PutItem"
                   - "dynamodb:UpdateItem"
-                  - "dynamodb:GetRecords"
-                  - "dynamodb:GetShardIterator"
-                  - "dynamodb:DescribeStream"
-                  - "dynamodb:ListStreams"
                 Resource:
                   - !Sub ${eventsDDBTable.Arn}
+                  - !Sub ${newsDDBTable.Arn}
+                  - !Sub ${blogsDDBTable.Arn}
+                  - !Sub ${clubsDDBTable.Arn}
+              - Effect: "Allow"
+                Action:
+                  - "ssm:GetParameter"
+                  - "ssm:PutParameter"
+                Resource: "*"
 
   getEventsData:
     Type: 'AWS::Serverless::Function'
@@ -79,22 +99,88 @@ Resources:
       Description: >
         Function that grabs data from the UBCO Events page
       MemorySize: 256
-      Timeout: 30
+      Timeout: 60
       CodeUri: ./functions
-      Role: !GetAtt EventsLambdaIAMRole.Arn
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
-          table_name: !Ref eventsTable
+          EVENTS_TABLE_NAME: !Ref eventsTable
+          EVENTS_EXPIRY_OFFSET: !Ref eventsExpiryDays
+
+  getNewsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: getNewsData.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO News page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          NEWS_TABLE_NAME: !Ref newsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref articleExpiryDays
+
+  getBlogData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: getBlogData.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO Student Blog page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          BLOGS_TABLE_NAME: !Ref blogsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref articleExpiryDays
+
+  getClubData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: getClubData.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO Club directory
+      MemorySize: 256
+      Timeout: 120
+      CodeUri: ./functions
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          CLUBS_TABLE_NAME: !Ref clubsTable
+
+  eventsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "EventsQueryTime"
+      Type: String
+      Value: "2021-05-01 6:07:08"
+
+  newsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "NewsQueryTime"
+      Type: String
+      Value: "2021-05-01 06:07:08"
+
+  blogsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "BlogsQueryTime"
+      Type: String
+      Value: "2021-05-01 06:07:08"
 
   eventsDDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Ref eventsTable
       AttributeDefinitions:
-        - AttributeName: "EventId"
+        - AttributeName: "eventId"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "EventId"
+        - AttributeName: "eventId"
           KeyType: "HASH"
       ProvisionedThroughput:
         ReadCapacityUnits:
@@ -106,5 +192,71 @@ Resources:
       SSESpecification:
         SSEEnabled: True
       TimeToLiveSpecification:
-        AttributeName: "ExpiresOn"
+        AttributeName: "expiresOn"
         Enabled: True
+
+  newsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref newsTable
+      AttributeDefinitions:
+        - AttributeName: "newsId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "newsId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+      TimeToLiveSpecification:
+        AttributeName: "expiresOn"
+        Enabled: True
+
+  blogsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref blogsTable
+      AttributeDefinitions:
+        - AttributeName: "blogId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "blogId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+      TimeToLiveSpecification:
+        AttributeName: "expiresOn"
+        Enabled: True
+
+  clubsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref clubsTable
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True

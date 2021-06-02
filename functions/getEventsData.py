@@ -1,62 +1,84 @@
 import logging
+import os
+import boto3
+import pytz
 import requests
 import json
-import datetime
+from datetime import datetime
+from common_lib import detailed_exception, get_adjusted_unix_time
 
 # Log level
 logging.basicConfig()
 LOGGER = logging.getLogger()
-LOGGER.setLevel(logging.INFO)
+if os.environ["DEBUG_MODE"] == "true":
+    LOGGER.setLevel(logging.DEBUG)
+else:
+    LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
 # REGION = boto3.session.Session().region_name
+EVENTS_TABLE = os.environ["EVENTS_TABLE_NAME"]
+EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
+DYNAMODB_RESOURCE = boto3.resource("dynamodb")
+SSM_CLIENT = boto3.client("ssm")
 
 
 def event_parser(event_json):
     """
     Parses individual event items from the REST API Response by keeping specific information
     and transforming some
+
+    :param event_json: Individual JSON item to format
+    :return: Parsed JSON formatted Event item dictionary
     """
     venue = event_json["venue"]
-    if venue["address"] == "Online":
+    if venue.get("address") == "Online":
         event_location = {"venue": "Online"}
     else:
         event_location = {
-            "venue": venue["venue"],
-            "address": venue["address"],
-            "city": venue["city"],
-            "country": venue["country"],
-            "province": venue["province"],
-            "zip": venue["zip"],
+            "venue": venue.get("venue", "N/A"),
+            "address": venue.get("address", "N/A"),
+            "city": venue.get("city", "N/A"),
+            "country": venue.get("country", "N/A"),
+            "province": venue.get("province", "N/A"),
+            "zip": venue.get("zip", "N/A"),
         }
-
     parsed_event = {
-        'id': event_json['id'],
-        "status": event_json['status'],
-        "date_modified": event_json['modified'],
-        "link": event_json['url'],
-        "title": event_json['title'],
-        "description": event_json['description'],
-        "excerpt": event_json['excerpt'],
-        "image": event_json['image'],
-        "all_day": event_json['all_day'],
-        "start_date": event_json['start_date'],
-        "end_date": event_json['end_date'],
-        "cost": event_json['cost'],
-        "categories": [category["name"] for category in event_json["categories"]],
-        "event_location": event_location,
+        "eventId": str(event_json.get("id", "N/A")),
+        "status": event_json.get("status", "N/A"),
+        "dateModified": event_json.get("modified", "N/A"),
+        "link": event_json.get("url", "N/A"),
+        "title": event_json.get("title", "N/A"),
+        "description": event_json.get("description", "N/A"),
+        "excerpt": event_json.get("excerpt", "N/A"),
+        "allDay": event_json.get("all_day", "N/A"),
+        "startDate": event_json.get("start_date", "N/A"),
+        "endDate": event_json.get("end_date", "N/A"),
+        "cost": event_json.get("cost", "N/A"),
+        "categories": [category["name"] for category in event_json.get("categories", "N/A")],
+        "eventLocation": event_location,
     }
+
+    # Check if event has an image included or not
+    if event_json.get("image") is False:
+        parsed_event["fullImage"] = False
+        parsed_event["thumbnailImage"] = False
+    else:
+        parsed_event["fullImage"] = event_json["image"]["url"],
+        parsed_event["thumbnailImage"] = event_json["image"]["sizes"]["thumbnail"]["url"],
+
     return parsed_event
 
 
 def parse_events(events_response):
     """
     Loops through the list of events in the REST API response and parses them
+
     :param events_response:
-    :return:
+    :return: JSON formatted list of event items
     """
     events = []
-    event_list = events_response['events']
+    event_list = events_response["events"]
     for event in event_list:
         events.append(event_parser(event))
     return events
@@ -65,14 +87,15 @@ def parse_events(events_response):
 def get_all_events(url):
     """
     Returns a list of all parsed events from the events page REST API, by looping through all result pages
+
     :param url: The events page REST API url
-    :return: List of parsed and formatted events
+    :return: JSON formatted list of parsed events
     """
     events = []
     json_response = requests.get(url).json()
     events.extend(parse_events(json_response))
-    while json_response.get('next_rest_url') is not None:
-        next_page = json_response['next_rest_url']
+    while json_response.get("next_rest_url") is not None:
+        next_page = json_response["next_rest_url"]
         json_response = requests.get(next_page).json()
         events.extend(parse_events(json_response))
     return events
@@ -80,10 +103,35 @@ def get_all_events(url):
 
 def lambda_handler(event, context):
     """
+    Lambda entry-point
     """
-    events_url = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
-    events = get_all_events(events_url)
+    base_url = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
+    events = []
+    newly_updated_events = []
+    try:
+        last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
+        events = get_all_events(base_url)
+
+        # Filter the events to keep the new ones since the last query
+        for event_item in events:
+            if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
+                    < datetime.strptime(event_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
+                newly_updated_events.append(event_item)
+
+        SSM_CLIENT.put_parameter(Name="EventsQueryTime",
+                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
+                                 Overwrite=True)
+    except Exception as error:
+        detailed_exception(LOGGER)
+
     LOGGER.debug(json.dumps(events, indent=4))
-    # TODO Filter results by datetime and save/update to dynamoDB
-    # TODO Consider TTL for data
-    return events
+    LOGGER.debug(json.dumps(newly_updated_events, indent=4))
+
+    table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
+    # Create TTL for each item and insert into DynamoDB
+    for event_item in newly_updated_events:
+        event_item["expiresOn"] = get_adjusted_unix_time(event_item["endDate"], "%Y-%m-%d %H:%M:%S",
+                                                         EVENTS_EXPIRY_OFFSET * 24)
+        table.put_item(Item=event_item)
+
+    return {"status": "completed"}
