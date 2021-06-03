@@ -11,35 +11,33 @@ function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
+            marginTop:'20px'
         },
         paper: {
             padding: theme.spacing(2),
             margin: 'auto',
         },
         image: {
-            width: 128,
-            height: 128,
         },
         img: {
             margin: 'auto',
             display: 'block',
             maxWidth: '100%',
             maxHeight: '100%',
+            width: 128,
         },
     }));
 
-    const {title,logo,description} = props
+    const {title,logo,description, email, website, facebook, twitter} = props
+
     const classes = useStyles();
     return(
         <div>
-            <Card>
-                <div className={classes.root}>
+            <Card className={classes.root}>
                     <Paper className={classes.paper}>
                         <Grid container spacing={2}>
                             <Grid item>
-                                <ButtonBase className={classes.image}>
-                                    <img className={classes.img} alt="complex" src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg" />
-                                </ButtonBase>
+                                <img className={classes.img} src={logo}/>
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
@@ -57,16 +55,16 @@ function ClubCard (props){
 
 
                                     <Grid item alignItems={'left'}>
-                                        <IconButton>
+                                        <IconButton href={`mailto:${email}`} target = "_blank">
                                             <EmailIcon/>
                                         </IconButton>
-                                        <IconButton>
+                                        <IconButton href={facebook} target = "_blank">
                                             <FacebookIcon/>
                                         </IconButton>
-                                        <IconButton>
+                                        <IconButton href={twitter} target = {"_blank"}>
                                             <TwitterIcon/>
                                         </IconButton>
-                                        <IconButton>
+                                        <IconButton href={website} target = "_blank">
                                             <LanguageIcon/>
                                         </IconButton>
 
@@ -76,8 +74,6 @@ function ClubCard (props){
                             </Grid>
                         </Grid>
                     </Paper>
-                </div>
-
             </Card>
         </div>
     )

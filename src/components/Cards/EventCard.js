@@ -15,6 +15,9 @@ import Grid from "@material-ui/core/Grid";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 const useStyles = makeStyles((theme) => ({
     root: {
+        height: '450px',
+    },
+    homeCardRoot:{
         maxWidth: 345,
     },
     iconArea:{
@@ -26,21 +29,19 @@ const useStyles = makeStyles((theme) => ({
         position: "flex", top: "50%",alignItems:'center', margin:'7px 0px 0px 0px '},
     icons:{
         float:'right'
+    },
+    gridListTile:{
+        height: '280px',
     }
 }));
 
 
-export default function EventCard (props){
-    const {category,title,location,date,photo,description} = props
+export function EventCard (props){
+    const {category,title,location,date,photo,description, link} = props
     const classes = useStyles();
 
     return (
         <Card className={classes.root} >
-                {/*<Container className={classes.iconArea}>*/}
-                {/*<Icon>*/}
-                {/*    <LocalOfferIcon color={'primary'}></LocalOfferIcon>*/}
-                {/*</Icon>*/}
-                {/*</Container>*/}
                 <CardMedia
                     component="img"
                     height="140"
@@ -50,14 +51,14 @@ export default function EventCard (props){
                 />
                 <CardContent>
                     <Grid container>
-                        <Grid item xs={7}>
+                        <Grid item md={7}>
 
                         <Typography gutterBottom variant="h5" component="h2" align={'left'} className={classes.heartIcon}>
                             {title}
                         </Typography>
                         </Grid>
-                        <Grid item xs={5} className={classes.icons} >
-                            <IconButton >
+                        <Grid item md={5} className={classes.icons} >
+                            <IconButton href={link} target = "_blank">
                                 <MoreHorizIcon/>
                             </IconButton>
                             <IconButton >
@@ -78,8 +79,99 @@ export default function EventCard (props){
                     </Typography>
 
                 </CardContent>
-            <CardActions>
-            </CardActions>
+        </Card>
+    );
+
+
+}
+export function HomeEventCard (props){
+    const {category,title,location,date,photo,description, link} = props
+    const classes = useStyles();
+
+    return (
+        <Card className={classes.homeCardRoot} >
+            <CardMedia
+                component="img"
+                height="140"
+                image={photo}
+
+                title="Event image"
+            />
+            <CardContent>
+                <Grid container>
+                    <Grid item md={7}>
+
+                        <Typography gutterBottom variant="h5" component="h2" align={'left'} className={classes.heartIcon}>
+                            {title}
+                        </Typography>
+                    </Grid>
+                    <Grid item md={5} className={classes.icons} >
+                        <IconButton href={link} target = "_blank">
+                            <MoreHorizIcon/>
+                        </IconButton>
+                        <IconButton >
+                            <FavoriteBorderIcon/>
+                        </IconButton>
+
+                    </Grid>
+                </Grid>
+
+                <Typography color={'error'} variant="body2"  align={'left'} >
+                    {date}
+                </Typography>
+                <Typography  variant="body2"  align={'left'} >
+                    {location}
+                </Typography>
+                <Typography variant="body2" color="textPrimary" component="p" align={'left'}>
+                    {description}
+                </Typography>
+
+            </CardContent>
+        </Card>
+    );
+
+
+}
+
+export function GridListEventCard (props){
+    const {category,title,location,date,photo, link} = props
+    const classes = useStyles();
+
+    return (
+        <Card className={classes.gridListTile} >
+            <CardMedia
+                component="img"
+                height="140"
+                image={photo}
+
+                title="Event image"
+            />
+            <CardContent>
+                <Grid container>
+                    <Grid item xs={7}>
+
+                        <Typography gutterBottom variant="h6"  align={'left'} className={classes.heartIcon}>
+                            {title}
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={5} className={classes.icons} >
+                        <IconButton href={link} target = "_blank">
+                            <MoreHorizIcon/>
+                        </IconButton>
+                        <IconButton >
+                            <FavoriteBorderIcon/>
+                        </IconButton>
+
+                    </Grid>
+                </Grid>
+
+                <Typography color={'error'} variant="body2"  align={'left'} >
+                    {date}
+                </Typography>
+                <Typography  variant="body2"  align={'left'} >
+                    {location}
+                </Typography>
+            </CardContent>
         </Card>
     );
 

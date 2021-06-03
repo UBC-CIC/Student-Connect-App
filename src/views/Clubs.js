@@ -54,9 +54,14 @@ function Clubs(){
             <Container className={classes.cardGrid} >
                 <Grid container spacing={4}>
                     <Grid item xs={12}>
-                        <ClubCard title="Club" description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu"}/>
-                    </Grid>
+                        <ClubCard title="Club" logo={'non'}description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu"}/>
+                        <ClubCard title="Ice Cream Club" logo={'https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ice_cream_club_logo_0.jpg?itok=e3BQq-uv'}
+                                  description={"The Ice Cream Club is UBCO’s fastest growing and soon to be largest club on campus. We know that life is tough, university is hard, and sometimes you just need ice cream. That’s where we come in. Our goal is to improve the life of UBCO’s students through ice cream."}
+                        email={"icecreamclububco@gmail.com"} facebook={'https://www.facebook.com/groups/693826520823694/about'}
+                                  twitter={'https://twitter.com/UBCOICC'}
+                        />
 
+                    </Grid>
                 </Grid>
             </Container>
 

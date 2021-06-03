@@ -18,30 +18,26 @@ export function HomePageNewsCard(props){
             padding: theme.spacing(2),
             margin: 'auto',
         },
-        image: {
-            width: 128,
-            height: 128,
-        },
         img: {
             margin: 'auto',
             display: 'block',
             maxWidth: '100%',
             maxHeight: '100%',
+            height: 128,
+
         },
     }));
 
     const classes = useStyles();
-    const {title, photo} = props
+    const {title, photo, link, date} = props
     return(
         <Card>
-            <CardActionArea>
-            <div className={classes.root}>
+            <CardActionArea href={link} target = "_blank">
+            <div className={classes.root} >
                 <Paper className={classes.paper}>
                     <Grid container spacing={2}>
                         <Grid item>
-                            <ButtonBase className={classes.image}>
-                                <img className={classes.img} alt="complex" src={photo} />
-                            </ButtonBase>
+                            <img className={classes.img} alt="complex" src={photo} />
                         </Grid>
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
@@ -50,6 +46,13 @@ export function HomePageNewsCard(props){
                                         {title}
                                     </Typography>
                                 </Grid>
+                                <Grid item>
+                                    <Typography variant="body2"  align={'left'} >
+                                        {date}
+                                    </Typography>
+
+                                </Grid>
+
                             </Grid>
                         </Grid>
                     </Grid>
