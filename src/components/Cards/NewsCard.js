@@ -7,6 +7,7 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import LanguageIcon from "@material-ui/icons/Language";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import {Tag} from "../Tags/Tag";
 
 export function HomePageNewsCard(props){
     const useStyles = makeStyles((theme) => ({
@@ -29,7 +30,7 @@ export function HomePageNewsCard(props){
     }));
 
     const classes = useStyles();
-    const {title, photo, link, date} = props
+    const {title, photo, link, date,categories} = props
     return(
         <Card>
             <CardActionArea href={link} target = "_blank">
@@ -49,6 +50,9 @@ export function HomePageNewsCard(props){
                                 <Grid item>
                                     <Typography variant="body2"  align={'left'} >
                                         {date}
+                                    </Typography>
+                                    <Typography variant="body2"  align={'left'} >
+                                        <Tag categories={categories}/>
                                     </Typography>
 
                                 </Grid>

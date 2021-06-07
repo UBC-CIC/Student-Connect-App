@@ -13,6 +13,8 @@ import Container from "@material-ui/core/Container";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Grid from "@material-ui/core/Grid";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import {Tag} from '../Tags/Tag'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         height: '450px',
@@ -32,17 +34,24 @@ const useStyles = makeStyles((theme) => ({
     },
     gridListTile:{
         height: '280px',
-    }
+    },
+    tags:{
+        display:'flex', justiyContent:'space-between', flexDirection:'column'    }
 }));
 
 
 export function EventCard (props){
-    const {category,title,location,date,photo,description, link} = props
+    const {categories,title,location,date,photo,description, link} = props
     const classes = useStyles();
 
     return (
+        <div>
         <Card className={classes.root} >
-                <CardMedia
+            <CardActions className={classes.tags} >
+                <Tag categories={categories}/>
+            </CardActions>
+
+            <CardMedia
                     component="img"
                     height="140"
                     image={photo}
@@ -80,16 +89,21 @@ export function EventCard (props){
 
                 </CardContent>
         </Card>
-    );
+        </div>
+);
 
 
 }
 export function HomeEventCard (props){
-    const {category,title,location,date,photo,description, link} = props
+    const {categories,title,location,date,photo,description, link} = props
     const classes = useStyles();
 
     return (
         <Card className={classes.homeCardRoot} >
+            <CardActions className={classes.tags} >
+                <Tag categories={categories}/>
+            </CardActions>
+
             <CardMedia
                 component="img"
                 height="140"
