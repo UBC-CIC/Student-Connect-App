@@ -24,13 +24,13 @@ function Clubs(){
             height: 28,
             margin: 4,
         },
-        cardGrid: {
-            paddingTop: theme.spacing(8),
-            paddingBottom: theme.spacing(8),
-            paddingLeft: theme.spacing(10),
-            paddingRight: theme.spacing(10)
-
-        },
+        // cardGrid: {
+        //     paddingTop: theme.spacing(8),
+        //     paddingBottom: theme.spacing(8),
+        //     paddingLeft: theme.spacing(10),
+        //     paddingRight: theme.spacing(10)
+        //
+        // },
 
     }));
     const classes = useStyles()

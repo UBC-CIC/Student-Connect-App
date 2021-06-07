@@ -20,6 +20,7 @@ import {HomeEventCard} from "../components/Cards/EventCard";
 import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
+import {NewsCarousel, Item} from '../components/Carousel/carousel'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -39,7 +40,10 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(10),
 
     },
-
+    recommandationContainer: {
+        // backgroundColor: '#0055B7',
+        // borderRadius: '25px',
+}
 
 }));
 
@@ -53,14 +57,13 @@ export default function Home() {
 
     return (
         <React.Fragment>
-            <Container className={classes.container}>
+
+            {/*<Container className={classes.recommandationContainer}>*/}
                 <Typography align={'left'} variant="h4">
-                    Events that you have shown interests
+                    Hi [First Name],
                 </Typography>
-                <Container>
-                    <EventGridList/>
-                </Container>
-            </Container>
+                <EventGridList/>
+            {/*</Container>*/}
 
             <Container className={classes.container} >
                 <Typography align={'left'} variant="h4">
@@ -70,7 +73,7 @@ export default function Home() {
                     Recommendations based on your personalized content tags
                 </Typography>
 
-            </Container>
+                </Container>
             <div className={classes.root}>
                 <Container className={classes.cardGrid}>
                 <Grid container spacing={3}>
@@ -119,15 +122,10 @@ export default function Home() {
                     </Grid>
                 </Grid>
                 </Container>
-                <Container className={classes.container} >
-                    <Typography align={'left'} variant="h4">
-                        News Spotlight
-                    </Typography>
-
-                </Container>
-                <Container className={classes.container} >
-                    <NewsGridList/>
-                </Container>
+                <Typography align={'left'} variant="h4">
+                    News Spotlight
+                </Typography>
+                <NewsCarousel/>
 
             </div>
 

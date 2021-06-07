@@ -1,21 +1,63 @@
 import React from 'react';
-import Paper from '@material-ui/core/Paper';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import PhoneIcon from '@material-ui/icons/Phone';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import PersonPinIcon from '@material-ui/icons/PersonPin';
-import BookIcon from '@material-ui/icons/Book';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+import {HomePageNewsCard} from "../Cards/NewsCard";
+import Container from "@material-ui/core/Container";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
-const useStyles = makeStyles({
+import BookIcon from '@material-ui/icons/Book';
+function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+
+    return (
+        <div
+            role="tabpanel"
+            hidden={value !== index}
+            id={`simple-tabpanel-${index}`}
+            aria-labelledby={`simple-tab-${index}`}
+            {...other}
+        >
+            {value === index && (
+                <Box p={3}>
+                    <Typography>{children}</Typography>
+                </Box>
+            )}
+        </div>
+    );
+}
+
+TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    };
+}
+
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        maxWidth: '100vw',
     },
-});
+    tabBar:{
+        background: '#0055B7',
 
-export default function IconLabelTabs() {
+    },
+    indicator:{
+        backgroundColor:"#6EC4E8"
+
+    }
+}));
+
+export default function SimpleTabs() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -24,18 +66,32 @@ export default function IconLabelTabs() {
     };
 
     return (
-        <Paper square className={classes.root}>
-            <Tabs
-                value={value}
-                onChange={handleChange}
-                variant="fullWidth"
-                indicatorColor="secondary"
-                textColor="secondary"
-                aria-label="icon label tabs example"
-            >
-                <Tab icon={<RssFeedIcon />} label="News" />
-                <Tab icon={<BookIcon />} label="Student Life Blogs" />
-            </Tabs>
-        </Paper>
+        <div className={classes.root}>
+
+            <AppBar position="static" className={classes.tabBar}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="fullWidth"
+                    indicatorColor="secondary"
+                    textColor="white"
+                    aria-label="icon label tabs example"
+                    classes={{
+                        indicator: classes.indicator
+                    }}>
+                >
+                    <Tab icon={<RssFeedIcon/>}label="News" {...a11yProps(0)}  />
+                    <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(1)} />
+                </Tabs>
+            </AppBar>
+            <TabPanel value={value} index={0}>
+                <Container>
+                    <HomePageNewsCard categories={['category']}/>
+                </Container>
+            </TabPanel>
+            <TabPanel value={value} index={1}>
+                Item Two
+            </TabPanel>
+        </div>
     );
 }

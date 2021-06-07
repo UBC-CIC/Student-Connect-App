@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        background: "#002145",
         transition: theme.transitions.create(['width', 'margin'], {
             easing: theme.transitions.easing.sharp,
             duration: theme.transitions.duration.leavingScreen,
@@ -86,7 +87,12 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(3),
     },
     signOutButton:{
-        float: 'right'
+        float: 'right',
+        backgroundColor:"#40B4E5",
+
+    },
+    appName:{
+        minWidth:'250px',
     }
 }));
 
@@ -125,12 +131,12 @@ export default function MiniDrawer() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" noWrap>
+                        <Typography className={classes.appName} variant="h6">
                             Student Engagement App
                         </Typography>
 
                     <Container>
-                        <Button className={classes.signOutButton} color={'secondary'} variant={'contained'} >
+                        <Button className={classes.signOutButton} variant={'contained'}>
                             Sign out
                         </Button>
                     </Container>
