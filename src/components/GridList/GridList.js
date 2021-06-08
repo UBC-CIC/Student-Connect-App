@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 export function EventGridList(){
     const classes = useStyles();
     return(
-        <GridList className={classes.gridList} cols={3}>
+        <GridList className={classes.gridList} cols={4}>
             <GridListTile className={classes.gridListTile}>
                 <GridListEventCard title={"Cover Letter Workshop"}
                            photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/05/CoverLetter-FBTwitter-1.jpg'}

@@ -54,11 +54,11 @@ const footers = [
     },
     {
         title: 'MIT License',
-        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/LICENSE.md'
+        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/LICENSE'
     },
     {
         title: 'Attribution',
-        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/ATTRIBUTIONS.md'
+        link: 'https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/frontend/ATTRIBUTIONS'
     }
 ];
 

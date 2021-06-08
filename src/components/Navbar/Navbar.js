@@ -22,7 +22,7 @@ import EventIcon from '@material-ui/icons/Event';
 import GroupIcon from '@material-ui/icons/Group';
 import { Link } from "react-router-dom";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-
+import ExploreIcon from '@material-ui/icons/Explore';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -177,6 +177,11 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
                         <ListItemText primary={"Home"} />
                     </ListItem>
+                    <ListItem component={Link} to="/explore">
+                        <ListItemIcon>{<ExploreIcon />}</ListItemIcon>
+                        <ListItemText primary={"Explore"} />
+                    </ListItem>
+
                     <ListItem component={Link} to="/clubs">
                         <ListItemIcon>{<GroupIcon />}</ListItemIcon>
                         <ListItemText primary={"Clubs"} />

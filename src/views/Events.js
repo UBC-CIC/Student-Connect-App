@@ -37,7 +37,7 @@ function Events(){
     return(
         <div>
             <h1>Events</h1>
-            <Container>
+            <Container maxWidth={"xl"}>
                 <FormControl >
                     <Input
                         id="input-with-icon-adornment"
@@ -50,7 +50,7 @@ function Events(){
                     />
                 </FormControl>
             </Container>
-            <Container className={classes.cardGrid}>
+            <Container className={classes.cardGrid} maxWidth={"xl"}>
                 <Grid container spacing={4}>
                     <Grid item xs={12} sm={6} md={4}>
                     <EventCard categories={['Health','category2']} title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}

@@ -9,25 +9,73 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Tag} from "../Tags/Tag";
 
+export function BigNewsCard(props){
+    const classes = useStyles();
+    const {title, photo, link, date,categories, excerpts} = props
+
+    return(
+    <Card>
+        <CardActionArea href={link} target = "_blank">
+                <Paper className={classes.bigCard}>
+                    <Grid container spacing={2}>
+                        <Grid item>
+                            <img className={classes.img} alt="complex" src={photo} />
+                        </Grid>
+                        <Grid item xs={12} sm container>
+                            <Grid item xs container direction="column" spacing={2}>
+                                <Grid item xs>
+                                    <Typography gutterBottom variant="h6" align={'left'}>
+                                        {title}
+                                    </Typography>
+                                    <Typography variant="body2"  align={'left'} >
+                                        {excerpts}
+                                    </Typography>
+
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="body2"  align={'left'} >
+                                        {date}
+                                    </Typography>
+                                    <Typography variant="body2"  align={'left'} >
+                                        <Tag categories={categories}/>
+                                    </Typography>
+
+                                </Grid>
+
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Paper>
+        </CardActionArea>
+    </Card>
+    )
+
+}
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    bigCard:{
+        minHeight:"300px",
+        padding: theme.spacing(2),
+        margin: 'auto',
+
+    },
+    paper: {
+        padding: theme.spacing(2),
+        margin: 'auto',
+    },
+    img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+        height: 128,
+
+    },
+}));
+
 export function HomePageNewsCard(props){
-    const useStyles = makeStyles((theme) => ({
-        root: {
-            flexGrow: 1,
-
-        },
-        paper: {
-            padding: theme.spacing(2),
-            margin: 'auto',
-        },
-        img: {
-            margin: 'auto',
-            display: 'block',
-            maxWidth: '100%',
-            maxHeight: '100%',
-            height: 128,
-
-        },
-    }));
 
     const classes = useStyles();
     const {title, photo, link, date,categories} = props

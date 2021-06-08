@@ -14,13 +14,13 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
-import {GridList, GridListTile, GridListTileBar, Paper} from "@material-ui/core";
+import {Divider, GridList, GridListTile, GridListTileBar, Paper} from "@material-ui/core";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import {HomeEventCard} from "../components/Cards/EventCard";
 import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item} from '../components/Carousel/carousel'
+import {NewsCarousel, Item, ClubsCarousel, BlogsCarousel} from '../components/Carousel/carousel'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -43,7 +43,21 @@ const useStyles = makeStyles((theme) => ({
     recommandationContainer: {
         // backgroundColor: '#0055B7',
         // borderRadius: '25px',
-}
+},
+    divider:{
+        marginTop:'30px',
+        marginBottom:'30px',
+
+    },
+    forYouTitle:{
+        fontWeight: 600,
+        color:"#00A7E1"
+    },
+    mostLikedTitle:{
+        fontWeight: 600,
+        color:"#ec407a"
+
+    }
 
 }));
 
@@ -58,24 +72,19 @@ export default function Home() {
     return (
         <React.Fragment>
 
-            {/*<Container className={classes.recommandationContainer}>*/}
-                <Typography align={'left'} variant="h4">
-                    Hi [First Name],
-                </Typography>
-                <EventGridList/>
-            {/*</Container>*/}
 
-            <Container className={classes.container} >
-                <Typography align={'left'} variant="h4">
-                    For you
+            <Container maxWidth={'xl'} >
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    For You
                 </Typography>
                 <Typography align={'left'} variant="h6">
                     Recommendations based on your personalized content tags
                 </Typography>
+                <Divider className={classes.divider}/>
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    News
+                </Typography>
 
-                </Container>
-            <div className={classes.root}>
-                <Container className={classes.cardGrid}>
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
                         <HomePageNewsCard categories={['category1','category2']} date={'date'} title={'News title'} photo={'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg'}/>
@@ -103,10 +112,16 @@ export default function Home() {
                     <Grid item xs={12} sm={6} >
                         <HomePageNewsCard title={'No time to exercise? No problem, says UBCO researcher'}
                                           photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/jonathan-little-770-225x225.jpg'}
-                        link={'https://news.ok.ubc.ca/?p=19210'} categories={['Health','category2']}
+                        link={''} categories={['Health','category2']}
                         date={'May 20, 2021'}/>
                     </Grid>
+                </Grid>
+                <Divider className={classes.divider}/>
 
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Events
+                </Typography>
+                <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={3} >
                         <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
 
@@ -122,13 +137,29 @@ export default function Home() {
                     </Grid>
                 </Grid>
                 </Container>
-                <Typography align={'left'} variant="h4">
-                    News Spotlight
+            <Container maxWidth={'xl'}>
+                <Divider className={classes.divider}/>
+
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Student life blogs
                 </Typography>
-                <NewsCarousel/>
+                <BlogsCarousel/>
+            </Container>
 
-            </div>
-
+            <Container maxWidth={"xl"}>
+                <Divider className={classes.divider}/>
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Event's that you liked
+                </Typography>
+                <EventGridList/>
+            </Container>
+            <Divider className={classes.divider}/>
+            <Container maxWidth={"xl"}>
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Clubs
+                </Typography>
+                <ClubsCarousel/>
+            </Container>
 
         </React.Fragment>
     );
