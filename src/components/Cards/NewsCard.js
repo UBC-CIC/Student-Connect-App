@@ -87,7 +87,7 @@ export function HomePageNewsCard(props){
                 <Paper className={classes.paper}>
                     <Grid container spacing={2}>
                         <Grid item>
-                            <img className={classes.img} alt="complex" src={photo} />
+                            <img className={classes.img} alt="img" src={photo} />
                         </Grid>
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>

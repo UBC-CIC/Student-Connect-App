@@ -4,6 +4,7 @@ import EventCard from "./components/Cards/EventCard";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./views/Home";
+import Survey from "./views/Survey";
 import {BrowserRouter as Router, Switch,Route,Redirect} from 'react-router-dom';
 import Clubs from './views/Clubs'
 import Events from "./views/Events";
@@ -37,6 +38,7 @@ function App() {
           <Route path ='/events' exact component={Events}/>
           <Route path ='/settings' exact component={Settings}/>
           <Route path ='/news' exact component={News}/>
+          <Route path = '/survey' exact component={Survey}/>
 
         </Container>
         <Footer/>

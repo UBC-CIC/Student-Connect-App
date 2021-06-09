@@ -23,6 +23,9 @@ import GroupIcon from '@material-ui/icons/Group';
 import { Link } from "react-router-dom";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ExploreIcon from '@material-ui/icons/Explore';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import HelpIcon from '@material-ui/icons/Help';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -138,7 +141,7 @@ export default function MiniDrawer() {
                         </Typography>
 
                     <Container>
-                        <Button className={classes.signOutButton} variant={'contained'}>
+                        <Button className={classes.signOutButton} variant={'contained'} startIcon={<ExitToAppIcon/>}>
                             Sign out
                         </Button>
                     </Container>
@@ -196,6 +199,10 @@ export default function MiniDrawer() {
                     <ListItem component={Link} to="/news">
                         <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} />
+                    </ListItem>
+                    <ListItem component={Link} to="/survey">
+                        <ListItemIcon>{<HelpIcon />}</ListItemIcon>
+                        <ListItemText primary={"Survey"} />
                     </ListItem>
 
                 </List>

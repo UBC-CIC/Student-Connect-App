@@ -92,7 +92,7 @@ export default function NewsBlogsTab() {
                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/03/Jian-Liu-770.jpg'}
                                          link={'https://news.ok.ubc.ca/2021/03/16/keeping-up-with-the-charge-to-develop-better-batteries/'}
                                          date={'March 16, 2021'} categories={['Research','Battery'] }
-                                         excerpts={"With increasing global efforts to adopt clean energy, developing sustainable storage systems has become a major challenge in getting electric vehicles on the road and integrating intermittent renewable energy resources into the grid."}
+                                         excerpts={"With increasing global efforts to adopt clean energy, developing sustainable storage systems has become a major challenge in getting electric vehicles on the road..."}
                             />
 
                         </Grid>
@@ -101,7 +101,7 @@ export default function NewsBlogsTab() {
                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/04/earth-770.jpg'}
                                          link={'https://news.ok.ubc.ca/2021/05/04/ubco-researcher-uses-geology-to-help-astronomers-find-habitable-planets/'}
                                          date={'May 24, 2021'} categories={['Research','Astronomy'] }
-                                         excerpts={"Astronomers have identified more than 4,000, and counting, confirmed exoplanets — planets orbiting stars other than the sun — but only a fraction have the potential to sustain life."}
+                                         excerpts={"Astronomers have identified more than 4,000, and counting, confirmed exoplanets — planets orbiting stars other than the sun..."}
                             />
                         </Grid>
                     </Grid>
@@ -165,11 +165,10 @@ export function ScrollableTabsButtonAuto() {
                     <Tab label="Physics" {...a11yProps(9)} />
                     <Tab label="Psychology" {...a11yProps(10)} />
                     <Tab label="Recreation" {...a11yProps(11)} />
-                    <Tab label="Chemistry" {...a11yProps(12)} />
-                    <Tab label="Religion" {...a11yProps(13)} />
-                    <Tab label="Science" {...a11yProps(14)} />
-                    <Tab label="Sports" {...a11yProps(15)} />
-                    <Tab label="Uncategorized" {...a11yProps(16)} />
+                    <Tab label="Religion" {...a11yProps(12)} />
+                    <Tab label="Science" {...a11yProps(13)} />
+                    <Tab label="Sports" {...a11yProps(14)} />
+                    <Tab label="Uncategorized" {...a11yProps(15)} />
 
                 </Tabs>
             </AppBar>

@@ -143,7 +143,7 @@ function Events(){
 
             <Grid container spacing={4} className={classes.cardGrid}>
                     <Grid item xs={12} sm={6} md={4}>
-                    <EventCard categories={['Health','category2']} title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
+                    <EventCard categories={['Category','Category']} title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
                                photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
                  location={'Vancouver, BC'} date={'2021/05/29'} />
                     </Grid>

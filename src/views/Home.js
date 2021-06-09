@@ -87,20 +87,20 @@ export default function Home() {
 
                 <Grid container spacing={3}>
                     <Grid item xs={12} >
-                        <HomePageNewsCard categories={['category1','category2']} date={'date'} title={'News title'} photo={'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg'}/>
+                        <HomePageNewsCard categories={['Category','Category']} date={'date'} title={'News title'}/>
                     </Grid>
                     <Grid item xs={12} sm={6} >
                         <HomePageNewsCard title={'Parental consumption shapes how teens think about and use cannabis'}
                                           photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/cannabis-1200-225x225.jpg'}
                                           link={'https://news.ok.ubc.ca/?p=19214'}
-                                          date={'May 19, 2021'} categories={['Health','category2']}
+                                          date={'May 19, 2021'} categories={['Health','Irving K. Barber Faculty of Arts and Social Sciences','Psychology']}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6} >
                         <HomePageNewsCard title={'UBCO student receives gift of a lifetime from younger sibling'}
                                           photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/nursing-bros-770-225x225.jpg'}
                                         link={'https://news.ok.ubc.ca/?p=19201'}
-                                          date={'May 12, 2021'} categories={['Health','category2']}
+                                          date={'May 12, 2021'} categories={['Health','School of Nursing',' Aboriginal',' Faculty of Health and Social Development']}
                         />
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -112,7 +112,8 @@ export default function Home() {
                     <Grid item xs={12} sm={6} >
                         <HomePageNewsCard title={'No time to exercise? No problem, says UBCO researcher'}
                                           photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/jonathan-little-770-225x225.jpg'}
-                        link={''} categories={['Health','category2']}
+                        link={'https://news.ok.ubc.ca/2021/05/20/no-time-to-exercise-no-problem-says-ubco-researcher/'}
+                                          categories={['Health','Research','School of Health and Exercise']}
                         date={'May 20, 2021'}/>
                     </Grid>
                 </Grid>
@@ -123,17 +124,17 @@ export default function Home() {
                 </Typography>
                 <Grid container spacing={3}>
                     <Grid item xs={12} sm={6} md={3} >
-                        <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
 
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
                     </Grid>
                     <Grid item xs={12} sm={6} md={3}>
-                        <HomeEventCard  categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                        <HomeEventCard  categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
                     </Grid>
                 </Grid>
                 </Container>

@@ -116,11 +116,11 @@ export default function Explore() {
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} md={3} >
-                    <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                    <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
 
                 </Grid>
                 <Grid item xs={12} sm={6} md={3}>
-                    <HomeEventCard categories={['Health','category2']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
+                    <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
                 </Grid>
 
             </Grid>
