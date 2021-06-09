@@ -88,7 +88,9 @@ const useStyles = makeStyles((theme) => ({
     },
     signOutButton:{
         float: 'right',
-        backgroundColor:"#40B4E5",
+        backgroundColor:"#0055B7",
+        color:"white",
+        textTransform:'none'
 
     },
     appName:{

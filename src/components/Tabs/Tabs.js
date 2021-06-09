@@ -152,23 +152,24 @@ export function ScrollableTabsButtonAuto() {
                     }}>
 
                 >
+                    <Tab label="All" {...a11yProps(0)} />
 
-                    <Tab label="Academics" {...a11yProps(0)} />
-                    <Tab label="Activism" {...a11yProps(1)} />
-                    <Tab label="Biology" {...a11yProps(2)} />
-                    <Tab label="Business" {...a11yProps(3)} />
-                    <Tab label="Chemistry" {...a11yProps(4)} />
-                    <Tab label="Computer Science" {...a11yProps(5)} />
-                    <Tab label="Culture" {...a11yProps(6)} />
-                    <Tab label="Engineering" {...a11yProps(0)} />
-                    <Tab label="Physics" {...a11yProps(1)} />
-                    <Tab label="Psychology" {...a11yProps(2)} />
-                    <Tab label="Recreation" {...a11yProps(3)} />
-                    <Tab label="Chemistry" {...a11yProps(4)} />
-                    <Tab label="Religion" {...a11yProps(5)} />
-                    <Tab label="Science" {...a11yProps(6)} />
-                    <Tab label="Sports" {...a11yProps(6)} />
-                    <Tab label="Uncategorized" {...a11yProps(6)} />
+                    <Tab label="Academics" {...a11yProps(1)} />
+                    <Tab label="Activism" {...a11yProps(2)} />
+                    <Tab label="Biology" {...a11yProps(3)} />
+                    <Tab label="Business" {...a11yProps(4)} />
+                    <Tab label="Chemistry" {...a11yProps(5)} />
+                    <Tab label="Computer Science" {...a11yProps(6)} />
+                    <Tab label="Culture" {...a11yProps(7)} />
+                    <Tab label="Engineering" {...a11yProps(8)} />
+                    <Tab label="Physics" {...a11yProps(9)} />
+                    <Tab label="Psychology" {...a11yProps(10)} />
+                    <Tab label="Recreation" {...a11yProps(11)} />
+                    <Tab label="Chemistry" {...a11yProps(12)} />
+                    <Tab label="Religion" {...a11yProps(13)} />
+                    <Tab label="Science" {...a11yProps(14)} />
+                    <Tab label="Sports" {...a11yProps(15)} />
+                    <Tab label="Uncategorized" {...a11yProps(16)} />
 
                 </Tabs>
             </AppBar>
