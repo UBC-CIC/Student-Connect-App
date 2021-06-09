@@ -5,7 +5,7 @@ import {Divider, FormControl, Input, InputAdornment} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import EventCard from "../components/Cards/EventCard";
-import {ScrollableTabsButtonForce} from "../components/Tabs/Tabs";
+import {ScrollableTabsButtonAuto, ScrollableTabsButtonForce} from "../components/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 function Clubs(){
@@ -50,17 +50,7 @@ function Clubs(){
 
             </Container>
             <Container>
-                <FormControl >
-                    <Input
-                        id="input-with-icon-adornment"
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <SearchIcon />
-                            </InputAdornment>
-                        }
-                        placeholder={"Search"}
-                    />
-                </FormControl>
+                <ScrollableTabsButtonAuto/>
             </Container>
             <Container className={classes.cardGrid} >
                 <Grid container spacing={4}>

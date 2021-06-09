@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function SimpleTabs() {
+export default function NewsBlogsTab() {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
@@ -129,3 +129,49 @@ export default function SimpleTabs() {
     );
 }
 
+export function ScrollableTabsButtonAuto() {
+    const classes = useStyles();
+    const [value, setValue] = React.useState(0);
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
+    return (
+        <div className={classes.root}>
+            <AppBar position="static" className={classes.tabBar}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    indicatorColor="secondary"
+                    textColor="white"
+                    variant="scrollable"
+                    scrollButtons="auto"
+                    classes={{
+                        indicator: classes.indicator
+                    }}>
+
+                >
+
+                    <Tab label="Academics" {...a11yProps(0)} />
+                    <Tab label="Activism" {...a11yProps(1)} />
+                    <Tab label="Biology" {...a11yProps(2)} />
+                    <Tab label="Business" {...a11yProps(3)} />
+                    <Tab label="Chemistry" {...a11yProps(4)} />
+                    <Tab label="Computer Science" {...a11yProps(5)} />
+                    <Tab label="Culture" {...a11yProps(6)} />
+                    <Tab label="Engineering" {...a11yProps(0)} />
+                    <Tab label="Physics" {...a11yProps(1)} />
+                    <Tab label="Psychology" {...a11yProps(2)} />
+                    <Tab label="Recreation" {...a11yProps(3)} />
+                    <Tab label="Chemistry" {...a11yProps(4)} />
+                    <Tab label="Religion" {...a11yProps(5)} />
+                    <Tab label="Science" {...a11yProps(6)} />
+                    <Tab label="Sports" {...a11yProps(6)} />
+                    <Tab label="Uncategorized" {...a11yProps(6)} />
+
+                </Tabs>
+            </AppBar>
+        </div>
+    );
+}
