@@ -6,10 +6,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import {HomePageNewsCard} from "../Cards/NewsCard";
+import {BigNewsCard, HomePageNewsCard} from "../Cards/NewsCard";
 import Container from "@material-ui/core/Container";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 import BookIcon from '@material-ui/icons/Book';
+import Grid from "@material-ui/core/Grid";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -85,13 +86,46 @@ export default function SimpleTabs() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                <Container>
-                    <HomePageNewsCard categories={['category']}/>
-                </Container>
+                    <Grid container spacing={3}>
+                        <Grid item xs={12} sm={6} >
+                            <BigNewsCard title={'Keeping up with the charge to develop better batteries\n\n'}
+                                         photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/03/Jian-Liu-770.jpg'}
+                                         link={'https://news.ok.ubc.ca/2021/03/16/keeping-up-with-the-charge-to-develop-better-batteries/'}
+                                         date={'March 16, 2021'} categories={['Research','Battery'] }
+                                         excerpts={"With increasing global efforts to adopt clean energy, developing sustainable storage systems has become a major challenge in getting electric vehicles on the road and integrating intermittent renewable energy resources into the grid."}
+                            />
+
+                        </Grid>
+                        <Grid item xs={12} sm={6} >
+                            <BigNewsCard title={'UBCO researcher uses geology to help astronomers find habitable planets\n'}
+                                         photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/04/earth-770.jpg'}
+                                         link={'https://news.ok.ubc.ca/2021/05/04/ubco-researcher-uses-geology-to-help-astronomers-find-habitable-planets/'}
+                                         date={'May 24, 2021'} categories={['Research','Astronomy'] }
+                                         excerpts={"Astronomers have identified more than 4,000, and counting, confirmed exoplanets — planets orbiting stars other than the sun — but only a fraction have the potential to sustain life."}
+                            />
+                        </Grid>
+                    </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                Item Two
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={6} >
+                        <BigNewsCard title={'5 ways to improve your exam prep'}
+                                     photo={'https://students.ok.ubc.ca/wp-content/uploads/sites/90/2020/10/exam-prep-blog-header.jpg'}
+                                     link={'https://students.ok.ubc.ca/2020/12/02/5-ways-to-improve-your-exam-prep/'}
+                                     date={'December 2, 2020'} categories={['Study','Academics'] }
+                                     excerpts={"Don’t stay up all night cramming for an exam. Start early with these tips to improve your exam prep."}/>
+
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <BigNewsCard title={'What I wish I’d known when I transferred to UBCO'}
+                                     photo={'https://students.ok.ubc.ca/wp-content/uploads/sites/90/2021/04/blog-header.jpg'}
+                                     link={'https://students.ok.ubc.ca/2021/04/16/what-i-wish-id-known-when-i-transferred-to-ubco/'}
+                                     date={'April 16, 2021'} categories={['New Student','Life'] }
+                                     excerpts="A transfer student shares her experience coming to UBCO, and some dos and don’ts to help you ease your transition to a new campus."/>
+                    </Grid>
+                </Grid>
             </TabPanel>
         </div>
     );
 }
+

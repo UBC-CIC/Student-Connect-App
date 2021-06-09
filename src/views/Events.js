@@ -1,10 +1,12 @@
 import {EventCard} from "../components/Cards/EventCard";
 import Container from "@material-ui/core/Container";
-import {FormControl, Input, InputAdornment, InputBase, InputLabel} from "@material-ui/core";
+import {Divider, FormControl, Input, InputAdornment, InputBase, InputLabel} from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import SearchIcon from '@material-ui/icons/Search';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+import React from "react";
 function Events(){
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -20,10 +22,6 @@ function Events(){
         iconButton: {
             padding: 10,
         },
-        divider: {
-            height: 28,
-            margin: 4,
-        },
         cardGrid: {
             paddingTop: theme.spacing(8),
             paddingBottom: theme.spacing(8),
@@ -31,12 +29,31 @@ function Events(){
             paddingRight: theme.spacing(10)
 
         },
+        divider:{
+            marginTop:'30px',
+            marginBottom:'30px',
+
+        },
+        title:{
+            fontWeight: 600,
+            color:"#0055B7"
+
+        }
 
     }));
     const classes = useStyles()
     return(
         <div>
-            <h1>Events</h1>
+            <Container maxWidth={'xl'} >
+                <Typography align={'left'} variant="h4" className={classes.title}>
+                    Events
+                </Typography>
+                <Typography align={'left'} variant="h6">
+                    Check out all the events here
+                </Typography>
+                <Divider className={classes.divider}/>
+
+            </Container>
             <Container maxWidth={"xl"}>
                 <FormControl >
                     <Input

@@ -1,5 +1,6 @@
-import {Button, Card, Container, Grid, Switch, Typography} from "@material-ui/core";
+import {Button, Card, Container, Divider, Grid, Switch, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import React from "react";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -13,7 +14,18 @@ const useStyles = makeStyles((theme) => ({
     card:{
         marginTop: theme.spacing(8),
         marginBottom: theme.spacing(8)
+    },
+    divider:{
+        marginTop:'30px',
+        marginBottom:'30px',
+
+    },
+    title:{
+        fontWeight: 600,
+        color:"#0055B7"
+
     }
+
 }));
 
 function Settings(){
@@ -22,7 +34,12 @@ function Settings(){
     return(
 
         <div>
-            <h1>Settings</h1>
+            <Container maxWidth={'xl'} >
+                <Typography align={'left'} variant="h4" className={classes.title}>
+                    Settings
+                </Typography>
+                <Divider className={classes.divider}/>
+            </Container>
             <Container>
             <Card className={classes.card}>
                 <Grid container spacing={3} className={classes.root} >

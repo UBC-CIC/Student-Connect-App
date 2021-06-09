@@ -7,6 +7,7 @@ import EmailIcon from '@material-ui/icons/Email';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import {Tag} from "../Tags/Tag";
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -28,7 +29,7 @@ function ClubCard (props){
         },
     }));
 
-    const {title,logo,description, email, website, facebook, twitter} = props
+    const {title,logo,description, email, website, facebook, twitter,categories} = props
 
     const classes = useStyles();
     return(
@@ -50,6 +51,9 @@ function ClubCard (props){
                                         <Typography gutterBottom variant={"body2"} align={'left'}>
                                             {description}
                                         </Typography>
+                                    </Grid>
+                                    <Grid item alignItems={'left'}>
+                                        <Tag categories = {categories}/>
                                     </Grid>
 
 

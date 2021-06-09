@@ -126,7 +126,7 @@ export default function Explore() {
             </Grid>
             <Divider className={classes.divider}/>
             <Typography align={'left'} variant="h4" className={classes.mostLikedTitle}>
-                Blogs
+                Student life blogs
             </Typography>
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6} >

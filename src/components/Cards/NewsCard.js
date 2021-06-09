@@ -59,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
         minHeight:"300px",
         padding: theme.spacing(2),
         margin: 'auto',
+        maxHeight:"400px"
 
     },
     paper: {
