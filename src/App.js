@@ -4,7 +4,7 @@ import EventCard from "./components/Cards/EventCard";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./views/Home";
-import Survey from "./views/Survey";
+import Survey from "./views/Survey/Survey";
 import {BrowserRouter as Router, Switch,Route,Redirect} from 'react-router-dom';
 import Clubs from './views/Clubs'
 import Events from "./views/Events";

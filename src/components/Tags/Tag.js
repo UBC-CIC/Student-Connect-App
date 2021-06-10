@@ -4,7 +4,7 @@ import {Button, withStyles} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 const StyledButton = withStyles({
     root: {
-        background: '#002145',
+        background: '#0055B7',
         borderRadius: 3,
         border: 0,
         color: 'white',

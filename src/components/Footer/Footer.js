@@ -69,14 +69,13 @@ export default function Footer() {
         <React.Fragment>
             <CssBaseline />
             {/* Footer */}
-            <Container maxWidth="md" component="footer" className={classes.footer}>
+            <Container maxWidth="lg" component="footer" className={classes.footer}>
                 <Grid container spacing={4} justify="space-evenly">
                     {footers.map((footer) => (
-                        <Grid item xs={6} sm={3} key={footer.title}>
-                            <Typography variant="h7" color="textPrimary" gutterBottom  >
+                        <Grid item xs={4} key={footer.title}>
+                            <Typography variant="h7" color="textPrimary" gutterBottom align={'center'}  >
                                 <Link href={footer.link} target = "_blank" >
                                     {footer.title}
-
                                 </Link>
                             </Typography>
                         </Grid>

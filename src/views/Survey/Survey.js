@@ -13,6 +13,8 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
+import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
+import {Academic, Campus, Career, Research} from "./SurveySections";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -22,12 +24,12 @@ const QontoConnector = withStyles({
     },
     active: {
         '& $line': {
-            borderColor: '#784af4',
+            borderColor: '#0055B7',
         },
     },
     completed: {
         '& $line': {
-            borderColor: '#784af4',
+            borderColor: '#0055B7',
         },
     },
     line: {
@@ -45,7 +47,7 @@ const useQontoStepIconStyles = makeStyles({
         alignItems: 'center',
     },
     active: {
-        color: '#784af4',
+        color: '#0055B7',
     },
     circle: {
         width: 8,
@@ -54,7 +56,7 @@ const useQontoStepIconStyles = makeStyles({
         backgroundColor: 'currentColor',
     },
     completed: {
-        color: '#784af4',
+        color: '#0055B7',
         zIndex: 1,
         fontSize: 18,
     },
@@ -86,29 +88,6 @@ QontoStepIcon.propTypes = {
     completed: PropTypes.bool,
 };
 
-const ColorlibConnector = withStyles({
-    alternativeLabel: {
-        top: 22,
-    },
-    active: {
-        '& $line': {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    completed: {
-        '& $line': {
-            backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
-        },
-    },
-    line: {
-        height: 3,
-        border: 0,
-        backgroundColor: '#eaeaf0',
-        borderRadius: 1,
-    },
-})(StepConnector);
 
 const useColorlibStepIconStyles = makeStyles({
     root: {
@@ -190,19 +169,19 @@ function getSteps() {
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return 'Which of the following academic fields are you interested in?';
+            return <Academic/>;
         case 1:
-            return 'Which of the follow careers development categories are you most interested in?';
+            return <Career/>;
         case 2:
-            return 'Want to know more about campus life (eg. Events, Student Blog)?';
+            return <Campus/>;
         default:
-            return 'Are you interested in research?';
+            return <Research/>;
     }
 }
 
 export default function Survey() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(1);
+    const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
     const handleNext = () => {
