@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -8,23 +8,28 @@ import CheckBoxOutlineBlankIcon from '@material-ui/icons/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Favorite from '@material-ui/icons/Favorite';
 import FavoriteBorder from '@material-ui/icons/FavoriteBorder';
+import Typography from "@material-ui/core/Typography";
+const useStyles = makeStyles((theme) => ({
+    label:{
+        fontSize:"14"
+    }
+
+}));
 
 const BlueCheckbox = withStyles({
     root: {
-        color: "#0055B7",
+        color: "#00A7E1",
         '&$checked': {
-            color: "#0055B7",
+            color: "#00A7E1",
         },
     },
     checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
 export default function SurveyCheckbox(props) {
+    const classes = useStyles()
     const [state, setState] = React.useState({
-        checkedA: true,
-        checkedB: true,
-        checkedF: true,
-        checkedG: true,
+        checkedA: false,
     });
 
     const handleChange = (event) => {
@@ -35,8 +40,8 @@ export default function SurveyCheckbox(props) {
     return (
         <FormGroup row>
             <FormControlLabel
-                control={<BlueCheckbox checked={state.checkedG} onChange={handleChange} name="checkedG" />}
-                label={label}
+                control={<BlueCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA"/>}
+                label={<Typography variant={"caption"}>{label}</Typography>}
             />
         </FormGroup>
     );
