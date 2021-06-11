@@ -15,7 +15,10 @@ import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
 import {Academic, Campus, Career, Research} from "./SurveySections";
-
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import DoneIcon from '@material-ui/icons/Done';
+import {ButtonGroup} from "@material-ui/core";
 const QontoConnector = withStyles({
     alternativeLabel: {
         top: 10,
@@ -153,13 +156,41 @@ const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
     },
-    button: {
-        marginRight: theme.spacing(1),
-    },
     instructions: {
         marginTop: theme.spacing(1),
         marginBottom: theme.spacing(1),
     },
+    nextButton:{
+        backgroundColor:'#0055B7',
+        color:"white",
+        padding: '10px 25px 10px 25px',
+        marginRight: theme.spacing(1)
+
+    },
+    prevButton:{
+        backgroundColor:'#0055B7',
+        color:"white",
+        padding: '10px 20px 10px 20px',
+        marginRight: theme.spacing(1)
+
+
+    },
+    goToHomeButton:{
+        backgroundColor:'#0055B7',
+        color:"white",
+        padding: '10px 20px 10px 20px',
+        marginTop: theme.spacing(5),
+        textTransform:'none'
+
+
+    },
+    title:{
+        color:"#0055B7",
+
+
+    },
+
+
 }));
 
 function getSteps() {
@@ -209,11 +240,11 @@ export default function Survey() {
             <div>
                 {activeStep === steps.length ? (
                     <div>
-                        <Typography className={classes.instructions}>
+                        <Typography variant={"h6"} className={classes.title}>
                             Thanks for filling in your preferences. If you would like to make changes, please go to settings page to modify
                         </Typography>
-                        <Button component={Link} to="/home" className={classes.button}>
-                            Go to home page!
+                        <Button component={Link} to="/home" className={classes.goToHomeButton}>
+                            Bring me to Home Page!
 
                         </Button>
                     </div>
@@ -221,17 +252,17 @@ export default function Survey() {
                     <div>
                         <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                         <div>
-                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                Back
-                            </Button>
-                            <Button
-                                variant="contained"
-                                color="primary"
-                                onClick={handleNext}
-                                className={classes.button}
-                            >
-                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                            </Button>
+                            <ButtonGroup>
+                                <Button disabled={activeStep === 0} onClick={handleBack} className={classes.prevButton} startIcon={<ArrowBackIcon/>}>
+                                </Button>
+                                <Button
+                                    onClick={handleNext}
+                                    className={classes.nextButton}
+                                >
+                                    {activeStep === steps.length - 1 ? <DoneIcon/>: <ArrowForwardIcon/>}
+                                </Button>
+
+                            </ButtonGroup>
                         </div>
                     </div>
                 )}

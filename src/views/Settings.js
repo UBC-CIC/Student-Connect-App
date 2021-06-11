@@ -1,6 +1,7 @@
-import {Button, Card, Container, Divider, Grid, Switch, Typography} from "@material-ui/core";
+import {Button, Card, Container, Divider, Grid, Modal,Fade, Switch, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
+import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,16 +21,40 @@ const useStyles = makeStyles((theme) => ({
         marginBottom:'30px',
 
     },
+
     title:{
         fontWeight: 600,
         color:"#0055B7"
 
-    }
+    },
+    switch:{
+
+    },
+    modal: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    paper: {
+        backgroundColor: theme.palette.background.paper,
+        border: '2px solid #000',
+        boxShadow: theme.shadows[5],
+        padding: theme.spacing(2, 4, 3),
+    },
+
 
 }));
 
 function Settings(){
     const classes = useStyles();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return(
 
@@ -48,15 +73,16 @@ function Settings(){
                                 General
                             </Typography>
                     </Grid>
-                    <Grid item xs={8}>
+                    <Grid item xs={10}>
                         <Typography align={'left'} >
                             Modify my preference settings to get the best out of the recommendation
                         </Typography>
 
                     </Grid>
-                    <Grid item xs={4}>
-                        <Button variant="contained" color="primary"> Modify</Button>
+                    <Grid item xs={2}>
+                        <UserPreferenceModal/>
                     </Grid>
+
                 </Grid>
 
             </Card>
@@ -71,14 +97,14 @@ function Settings(){
                         </Typography>
 
                     </Grid>
-                        <Grid item xs={8}>
+                        <Grid item xs={10}>
                             <Typography align={'left'}>
                             Email me about events and clubs that I might be interested in
                             </Typography>
                         </Grid>
 
-                        <Grid item xs={4}>
-                            <Switch/>
+                        <Grid item xs={2}>
+                            <Switch className={classes.switch}/>
                         </Grid>
                     </Grid>
 
