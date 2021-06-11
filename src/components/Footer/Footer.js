@@ -16,8 +16,10 @@ import Box from '@material-ui/core/Box';
 import { Link } from "@material-ui/core";
 
 function Copyright() {
+    const classes = useStyles();
+
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
+        <Typography variant="body2" className={classes.link} align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://cic.ubc.ca/" target = "_blank" >
                 UBC CIC
@@ -45,7 +47,11 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(6),
             paddingBottom: theme.spacing(6),
         },
+        backgroundColor:"#002145"
     },
+    link:{
+        color:"white"
+    }
 }));
 const footers = [
     {
@@ -69,21 +75,24 @@ export default function Footer() {
         <React.Fragment>
             <CssBaseline />
             {/* Footer */}
-            <Container maxWidth="lg" component="footer" className={classes.footer}>
-                <Grid container spacing={4} justify="space-evenly">
-                    {footers.map((footer) => (
-                        <Grid item xs={4} key={footer.title}>
-                            <Typography variant="h7" color="textPrimary" gutterBottom align={'center'}  >
-                                <Link href={footer.link} target = "_blank" >
-                                    {footer.title}
-                                </Link>
-                            </Typography>
-                        </Grid>
-                    ))}
-                </Grid>
-                <Box mt={5}>
-                    <Copyright />
-                </Box>
+            <Container maxWidth="xl" component="footer" className={classes.footer}>
+                <Container maxWidth="md">
+                    <Grid container spacing={4} justify="space-evenly">
+                        {footers.map((footer) => (
+                            <Grid item md={4} xs={2} key={footer.title}>
+                                <Typography variant="body1"  gutterBottom align={'center'}  >
+                                    <Link href={footer.link} className={classes.link} target = "_blank" align={'center'} >
+                                        {footer.title}
+                                    </Link>
+                                </Typography>
+                            </Grid>
+                        ))}
+                    </Grid>
+                    <Box mt={5}>
+                        <Copyright />
+                    </Box>
+
+                </Container>
             </Container>
             {/* End footer */}
         </React.Fragment>
