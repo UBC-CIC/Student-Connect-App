@@ -11,7 +11,13 @@ import CloseIcon from '@material-ui/icons/Close';
 import {ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
 import {PreferenceListItem} from "../ListItem/ListItem";
 import {academicOptions,sustainbilityOptions,campusLifeOptions,workingCareerOptions,studyingCareerOptions,researchOptions} from "../../assets/SurveyCategories";
-
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import SchoolIcon from '@material-ui/icons/School';
+import WorkIcon from '@material-ui/icons/Work';
+import EcoIcon from '@material-ui/icons/Eco';
+import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
+import FunctionsIcon from '@material-ui/icons/Functions';
+import BookIcon from "@material-ui/icons/Book";
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
@@ -72,12 +78,12 @@ export default function UserPreferenceModal(props){
                     </Toolbar>
                 </AppBar>
                 <List>
-                    <PreferenceListItem label={"Academic"} nestedItem={academicOptions}/>
-                    <PreferenceListItem label={"Campus Life"} nestedItem={campusLifeOptions}/>
-                    <PreferenceListItem label={"Graduate studies"} nestedItem={studyingCareerOptions}/>
-                    <PreferenceListItem label={"Career"} nestedItem={workingCareerOptions}/>
-                    <PreferenceListItem label={"Sustainability"} nestedItem={sustainbilityOptions}/>
-                    <PreferenceListItem label={"Research"} nestedItem={researchOptions}/>
+                    <PreferenceListItem label={"Academic"} nestedItem={academicOptions} icon={<BookIcon/>}/>
+                    <PreferenceListItem label={"Campus Life"} nestedItem={campusLifeOptions}icon={<SportsEsportsIcon/>}/>
+                    <PreferenceListItem label={"Graduate studies"} nestedItem={studyingCareerOptions} icon={<SchoolIcon/>}/>
+                    <PreferenceListItem label={"Career"} nestedItem={workingCareerOptions} icon={<WorkIcon/>}/>
+                    <PreferenceListItem label={"Sustainability"} nestedItem={sustainbilityOptions}icon={<EcoIcon/>}/>
+                    <PreferenceListItem label={"Research"} nestedItem={researchOptions} icon={<FunctionsIcon/>}/>
 
 
                 </List>

@@ -35,11 +35,14 @@ export  function PreferenceListItem(props){
         setOpenListItem(!openListItem);
     };
     const classes = useStyles();
-    const {label,nestedItem} = props
+    const {label,nestedItem,icon} = props
 
     return(
         <div>
             <ListItem button onClick={handleClickOpenListItem}>
+                <ListItemIcon style={{ color:"#0055B7"  }} >
+                    {icon}
+                </ListItemIcon>
                 <ListItemText primary={label} />
                 {openListItem ? <ExpandLess /> : <ExpandMore />}
             </ListItem>

@@ -11,6 +11,7 @@ import Container from "@material-ui/core/Container";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 import BookIcon from '@material-ui/icons/Book';
 import Grid from "@material-ui/core/Grid";
+import {clubCategories} from "../../assets/ClubCategories";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -152,23 +153,10 @@ export function ScrollableTabsButtonAuto() {
                     }}>
 
                 >
-                    <Tab label="All" {...a11yProps(0)} />
+                    {clubCategories.map((option,index)=>
+                        <Tab label={option} {...a11yProps(index)} />
 
-                    <Tab label="Academics" {...a11yProps(1)} />
-                    <Tab label="Activism" {...a11yProps(2)} />
-                    <Tab label="Biology" {...a11yProps(3)} />
-                    <Tab label="Business" {...a11yProps(4)} />
-                    <Tab label="Chemistry" {...a11yProps(5)} />
-                    <Tab label="Computer Science" {...a11yProps(6)} />
-                    <Tab label="Culture" {...a11yProps(7)} />
-                    <Tab label="Engineering" {...a11yProps(8)} />
-                    <Tab label="Physics" {...a11yProps(9)} />
-                    <Tab label="Psychology" {...a11yProps(10)} />
-                    <Tab label="Recreation" {...a11yProps(11)} />
-                    <Tab label="Religion" {...a11yProps(12)} />
-                    <Tab label="Science" {...a11yProps(13)} />
-                    <Tab label="Sports" {...a11yProps(14)} />
-                    <Tab label="Uncategorized" {...a11yProps(15)} />
+                    )}
 
                 </Tabs>
             </AppBar>
