@@ -92,7 +92,7 @@ def lambda_handler(event, context):
     """
     """
 
-    blogs_url = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=asc"
+    blogs_url = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=desc"
     blogs = []
     newly_updated_blogs = []
 

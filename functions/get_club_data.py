@@ -37,10 +37,12 @@ def parse_club_html_nodes(club_html_nodes):
         club_item["imageLink"] = image_link
 
         paragraphs = node.find_all("p")
+        club_item["description"]= ""
         if len(paragraphs) == 0:
             club_item["description"] = "None"
         else:
-            club_item["description"] = paragraphs[0].text
+            for index, paragraph in enumerate(paragraphs):
+                club_item["description"] = club_item["description"] + paragraphs[index].text + "\n"
 
         links_node = node.find("ul", {"class": "clearfix"})
         link_list = links_node.find_all("li")
@@ -96,3 +98,6 @@ def lambda_handler(event, context):
     except Exception as error:
         detailed_exception(LOGGER)
         return {"error": "incomplete"}
+
+
+

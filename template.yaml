@@ -31,14 +31,36 @@ Parameters:
     Type: String
     Default: ClubsTable
     Description: DynamoDB Table name for clubs (Ensure you do not have a table with this name already).
-  articleExpiryDays:
+  esHashTable:
     Type: String
-    Default: 30
+    Default: ESHashTable
+    Description: DynamoDB Table name that stores the hashes for all documents currently in Elasticsearch
+  newsExpiryDays:
+    Type: String
+    Default: 60
+    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+  blogExpiryDays:
+    Type: String
+    Default: 120
     Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
   eventsExpiryDays:
     Type: String
     Default: 2
     Description: Number of days after an event's end time after which the event item is automatically deleted from DynamoDB
+  kibanaUser:
+    Type: String
+    Default: kibana
+    Description: The name of the user that is used to log into kibana.
+#  KibanaUserEmail:
+#    AllowedPattern: ^[0-9a-zA-Z-/_.@]*$
+#    Default: kibana
+#    Type: String
+  ESDomainName:
+    Type: String
+    Default: 'engagement-app-data-index'
+    Description: Name for the Amazon ES domain that will be created. Domain names must start
+      with a lowercase letter and must be between 3 and 28 characters.
+      Valid characters are a-z (lowercase only), 0-9.
 
 Outputs:
   LambdaFunctionArn:
@@ -47,6 +69,20 @@ Outputs:
   eventsDDBTable:
     Value: !GetAtt eventsDDBTable.Arn
     Description: ARN of the DynamoDB table that contains the events data
+  KibanaPassword:
+    Description: The password for the kibana user
+    Value: !GetAtt ESCognito.KibanaPassword
+  KibanaUser:
+    Description: The username for the kibana user
+    Value: !GetAtt ESCognito.KibanaUser
+  KibanaUrl:
+    Description: A hyperlink to the Kibana tool
+    Value: !Sub https://${ESDomain.DomainEndpoint}/_plugin/kibana/
+  ESDomainOutputName:
+    Description: The name of the deployed Elasticsearch domain
+    Value: !Ref ESDomainName
+    Export:
+      Name: !Sub "${AWS::StackName}-ESDomainName"
 
 Resources:
   DataGrabberLambdaIAMRole:
@@ -92,10 +128,96 @@ Resources:
                   - "ssm:PutParameter"
                 Resource: "*"
 
+  esHasherLambdaIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: EsHasherPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:Query"
+                  - "dynamodb:Scan"
+                  - "dynamodb:GetItem"
+                  - "dynamodb:PutItem"
+                  - "dynamodb:UpdateItem"
+                Resource:
+                  - !Sub ${eventsDDBTable.Arn}
+                  - !Sub ${newsDDBTable.Arn}
+                  - !Sub ${blogsDDBTable.Arn}
+                  - !Sub ${clubsDDBTable.Arn}
+              - Effect: "Allow"
+                Action:
+                  - "comprehend:*"
+                Resource: "*"
+              - Effect: Allow
+                Action:
+                  - 'es:ESHttpGet'
+                  - 'es:ESHttpPost'
+                  - 'es:ESHttpPut'
+                  - 'es:ESHttpHead'
+                Resource:
+                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
+                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
+
+  esQueryLambdaIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
+      Policies:
+        - PolicyName: EsQueryPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: "Allow"
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
+              - Effect: Allow
+                Action:
+                  - 'es:ESHttpGet'
+                  - 'es:ESHttpPost'
+                  - 'es:ESHttpPut'
+                  - 'es:ESHttpHead'
+                Resource:
+                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
+                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
+
   getEventsData:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: getEventsData.lambda_handler
+      Handler: get_events_data.lambda_handler
       Description: >
         Function that grabs data from the UBCO Events page
       MemorySize: 256
@@ -110,7 +232,7 @@ Resources:
   getNewsData:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: getNewsData.lambda_handler
+      Handler: get_news_data.lambda_handler
       Description: >
         Function that grabs data from the UBCO News page
       MemorySize: 256
@@ -120,12 +242,12 @@ Resources:
       Environment:
         Variables:
           NEWS_TABLE_NAME: !Ref newsTable
-          DOCUMENT_EXPIRY_DAYS: !Ref articleExpiryDays
+          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
   getBlogData:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: getBlogData.lambda_handler
+      Handler: get_blog_data.lambda_handler
       Description: >
         Function that grabs data from the UBCO Student Blog page
       MemorySize: 256
@@ -135,21 +257,54 @@ Resources:
       Environment:
         Variables:
           BLOGS_TABLE_NAME: !Ref blogsTable
-          DOCUMENT_EXPIRY_DAYS: !Ref articleExpiryDays
+          DOCUMENT_EXPIRY_DAYS: !Ref blogExpiryDays
 
   getClubData:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: getClubData.lambda_handler
+      Handler: get_club_data.lambda_handler
       Description: >
         Function that grabs data from the UBCO Club directory
       MemorySize: 256
-      Timeout: 600
+      Timeout: 300
       CodeUri: ./functions
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
           CLUBS_TABLE_NAME: !Ref clubsTable
+
+  esHasher:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: es_hasher.lambda_handler
+      Description: >
+        This function creates hashes for documents in the events, news and blogs table to update the ES indices with new data
+      MemorySize: 1024
+      Timeout: 600
+      CodeUri: ./functions
+      Role: !GetAtt esHasherLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          EVENTS_TABLE_NAME: !Ref eventsTable
+          BLOGS_TABLE_NAME: !Ref blogsTable
+          NEWS_TABLE_NAME: !Ref newsTable
+          CLUBS_TABLE_NAME: !Ref clubsTable
+          ES_HASH_TABLE_NAME: !Ref esHashTable
+          ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
+
+  getSimilarCategoryESDocuments:
+    Type: "AWS::Serverless::Function"
+    Properties:
+      Handler: get_es_documents.lambda_handler
+      Description: >
+        Given a list of categories and index, it queries the Elasticsearch index for documents with similar categories
+      MemorySize: 256
+      Timeout: 600
+      CodeUri: ./functions
+      Role: !GetAtt esQueryLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 
   eventsQueryTime:
     Type: AWS::SSM::Parameter
@@ -241,7 +396,6 @@ Resources:
         AttributeName: "expiresOn"
         Enabled: True
 
-
   clubsDDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
@@ -261,3 +415,222 @@ Resources:
         PointInTimeRecoveryEnabled: True
       SSESpecification:
         SSEEnabled: True
+
+  esHashDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref esHashTable
+      AttributeDefinitions:
+        - AttributeName: "documentHash"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "documentHash"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+
+  ESDomain:
+    Type: AWS::Elasticsearch::Domain
+    DependsOn:
+      - ESCognito
+    Properties:
+      CognitoOptions:
+        Enabled: true
+        IdentityPoolId: !Ref CognitoIdentityPool
+        RoleArn: !GetAtt CognitoAccessForAmazonES.Arn
+        UserPoolId: !Ref CognitoUserPool
+      DomainName: !Ref ESDomainName
+      EBSOptions:
+        EBSEnabled: true
+        VolumeSize: 10
+        VolumeType: gp2
+      AdvancedOptions:
+        indices.fielddata.cache.size: ''
+        rest.action.multi.allow_explicit_index: 'true'
+      ElasticsearchClusterConfig:
+        DedicatedMasterEnabled: false
+        InstanceCount: 1
+        InstanceType: t2.small.elasticsearch
+        ZoneAwarenessEnabled: false
+      ElasticsearchVersion: '7.10'
+
+
+  # Cognito Authentication for Kibana Resources below     #
+
+  ########################################
+  # Cognito identity pool                #
+  ########################################
+  CognitoUnauthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                "cognito-identity.amazonaws.com:aud": !Ref CognitoIdentityPool
+  CognitoAuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                "cognito-identity.amazonaws.com:aud": !Ref CognitoIdentityPool
+  CognitoIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders:
+        - ClientId: !Ref CognitoApplicationClient
+          ProviderName: !Sub cognito-idp.${AWS::Region}.amazonaws.com/${CognitoUserPool}
+          ServerSideTokenCheck: false
+  CognitoIdentityPoolRole:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId: !Ref CognitoIdentityPool
+      Roles:
+        unauthenticated: !GetAtt CognitoUnauthRole.Arn
+        authenticated: !GetAtt CognitoAuthRole.Arn
+
+  #########################################################
+  # The IAM role below gives ES service access            #
+  # to Amazon Cognito                                     #
+  # and hence the user in user pool for authentication    #
+  #########################################################
+
+  CognitoAccessForAmazonES:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: es.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonESCognitoAccess
+
+  ############################################################################################
+  # The below gives the role used by authenticated users from the cognito user pool          #
+  # to access the ES domain                                                                  #
+  ############################################################################################
+  CognitoAuthKibanaPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - es:ESHttp*
+            Resource: !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomainName}/*'
+      Description: give role used by authenticated users from the cognito user pool access to the ES domain
+      Roles:
+        - !Ref CognitoAuthRole
+
+  ########################################
+  # Cognito User pool                    #
+  ########################################
+
+  CognitoUserPool:
+    Type: "AWS::Cognito::UserPool"
+    Properties:
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+        InviteMessageTemplate:
+          EmailMessage: 'Welcome to the Student Engagement App. Username: {username} Pwd: {####}'
+          EmailSubject: Welcome to the Student Engagement App.
+          SMSMessage: 'Welcome to the Student Engagement App. Username: {username} Pwd: {####}'
+        UnusedAccountValidityDays: 14
+      AliasAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      EmailVerificationMessage: 'Welcome to the Student Engagement App. Here is your confirmation code: {####}'
+      EmailVerificationSubject: The Student Engagement App Email Confirmation Code
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+          RequireUppercase: true
+      UserPoolName: !Sub '${AWS::StackName}-kibana-users'
+
+  CognitoApplicationClient:
+    Type: "AWS::Cognito::UserPoolClient"
+    Properties:
+      ClientName: !Sub '${AWS::StackName}-appclient'
+      GenerateSecret: false
+      RefreshTokenValidity: 2
+      UserPoolId: !Ref CognitoUserPool
+
+  CognitoUserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain: !Sub 'kibana-${AWS::StackName}-${AWS::Region}-${AWS::AccountId}'
+      UserPoolId: !Ref CognitoUserPool
+
+#  CognitoUserPoolUser:
+#    Type: "AWS::Cognito::UserPoolUser"
+#    Properties:
+#      Username: !Ref KibanaUserEmail
+#      UserPoolId: !Ref CognitoUserPool
+#      MessageAction: "SUPPRESS"
+#      UserAttributes:
+#        - Name: "email_verified"
+#          Value: "true"
+#        - Name: "email"
+#          Value: !Ref KibanaUserEmail
+
+  ESCognito:
+    Type: Custom::ESName
+    DependsOn:
+      - setupESCognitoCustomResourceLambda
+    Properties:
+      ServiceToken: !GetAtt setupESCognitoCustomResourceLambda.Arn
+      StackName: !Ref AWS::StackName
+      EsCluster: !Ref ESDomainName
+      UserPoolId: !Ref CognitoUserPool
+      kibanaUser: !Ref kibanaUser
+
+  ########################################################
+  # A lambda-based custom resource is used to configure Cognito User Pool. It adds
+  # a user to the Cognito User Pool
+  ########################################################
+
+  setupESCognitoCustomResourceLambda:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: cognito_user_creator.configure_cognito_lambda_handler
+      Description: ''
+      MemorySize: 512
+      Timeout: 240
+      Policies:
+        Statement:
+          - Effect: Allow
+            Action:
+              - 'cognito-idp:AdminCreateUser'
+              - 'cognito-idp:CreateUserPoolDomain'
+              - 'cognito-idp:DeleteUserPoolDomain'
+            Resource:
+              - !GetAtt CognitoUserPool.Arn
+      CodeUri: ./functions

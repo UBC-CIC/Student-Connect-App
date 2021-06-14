@@ -1,3 +1,4 @@
+import hashlib
 import time
 import typing
 
@@ -86,12 +87,99 @@ def get_all_clubs(url):
     return club_result
 
 
-with open("../parsed_data/newResult.json", "w") as file:
-    time1 = time.time()
-    final_clubs = get_all_clubs("https://www.ubcsuo.ca/club-directory-listing")
-    print(len(final_clubs))
+def event_parser(event_json):
+    """
+    Parses individual event items from the REST API Response by keeping specific information
+    and transforming some
+
+    :param event_json: Individual JSON item to format
+    :return: Parsed JSON formatted Event item dictionary
+    """
+    venue = event_json["venue"]
+    if venue.get("address") == "Online":
+        event_location = {"venue": "Online"}
+    else:
+        event_location = {
+            "venue": venue.get("venue", "Null"),
+            "address": venue.get("address", "Null"),
+            "city": venue.get("city", "Null"),
+            "country": venue.get("country", "Null"),
+            "province": venue.get("province", "Null"),
+            "zip": venue.get("zip", "Null"),
+        }
+    parsed_event = {
+        "eventId": str(event_json.get("id", "Null")),
+        "status": event_json.get("status", "Null"),
+        "dateModified": event_json.get("modified", "Null"),
+        "link": event_json.get("url", "Null"),
+        "title": event_json.get("title", "Null"),
+        "description": event_json.get("description", "Null"),
+        "excerpt": event_json.get("excerpt", "Null"),
+        "allDay": event_json.get("all_day", "Null"),
+        "startDate": event_json.get("start_date", "Null"),
+        "endDate": event_json.get("end_date", "Null"),
+        "cost": event_json.get("cost", "Null"),
+        "categories": [category["name"] for category in event_json.get("categories", "Null")],
+        "eventLocation": event_location,
+    }
+
+    # Check if event has an image included or not
+    if event_json.get("image") is False:
+        parsed_event["fullImage"] = False
+        parsed_event["thumbnailImage"] = False
+    else:
+        parsed_event["fullImage"] = event_json["image"]["url"],
+        parsed_event["thumbnailImage"] = event_json["image"]["sizes"]["thumbnail"]["url"],
+
+    return parsed_event
+
+
+def parse_events(events_response):
+    """
+    Loops through the list of events in the REST API response and parses them
+
+    :param events_response:
+    :return: JSON formatted list of event items
+    """
+    events = []
+    event_list = events_response["events"]
+    for event in event_list:
+        events.append(event_parser(event))
+    return events
+
+
+def get_all_events(url):
+    """
+    Returns a list of all parsed events from the events page REST API, by looping through all result pages
+
+    :param url: The events page REST API url
+    :return: JSON formatted list of parsed events
+    """
+    events = []
+    json_response = requests.get(url).json()
+    events.extend(parse_events(json_response))
+    while json_response.get("next_rest_url") is not None:
+        next_page = json_response["next_rest_url"]
+        json_response = requests.get(next_page).json()
+        events.extend(parse_events(json_response))
+    return events
+
+with open("../parsed_data/AllUBCOClubs.json", "r") as file:
+
+    items = json.load(file)
+    itemList = []
+    itemSet = set()
+    for item in items:
+        itemList.append(hashlib.md5(str(item).encode('utf-8')).hexdigest())
+        itemSet.add(hashlib.md5(str(item).encode('utf-8')).hexdigest())
+
+    print(len(itemList))
+    print(len(itemSet))
+
+    # events = get_all_events("https://events.ok.ubc.ca/wp-json/tribe/events/v1/events")
+    # file.write(json.dumps(events, indent=4))
+
     # for index, club_item in enumerate(clubs):
     #     club_item["clubId"] = str(index)
     # file.write(json.dumps(clubs, indent=4))
-    print(f"Time taken to save {len(final_clubs)} clubs: {time.time() - time1}")
     # file.write(str(requests.get("https://events.ok.ubc.ca/wp-json/tribe/events/v1/events").json()))
