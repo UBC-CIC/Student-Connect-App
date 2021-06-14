@@ -2,7 +2,6 @@ import {Button, Card, Container, Divider, Grid, Modal,Fade, Switch, Typography} 
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
-
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: theme.spacing(8),

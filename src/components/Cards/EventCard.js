@@ -17,11 +17,14 @@ import {Tag} from '../Tags/Tag'
 
 const useStyles = makeStyles((theme) => ({
     root: {
-        height: '450px',
+        height: '100%',
+        boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
+        '&:hover':{
+            boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)"
+        }
+
     },
-    homeCardRoot:{
-        maxWidth: 345,
-    },
+
     iconArea:{
         height: 35,
         alignItems:"left",
@@ -36,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
         height: '280px',
     },
     tags:{
-        display:'flex', justiyContent:'space-between', flexDirection:'column'    }
+        display:'flex', justiyContent:'space-between', flexDirection:'column'    },
+
 }));
 
 
@@ -55,7 +59,6 @@ export function EventCard (props){
                     component="img"
                     height="140"
                     image={photo}
-
                     title="Event image"
                 />
                 <CardContent>
@@ -99,7 +102,7 @@ export function HomeEventCard (props){
     const classes = useStyles();
 
     return (
-        <Card className={classes.homeCardRoot} >
+        <Card className={classes.root} >
             <CardActions className={classes.tags} >
                 <Tag categories={categories}/>
             </CardActions>

@@ -56,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     indicator:{
         backgroundColor:"#6EC4E8"
 
+    },
+    grid:{
+        display: 'flex'
     }
 }));
 
@@ -87,8 +90,8 @@ export default function NewsBlogsTab() {
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
-                    <Grid container spacing={3}>
-                        <Grid item xs={12} sm={6} >
+                    <Grid container spacing={3} alignItems="stretch">
+                        <Grid item xs={12} sm={6} className={classes.grid} >
                             <BigNewsCard title={'Keeping up with the charge to develop better batteries\n\n'}
                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/03/Jian-Liu-770.jpg'}
                                          link={'https://news.ok.ubc.ca/2021/03/16/keeping-up-with-the-charge-to-develop-better-batteries/'}
@@ -97,7 +100,7 @@ export default function NewsBlogsTab() {
                             />
 
                         </Grid>
-                        <Grid item xs={12} sm={6} >
+                        <Grid item xs={12} sm={6} className={classes.grid} >
                             <BigNewsCard title={'UBCO researcher uses geology to help astronomers find habitable planets\n'}
                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/04/earth-770.jpg'}
                                          link={'https://news.ok.ubc.ca/2021/05/04/ubco-researcher-uses-geology-to-help-astronomers-find-habitable-planets/'}
@@ -108,8 +111,8 @@ export default function NewsBlogsTab() {
                     </Grid>
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6} >
+                <Grid container spacing={3} alignItems="stretch">
+                    <Grid item xs={12} sm={6} className={classes.grid} >
                         <BigNewsCard title={'5 ways to improve your exam prep'}
                                      photo={'https://students.ok.ubc.ca/wp-content/uploads/sites/90/2020/10/exam-prep-blog-header.jpg'}
                                      link={'https://students.ok.ubc.ca/2020/12/02/5-ways-to-improve-your-exam-prep/'}
@@ -117,7 +120,7 @@ export default function NewsBlogsTab() {
                                      excerpts={"Don’t stay up all night cramming for an exam. Start early with these tips to improve your exam prep."}/>
 
                     </Grid>
-                    <Grid item xs={12} sm={6} >
+                    <Grid item xs={12} sm={6} className={classes.grid}>
                         <BigNewsCard title={'What I wish I’d known when I transferred to UBCO'}
                                      photo={'https://students.ok.ubc.ca/wp-content/uploads/sites/90/2021/04/blog-header.jpg'}
                                      link={'https://students.ok.ubc.ca/2021/04/16/what-i-wish-id-known-when-i-transferred-to-ubco/'}

@@ -4,13 +4,13 @@ import {Button, withStyles} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 const StyledButton = withStyles({
     root: {
-        background: '#0055B7',
+        background: '#40B4E5',
         borderRadius: 3,
         border: 0,
         color: 'white',
         height: 20,
         padding: '0 15px',
-        marginLeft:'5px'
+        marginRight:'5px'
     },
     label: {
         textTransform: 'capitalize',

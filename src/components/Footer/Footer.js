@@ -47,7 +47,10 @@ const useStyles = makeStyles((theme) => ({
             paddingTop: theme.spacing(6),
             paddingBottom: theme.spacing(6),
         },
-        backgroundColor:"#002145"
+        backgroundColor:"#002145",
+        bottom:"0",
+        width:"100%",
+
     },
     link:{
         color:"white"

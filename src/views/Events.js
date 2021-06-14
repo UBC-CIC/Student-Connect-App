@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
     },
     sortDropDown:{
         textTransform:'none',
+    },
+    grid:{
+        display: 'flex'
     }
 
 
@@ -142,34 +145,34 @@ function Events(){
             <Container>
 
             <Grid container spacing={4} className={classes.cardGrid}>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                     <EventCard categories={['Category','Category']} title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
                                photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
                  location={'Vancouver, BC'} date={'2021/05/29'} />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                         <EventCard title={"Cover Letter Workshop"} description={"Learn how to create and use your cover letter as a marketing tool to introduce yourself to employers."}
                                    photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/05/CoverLetter-FBTwitter-1.jpg'}
                                    location={'Online'} date={'2021-06-07 12:00:00'} categories={['Workshop']} link={'https://events.ok.ubc.ca/event/cover-letter-workshop/'}/>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                         <EventCard categories={['Health']} title={"Okanagan Clinical Neurosciences Grand Rounds"}
                                    description={"The UBC Centre for Chronic Disease Prevention and Management (CCDPM) is pleased to present the Okanagan Clinical Neurosciences Grand Rounds in partnership with Interior Health."}
                                    photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/02/Grand-Round-Series.png'}
                                    location={'Online'} date={'2021-06-04 08:00:00'}
                         link={'https://events.ok.ubc.ca/event/okanagan-clinical-neurosciences-grand-rounds-4/'}/>
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                         <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
                                    photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
                                    location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']} />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                         <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
                                    photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
                                    location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']} />
                     </Grid>
-                    <Grid item xs={12} sm={6} md={4}>
+                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
                         <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
                                    photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
                                    location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']}/>

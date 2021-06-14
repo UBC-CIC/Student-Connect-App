@@ -18,6 +18,10 @@ import EcoIcon from '@material-ui/icons/Eco';
 import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
 import FunctionsIcon from '@material-ui/icons/Functions';
 import BookIcon from "@material-ui/icons/Book";
+import EditIcon from '@material-ui/icons/Edit';
+import SaveAltIcon from '@material-ui/icons/SaveAlt';
+
+
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
@@ -60,7 +64,7 @@ export default function UserPreferenceModal(props){
 
     return(
         <div>
-            <Button className={classes.modifyButton} onClick={handleClickOpen}>
+            <Button className={classes.modifyButton} onClick={handleClickOpen} startIcon={<EditIcon/>}>
                 Modify
             </Button>
             <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
@@ -72,7 +76,7 @@ export default function UserPreferenceModal(props){
                         <Typography variant="h6" className={classes.title}>
                             Change preferences
                         </Typography>
-                        <Button autoFocus color="inherit" onClick={handleClose}>
+                        <Button autoFocus color="inherit" onClick={handleClose} startIcon={<SaveAltIcon/>}>
                             Save
                         </Button>
                     </Toolbar>

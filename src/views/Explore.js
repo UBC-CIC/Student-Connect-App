@@ -52,14 +52,9 @@ const useStyles = makeStyles((theme) => ({
         marginBottom:'30px',
 
     },
-    forYouTitle:{
-        fontWeight: 600,
-        color:"#00A7E1"
-    },
     mostLikedTitle:{
         fontWeight: 600,
-        color:"#ec407a"
-
+        color:"#0055B7"
     }
 
 }));

@@ -15,7 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Button, Container} from "@material-ui/core";
+import {Button, Container, MenuItem} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import EventIcon from '@material-ui/icons/Event';
@@ -25,6 +25,7 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ExploreIcon from '@material-ui/icons/Explore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
+import { useLocation } from 'react-router-dom'
 
 const drawerWidth = 240;
 
@@ -169,41 +170,41 @@ export default function MiniDrawer() {
                 </div>
                 <Divider />
                 <List>
-                    <ListItem component={Link} to="/settings">
+                    <MenuItem component={Link} to="/settings">
                         <ListItemIcon>{<PersonIcon />}</ListItemIcon>
                         <ListItemText primary={"Profile"} />
-                    </ListItem>
+                    </MenuItem>
 
 
                 </List>
                 <Divider />
                 <List>
-                    <ListItem component={Link} to="/home">
+                    <MenuItem component={Link} to="/home" >
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
                         <ListItemText primary={"Home"} />
-                    </ListItem>
-                    <ListItem component={Link} to="/explore">
+                    </MenuItem>
+                    <MenuItem component={Link} to="/explore">
                         <ListItemIcon>{<ExploreIcon />}</ListItemIcon>
                         <ListItemText primary={"Explore"} />
-                    </ListItem>
+                    </MenuItem>
 
-                    <ListItem component={Link} to="/clubs">
+                    <MenuItem component={Link} to="/clubs">
                         <ListItemIcon>{<GroupIcon />}</ListItemIcon>
                         <ListItemText primary={"Clubs"} />
-                    </ListItem>
-                    <ListItem component={Link} to="/events">
+                    </MenuItem>
+                    <MenuItem component={Link} to="/events">
                         <ListItemIcon>{<EventIcon />}</ListItemIcon>
                         <ListItemText primary={"Events"} />
-                    </ListItem>
+                    </MenuItem>
 
-                    <ListItem component={Link} to="/news">
+                    <MenuItem component={Link} to="/news">
                         <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} />
-                    </ListItem>
-                    <ListItem component={Link} to="/survey">
+                    </MenuItem>
+                    <MenuItem component={Link} to="/survey">
                         <ListItemIcon>{<HelpIcon />}</ListItemIcon>
                         <ListItemText primary={"Survey"} />
-                    </ListItem>
+                    </MenuItem>
 
                 </List>
             </Drawer>

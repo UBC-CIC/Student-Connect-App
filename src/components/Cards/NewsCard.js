@@ -8,15 +8,16 @@ import LanguageIcon from "@material-ui/icons/Language";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Tag} from "../Tags/Tag";
-
+import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import Button from "@material-ui/core/Button";
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 export function BigNewsCard(props){
     const classes = useStyles();
     const {title, photo, link, date,categories, excerpts} = props
 
     return(
-    <Card>
-        <CardActionArea href={link} target = "_blank">
-                <Paper className={classes.bigCard}>
+    <Card className={classes.bigCard}>
                     <Grid container spacing={2}>
                         <Grid item>
                             <img className={classes.img} alt="complex" src={photo} />
@@ -33,38 +34,45 @@ export function BigNewsCard(props){
 
                                 </Grid>
                                 <Grid item>
+
                                     <Typography variant="body2"  align={'left'} >
                                         {date}
                                     </Typography>
                                     <Typography variant="body2"  align={'left'} >
                                         <Tag categories={categories}/>
                                     </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
+                                        Read more
+                                    </Button>
+                                    <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
+                                        Like
+                                    </Button>
 
                                 </Grid>
 
                             </Grid>
                         </Grid>
                     </Grid>
-                </Paper>
-        </CardActionArea>
     </Card>
     )
 
 }
 const useStyles = makeStyles((theme) => ({
     root: {
-        flexGrow: 1,
-    },
-    bigCard:{
-        minHeight:"300px",
-        padding: theme.spacing(2),
-        margin: 'auto',
-        maxHeight:"400px"
 
     },
-    paper: {
+    bigCard:{
         padding: theme.spacing(2),
-        margin: 'auto',
+
+        height: "100%",
+        margin:'none',
+        boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
+        '&:hover':{
+            boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)"
+        }
+
     },
     img: {
         margin: 'auto',
@@ -74,6 +82,15 @@ const useStyles = makeStyles((theme) => ({
         height: 128,
 
     },
+    learnMoreButton:{
+        textTransform:"none",
+        backgroundColor:"#0055B7",
+        color:"white",
+        fontSize:'11px',
+        borderRadius:"3",
+        marginRight:theme.spacing(1)
+
+    }
 }));
 
 export function HomePageNewsCard(props){
@@ -81,10 +98,8 @@ export function HomePageNewsCard(props){
     const classes = useStyles();
     const {title, photo, link, date,categories} = props
     return(
-        <Card>
-            <CardActionArea href={link} target = "_blank">
+        <Card className={classes.bigCard}>
             <div className={classes.root} >
-                <Paper className={classes.paper}>
                     <Grid container spacing={2}>
                         <Grid item>
                             <img className={classes.img} alt="img" src={photo} />
@@ -105,14 +120,20 @@ export function HomePageNewsCard(props){
                                     </Typography>
 
                                 </Grid>
+                                <Grid item>
+                                    <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
+                                        Read more
+                                    </Button>
+                                    <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
+                                        Like
+                                    </Button>
+
+                                </Grid>
 
                             </Grid>
                         </Grid>
                     </Grid>
-                </Paper>
-
             </div>
-            </CardActionArea>
         </Card>
     )
 
