@@ -20,7 +20,7 @@ import {HomeEventCard} from "../components/Cards/EventCard";
 import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item, ClubsCarousel, BlogsCarousel} from '../components/Carousel/carousel'
+import {NewsCarousel, Item, ClubsCarousel, BlogsCarousel} from '../components/Carousel/Carousel'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

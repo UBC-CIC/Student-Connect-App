@@ -20,7 +20,7 @@ import {HomeEventCard} from "../components/Cards/EventCard";
 import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item, ClubsCarousel} from '../components/Carousel/carousel'
+import {NewsCarousel, Item, ClubsCarousel} from '../components/Carousel/Carousel'
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import ClubCard from "../components/Cards/ClubCard";
@@ -69,6 +69,7 @@ export default function Explore() {
 
     return (
         <React.Fragment>
+            <Container maxWidth={'xl'} >
 
             <Typography align={'left'} variant="h4" className={classes.mostLikedTitle}>
                 Trending
@@ -140,7 +141,7 @@ export default function Explore() {
                                  excerpts="A transfer student shares her experience coming to UBCO, and some dos and don’ts to help you ease your transition to a new campus."/>
                 </Grid>
             </Grid>
-
+            </Container>
 
 
         </React.Fragment>

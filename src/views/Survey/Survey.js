@@ -19,6 +19,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
 import {ButtonGroup} from "@material-ui/core";
+import Container from "@material-ui/core/Container";
 const QontoConnector = withStyles({
     alternativeLabel: {
         top: 10,
@@ -228,6 +229,8 @@ export default function Survey() {
     };
 
     return (
+        <Container maxWidth={'xl'} >
+
         <div className={classes.root}>
 
             <Stepper alternativeLabel activeStep={activeStep} connector={<QontoConnector />}>
@@ -268,5 +271,6 @@ export default function Survey() {
                 )}
             </div>
         </div>
+        </Container>
     );
 }

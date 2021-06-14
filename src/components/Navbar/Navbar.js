@@ -77,6 +77,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('sm')]: {
             width: theme.spacing(9) + 1,
         },
+        [theme.breakpoints.down('sm')]: {
+            width: 0,
+            display:'none',
+        },
+
     },
     toolbar: {
         display: 'flex',
@@ -98,8 +103,14 @@ const useStyles = makeStyles((theme) => ({
 
     },
     appName:{
-        minWidth:'250px',
-    }
+        minWidth:"50%"
+    },
+    drawerPaperClose: {
+    },
+    nested: {
+        paddingLeft: theme.spacing.unit * 4,
+    },
+
 }));
 
 export default function MiniDrawer() {
@@ -138,7 +149,7 @@ export default function MiniDrawer() {
                             <MenuIcon />
                         </IconButton>
                         <Typography className={classes.appName} variant="h6">
-                            Student Engagement App
+                            Student App
                         </Typography>
 
                     <Container>

@@ -20,7 +20,7 @@ export function ClubsCarousel(props){
     ]
     return (
 
-        <Carousel>
+        <Carousel animation={'slide'}>
             {
                 clubs.map( (item, i) => <ClubsItem key={i} item={item} /> )
             }
@@ -53,7 +53,7 @@ export function BlogsCarousel(props)
         ]
         return (
 
-            <Carousel>
+            <Carousel animation={'slide'}>
                 {
                     items.map( (item, i) => <NewsItem key={i} item={item} /> )
                 }
@@ -84,7 +84,7 @@ export function NewsCarousel(props)
         ]
     return (
 
-        <Carousel>
+        <Carousel animation={'slide'} >
             {
                 items.map( (item, i) => <NewsItem key={i} item={item} /> )
             }

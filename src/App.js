@@ -15,7 +15,9 @@ import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 const useStyles = makeStyles((theme) => ({
   container:{
-    paddingLeft: theme.spacing(10),
+    paddingLeft: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+
   },
   app:{
     backgroundColor:"#fafafa"
