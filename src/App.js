@@ -15,7 +15,12 @@ import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 const useStyles = makeStyles((theme) => ({
   container:{
-    paddingLeft: theme.spacing(1),
+    [theme.breakpoints.down('sm')]: {
+      paddingLeft: theme.spacing(1),
+      paddingRight: theme.spacing(1),
+    },
+
+    paddingLeft: theme.spacing(10),
     paddingRight: theme.spacing(1),
 
   },
