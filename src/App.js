@@ -12,6 +12,9 @@ import {Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 import connect from "react-redux/lib/connect/connect";
+import AWS from 'aws-sdk';
+import {useEffect} from "react";
+
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -29,7 +32,38 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+const main = async () => {
+
+  // You shouldn't hard-code your keys in production!
+  // http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html
+  AWS.config.update({
+    accessKeyId: process.env.REACT_APP_accessKeyId,
+    secretAccessKey: process.env.REACT_APP_secretAccessKey,
+
+    sessionToken:process.env.REACT_APP_sessionToken,
+    region: 'ca-central-1',
+  });
+
+  const params = {
+    FunctionName: process.env.REACT_APP_FunctionName,
+    Payload:JSON.stringify({
+      'index': "news",
+      'categories': "Health",
+    }),
+  };
+
+  const result = await (new AWS.Lambda().invoke(params).promise());
+
+  console.log('Success!');
+  console.log(JSON.parse(result.Payload));
+};
+
+main().catch(error => console.error(error));
+
 function App() {
+  useEffect(() => {
+    main()
+  });
   const classes = useStyles();
 
   return (

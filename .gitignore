@@ -3,6 +3,7 @@ dist/
 node_modules/
 awsconfiguration.json
 .secret-*
+.env
 
 #amplify
 amplify/\#current-cloud-backend
