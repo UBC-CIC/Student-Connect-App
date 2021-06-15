@@ -1,6 +1,4 @@
-import logo from './logo.svg';
 import './App.css';
-import EventCard from "./components/Cards/EventCard";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./views/Home";
@@ -13,6 +11,7 @@ import News from './views/News'
 import {Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
+import connect from "react-redux/lib/connect/connect";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -56,5 +55,14 @@ function App() {
     </div>
   );
 }
-
-export default App;
+export default App
+// const mapStateToProps = (state) => {
+//   return {
+//     isLoading: state.applicationStatus.startupLoading,
+//   };
+// };
+//
+// const mapDispatchToProps = {
+// };
+//
+// export default (connect(mapStateToProps, mapDispatchToProps)(App));

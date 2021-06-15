@@ -8,9 +8,9 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import CloseIcon from '@material-ui/icons/Close';
-import {ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
+import {CalendarToday, ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
 import {PreferenceListItem} from "../ListItem/ListItem";
-import {academicOptions,sustainbilityOptions,campusLifeOptions,workingCareerOptions,studyingCareerOptions,researchOptions} from "../../assets/SurveyCategories";
+import {newsBlogsClubsOptions,academicOptions,eventsOptions,workingCareerOptions,studyingCareerOptions,researchOptions} from "../../assets/SurveyCategories";
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import SchoolIcon from '@material-ui/icons/School';
 import WorkIcon from '@material-ui/icons/Work';
@@ -20,7 +20,8 @@ import FunctionsIcon from '@material-ui/icons/Functions';
 import BookIcon from "@material-ui/icons/Book";
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
-
+import RssFeedIcon from "@material-ui/icons/RssFeed";
+import EventIcon from '@material-ui/icons/Event';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -82,12 +83,9 @@ export default function UserPreferenceModal(props){
                     </Toolbar>
                 </AppBar>
                 <List>
+                    <PreferenceListItem label={"News, Blogs and Clubs"} nestedItem={newsBlogsClubsOptions} icon={<RssFeedIcon/>}/>
+                    <PreferenceListItem label={"Events"} nestedItem={eventsOptions} icon={<EventIcon/>}/>
                     <PreferenceListItem label={"Academic"} nestedItem={academicOptions} icon={<BookIcon/>}/>
-                    <PreferenceListItem label={"Campus Life"} nestedItem={campusLifeOptions}icon={<SportsEsportsIcon/>}/>
-                    <PreferenceListItem label={"Graduate studies"} nestedItem={studyingCareerOptions} icon={<SchoolIcon/>}/>
-                    <PreferenceListItem label={"Career"} nestedItem={workingCareerOptions} icon={<WorkIcon/>}/>
-                    <PreferenceListItem label={"Sustainability"} nestedItem={sustainbilityOptions}icon={<EcoIcon/>}/>
-                    <PreferenceListItem label={"Research"} nestedItem={researchOptions} icon={<FunctionsIcon/>}/>
 
 
                 </List>

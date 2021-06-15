@@ -4,7 +4,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {academicOptions} from "../../assets/SurveyCategories";
+import {newsBlogsClubsOptions} from "../../assets/SurveyCategories";
 import SurveyCheckbox from "../Checkboxes/Checkbox";
 const useStyles = makeStyles((theme) => ({
     title: {

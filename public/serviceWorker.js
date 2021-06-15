@@ -4,7 +4,6 @@ const urlsToCache = [
 '/index.html',
 ];
 self.addEventListener('install', function(event) {
-// Perform install steps
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then(function(cache) {
@@ -36,11 +35,12 @@ self.addEventListener('install', function(event) {
 });
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('mapCache').then(function(cache) {
+        caches.open('AppCahe').then(function(cache) {
             return cache.addAll(
                 [
                     'src/App.css',
                     'src/App.js',
+                    'src/views/Home.js'
                 ]
             );
         })

@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
-import {Academic, Campus, Career, Research} from "./SurveySections";
+import {NewsBlogsClubs, Academic, Events} from "./SurveySections";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
@@ -195,19 +195,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Academic Fields', 'Career Development', 'Campus Life', 'Research'];
+    return ['News, Blogs, Clubs', 'Academic', 'Events'];
 }
 
 function getStepContent(step) {
     switch (step) {
         case 0:
-            return <Academic/>;
+            return <NewsBlogsClubs/>;
         case 1:
-            return <Career/>;
-        case 2:
-            return <Campus/>;
+            return <Academic/>;
         default:
-            return <Research/>;
+            return <Events/>;
     }
 }
 
