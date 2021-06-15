@@ -31,7 +31,7 @@ def event_parser(event_json):
     :param event_json: Individual JSON item to format
     :return: Parsed JSON formatted Event item dictionary
     """
-    venue = event_json["venue"]
+    venue = event_json.get("venue")
     if venue.get("address") == "Online":
         event_location = {"venue": "Online"}
     else:
@@ -64,8 +64,11 @@ def event_parser(event_json):
         parsed_event["fullImage"] = False
         parsed_event["thumbnailImage"] = False
     else:
-        parsed_event["fullImage"] = event_json["image"]["url"],
-        parsed_event["thumbnailImage"] = event_json["image"]["sizes"]["thumbnail"]["url"],
+        parsed_event["fullImage"] = event_json.get("image", "Null").get("url", "Null"),
+        parsed_event["thumbnailImage"] = event_json.get("image", "Null") \
+                                                   .get("sizes", "Null") \
+                                                   .get("thumbnail", "Null") \
+                                                   .get("url", "Null")
 
     return parsed_event
 

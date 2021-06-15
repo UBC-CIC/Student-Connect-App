@@ -167,14 +167,12 @@ def get_all_events(url):
 with open("../parsed_data/AllUBCOClubs.json", "r") as file:
 
     items = json.load(file)
-    itemList = []
-    itemSet = set()
+    categorySet = set()
     for item in items:
-        itemList.append(hashlib.md5(str(item).encode('utf-8')).hexdigest())
-        itemSet.add(hashlib.md5(str(item).encode('utf-8')).hexdigest())
+        for category in item.get("categories"):
+            categorySet.add(category)
 
-    print(len(itemList))
-    print(len(itemSet))
+    print(categorySet)
 
     # events = get_all_events("https://events.ok.ubc.ca/wp-json/tribe/events/v1/events")
     # file.write(json.dumps(events, indent=4))

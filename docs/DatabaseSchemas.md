@@ -81,7 +81,7 @@ For Example,
     List of strings representing the categories the blog falls under
   ],
   "excerpt": Small description about the blog post, includes HTML Tags,
-  "mediaImages": {    // Contains thumnbail images if the blog post has a cover image attached
+  "mediaImages": {    // Contains thumnbail images if the blog post has a cover image attached. Empty array if no image attached
     "fullImage": Link to full-sized image,
     "mediumImage": Link the medium size crop of the cover image, medium as defined by Wordpress
   }

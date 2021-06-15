@@ -33,13 +33,13 @@ def news_parser(news_json):
     :return: JSON formatted item for DynamoDB storage
     """
     parsed_news = {
-        "newsId": str(news_json["post-id"]),
-        "title": news_json["title"],
-        "link": news_json["id"],
+        "newsId": str(news_json.get("post-id", "Null")),
+        "title": news_json.get("title", "Null"),
+        "link": news_json.get("id", "Null"),
+        "summary": news_json.get("summary", "Null"),
+        "mediaThumbnail": news_json.get("media_thumbnail", []),
         "categories": [category["term"] for category in news_json["tags"]],
-        "summary": news_json["summary"],
-        "dateModified": str(datetime.strptime(news_json["published"].split(",")[1][1:-6], "%d %b %Y %H:%M:%S")),
-        "mediaThumbnail": news_json["media_thumbnail"]
+        "dateModified": str(datetime.strptime(news_json["published"].split(",")[1][1:-6], "%d %b %Y %H:%M:%S"))
     }
     return parsed_news
 

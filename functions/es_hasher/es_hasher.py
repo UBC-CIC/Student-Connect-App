@@ -1,17 +1,13 @@
 import logging
-from datetime import datetime
 import boto3
 import os
-import json
 import certifi
 import hashlib
 from aws_requests_auth.aws_auth import AWSRequestsAuth
 from elasticsearch import Elasticsearch, RequestsHttpConnection
-
-
-# Log level
 from common_lib import detailed_exception
 
+# Log level
 logging.basicConfig()
 LOGGER = logging.getLogger()
 if os.environ["DEBUG_MODE"] == "true":
@@ -81,11 +77,11 @@ def lambda_handler(event, context):
         # Update ESHashTable and Elasticsearch with respect to events, news and blogs
         for table_name in ["Events", "News", "Blogs"]:
             # Get all items for the specific table_name
-            table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
-            response = table.scan(ConsistentRead=True)
+            item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
+            response = item_table.scan(ConsistentRead=True)
             table_items = response["Items"]
             while response.get("LastEvaluatedKey") in response:
-                response = table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
+                response = item_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
                 table_items.extend(response["Items"])
 
             # Hash all items in the item table
@@ -94,16 +90,19 @@ def lambda_handler(event, context):
                 item_hash = hashlib.md5(str(item).encode("utf-8")).hexdigest()
                 item_hash_list.append(item_hash)
 
-            # Remove old items from hash table and Elasticsearch
             for es_item_hash_string in es_hash_list_map.get(table_name):
                 if es_item_hash_string not in item_hash_list:
-                    table.delete_item(Key=es_item_hash_string)
+                    # If an item hash is in the ESHashTable but not the datastore tables
+                    # That item is outdated and should be removed from ESHashTable and Elasticsearch
+                    hash_table.delete_item(Key=es_item_hash_string)
                     ES_CLIENT.delete(index=table_name.lower(), id=es_item_hash_string)
 
             # Insert new items from item table into hashtable and Elasticsearch
             for index, item in enumerate(table_items):
                 if item_hash_list[index] not in es_hash_list_map.get(table_name):
-                    table.put_item(Item={
+                    # If an item hash is in the datastore table but not in the ESHashTable
+                    # That item is new and should be added to ESHashTable and Elasticsearch
+                    hash_table.put_item(Item={
                         "documentHash": item_hash_list[index],
                         "documentType": table_name
                     })

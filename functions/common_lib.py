@@ -2,7 +2,6 @@ import logging
 import json
 import sys
 import traceback
-import calendar
 from datetime import datetime, timedelta, timezone
 
 

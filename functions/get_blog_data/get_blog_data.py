@@ -43,8 +43,11 @@ def get_blog_thumbnail(media_url):
     """
     media_response = requests.get(media_url).json()
     image_links = {
-        "fullImage": media_response["guid"]["rendered"],
-        "mediumImage": media_response["media_details"]["sizes"]["medium"]["source_url"]
+        "fullImage": media_response.get("guid", "Null").get("rendered", "Null"),
+        "mediumImage": media_response.get("media_details", "Null")
+                                     .get("sizes", "Null")
+                                     .get("medium", "Null")
+                                     .get("source_url", "Null")
     }
     return image_links
 
@@ -60,14 +63,14 @@ def blog_parser(blog_json):
         image_links = get_blog_thumbnail(blog_json["_links"]["wp:featuredmedia"][0]["href"])
     except KeyError as e:
         LOGGER.debug(f"No image in blog_item {blog_json['id']}")
-        image_links = "None"
+        image_links = []
     parsed_blog = {
         "blogId": str(blog_json["id"]),
         "title": blog_json["title"]["rendered"],
-        "dateModified": str(datetime.strptime(blog_json["date"], "%Y-%m-%dT%H:%M:%S")),
         "link": blog_json["guid"]["rendered"],
-        "categories": [CATEGORY_MAP[str(category)] for category in blog_json["categories"]],
         "excerpt": blog_json["excerpt"]["rendered"],
+        "categories": [CATEGORY_MAP[str(category)] for category in blog_json["categories"]],
+        "dateModified": str(datetime.strptime(blog_json["date"], "%Y-%m-%dT%H:%M:%S")),
         "mediaImages": image_links
     }
     return parsed_blog

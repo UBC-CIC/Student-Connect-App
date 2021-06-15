@@ -155,7 +155,6 @@ Resources:
                   - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
               - Effect: "Allow"
                 Action:
-                  - "dynamodb:Query"
                   - "dynamodb:Scan"
                   - "dynamodb:GetItem"
                   - "dynamodb:PutItem"
@@ -167,6 +166,13 @@ Resources:
                   - !Sub ${clubsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
+                  - "dynamoDB:DeleteItem"
+                  - "dynamodb:Scan"
+                  - "dynamodb:PutItem"
+                Resource:
+                  - !Sub ${esHashDDBTable.Arn}
+              - Effect: "Allow"
+                Action:
                   - "comprehend:*"
                 Resource: "*"
               - Effect: Allow
@@ -175,6 +181,7 @@ Resources:
                   - 'es:ESHttpPost'
                   - 'es:ESHttpPut'
                   - 'es:ESHttpHead'
+                  - 'es:ESHttpDelete'
                 Resource:
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
@@ -222,7 +229,7 @@ Resources:
         Function that grabs data from the UBCO Events page
       MemorySize: 256
       Timeout: 60
-      CodeUri: ./functions
+      CodeUri: ./functions/get_events_data
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -237,7 +244,7 @@ Resources:
         Function that grabs data from the UBCO News page
       MemorySize: 256
       Timeout: 60
-      CodeUri: ./functions
+      CodeUri: ./functions/get_news_data
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -252,7 +259,7 @@ Resources:
         Function that grabs data from the UBCO Student Blog page
       MemorySize: 256
       Timeout: 60
-      CodeUri: ./functions
+      CodeUri: ./functions/get_blog_data
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -267,7 +274,7 @@ Resources:
         Function that grabs data from the UBCO Club directory
       MemorySize: 256
       Timeout: 300
-      CodeUri: ./functions
+      CodeUri: ./functions/get_club_data
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -281,7 +288,7 @@ Resources:
         This function creates hashes for documents in the events, news and blogs table to update the ES indices with new data
       MemorySize: 1024
       Timeout: 600
-      CodeUri: ./functions
+      CodeUri: ./functions/es_hasher
       Role: !GetAtt esHasherLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -300,7 +307,7 @@ Resources:
         Given a list of categories and index, it queries the Elasticsearch index for documents with similar categories
       MemorySize: 256
       Timeout: 600
-      CodeUri: ./functions
+      CodeUri: ./functions/get_es_documents
       Role: !GetAtt esQueryLambdaIAMRole.Arn
       Environment:
         Variables:
@@ -633,4 +640,4 @@ Resources:
               - 'cognito-idp:DeleteUserPoolDomain'
             Resource:
               - !GetAtt CognitoUserPool.Arn
-      CodeUri: ./functions
+      CodeUri: ./functions/cognito_user_creator
