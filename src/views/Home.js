@@ -9,8 +9,10 @@ import {HomeEventCard} from "../components/Cards/EventCard";
 import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item, ClubsCarousel, BlogsCarousel} from '../components/Carousel/Carousel'
+import {NewsCarousel, Item, ClubsCarousel} from '../components/Carousel/Carousel'
 import { connect } from "react-redux";
+import EventsCarousel from "../components/Carousel/EventsCarousel";
+import BlogsCarousel from "../components/Carousel/BlogsCarousel";
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -100,21 +102,7 @@ function Home(props) {
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Events
                 </Typography>
-                <Grid container spacing={3}>
-                    <Grid item xs={12} sm={6} md={3} className={classes.grid}>
-                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
-
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}className={classes.grid}>
-                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}className={classes.grid}>
-                        <HomeEventCard categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"}  photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}className={classes.grid}>
-                        <HomeEventCard  categories={['Category','Category']} title={"Event"} date={'2021/05/20'} location={"Vancouver, BC"} photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}/>
-                    </Grid>
-                </Grid>
+                <EventsCarousel/>
                 </Container>
             <Container maxWidth={'xl'}>
                 <Divider className={classes.divider}/>

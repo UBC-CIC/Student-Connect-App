@@ -95,7 +95,7 @@ const useStyles = makeStyles((theme) => ({
 export function HomePageNewsCard(props){
 
     const classes = useStyles();
-    const {title, photo, link, date,categories} = props
+    const {title, photo, link, date,categories,description} = props
     return(
         <Card className={classes.bigCard}>
             <div className={classes.root} >
@@ -111,6 +111,10 @@ export function HomePageNewsCard(props){
                                     </Typography>
                                 </Grid>
                                 <Grid item>
+                                    <Typography variant="body2"  align={'left'} >
+                                        {description}
+                                    </Typography>
+
                                     <Typography variant="body2"  align={'left'} >
                                         {date}
                                     </Typography>

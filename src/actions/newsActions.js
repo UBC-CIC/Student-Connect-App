@@ -10,14 +10,14 @@ export const fetchNews = () => {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "news",
-                'categories': "Health Psychology Research",
+                'categories': "Health Psychology Research Recreation Careers",
             }),
         };
         lambda.invoke(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
             else{
                 let results = (JSON.parse(data.Payload));
-                console.log(results.hits.hits)
+                results = JSON.parse(results)
                 dispatch(fetchNewsSuccess(results.hits.hits))
             }
         });

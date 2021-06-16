@@ -8,6 +8,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Tag} from "../Tags/Tag";
+
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {

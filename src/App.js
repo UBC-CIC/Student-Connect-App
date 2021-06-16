@@ -15,6 +15,8 @@ import AWS from 'aws-sdk';
 import {useEffect} from "react";
 import {fetchNews} from "./actions/newsActions";
 import { connect } from "react-redux";
+import {fetchEvents} from "./actions/eventsAction";
+import {fetchBlogs} from "./actions/blogsAction";
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -49,9 +51,9 @@ const main = async () => {
     }),
   };
   const result = await (new AWS.Lambda().invoke(params).promise());
-  console.log('Success!');
-  let data = JSON.parse(result.Payload);
-  console.log(data.hits.hits)
+  // console.log('Success!');
+  // let data = JSON.parse(result.Payload);
+  // console.log(JSON.parse(data))
 
 };
 
@@ -59,12 +61,13 @@ main().catch(error => console.error(error));
 
 function App(props) {
   const classes = useStyles();
-  const{fetchNews}= props
+  const{fetchNews, fetchEvents,fetchBlogs}= props
 
   useEffect(() => {
     main()
-    console.log("hello")
     fetchNews()
+    fetchEvents()
+    fetchBlogs()
   }, []);
 
   return (
@@ -98,7 +101,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-  fetchNews
+  fetchNews,
+  fetchEvents,
+  fetchBlogs
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));
