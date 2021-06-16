@@ -1,6 +1,7 @@
 import { combineReducers } from "redux";
-import {surveyReducer} from "./surveyReducer";
+import newsReducer from "./newsReducer";
 
 export default combineReducers({
-    survey: surveyReducer,
+    news: newsReducer
+
 });
