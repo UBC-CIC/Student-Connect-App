@@ -40,14 +40,19 @@ function EventsCarousel(props){
 
 function EventItem(props)
 {
+    if(props.item._source.cost === ""){
+        props.item._source.cost="Free"
+    }
     return (
         <HomeEventCard title={props.item._source.title}
                   categories={props.item._source.categories}
                        link={props.item._source.link}
                        location={props.item._source.eventLocation.venue}
-                       date={props.item._source.startDate}
                        photo={props.item._source.thumbnailImage[0]}
                        description={props.item._source.excerpt}
+                       startDate={props.item._source.startDate}
+                       endDate={props.item._source.endDate}
+                       cost={props.item._source.cost}
         />
     )
 }

@@ -128,7 +128,7 @@ export function EventCard (props){
 }
 
 export function HomeEventCard (props){
-    const {categories,title,location,date,photo,description, link} = props
+    const {categories,title,location,startDate,endDate,photo,description, link, cost} = props
     const classes = useStyles();
     return(
         <div className={classes.root} >
@@ -148,14 +148,18 @@ export function HomeEventCard (props){
                                 <Typography variant="body2"  align={'left'} >
                                     {description}
                                 </Typography>
-
-                                <Typography variant="body2"  align={'left'} >
-                                   Start time: {date}
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="body2"  align={'left'} color={'error'} >
+                                    {startDate} - {endDate}
                                 </Typography>
+                            </Grid>
+                            <Grid item>
                                 <Typography variant="body2"  align={'left'} >
-                                    {location}
+                                    {location} • {cost}
                                 </Typography>
-
+                            </Grid>
+                            <Grid item>
                                 <Typography variant="body2"  align={'left'} >
                                     <Tag categories={categories}/>
                                 </Typography>

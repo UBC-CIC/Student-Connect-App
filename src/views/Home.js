@@ -3,13 +3,11 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Divider, GridList, GridListTile, GridListTileBar, Paper} from "@material-ui/core";
+import {Divider} from "@material-ui/core";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
-import {HomeEventCard} from "../components/Cards/EventCard";
-import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
 import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item, ClubsCarousel} from '../components/Carousel/Carousel'
+import {ClubsCarousel} from '../components/Carousel/Carousel'
 import { connect } from "react-redux";
 import EventsCarousel from "../components/Carousel/EventsCarousel";
 import BlogsCarousel from "../components/Carousel/BlogsCarousel";
@@ -72,6 +70,7 @@ function Home(props) {
                                   categories={item._source.categories}
                                   photo={item._source.mediaThumbnail[0].url}
                                   link={item._source.link}
+                                  description={item._source.summary}
                 />
             </Grid>
 

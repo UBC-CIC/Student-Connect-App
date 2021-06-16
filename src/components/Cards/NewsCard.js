@@ -115,6 +115,9 @@ export function HomePageNewsCard(props){
                                         {description}
                                     </Typography>
 
+                                </Grid>
+                                <Grid item>
+
                                     <Typography variant="body2"  align={'left'} >
                                         {date}
                                     </Typography>
