@@ -10,7 +10,7 @@ export const fetchNews = () => {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "news",
-                'categories': "Health",
+                'categories': "Health Psychology Research",
             }),
         };
         lambda.invoke(params, function(err, data) {

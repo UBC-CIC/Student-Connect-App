@@ -63,6 +63,18 @@ function Home(props) {
     const classes = useStyles();
     const {news} = props
     console.log(news)
+    const newsList = news.map((item) => {
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+                <HomePageNewsCard title={item._source.title}
+                                  categories={item._source.categories}
+                                  photo={item._source.mediaThumbnail[0].url}
+                                  link={item._source.link}
+                />
+            </Grid>
+
+        )
+    });
 
     return (
         <React.Fragment>
@@ -81,37 +93,7 @@ function Home(props) {
                 </Typography>
 
                 <Grid container spacing={3}>
-                    <Grid item xs={12} >
-                        <HomePageNewsCard photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/06/immersive-technologies-770.jpg'}
-                            link={'https://news.ok.ubc.ca/2021/06/10/new-funding-for-immersive-technologies-makes-virtual-a-reality-at-ubco/'}categories={['Technology','Research']} date={'June 10, 2021'} title={'New funding for immersive technologies makes virtual a reality at UBCO\n'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                        <HomePageNewsCard title={'Parental consumption shapes how teens think about and use cannabis'}
-                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/cannabis-1200-225x225.jpg'}
-                                          link={'https://news.ok.ubc.ca/?p=19214'}
-                                          date={'May 19, 2021'} categories={['Health','Irving K. Barber Faculty of Arts and Social Sciences','Psychology']}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid} >
-                        <HomePageNewsCard title={'UBCO student receives gift of a lifetime from younger sibling'}
-                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/nursing-bros-770-225x225.jpg'}
-                                        link={'https://news.ok.ubc.ca/?p=19201'}
-                                          date={'May 12, 2021'} categories={['Health','School of Nursing',' Aboriginal',' Faculty of Health and Social Development']}
-                        />
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                        <HomePageNewsCard title={'UBC invites wine lovers to learn and wine taste virtually'}
-                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/wine-770-225x225.jpg'}
-                                link = 'https://news.ok.ubc.ca/?p=19227' categories={['Health','Chemistry']}
-                        date={'May 26, 2021'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} className={classes.grid}>
-                        <HomePageNewsCard title={'No time to exercise? No problem, says UBCO researcher'}
-                                          photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/05/jonathan-little-770-225x225.jpg'}
-                        link={'https://news.ok.ubc.ca/2021/05/20/no-time-to-exercise-no-problem-says-ubco-researcher/'}
-                                          categories={['Health','Research','School of Health and Exercise']}
-                        date={'May 20, 2021'}/>
-                    </Grid>
+                    {newsList}
                 </Grid>
                 <Divider className={classes.divider}/>
 
