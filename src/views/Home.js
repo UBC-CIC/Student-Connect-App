@@ -6,11 +6,13 @@ import Container from '@material-ui/core/Container';
 import {Divider} from "@material-ui/core";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import * as PropTypes from "prop-types";
-import {EventGridList, NewsGridList} from "../components/GridList/GridList";
+import EventGridList from "../components/GridList/GridList";
+import NewsGridList from "../components/GridList/NewsGridList";
 import {ClubsCarousel} from '../components/Carousel/Carousel'
 import { connect } from "react-redux";
 import EventsCarousel from "../components/Carousel/EventsCarousel";
 import BlogsCarousel from "../components/Carousel/BlogsCarousel";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

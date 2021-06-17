@@ -19,11 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-
-export function EventGridList(){
+ function EventGridList(props){
     const classes = useStyles();
     return(
-        <GridList className={classes.gridList} cols={4}>
+        <GridList className={classes.gridList} cols={3}>
             <GridListTile className={classes.gridListTile}>
                 <GridListEventCard title={"Cover Letter Workshop"}
                            photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/05/CoverLetter-FBTwitter-1.jpg'}
@@ -41,29 +40,5 @@ export function EventGridList(){
         </GridList>
     )
 }
-export function NewsGridList(){
-    const classes = useStyles();
 
-    return(
-        <GridList className={classes.gridList} cols={2}>
-            <GridListTile className={classes.gridListTile}>
-                <HomePageNewsCard title={'UBCO researchers examine how pandemics impact the homeless'}
-                                  photo={'https://news.ok.ubc.ca/wp-content/uploads/2021/01/homeless-man-1200-225x225.jpg'}
-                link={'https://news.ok.ubc.ca/?p=19223'}
-                date={'May 25, 2021'} categories={['Faculty of Health and Social Development']}/>
-            </GridListTile>
-            <GridListTile className={classes.gridListTile}>
-                <HomePageNewsCard categories={['Category']} title={'News title'}
-                                  photo={'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg'}
-                date={'date'}/>
-            </GridListTile>
-            <GridListTile className={classes.gridListTile}>
-                <HomePageNewsCard categories={['Category']} title={'News title'}
-                                  photo={'https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg'}
-                date={'date'}/>
-            </GridListTile>
-
-        </GridList>
-
-    )
-}
+export default (EventGridList)

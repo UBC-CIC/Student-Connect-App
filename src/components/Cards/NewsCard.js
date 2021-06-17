@@ -12,6 +12,7 @@ import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import {NewsCardAccordion} from "../Accordion/Accordions";
 export function BigNewsCard(props){
     const classes = useStyles();
     const {title, photo, link, date,categories, excerpts} = props
@@ -105,15 +106,8 @@ export function HomePageNewsCard(props){
                         </Grid>
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
-                                <Grid item xs>
-                                    <Typography gutterBottom variant="h6" align={'left'}>
-                                        {title}
-                                    </Typography>
-                                </Grid>
                                 <Grid item>
-                                    <Typography variant="body2"  align={'left'} >
-                                        {description}
-                                    </Typography>
+                                    <NewsCardAccordion title={title} content={description}/>
 
                                 </Grid>
                                 <Grid item>

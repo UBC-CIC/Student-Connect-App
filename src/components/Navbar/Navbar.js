@@ -194,7 +194,7 @@ export default function MiniDrawer() {
                 <List>
                     <MenuItem component={Link} to="/home" >
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
-                        <ListItemText primary={"Home"} />
+                        <ListItemText primary={"For you"} />
                     </MenuItem>
                     <MenuItem component={Link} to="/explore">
                         <ListItemIcon>{<ExploreIcon />}</ListItemIcon>
