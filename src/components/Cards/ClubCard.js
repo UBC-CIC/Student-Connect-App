@@ -8,6 +8,8 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Tag} from "../Tags/Tag";
+import {HomePageNewsCard} from "./NewsCard";
+import {NewsCardAccordion} from "../Accordion/Accordions";
 
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
@@ -33,6 +35,9 @@ function ClubCard (props){
             maxHeight: '100%',
             width: 128,
         },
+        categories:{
+            marginLeft:"10px"
+        }
     }));
 
     const {title,logo,description, email, website, facebook, twitter,categories} = props
@@ -48,35 +53,35 @@ function ClubCard (props){
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
-                                    <Grid item xs>
-                                        <Typography gutterBottom variant="h5" align={'left'}>
-                                            {title}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item xs>
-                                        <Typography gutterBottom variant={"body2"} align={'left'}>
-                                            {description}
-                                        </Typography>
-                                    </Grid>
-                                    <Grid item alignItems={'left'}>
+                                        <NewsCardAccordion title={title} content={description}/>
+                                    <Grid item className={classes.categories}>
                                         <Tag categories = {categories}/>
                                     </Grid>
 
-
-
                                     <Grid item alignItems={'left'}>
-                                        <IconButton href={`mailto:${email}`} target = "_blank">
-                                            <EmailIcon/>
-                                        </IconButton>
-                                        <IconButton href={facebook} target = "_blank">
-                                            <FacebookIcon/>
-                                        </IconButton>
-                                        <IconButton href={twitter} target = {"_blank"}>
-                                            <TwitterIcon/>
-                                        </IconButton>
-                                        <IconButton href={website} target = "_blank">
-                                            <LanguageIcon/>
-                                        </IconButton>
+                                        {email ?
+                                            <IconButton href={`mailto:${email}`} target = "_blank">
+                                                <EmailIcon/>
+                                            </IconButton>
+                                            : null}
+
+                                        {facebook ? <IconButton href={facebook} target = "_blank">
+                                                <FacebookIcon/>
+                                            </IconButton>
+                                            : null}
+                                        {twitter ?
+                                            <IconButton href={twitter} target = {"_blank"}>
+                                                <TwitterIcon/>
+                                            </IconButton>
+
+                                            : null}
+                                        {website ?
+                                            <IconButton href={website} target = "_blank">
+                                                <LanguageIcon/>
+                                            </IconButton>
+
+                                            : null}
+
 
 
                                     </Grid>

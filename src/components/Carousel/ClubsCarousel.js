@@ -25,6 +25,10 @@ function ClubsItem(props)
                   email={props.item._source.email}
                   description={props.item._source.description}
                   categories={props.item._source.categories}
+                  facebook={props.item._source.facebook}
+                  twitter={props.item._source.twitter}
+                  website={props.item._source.website}
+
         />
 
     )

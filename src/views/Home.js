@@ -75,7 +75,6 @@ function Home(props) {
                                   description={item._source.summary}
                 />
             </Grid>
-
         )
     });
 

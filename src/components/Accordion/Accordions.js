@@ -10,10 +10,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
+
     },
     accordion:{
         boxShadow:"none",
-        border:'none'
+        paddingRight:"20px"
 
     },
     heading: {
