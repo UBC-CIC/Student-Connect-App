@@ -67,7 +67,11 @@ const useStyles = makeStyles((theme) => ({
         borderRadius:"3",
         marginRight:theme.spacing(1)
 
+    } ,
+    title:{
+        fontWeight:"500"
     }
+
 
 
 }));
@@ -140,7 +144,7 @@ export function HomeEventCard (props){
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <Typography gutterBottom variant="h6" align={'left'}>
+                                <Typography gutterBottom variant="subtitle1" align={'left'} className={classes.title}>
                                     {title}
                                 </Typography>
                             </Grid>

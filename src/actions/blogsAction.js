@@ -1,4 +1,5 @@
 import AWS from "aws-sdk";
+import {htmlTagCleaner} from "../helpers/htmlTagCleaner";
 
 export const fetchBlogs = () => {
     return (dispatch) => {
@@ -15,8 +16,13 @@ export const fetchBlogs = () => {
             else{
                 let results = (JSON.parse(data.Payload));
                 results = JSON.parse(results)
-                console.log(results)
-                dispatch(fetchBlogsSuccess(results.hits.hits))
+                results=results.hits.hits
+                for(let i=0;i<results.length;i++){
+                    results[i]._source.excerpt= htmlTagCleaner(results[i]._source.excerpt)
+                    console.log(results[i]._source.excerpt)
+                }
+
+                dispatch(fetchBlogsSuccess(results))
             }
         });
     }

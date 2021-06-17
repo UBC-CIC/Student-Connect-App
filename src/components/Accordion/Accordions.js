@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    title:{
+        fontWeight:"500"
+    }
 }));
 
 export function NewsCardAccordion(props) {
@@ -33,12 +36,12 @@ export function NewsCardAccordion(props) {
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                 >
-                    <Typography gutterBottom variant="h6" align={'left'}>
+                    <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
                         {title}
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="body2"  align={'left'} >
+                    <Typography variant="caption"  align={'left'} >
                         {content}
                     </Typography>
                 </AccordionDetails>

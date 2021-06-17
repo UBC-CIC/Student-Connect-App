@@ -10,7 +10,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import {Tag} from "../Tags/Tag";
 import {HomePageNewsCard} from "./NewsCard";
 import {NewsCardAccordion} from "../Accordion/Accordions";
-
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {
@@ -37,6 +37,15 @@ function ClubCard (props){
         },
         categories:{
             marginLeft:"10px"
+        },
+        facebookIcon:{
+            fill:"#4267B2"
+        },
+        twitterIcon:{
+            fill:"#1DA1F2"
+        },
+        emailIcon:{
+            color:"#DB4437"
         }
     }));
 
@@ -47,7 +56,7 @@ function ClubCard (props){
         <div>
             <Card className={classes.root}>
                     <Paper className={classes.paper}>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             <Grid item>
                                 <img className={classes.img} src={logo}/>
                             </Grid>
@@ -61,17 +70,17 @@ function ClubCard (props){
                                     <Grid item alignItems={'left'}>
                                         {email ?
                                             <IconButton href={`mailto:${email}`} target = "_blank">
-                                                <EmailIcon/>
+                                                <MailOutlineIcon className={classes.emailIcon}/>
                                             </IconButton>
                                             : null}
 
                                         {facebook ? <IconButton href={facebook} target = "_blank">
-                                                <FacebookIcon/>
+                                                <FacebookIcon className={classes.facebookIcon}/>
                                             </IconButton>
                                             : null}
                                         {twitter ?
                                             <IconButton href={twitter} target = {"_blank"}>
-                                                <TwitterIcon/>
+                                                <TwitterIcon className={classes.twitterIcon}/>
                                             </IconButton>
 
                                             : null}

@@ -29,7 +29,7 @@ function BlogsCarousel(props)
 
     return (
 
-        <Carousel animation={'slide'}>
+        <Carousel animation={'slide'} autoPlay={false}>
             {
                 blogs.map( (item, i) => <BlogsItem key={i} item={item} /> )
             }

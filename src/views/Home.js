@@ -63,7 +63,7 @@ function StarBorderIcon(props) {
 StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
-    const {news} = props
+    const {news,blogs} = props
     console.log(news)
     const newsList = news.map((item) => {
         return(
@@ -77,6 +77,19 @@ function Home(props) {
             </Grid>
         )
     });
+    const blogsList=blogs.map((item)=>{
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+            <HomePageNewsCard title={item._source.title}
+                              categories={item._source.categories}
+                              link={item._source.link}
+                              description={item._source.excerpt}
+                              photo={item._source.mediaImages.mediumImage}
+            />
+            </Grid>
+
+        )
+    })
 
     return (
         <React.Fragment>
@@ -105,21 +118,24 @@ function Home(props) {
                 <EventsCarousel/>
                 </Container>
             <Container maxWidth={'xl'}>
-                <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Student life blogs
                 </Typography>
-                <BlogsCarousel/>
+                <Grid container spacing={3}>
+
+                    {blogsList}
+                </Grid>
+                {/*<BlogsCarousel/>*/}
             </Container>
 
-            <Container maxWidth={"xl"}>
-                <Divider className={classes.divider}/>
-                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Event's that you liked
-                </Typography>
-                <EventGridList/>
-            </Container>
+            {/*<Container maxWidth={"xl"}>*/}
+            {/*    <Divider className={classes.divider}/>*/}
+            {/*    <Typography align={'left'} variant="h4" className={classes.forYouTitle}>*/}
+            {/*        Event's that you liked*/}
+            {/*    </Typography>*/}
+            {/*    <EventGridList/>*/}
+            {/*</Container>*/}
             <Divider className={classes.divider}/>
             <Container maxWidth={"xl"}>
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
@@ -135,6 +151,7 @@ function Home(props) {
 const mapStateToProps = (state) => {
     return {
         news: state.news,
+        blogs:state.blogs
     };
 };
 

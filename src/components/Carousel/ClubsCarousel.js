@@ -7,7 +7,7 @@ function ClubsCarousel(props){
     const {clubs}=props
     return (
 
-        <Carousel animation={'slide'}>
+        <Carousel animation={'slide'} autoPlay={false} >
             {
                 clubs.map( (item, i) => <ClubsItem key={i} item={item} /> )
             }

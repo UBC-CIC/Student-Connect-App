@@ -13,6 +13,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {NewsCardAccordion} from "../Accordion/Accordions";
+
 export function BigNewsCard(props){
     const classes = useStyles();
     const {title, photo, link, date,categories, excerpts} = props
@@ -79,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
-        height: 128,
+        width: 128,
 
     },
     learnMoreButton:{

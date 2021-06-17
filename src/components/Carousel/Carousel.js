@@ -31,7 +31,7 @@ export function NewsCarousel(props)
         ]
     return (
 
-        <Carousel animation={'slide'} >
+        <Carousel animation={'slide'}  autoPlay={false}>
             {
                 items.map( (item, i) => <NewsItem key={i} item={item} /> )
             }
