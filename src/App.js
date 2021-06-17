@@ -17,6 +17,7 @@ import {fetchNews} from "./actions/newsActions";
 import { connect } from "react-redux";
 import {fetchEvents} from "./actions/eventsAction";
 import {fetchBlogs} from "./actions/blogsAction";
+import {fetchClubs} from "./actions/clubAction";
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -46,14 +47,14 @@ const main = async () => {
   const params = {
     FunctionName: process.env.REACT_APP_FunctionName,
     Payload:JSON.stringify({
-      'index': "news",
-      'categories': "Health",
+      'index': "clubs",
+      'categories': "recreation",
     }),
   };
   const result = await (new AWS.Lambda().invoke(params).promise());
-  // console.log('Success!');
-  // let data = JSON.parse(result.Payload);
-  // console.log(JSON.parse(data))
+  console.log('Success!');
+  let data = JSON.parse(result.Payload);
+  console.log(JSON.parse(data))
 
 };
 
@@ -61,13 +62,14 @@ main().catch(error => console.error(error));
 
 function App(props) {
   const classes = useStyles();
-  const{fetchNews, fetchEvents,fetchBlogs}= props
+  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs}= props
 
   useEffect(() => {
     main()
     fetchNews()
     fetchEvents()
     fetchBlogs()
+    fetchClubs()
   }, []);
 
   return (
@@ -103,7 +105,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchNews,
   fetchEvents,
-  fetchBlogs
+  fetchBlogs,
+  fetchClubs
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

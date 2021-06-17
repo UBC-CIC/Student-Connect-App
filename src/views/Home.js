@@ -8,10 +8,10 @@ import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import * as PropTypes from "prop-types";
 import EventGridList from "../components/GridList/GridList";
 import NewsGridList from "../components/GridList/NewsGridList";
-import {ClubsCarousel} from '../components/Carousel/Carousel'
 import { connect } from "react-redux";
 import EventsCarousel from "../components/Carousel/EventsCarousel";
 import BlogsCarousel from "../components/Carousel/BlogsCarousel";
+import ClubsCarousel from "../components/Carousel/ClubsCarousel";
 
 const useStyles = makeStyles((theme) => ({
     root: {

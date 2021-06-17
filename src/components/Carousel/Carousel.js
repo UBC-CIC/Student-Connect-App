@@ -7,29 +7,6 @@ import ClubCard from "../Cards/ClubCard";
 import News from "../../views/News";
 import {connect} from "react-redux";
 
-export function ClubsCarousel(props){
-    var clubs = [
-        {
-            title: "Ice Cream Club",
-            logo: "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ice_cream_club_logo_0.jpg?itok=e3BQq-uv",
-            email:"icecreamclububco@gmail.com",
-            description:"The Ice Cream Club is UBCO’s fastest growing and soon to be largest club on campus. We know that life is tough, university is hard, and sometimes you just need ice cream. That’s where we come in. Our goal is to improve the life of UBCO’s students through ice cream.",
-            categories:['Health','Research']
-
-        },
-
-    ]
-    return (
-
-        <Carousel animation={'slide'}>
-            {
-                clubs.map( (item, i) => <ClubsItem key={i} item={item} /> )
-            }
-        </Carousel>
-    )
-
-
-}
 
 export function NewsCarousel(props)
 {
@@ -74,14 +51,4 @@ export function NewsCarousel(props)
 }
 
 
-function ClubsItem(props)
-{
-    return (
-        <ClubCard title={props.item.title}
-                  logo={props.item.logo}
-                  email={props.item.email}
-                  description={props.item.description} categories={props.item.categories}
-        />
 
-    )
-}
