@@ -1,4 +1,7 @@
 import AWS from "aws-sdk";
+import { API, graphqlOperation } from 'aws-amplify';
+import {createTodo} from "../graphql/mutations";
+import {listClubs, listClubsTables} from "../graphql/queries";
 
 export const fetchClubs = () => {
     return (dispatch) => {
@@ -10,6 +13,7 @@ export const fetchClubs = () => {
                 'categories': "Health Psychology Research Recreation Careers",
             }),
         };
+
         lambda.invoke(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
             else{
@@ -20,9 +24,24 @@ export const fetchClubs = () => {
         });
     }
 }
+export const fetchAllClubs = () => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(listClubsTables, {limit: 200})).then((response) => {
+            dispatch(fetchAllClubsSuccess(response.data.listClubsTables.items))
+        }).catch((err) => {
+            console.log("Error fetching clubs: ", err);
+        })
+    }
+}
 export const fetchClubsSuccess = (payload) => {
     return {
         type: "FETCH_CLUBS_SUCCESS",
+        payload: payload
+    }
+}
+export const fetchAllClubsSuccess = (payload) => {
+    return {
+        type: "FETCH_ALL_CLUBS_SUCCESS",
         payload: payload
     }
 }

@@ -17,7 +17,9 @@ import {fetchNews} from "./actions/newsActions";
 import { connect } from "react-redux";
 import {fetchEvents} from "./actions/eventsAction";
 import {fetchBlogs} from "./actions/blogsAction";
-import {fetchClubs} from "./actions/clubAction";
+import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
+import {listClubs, listClubsTables} from "./graphql/queries";
+import { API, graphqlOperation } from 'aws-amplify';
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -62,7 +64,7 @@ main().catch(error => console.error(error));
 
 function App(props) {
   const classes = useStyles();
-  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs}= props
+  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs}= props
 
   useEffect(() => {
     main()
@@ -70,6 +72,7 @@ function App(props) {
     fetchEvents()
     fetchBlogs()
     fetchClubs()
+    fetchAllClubs()
   }, []);
 
   return (
@@ -106,7 +109,8 @@ const mapDispatchToProps = {
   fetchNews,
   fetchEvents,
   fetchBlogs,
-  fetchClubs
+  fetchClubs,
+  fetchAllClubs
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

@@ -118,6 +118,7 @@ function Home(props) {
                 <EventsCarousel/>
                 </Container>
             <Container maxWidth={'xl'}>
+                <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Student life blogs

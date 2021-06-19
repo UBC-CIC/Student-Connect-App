@@ -2,13 +2,12 @@
 
 const initialClubs =[]
 
-const clubsReducer = (club = initialClubs, action) => {
+const allClubsReducer = (club = initialClubs, action) => {
     let clubsList = club;
     switch (action.type) {
-        case "FETCH_CLUBS_SUCCESS": {
+        case "FETCH_ALL_CLUBS_SUCCESS": {
             return (action.payload);
         }
-
         default:
             return clubsList;
     }
@@ -16,4 +15,4 @@ const clubsReducer = (club = initialClubs, action) => {
 };
 
 
-export default clubsReducer
+export default allClubsReducer

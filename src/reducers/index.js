@@ -3,11 +3,13 @@ import newsReducer from "./newsReducer";
 import eventsReducer from "./eventsReducer";
 import blogsReducer from "./blogsReducer";
 import clubsReducer from "./clubsReducer";
+import allClubsReducer from "./allClubsReducer";
 
 export default combineReducers({
     news: newsReducer,
     events:eventsReducer,
     blogs:blogsReducer,
-    clubs:clubsReducer
+    clubs:clubsReducer,
+    allClubs:allClubsReducer
 
 });
