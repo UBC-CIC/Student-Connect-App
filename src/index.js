@@ -8,7 +8,7 @@ import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
 // import * as serviceWorker from '../public/serviceWorker';
 import reducers from "./reducers";
-import {AmplifyAuthenticator} from "@aws-amplify/ui-react";
+import {AmplifyAuthenticator, AmplifySignOut} from "@aws-amplify/ui-react";
 import {Amplify} from "aws-amplify";
 import awsconfig from './aws-exports';
 
@@ -20,6 +20,7 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
     <AmplifyAuthenticator>
     <Provider store={store}>
+        <AmplifySignOut/>
         <App />
     </Provider>
     </AmplifyAuthenticator>,

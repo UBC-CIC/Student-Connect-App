@@ -5,7 +5,7 @@ import {Divider, FormControl, Input, InputAdornment} from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import Grid from "@material-ui/core/Grid";
 import EventCard from "../components/Cards/EventCard";
-import {ScrollableTabsButtonAuto, ScrollableTabsButtonForce} from "../components/Tabs/Tabs";
+import ClubsTabs from "../components/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {connect} from "react-redux";
@@ -38,21 +38,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 function Clubs(props){
     const classes = useStyles()
-    const {allClubs} = props
-    const clubsList=allClubs.map((item)=>{
-        return(
-            <Grid item xs={12}>
-                <ClubCard title={item.title} categories={item.categories}
-                          description={item.description}
-                          logo={item.image_link}
-                          facebook={item.facebook}
-                          twitter={item.twitter}
-                          email={item.email}
-                          website={item.website}
-                />
-            </Grid>
-        )
-    })
 
     return(
         <div>
@@ -67,12 +52,7 @@ function Clubs(props){
 
             </Container>
             <Container>
-                <ScrollableTabsButtonAuto/>
-            </Container>
-            <Container className={classes.cardGrid} >
-                <Grid container spacing={4}>
-                    {clubsList}
-                </Grid>
+                <ClubsTabs/>
             </Container>
 
         </div>
@@ -81,10 +61,4 @@ function Clubs(props){
 
 }
 
-const mapStateToProps = (state) => {
-    return {
-        allClubs: state.allClubs,
-    };
-};
-
-export default connect(mapStateToProps)(Clubs);
+export default Clubs
