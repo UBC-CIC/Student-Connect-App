@@ -48,7 +48,10 @@ ES_CLIENT = Elasticsearch(
 # Entry point into the lambda function
 def lambda_handler(event, context):
     """
-    Lambda Entry-point
+    Lambda Entry-point. The event json payload will contain the fields:
+
+    - index: Elasticsearch index to search
+    - categories: Categories to search for
     """
     query_categories = event["categories"]
     es_index = event["index"]
@@ -79,4 +82,4 @@ def search_es_index(index, categories):
     es_result = ES_CLIENT.search(index=index, body=query_body)
     LOGGER.info(f"Response: {json.dumps(es_result, indent=4)}")
     LOGGER.info('REQUEST_TIME es_client.index {:10.4f}'.format(time.time() - start))
-    return es_result
+    return json.dumps(es_result)

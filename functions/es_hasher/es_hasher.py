@@ -1,3 +1,4 @@
+import json
 import logging
 import boto3
 import os
@@ -68,14 +69,15 @@ def lambda_handler(event, context):
         es_hash_list_map = {
             "Events": [],
             "News": [],
-            "Blogs": []
+            "Blogs": [],
+            "Clubs": []
         }
         # Separate the hashes in the ESHashTable by document type into individual lists
         for es_item_hash_string in es_hash_items:
             es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
 
         # Update ESHashTable and Elasticsearch with respect to events, news and blogs
-        for table_name in ["Events", "News", "Blogs"]:
+        for table_name in ["Events", "News", "Blogs", "Clubs"]:
             # Get all items for the specific table_name
             item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
             response = item_table.scan(ConsistentRead=True)
@@ -94,7 +96,7 @@ def lambda_handler(event, context):
                 if es_item_hash_string not in item_hash_list:
                     # If an item hash is in the ESHashTable but not the datastore tables
                     # That item is outdated and should be removed from ESHashTable and Elasticsearch
-                    hash_table.delete_item(Key=es_item_hash_string)
+                    hash_table.delete_item(Key={"documentHash": es_item_hash_string})
                     ES_CLIENT.delete(index=table_name.lower(), id=es_item_hash_string)
 
             # Insert new items from item table into hashtable and Elasticsearch
