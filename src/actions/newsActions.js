@@ -35,7 +35,6 @@ export const fetchAllNews = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
             dispatch(fetchAllNewsSuccess(response.data.listNewsTables.items))
-            console.log(response.data.listNewsTables.items)
         }).catch((err) => {
             console.log("Error fetching news: ", err);
         })

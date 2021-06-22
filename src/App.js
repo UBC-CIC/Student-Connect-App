@@ -46,17 +46,17 @@ const main = async () => {
     region: 'ca-central-1',
   });
 
-  const params = {
-    FunctionName: process.env.REACT_APP_FunctionName,
-    Payload:JSON.stringify({
-      'index': "clubs",
-      'categories': "recreation",
-    }),
-  };
-  const result = await (new AWS.Lambda().invoke(params).promise());
-  console.log('Success!');
-  let data = JSON.parse(result.Payload);
-  console.log(JSON.parse(data))
+  // const params = {
+  //   FunctionName: process.env.REACT_APP_FunctionName,
+  //   Payload:JSON.stringify({
+  //     'index': "clubs",
+  //     'categories': "recreation",
+  //   }),
+  // };
+  // const result = await (new AWS.Lambda().invoke(params).promise());
+  // console.log('Success!');
+  // let data = JSON.parse(result.Payload);
+  // console.log(JSON.parse(data))
 
 };
 

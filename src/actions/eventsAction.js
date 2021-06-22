@@ -22,7 +22,6 @@ export const fetchEvents = () => {
                 results=results.hits.hits
                 for(let i=0;i<results.length;i++){
                     results[i]._source.excerpt= htmlTagCleaner(results[i]._source.excerpt)
-                    console.log(results[i]._source.excerpt)
                 }
                 dispatch(fetchEventsSuccess(results))
             }
@@ -40,7 +39,6 @@ export const fetchAllEvents = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listEventsTables, {limit: 200})).then((response) => {
             dispatch(fetchAllEventsSuccess(response.data.listEventsTables.items))
-            console.log(response.data.listEventsTables.items)
         }).catch((err) => {
             console.log("Error fetching events: ", err);
         })

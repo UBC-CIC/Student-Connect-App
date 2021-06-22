@@ -2,8 +2,7 @@ import { combineReducers } from "redux";
 import {newsReducer, allNewsReducer}from "./newsReducer";
 import {eventsReducer,allEventsReducer} from "./eventsReducer";
 import {blogsReducer,allBlogsReducer} from "./blogsReducer";
-import clubsReducer from "./clubsReducer";
-import allClubsReducer from "./allClubsReducer";
+import {clubsReducer,allClubsReducer} from "./clubsReducer";
 
 export default combineReducers({
     news: newsReducer,

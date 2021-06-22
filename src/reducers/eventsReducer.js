@@ -17,7 +17,6 @@ const initialAllEvents=[]
 
 export const allEventsReducer = (event = initialAllEvents, action) => {
     let eventsList = [...event];
-    console.log(eventsList)
     switch (action.type) {
         case "FETCH_ALL_EVENTS_SUCCESS": {
             return (action.payload);

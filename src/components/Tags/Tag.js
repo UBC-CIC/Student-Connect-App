@@ -40,7 +40,6 @@ export function Tag(props){
 
 export function Lduh(props){
     const {categories} = props
-    console.log(categories)
 
     return(
         <div>

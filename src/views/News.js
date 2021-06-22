@@ -9,6 +9,7 @@ import {Divider} from "@material-ui/core";
 import React from "react";
 import {NewsBlogsClubs} from "./Survey/SurveySections";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
+import {connect} from "react-redux";
 const category = ['lduh','aldo','dddd']
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -37,8 +38,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function News(props){
+function News(props){
     const classes = useStyles()
+    const {allNews,allBlogs} = props
     return(
         <div>
             <Container maxWidth={'xl'} >
@@ -48,7 +50,7 @@ export default function News(props){
                 <Divider className={classes.divider}/>
             </Container>
             <Container maxWidth={'xl'} >
-                <NewsBlogsTab/>
+                <NewsBlogsTab allNews={allNews} allBlogs={allBlogs}/>
 
             </Container>
 
@@ -56,3 +58,12 @@ export default function News(props){
     )
 
 }
+
+const mapStateToProps = (state) => {
+    return {
+        allNews: state.allNews,
+        allBlogs:state.allBlogs
+    };
+};
+
+export default connect(mapStateToProps)(News);

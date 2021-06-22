@@ -36,7 +36,6 @@ function EventItem(props)
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         events: state.events,
     }

@@ -35,7 +35,6 @@ function ClubsItem(props)
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         clubs: state.clubs,
     }

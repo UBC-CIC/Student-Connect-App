@@ -21,7 +21,6 @@ export const fetchBlogs = () => {
                 results=results.hits.hits
                 for(let i=0;i<results.length;i++){
                     results[i]._source.excerpt= htmlTagCleaner(results[i]._source.excerpt)
-                    console.log(results[i]._source.excerpt)
                 }
 
                 dispatch(fetchBlogsSuccess(results))
@@ -39,7 +38,6 @@ export const fetchAllBlogs = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listBlogsTables, {limit: 200})).then((response) => {
             dispatch(fetchAllBlogsSuccess(response.data.listBlogsTables.items))
-            console.log(response.data.listBlogsTables.items)
         }).catch((err) => {
             console.log("Error fetching news: ", err);
         })
