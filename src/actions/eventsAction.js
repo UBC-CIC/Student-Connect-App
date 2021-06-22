@@ -1,5 +1,8 @@
 import AWS from "aws-sdk";
 import {htmlTagCleaner} from "../helpers/htmlTagCleaner";
+import {API, graphqlOperation} from "aws-amplify";
+import {listClubsTables, listEventsTables} from "../graphql/queries";
+import {fetchAllClubsSuccess} from "./clubAction";
 
 export const fetchEvents = () => {
     return (dispatch) => {
@@ -29,6 +32,23 @@ export const fetchEvents = () => {
 export const fetchEventsSuccess = (payload) => {
     return {
         type: "FETCH_EVENTS_SUCCESS",
+        payload: payload
+    }
+}
+
+export const fetchAllEvents = () => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(listEventsTables, {limit: 200})).then((response) => {
+            dispatch(fetchAllEventsSuccess(response.data.listEventsTables.items))
+            console.log(response.data.listEventsTables.items)
+        }).catch((err) => {
+            console.log("Error fetching events: ", err);
+        })
+    }
+}
+export const fetchAllEventsSuccess = (payload) => {
+    return {
+        type: "FETCH_ALL_EVENTS_SUCCESS",
         payload: payload
     }
 }

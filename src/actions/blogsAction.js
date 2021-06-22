@@ -1,5 +1,7 @@
 import AWS from "aws-sdk";
 import {htmlTagCleaner} from "../helpers/htmlTagCleaner";
+import {API, graphqlOperation} from "aws-amplify";
+import {listBlogsTables, listNewsTables} from "../graphql/queries";
 
 export const fetchBlogs = () => {
     return (dispatch) => {
@@ -30,6 +32,22 @@ export const fetchBlogs = () => {
 export const fetchBlogsSuccess = (payload) => {
     return {
         type: "FETCH_BLOGS_SUCCESS",
+        payload: payload
+    }
+}
+export const fetchAllBlogs = () => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(listBlogsTables, {limit: 200})).then((response) => {
+            dispatch(fetchAllBlogsSuccess(response.data.listBlogsTables.items))
+            console.log(response.data.listBlogsTables.items)
+        }).catch((err) => {
+            console.log("Error fetching news: ", err);
+        })
+    }
+}
+export const fetchAllBlogsSuccess = (payload) => {
+    return {
+        type: "FETCH_ALL_BLOGS_SUCCESS",
         payload: payload
     }
 }

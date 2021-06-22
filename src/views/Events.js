@@ -17,6 +17,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
+import {connect} from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',
@@ -76,8 +77,9 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function Events(){
+function Events(props){
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const {allEvents} = props
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -86,8 +88,6 @@ function Events(){
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-
     const classes = useStyles()
     return(
         <div>
@@ -186,5 +186,11 @@ function Events(){
     )
 
 }
+const mapStateToProps = (state) => {
+    return {
+        allEvents: state.allEvents,
+    };
+};
 
-export default Events
+export default connect(mapStateToProps)(Events);
+

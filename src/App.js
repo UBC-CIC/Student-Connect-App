@@ -13,10 +13,10 @@ import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 import AWS from 'aws-sdk';
 import {useEffect} from "react";
-import {fetchNews} from "./actions/newsActions";
+import {fetchAllNews, fetchNews} from "./actions/newsActions";
 import { connect } from "react-redux";
-import {fetchEvents} from "./actions/eventsAction";
-import {fetchBlogs} from "./actions/blogsAction";
+import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
+import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
 import {listClubs, listClubsTables} from "./graphql/queries";
 import { API, graphqlOperation } from 'aws-amplify';
@@ -64,7 +64,8 @@ main().catch(error => console.error(error));
 
 function App(props) {
   const classes = useStyles();
-  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs}= props
+  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
+    fetchAllNews,fetchAllBlogs}= props
 
   useEffect(() => {
     main()
@@ -73,6 +74,9 @@ function App(props) {
     fetchBlogs()
     fetchClubs()
     fetchAllClubs()
+    fetchAllEvents()
+    fetchAllNews()
+    fetchAllBlogs()
   }, []);
 
   return (
@@ -110,7 +114,10 @@ const mapDispatchToProps = {
   fetchEvents,
   fetchBlogs,
   fetchClubs,
-  fetchAllClubs
+  fetchAllClubs,
+  fetchAllEvents,
+  fetchAllNews,
+  fetchAllBlogs,
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

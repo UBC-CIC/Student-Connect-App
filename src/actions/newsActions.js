@@ -2,6 +2,8 @@
 
 // ===================================---FETCH NEWS---=============================================
 import AWS from "aws-sdk";
+import {API, graphqlOperation} from "aws-amplify";
+import {listEventsTables, listNewsTables} from "../graphql/queries";
 
 export const fetchNews = () => {
     return (dispatch) => {
@@ -26,6 +28,22 @@ export const fetchNews = () => {
 export const fetchNewsSuccess = (payload) => {
     return {
         type: "FETCH_NEWS_SUCCESS",
+        payload: payload
+    }
+}
+export const fetchAllNews = () => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
+            dispatch(fetchAllNewsSuccess(response.data.listNewsTables.items))
+            console.log(response.data.listNewsTables.items)
+        }).catch((err) => {
+            console.log("Error fetching news: ", err);
+        })
+    }
+}
+export const fetchAllNewsSuccess = (payload) => {
+    return {
+        type: "FETCH_ALL_NEWS_SUCCESS",
         payload: payload
     }
 }

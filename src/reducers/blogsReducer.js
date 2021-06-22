@@ -2,7 +2,7 @@
 
 const initialBlogs =[]
 
-const blogsReducer = (blog = initialBlogs, action) => {
+export const blogsReducer = (blog = initialBlogs, action) => {
     let blogsList = [...blog];
     switch (action.type) {
         case "FETCH_BLOGS_SUCCESS": {
@@ -15,4 +15,16 @@ const blogsReducer = (blog = initialBlogs, action) => {
 };
 
 
-export default blogsReducer
+const initialAllBlogs =[]
+
+export const allBlogsReducer = (blog = initialAllBlogs, action) => {
+    let blogsList = [...blog];
+    switch (action.type) {
+        case "FETCH_ALL_BLOGS_SUCCESS": {
+            return (action.payload);
+        }
+        default:
+            return blogsList;
+    }
+
+};

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
-import newsReducer from "./newsReducer";
-import eventsReducer from "./eventsReducer";
-import blogsReducer from "./blogsReducer";
+import {newsReducer, allNewsReducer}from "./newsReducer";
+import {eventsReducer,allEventsReducer} from "./eventsReducer";
+import {blogsReducer,allBlogsReducer} from "./blogsReducer";
 import clubsReducer from "./clubsReducer";
 import allClubsReducer from "./allClubsReducer";
 
@@ -10,6 +10,9 @@ export default combineReducers({
     events:eventsReducer,
     blogs:blogsReducer,
     clubs:clubsReducer,
-    allClubs:allClubsReducer
+    allClubs:allClubsReducer,
+    allEvents:allEventsReducer,
+    allNews:allNewsReducer,
+    allBlogs:allBlogsReducer
 
 });
