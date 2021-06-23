@@ -255,6 +255,25 @@ For Example,
   }
 ```
 
+## ESHash Table Schema
+<hr>
+
+```
+    {
+      "documentHash": MD5 hash created from the text of the entire document, for document version fingerprinting
+      "documentType": String representing the type of the document being stored, e.g events, news, blogs etc
+    }
+```
+
+For Example,
+
+```json
+    {
+      "documentHash": "00947523a73348e73ee5bc5e5f5ef6fd",
+      "documentType": "Events"
+    }
+```
+
 ## Elasticsearch Schema
 <hr>
 
