@@ -4,3 +4,9 @@ export function htmlTagCleaner(text){
         .trim()
     return res
 }
+
+export function bracketRemover(text){
+    let res=text.replace(/\[/," ").replace(/\.*?\]/," ")
+    return res
+
+}

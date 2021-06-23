@@ -1,28 +1,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const listClubsTables = /* GraphQL */ `
-  query ListClubsTables(
-    $filter: TableClubsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClubsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        clubId
-        title
-        image_link
-        description
-        email
-        facebook
-        twitter
-        website
-        categories
-      }
-      nextToken
-    }
-  }
-`;
 export const listEventsTables = /* GraphQL */ `
   query ListEventsTables(
     $filter: TableEventsTableFilterInput
@@ -100,6 +78,28 @@ export const listBlogsTables = /* GraphQL */ `
           fullImage
           mediumImage
         }
+      }
+      nextToken
+    }
+  }
+`;
+export const listClubsTables = /* GraphQL */ `
+  query ListClubsTables(
+    $filter: TableClubsTableFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClubsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        clubId
+        title
+        imageLink
+        description
+        email
+        facebook
+        twitter
+        website
+        categories
       }
       nextToken
     }

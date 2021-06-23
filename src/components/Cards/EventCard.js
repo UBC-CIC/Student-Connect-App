@@ -78,53 +78,57 @@ const useStyles = makeStyles((theme) => ({
 
 
 export function EventCard (props){
-    const {categories,title,location,date,photo,description, link} = props
+    const {categories,title,location,startDate,endDate,photo,description, link,cost} = props
     const classes = useStyles();
 
     return (
         <div>
         <Card className={classes.root} >
-            <CardActions className={classes.tags} >
-                <Tag categories={categories}/>
-            </CardActions>
-
             <CardMedia
                     component="img"
                     height="140"
+                    src={photo}
                     image={photo}
                     title="Event image"
                 />
                 <CardContent>
-                    <Grid container>
-                        <Grid item md={7}>
-
-                        <Typography gutterBottom variant="h5" component="h2" align={'left'} className={classes.heartIcon}>
+                    <Grid container spacing={1}>
+                    <Grid item>
+                        <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
                             {title}
                         </Typography>
-                        </Grid>
-                        <Grid item md={5} className={classes.icons} >
-                            <IconButton href={link} target = "_blank">
-                                <MoreHorizIcon/>
-                            </IconButton>
-                            <IconButton >
-                                <FavoriteBorderIcon/>
-                            </IconButton>
-
-                        </Grid>
                     </Grid>
 
-                    <Typography color={'error'} variant="body2"  align={'left'} >
-                        {date}
-                    </Typography>
-                    <Typography  variant="body2"  align={'left'} >
-                        {location}
-                    </Typography>
-                    <Typography variant="body2" color="textPrimary" component="p" align={'left'}>
-                        {description}
-                    </Typography>
-
+                    <Grid item>
+                        <Typography variant="caption"  align={'left'} color={'error'}>
+                            {startDate} - {endDate}
+                        </Typography>
+                    </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="caption"  align={'left'} >
+                                {location} • {cost}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Typography variant="caption"  align={'left'} >
+                                {description}
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Tag categories={categories}/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
+                                Read more
+                            </Button>
+                            <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
+                                Like
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </CardContent>
         </Card>
+
         </div>
 );
 

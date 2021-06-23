@@ -37,7 +37,13 @@ export const fetchBlogsSuccess = (payload) => {
 export const fetchAllBlogs = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listBlogsTables, {limit: 200})).then((response) => {
-            dispatch(fetchAllBlogsSuccess(response.data.listBlogsTables.items))
+            let allBlogs = response.data.listBlogsTables.items
+            for(let i=0;i<allBlogs.length;i++) {
+                allBlogs[i].excerpt=htmlTagCleaner(allBlogs[i].excerpt)
+
+            }
+
+                dispatch(fetchAllBlogsSuccess(response.data.listBlogsTables.items))
         }).catch((err) => {
             console.log("Error fetching news: ", err);
         })

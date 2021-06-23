@@ -21,7 +21,7 @@ function ClubsItem(props)
 {
     return (
         <ClubCard title={props.item._source.title}
-                  logo={props.item._source.image_link}
+                  logo={props.item._source.imageLink}
                   email={props.item._source.email}
                   description={props.item._source.description}
                   categories={props.item._source.categories}

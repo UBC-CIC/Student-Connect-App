@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import {htmlTagCleaner} from "../helpers/htmlTagCleaner";
+import {bracketRemover, htmlTagCleaner} from "../helpers/htmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
 import {listClubsTables, listEventsTables} from "../graphql/queries";
 import {fetchAllClubsSuccess} from "./clubAction";
@@ -38,7 +38,18 @@ export const fetchEventsSuccess = (payload) => {
 export const fetchAllEvents = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listEventsTables, {limit: 200})).then((response) => {
-            dispatch(fetchAllEventsSuccess(response.data.listEventsTables.items))
+            let allEvents = response.data.listEventsTables.items
+            for(let i=0;i<allEvents.length;i++) {
+                allEvents[i].excerpt=htmlTagCleaner(allEvents[i].excerpt)
+                allEvents[i].thumbnailImage = bracketRemover(allEvents[i].thumbnailImage)
+                allEvents[i].fullImage = bracketRemover(allEvents[i].fullImage)
+                if(allEvents[i].cost===""){
+                    allEvents[i].cost='free'
+                }
+            }
+            console.log(allEvents)
+            dispatch(fetchAllEventsSuccess(allEvents))
+
         }).catch((err) => {
             console.log("Error fetching events: ", err);
         })

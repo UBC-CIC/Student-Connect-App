@@ -71,6 +71,7 @@ function ClubsTabs(props) {
     const {allClubs} = props
     const [currentCategory,setCurrentCategory] = React.useState("Academics");
     const currentClubs = allClubs.filter((item => item.categories.includes(currentCategory)))
+    console.log(allClubs)
 
 
     const clubsList=currentClubs.map((item)=>{
@@ -78,7 +79,7 @@ function ClubsTabs(props) {
             <Grid item xs={12}>
                 <ClubCard title={item.title} categories={item.categories}
                           description={item.description}
-                          logo={item.image_link}
+                          logo={item.imageLink }
                           facebook={item.facebook}
                           twitter={item.twitter}
                           email={item.email}

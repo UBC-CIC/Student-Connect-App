@@ -18,6 +18,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {connect} from "react-redux";
+import defaultImg from '../assets/img/event_img.png'
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',
@@ -89,9 +90,31 @@ function Events(props){
         setAnchorEl(null);
     };
     const classes = useStyles()
+    console.log(allEvents)
+
+    const eventsList= allEvents.map((item)=>{
+        if(item.fullImage==='false'){
+            item.fullImage = defaultImg
+        }
+        return(
+            <Grid item xs={12} sm={6} md={4} className={classes.grid}>
+                <EventCard categories={item.categories}
+                           startDate={item.startDate}
+                           endDate={item.endDate}
+                           title={item.title}
+                           description={item.excerpt}
+                           photo={item.fullImage}
+                           link={item.link}
+                           location={item.eventLocation.venue}
+                           cost={item.cost}
+                               />
+            </Grid>
+
+        )
+    })
     return(
-        <div>
         <Container>
+
                 <Typography align={'left'} variant="h4" className={classes.title}>
                     Events
                 </Typography>
@@ -99,30 +122,26 @@ function Events(props){
                     Check out all the events here
                 </Typography>
                 <Divider className={classes.divider}/>
-        </Container>
-    <Container>
 
     <Grid container spacing={1}>
-                    <Grid item md={8}>
-                        <Input
-                            id="input-with-icon-adornment"
-                            startAdornment={
-                                <InputAdornment position="start">
-                                    <SearchIcon />
-                                </InputAdornment>
-                            }
-                            placeholder={"Search"}
-                            fullWidth
-                        />
-                    </Grid>
-                    <Grid item md={2}>
-                        <Button className={classes.button}>
-                            Search
-                        </Button>
-                    </Grid>
-                    <Grid item md={2}>
-
-
+                    {/*<Grid item md={8}>*/}
+                    {/*    <Input*/}
+                    {/*        id="input-with-icon-adornment"*/}
+                    {/*        startAdornment={*/}
+                    {/*            <InputAdornment position="start">*/}
+                    {/*                <SearchIcon />*/}
+                    {/*            </InputAdornment>*/}
+                    {/*        }*/}
+                    {/*        placeholder={"Search"}*/}
+                    {/*        fullWidth*/}
+                    {/*    />*/}
+                    {/*</Grid>*/}
+                    {/*<Grid item md={2}>*/}
+                    {/*    <Button className={classes.button}>*/}
+                    {/*        Search*/}
+                    {/*    </Button>*/}
+                    {/*</Grid>*/}
+                    <Grid item >
                         <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                             Sort By
                         </Button>
@@ -141,47 +160,12 @@ function Events(props){
                     </Grid>
 
                 </Grid>
-    </Container>
-            <Container>
 
             <Grid container spacing={4} className={classes.cardGrid}>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                    <EventCard categories={['Category','Category']} title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
-                               photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
-                 location={'Vancouver, BC'} date={'2021/05/29'} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                        <EventCard title={"Cover Letter Workshop"} description={"Learn how to create and use your cover letter as a marketing tool to introduce yourself to employers."}
-                                   photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/05/CoverLetter-FBTwitter-1.jpg'}
-                                   location={'Online'} date={'2021-06-07 12:00:00'} categories={['Workshop']} link={'https://events.ok.ubc.ca/event/cover-letter-workshop/'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                        <EventCard categories={['Health']} title={"Okanagan Clinical Neurosciences Grand Rounds"}
-                                   description={"The UBC Centre for Chronic Disease Prevention and Management (CCDPM) is pleased to present the Okanagan Clinical Neurosciences Grand Rounds in partnership with Interior Health."}
-                                   photo={'https://events.cms.ok.ubc.ca/wp-content/uploads/sites/121/2021/02/Grand-Round-Series.png'}
-                                   location={'Online'} date={'2021-06-04 08:00:00'}
-                        link={'https://events.ok.ubc.ca/event/okanagan-clinical-neurosciences-grand-rounds-4/'}/>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                        <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
-                                   photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
-                                   location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                        <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
-                                   photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
-                                   location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']} />
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={4} className={classes.grid}>
-                        <EventCard title={"Event"} description={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque scelerisque eget ligula elementum ultrices. Duis pulvinar tincidunt est eu feugiat. Nam feugiat lacus eu maximus commodo. Lorem ipsum dolor sit"}
-                                   photo={'https://cdn.pixabay.com/photo/2015/05/15/14/50/concert-768722_960_720.jpg'}
-                                   location={'Vancouver, BC'} date={'2021/05/29'} categories={['Category']}/>
-                    </Grid>
+                {eventsList}
 
                 </Grid>
-            </Container>
-        </div>
-
+        </Container>
 
     )
 
