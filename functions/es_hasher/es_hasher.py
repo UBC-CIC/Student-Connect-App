@@ -77,7 +77,7 @@ def lambda_handler(event, context):
             es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
 
         # Update ESHashTable and Elasticsearch with respect to events, news and blogs
-        for table_name in ["Events", "News", "Blogs", "Clubs"]:
+        for table_name in ["Events", "News", "Blogs"]:
             # Get all items for the specific table_name
             item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
             response = item_table.scan(ConsistentRead=True)

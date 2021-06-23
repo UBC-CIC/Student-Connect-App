@@ -14,7 +14,7 @@ The workflow is as follows:
   The Lambda performs the following tasks:
   - Parses raw, unstructured documents into a semi-structured document format, while making sure it has a 
     unique identifier. The schema for the semi-structure data is detailed below in
-    the **Database Schemas** section
+    the [**Database Schemas**](#database-schemas) section
     
   - Sets up a Time-To-Live for the document if necessary
     

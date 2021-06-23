@@ -1,3 +1,5 @@
+import hashlib
+
 import boto3
 import os
 import requests
@@ -94,6 +96,13 @@ def lambda_handler(event, context):
             club_item["clubId"] = str(index)
             table.put_item(Item=club_item)
         return {"status": "completed"}
+
+
+        # clubs_table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
+        # for index, club in enumerate(clubs_list):
+        #     club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
+        #     clubs_table.put_item(Item=club)
+
 
     except Exception as error:
         detailed_exception(LOGGER)

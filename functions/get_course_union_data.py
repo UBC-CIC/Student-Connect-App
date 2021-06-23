@@ -10,11 +10,11 @@ from selenium.common.exceptions import ElementClickInterceptedException
 
 
 """
-Not a Lambda function file. A one time python script to grab and parse data from the UBCO Course Union directory,
-but was not used ultimately
+Not a Lambda function file. A one time python script to grab and parse data from the UBCO Course Union directory
 """
 
 STUDENT_UNION_BASE_URL = "https://www.ubcsuo.ca"
+
 
 def parse_club_html_nodes(club_html_nodes):
     clubs = []
@@ -50,33 +50,22 @@ def parse_club_html_nodes(club_html_nodes):
         clubs.append(club_item)
     return clubs
 
-driver = webdriver.Chrome(ChromeDriverManager().install())
-
-course_union_url = "https://www.ubcsuo.ca/course-union-directory"
-
-letter_list = ["B", "C", "E", "G", "H", "M", "N", "P", "Q", "S", "V"]
-driver.get(course_union_url)
-club_jsons = []
-button_list = []
-for index in range(2, 13):
-    print(f"Iteration number: {index}")
-    button = driver.find_element_by_link_text(f"{letter_list[index - 2]}")
-    # button = driver.find_element_by_xpath(f'/html/body/div/div[3]/div[5]/div/div[1]/div[2]/div/div/div/div[2]/div/div/div[2]/span[{index}]')
-    button.click()
-    time.sleep(2)
-    # print(button.get_attribute("innerHTML"))
-    node = driver.find_element_by_xpath('//*[@id="block-views-club-directory-block-2"]/div/div')
-    soup = BeautifulSoup(node.get_attribute('innerHTML'), "html.parser")
-    clubs = soup.find_all("div", {"class": "club-item-content"})
-    parsed_clubs = parse_club_html_nodes(clubs)
-    for club in parsed_clubs:
-        print(json.dumps(str(club), indent=2))
-    print(f"Course Unions gathered: {len(parsed_clubs)}")
-    club_jsons.extend(parsed_clubs)
+def get_course_unions(url):
+    letter_list = ["B", "C", "E", "G", "H", "M", "N", "P", "Q", "S", "V"]
+    club_jsons = []
+    driver = webdriver.Chrome(ChromeDriverManager().install())
+    driver.get(url)
+    time.sleep(1)
+    for index in range(2, 13):
+        button = driver.find_element_by_link_text(f"{letter_list[index - 2]}")
+        button.click()
+        time.sleep(2)
+        node = driver.find_element_by_xpath('//*[@id="block-views-club-directory-block-2"]/div/div')
+        soup = BeautifulSoup(node.get_attribute('innerHTML'), "html.parser")
+        clubs = soup.find_all("div", {"class": "club-item-content"})
+        parsed_clubs = parse_club_html_nodes(clubs)
+        club_jsons.extend(parsed_clubs)
 
 
-
-with open("../parsed_data/newResult.json", "w") as file:
-    file.write(json.dumps(club_jsons, indent=4))
 
 

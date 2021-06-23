@@ -111,6 +111,7 @@ def lambda_handler(event, context):
     base_url = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
     events = []
     newly_updated_events = []
+
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
         events = get_all_events(base_url)

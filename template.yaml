@@ -51,10 +51,10 @@ Parameters:
     Type: String
     Default: kibana
     Description: The name of the user that is used to log into kibana.
-#  KibanaUserEmail:
-#    AllowedPattern: ^[0-9a-zA-Z-/_.@]*$
-#    Default: kibana
-#    Type: String
+  #  KibanaUserEmail:
+  #    AllowedPattern: ^[0-9a-zA-Z-/_.@]*$
+  #    Default: kibana
+  #    Type: String
   ESDomainName:
     Type: String
     Default: 'engagement-app-data-index'
@@ -63,9 +63,12 @@ Parameters:
       Valid characters are a-z (lowercase only), 0-9.
 
 Outputs:
-  LambdaFunctionArn:
-    Value: !GetAtt getEventsData.Arn
-    Description: The Lambda ARN just for test purposes
+  getESDocumentsLambdaFunction:
+    Value: !Ref getESDocuments
+    Description: The name of the lambda that queries elasticsearch with a given payload
+  getESDocumentsLambdaFunctionArn:
+    Value: !GetAtt getESDocuments.Arn
+    Description: The arn of the lambda that queries elasticsearch with a given payload
   eventsDDBTable:
     Value: !GetAtt eventsDDBTable.Arn
     Description: ARN of the DynamoDB table that contains the events data
@@ -299,7 +302,7 @@ Resources:
           ES_HASH_TABLE_NAME: !Ref esHashTable
           ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 
-  getSimilarCategoryESDocuments:
+  getESDocuments:
     Type: "AWS::Serverless::Function"
     Properties:
       Handler: get_es_documents.lambda_handler
@@ -596,17 +599,17 @@ Resources:
       Domain: !Sub 'kibana-${AWS::StackName}-${AWS::Region}-${AWS::AccountId}'
       UserPoolId: !Ref CognitoUserPool
 
-#  CognitoUserPoolUser:
-#    Type: "AWS::Cognito::UserPoolUser"
-#    Properties:
-#      Username: !Ref KibanaUserEmail
-#      UserPoolId: !Ref CognitoUserPool
-#      MessageAction: "SUPPRESS"
-#      UserAttributes:
-#        - Name: "email_verified"
-#          Value: "true"
-#        - Name: "email"
-#          Value: !Ref KibanaUserEmail
+  #  CognitoUserPoolUser:
+  #    Type: "AWS::Cognito::UserPoolUser"
+  #    Properties:
+  #      Username: !Ref KibanaUserEmail
+  #      UserPoolId: !Ref CognitoUserPool
+  #      MessageAction: "SUPPRESS"
+  #      UserAttributes:
+  #        - Name: "email_verified"
+  #          Value: "true"
+  #        - Name: "email"
+  #          Value: !Ref KibanaUserEmail
 
   ESCognito:
     Type: Custom::ESName
