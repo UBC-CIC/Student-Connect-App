@@ -9,7 +9,7 @@ import LanguageIcon from '@material-ui/icons/Language';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Tag} from "../Tags/Tag";
 import {HomePageNewsCard} from "./NewsCard";
-import {NewsCardAccordion} from "../Accordion/Accordions";
+import {ClubCardAccordion, NewsCardAccordion} from "../Accordion/Accordions";
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
@@ -62,7 +62,7 @@ function ClubCard (props){
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
-                                        <NewsCardAccordion title={title} content={description}/>
+                                        <ClubCardAccordion title={title} content={description}/>
                                     <Grid item className={classes.categories}>
                                         <Tag categories = {categories}/>
                                     </Grid>

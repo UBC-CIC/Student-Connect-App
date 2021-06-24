@@ -34,7 +34,14 @@ export const fetchNewsSuccess = (payload) => {
 export const fetchAllNews = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
-            dispatch(fetchAllNewsSuccess(response.data.listNewsTables.items))
+            let res = response.data.listNewsTables.items
+            res.sort(function(a, b) {
+                var c = new Date(a.dateModified);
+                var d = new Date(b.dateModified);
+                return c-d
+            });
+
+            dispatch(fetchAllNewsSuccess(res))
         }).catch((err) => {
             console.log("Error fetching news: ", err);
         })

@@ -71,10 +71,10 @@ function ClubsTabs(props) {
     const {allClubs} = props
     const [currentCategory,setCurrentCategory] = React.useState("Academics");
     const currentClubs = allClubs.filter((item => item.categories.includes(currentCategory)))
-    console.log(allClubs)
+    const sortedCurrentClubs = currentClubs.sort((a, b) => a.title.localeCompare(b.title))
 
 
-    const clubsList=currentClubs.map((item)=>{
+    const clubsList=sortedCurrentClubs.map((item)=>{
         return(
             <Grid item xs={12}>
                 <ClubCard title={item.title} categories={item.categories}

@@ -15,6 +15,7 @@ import Grid from "@material-ui/core/Grid";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {Tag} from '../Tags/Tag'
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import {EventCardAccordion} from "../Accordion/Accordions";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -148,27 +149,21 @@ export function HomeEventCard (props){
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
                             <Grid item xs>
-                                <Typography gutterBottom variant="subtitle1" align={'left'} className={classes.title}>
-                                    {title}
-                                </Typography>
+                                {/*<Typography gutterBottom variant="subtitle1" align={'left'} className={classes.title}>*/}
+                                {/*    {title}*/}
+                                {/*</Typography>*/}
+                                <EventCardAccordion title={title} description={description}
+                                                    location={location} cost={cost}
+                                                    />
                             </Grid>
-                            <Grid item>
-                                <Typography variant="body2"  align={'left'} >
-                                    {description}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="body2"  align={'left'} color={'error'} >
+                            <Grid item >
+                                <Typography variant="caption"  align={'left'} color={'error'} >
                                     {startDate} - {endDate}
                                 </Typography>
                             </Grid>
+
                             <Grid item>
-                                <Typography variant="body2"  align={'left'} >
-                                    {location} • {cost}
-                                </Typography>
-                            </Grid>
-                            <Grid item>
-                                <Typography variant="body2"  align={'left'} >
+                                <Typography variant="caption"  align={'left'} >
                                     <Tag categories={categories}/>
                                 </Typography>
 

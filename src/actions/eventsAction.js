@@ -23,6 +23,9 @@ export const fetchEvents = () => {
                 for(let i=0;i<results.length;i++){
                     results[i]._source.excerpt= htmlTagCleaner(results[i]._source.excerpt)
                 }
+                results.sort(function(a, b) {
+                    return new Date(a._source.startDate) - new Date(b._source.startDate)
+                });
                 dispatch(fetchEventsSuccess(results))
             }
         });
@@ -47,6 +50,12 @@ export const fetchAllEvents = () => {
                     allEvents[i].cost='free'
                 }
             }
+            allEvents.sort(function(a, b) {
+                var c = new Date(a.startDate);
+                var d = new Date(b.startDate);
+                return c-d
+            });
+
             console.log(allEvents)
             dispatch(fetchAllEventsSuccess(allEvents))
 

@@ -77,6 +77,7 @@ export default function NewsBlogsTab(props) {
                                   link={item.link}
                                   description={item.summary}
                                   photo={item.mediaThumbnail[0].url}
+                                  date={item.dateModified}
                 />
             </Grid>
 

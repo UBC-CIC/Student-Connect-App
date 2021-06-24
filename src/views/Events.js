@@ -19,6 +19,7 @@ import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {connect} from "react-redux";
 import defaultImg from '../assets/img/event_img.png'
+import {array} from "prop-types";
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',
@@ -85,10 +86,29 @@ function Events(props){
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
-
     const handleClose = () => {
         setAnchorEl(null);
+
     };
+
+
+    const sortOldToNew = () => {
+        setAnchorEl(null);
+        allEvents.sort(function(a, b) {
+            var c = new Date(a.startDate);
+            var d = new Date(b.startDate);
+            return c-d
+
+    })};
+    const sortNewToOld = () => {
+        setAnchorEl(null);
+        allEvents.sort(function(a, b) {
+            var c = new Date(a.startDate);
+            var d = new Date(b.startDate);
+            return d-c
+
+        })};
+
     const classes = useStyles()
     console.log(allEvents)
 
@@ -153,8 +173,8 @@ function Events(props){
                             onClose={handleClose}
 
                         >
-                            <MenuItem className={classes.sortDropDown} onClick={handleClose}>New to Old</MenuItem>
-                            <MenuItem className={classes.sortDropDown} onClick={handleClose}>Old to New</MenuItem>
+                            <MenuItem className={classes.sortDropDown} onClick={sortNewToOld}>New to Old</MenuItem>
+                            <MenuItem className={classes.sortDropDown} onClick={sortOldToNew}>Old to New</MenuItem>
                         </Menu>
 
                     </Grid>
