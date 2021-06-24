@@ -1,11 +1,8 @@
 @echo off
 
 :: TODO Finish batch script
-SET bucket-name=%~1
-SET aws-region=%~2
-SET aws-profile=%~3
-SET stack-name=%~4
+SET aws-profile=%~1
 
 CALL sam build
 
-CALL sam deploy
+CALL sam deploy --profile %aws-profile%

@@ -1,6 +1,7 @@
 build/
 dist/
 node_modules/
+.aws-sam/
 awsconfiguration.json
 .secret-*
 .env
