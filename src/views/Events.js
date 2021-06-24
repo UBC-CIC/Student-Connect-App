@@ -110,7 +110,6 @@ function Events(props){
         })};
 
     const classes = useStyles()
-    console.log(allEvents)
 
     const eventsList= allEvents.map((item)=>{
         if(item.fullImage==='false'){

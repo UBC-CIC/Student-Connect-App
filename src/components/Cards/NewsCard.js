@@ -107,6 +107,7 @@ export function HomePageNewsCard(props){
                         </Grid>
                         <Grid item xs={12} sm container>
                             <Grid item xs container direction="column" spacing={2}>
+
                                 <Grid item>
                                     <NewsCardAccordion title={title} content={description} date={date}/>
 

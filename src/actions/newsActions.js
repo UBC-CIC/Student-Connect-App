@@ -36,9 +36,7 @@ export const fetchAllNews = () => {
         API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
             let res = response.data.listNewsTables.items
             res.sort(function(a, b) {
-                var c = new Date(a.dateModified);
-                var d = new Date(b.dateModified);
-                return c-d
+                return new Date(a.dateModified)-new Date(b.dateModified)
             });
             res.map((item)=>{
                 item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');

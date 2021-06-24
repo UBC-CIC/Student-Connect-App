@@ -1,4 +1,4 @@
-const newsBlogsClubsOptions =["Academics","Actvisim","Health and Wellbeing","Culture","Career Development","Grad School","Research",
+const newsBlogsClubsOptions =["Academics","Actvism","Culture","Career Development","Grad School","Health and Wellbeing","Research",
     "Recreation","Religion","Sports"]
 
 const academicOptions=["Arts","Business","Computer Science","Science","Engineering","Biology","Chemistry","Physics","Psychology","Economics","Statistics",

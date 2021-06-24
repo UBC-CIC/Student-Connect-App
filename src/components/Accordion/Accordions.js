@@ -7,7 +7,8 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Grid from "@material-ui/core/Grid";
-import {Container} from "@material-ui/core";
+import {Container, IconButton} from "@material-ui/core";
+import TwitterIcon from "@material-ui/icons/Twitter";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -47,9 +48,11 @@ export function NewsCardAccordion(props) {
                     </Typography>
                 </AccordionSummary>
                 <div>
-                    <Typography variant="caption" className={classes.date} align={'left'} >
-                        Date: {date}
-                    </Typography>
+                    {date ?
+                        <Typography variant="caption" className={classes.date} align={'left'} >
+                            Date: {date}
+                        </Typography>
+                        : null}
 
                 </div>
 
@@ -90,7 +93,7 @@ export function ClubCardAccordion(props) {
 
 export function EventCardAccordion(props) {
     const classes = useStyles();
-    const {description,title, location, cost} = props
+    const {description,title} = props
 
     return (
         <div className={classes.root}>
@@ -105,11 +108,6 @@ export function EventCardAccordion(props) {
                     <Grid item xs={12}>
                         <Typography variant="caption"  align={'left'} >
                             {description}
-                        </Typography>
-                    </Grid>
-                    <Grid item>
-                        <Typography variant="caption"  align={'left'} >
-                            {location} • {cost}
                         </Typography>
                     </Grid>
 

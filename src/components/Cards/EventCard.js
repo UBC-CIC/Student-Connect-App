@@ -95,12 +95,18 @@ export function EventCard (props){
                 <CardContent>
                     <Grid container spacing={1}>
                     <Grid item>
-                        <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
-                            {title}
-                        </Typography>
+                        <EventCardAccordion title={title} description={description}/>
+                        {/*<Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>*/}
+                        {/*    {title}*/}
+                        {/*</Typography>*/}
                     </Grid>
+                        {/*<Grid item xs={12}>*/}
+                        {/*    <Typography variant="caption"  align={'left'} >*/}
+                        {/*        {description}*/}
+                        {/*    </Typography>*/}
+                        {/*</Grid>*/}
 
-                    <Grid item>
+                        <Grid item xs={12}>
                         <Typography variant="caption"  align={'left'} color={'error'}>
                             {startDate} - {endDate}
                         </Typography>
@@ -108,11 +114,6 @@ export function EventCard (props){
                         <Grid item xs={12}>
                             <Typography variant="caption"  align={'left'} >
                                 {location} • {cost}
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Typography variant="caption"  align={'left'} >
-                                {description}
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -148,17 +149,18 @@ export function HomeEventCard (props){
                     </Grid>
                     <Grid item xs={12} sm container>
                         <Grid item xs container direction="column" spacing={2}>
-                            <Grid item xs>
-                                {/*<Typography gutterBottom variant="subtitle1" align={'left'} className={classes.title}>*/}
-                                {/*    {title}*/}
-                                {/*</Typography>*/}
+                            <Grid item xs={12}>
                                 <EventCardAccordion title={title} description={description}
-                                                    location={location} cost={cost}
                                                     />
                             </Grid>
-                            <Grid item >
+                            <Grid item xs={12} xl={12} lg={12} md={12}>
                                 <Typography variant="caption"  align={'left'} color={'error'} >
                                     {startDate} - {endDate}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant="caption"  align={'left'} >
+                                    {location} • {cost}
                                 </Typography>
                             </Grid>
 

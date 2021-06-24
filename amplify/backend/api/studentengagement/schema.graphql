@@ -1,0 +1,52 @@
+type userPreference @model {
+  SPUID: String!
+  newsBlogsClubsPreference: newsBlogsClubsList!
+  academicPreference:academicList!
+  eventsPreference: eventsList!
+  emailNotification: Boolean!
+}
+
+type userData @model {
+  SPUID: String!,
+  displayName: String!,
+  yearLevel: Int!,
+  email: String!
+  primarySpecialization:String!,
+  campus:String!
+
+}
+
+type newsBlogsClubsList{
+  academics: Boolean,
+  actvism: Boolean,
+  culture: Boolean,
+  careerDevelopment: Boolean,
+  gradSchool: Boolean,
+  healthAndWellbeing: Boolean,
+  research: Boolean,
+  recreation: Boolean,
+  religion: Boolean,
+  sports: Boolean,
+}
+type academicList{
+  arts: Boolean,
+  business: Boolean,
+  computerScience: Boolean,
+  engineering: Boolean,
+  biology: Boolean,
+  chemistry: Boolean,
+  physics: Boolean,
+  psychology: Boolean,
+  economics: Boolean,
+  science: Boolean,
+  statistics: Boolean,
+  mathematics: Boolean,
+  philosophy: Boolean,
+  history: Boolean,
+}
+type eventsList{
+  subjectDepartments: Boolean,
+  studentServices: Boolean,
+  faculties: Boolean,
+  universityServices: Boolean,
+}

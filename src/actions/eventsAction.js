@@ -62,7 +62,6 @@ export const fetchAllEvents = () => {
                 return new Date(a.startDate)-new Date(b.startDate)
             });
 
-            console.log(allEvents)
             dispatch(fetchAllEventsSuccess(allEvents))
 
         }).catch((err) => {
