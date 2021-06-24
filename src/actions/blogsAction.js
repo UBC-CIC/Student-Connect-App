@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import {htmlTagCleaner} from "../helpers/htmlTagCleaner";
+import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
 import {listBlogsTables, listNewsTables} from "../graphql/queries";
 

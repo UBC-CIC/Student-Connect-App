@@ -40,6 +40,9 @@ export const fetchAllNews = () => {
                 var d = new Date(b.dateModified);
                 return c-d
             });
+            res.map((item)=>{
+                item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
+            })
 
             dispatch(fetchAllNewsSuccess(res))
         }).catch((err) => {

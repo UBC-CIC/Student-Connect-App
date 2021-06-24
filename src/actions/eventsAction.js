@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import {bracketRemover, htmlTagCleaner} from "../helpers/htmlTagCleaner";
+import {bracketRemover, eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
 import {listClubsTables, listEventsTables} from "../graphql/queries";
 import {fetchAllClubsSuccess} from "./clubAction";
@@ -20,9 +20,10 @@ export const fetchEvents = () => {
                 let results = (JSON.parse(data.Payload));
                 results = JSON.parse(results)
                 results=results.hits.hits
-                for(let i=0;i<results.length;i++){
-                    results[i]._source.excerpt= htmlTagCleaner(results[i]._source.excerpt)
-                }
+                results.map((item)=>{
+                    item._source.excerpt= htmlTagCleaner(item._source.excerpt)
+                })
+
                 results.sort(function(a, b) {
                     return new Date(a._source.startDate) - new Date(b._source.startDate)
                 });
@@ -42,18 +43,23 @@ export const fetchAllEvents = () => {
     return (dispatch) => {
         API.graphql(graphqlOperation(listEventsTables, {limit: 200})).then((response) => {
             let allEvents = response.data.listEventsTables.items
-            for(let i=0;i<allEvents.length;i++) {
-                allEvents[i].excerpt=htmlTagCleaner(allEvents[i].excerpt)
-                allEvents[i].thumbnailImage = bracketRemover(allEvents[i].thumbnailImage)
-                allEvents[i].fullImage = bracketRemover(allEvents[i].fullImage)
-                if(allEvents[i].cost===""){
-                    allEvents[i].cost='free'
+            allEvents.map((item)=>{
+                item.excerpt=htmlTagCleaner(item.excerpt)
+                item.thumbnailImage = bracketRemover(item.thumbnailImage)
+
+                if(item.startDate) item.startDate = eventDateCleaner(item.startDate)
+                if(item.endDate) item.endDate = eventDateCleaner(item.endDate)
+                if(item.endDate) item.endDate = eventEndDateCleaner(item.startDate,item.endDate)
+                item.fullImage=bracketRemover(item.fullImage)
+
+                if(item.cost===""){
+                    item.cost='Free'
                 }
-            }
+
+            })
+
             allEvents.sort(function(a, b) {
-                var c = new Date(a.startDate);
-                var d = new Date(b.startDate);
-                return c-d
+                return new Date(a.startDate)-new Date(b.startDate)
             });
 
             console.log(allEvents)
