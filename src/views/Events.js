@@ -172,8 +172,9 @@ function Events(props){
                             onClose={handleClose}
 
                         >
-                            <MenuItem className={classes.sortDropDown} onClick={sortNewToOld}>New to Old</MenuItem>
-                            <MenuItem className={classes.sortDropDown} onClick={sortOldToNew}>Old to New</MenuItem>
+                            <MenuItem className={classes.sortDropDown} onClick={sortOldToNew}>Most recent</MenuItem>
+                            <MenuItem className={classes.sortDropDown} onClick={sortNewToOld}>Least Recent</MenuItem>
+
                         </Menu>
 
                     </Grid>

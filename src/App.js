@@ -12,7 +12,7 @@ import {Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 import AWS from 'aws-sdk';
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 import {fetchAllNews, fetchNews} from "./actions/newsActions";
 import { connect } from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
@@ -20,7 +20,8 @@ import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
 import {listClubs, listClubsTables} from "./graphql/queries";
 import { API, graphqlOperation } from 'aws-amplify';
-
+import {AmplifySignOut} from "@aws-amplify/ui-react";
+import Amplify, { Auth } from 'aws-amplify';
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -45,18 +46,8 @@ const main = async () => {
     sessionToken:process.env.REACT_APP_sessionToken,
     region: 'ca-central-1',
   });
+  console.log(Auth.currentUserInfo())
 
-  // const params = {
-  //   FunctionName: process.env.REACT_APP_FunctionName,
-  //   Payload:JSON.stringify({
-  //     'index': "clubs",
-  //     'categories': "recreation",
-  //   }),
-  // };
-  // const result = await (new AWS.Lambda().invoke(params).promise());
-  // console.log('Success!');
-  // let data = JSON.parse(result.Payload);
-  // console.log(JSON.parse(data))
 
 };
 
@@ -95,7 +86,9 @@ function App(props) {
 
         </Container>
         <Footer/>
-        </Router>
+        <AmplifySignOut/>
+
+      </Router>
 
 
 

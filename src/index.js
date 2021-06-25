@@ -20,7 +20,6 @@ Amplify.configure(awsconfig);
 ReactDOM.render(
     <AmplifyAuthenticator>
     <Provider store={store}>
-        <AmplifySignOut/>
         <App />
     </Provider>
     </AmplifyAuthenticator>,

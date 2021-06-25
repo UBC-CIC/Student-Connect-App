@@ -1,4 +1,4 @@
-type userPreference @model {
+type userPreference @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   SPUID: String!
   newsBlogsClubsPreference: newsBlogsClubsList!
   academicPreference:academicList!
@@ -6,7 +6,7 @@ type userPreference @model {
   emailNotification: Boolean!
 }
 
-type userData @model {
+type userData  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   SPUID: String!,
   displayName: String!,
   yearLevel: Int!,
