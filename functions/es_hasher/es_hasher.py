@@ -1,4 +1,3 @@
-import json
 import logging
 import boto3
 import os
@@ -70,6 +69,7 @@ def lambda_handler(event, context):
             "Events": [],
             "News": [],
             "Blogs": [],
+            "AthleticsNews": [],
             "Clubs": []
         }
         # Separate the hashes in the ESHashTable by document type into individual lists
@@ -77,7 +77,7 @@ def lambda_handler(event, context):
             es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
 
         # Update ESHashTable and Elasticsearch with respect to events, news and blogs
-        for table_name in ["Events", "News", "Blogs"]:
+        for table_name in ["Events", "News", "Blogs", "AthleticsNews"]:
             # Get all items for the specific table_name
             item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
             response = item_table.scan(ConsistentRead=True)

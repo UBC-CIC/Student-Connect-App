@@ -16,7 +16,6 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-# REGION = boto3.session.Session().region_name
 BLOGS_TABLE = os.environ["BLOGS_TABLE_NAME"]
 EXPIRY_DAYS_OFFSET = int(os.environ["DOCUMENT_EXPIRY_DAYS"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
@@ -120,7 +119,7 @@ def lambda_handler(event, context):
     LOGGER.info(f"Time filtered Blogs: {json.dumps(newly_updated_blogs, indent=4)}")
 
     table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
-    # Create one month TTL for each item and insert into DynamoDB
+    # Create a TTL for each item and insert into DynamoDB
     for blog_item in newly_updated_blogs:
         blog_item["expiresOn"] = get_adjusted_unix_time(blog_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                         EXPIRY_DAYS_OFFSET * 24)

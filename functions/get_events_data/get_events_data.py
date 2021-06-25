@@ -16,7 +16,6 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-# REGION = boto3.session.Session().region_name
 EVENTS_TABLE = os.environ["EVENTS_TABLE_NAME"]
 EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
@@ -132,7 +131,7 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(newly_updated_events, indent=4))
 
     table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
-    # Create TTL for each item and insert into DynamoDB
+    # Create a TTL for each item and insert into DynamoDB
     for event_item in newly_updated_events:
         event_item["expiresOn"] = get_adjusted_unix_time(event_item["endDate"], "%Y-%m-%d %H:%M:%S",
                                                          EVENTS_EXPIRY_OFFSET * 24)

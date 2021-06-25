@@ -23,6 +23,10 @@ Parameters:
     Type: String
     Default: NewsTable
     Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
+  athleticsNewsTable:
+    Type: String
+    Default: AthleticsNewsTable
+    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
   blogsTable:
     Type: String
     Default: BlogsTable
@@ -38,11 +42,11 @@ Parameters:
   newsExpiryDays:
     Type: String
     Default: 60
-    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+    Description: Number of days after which a news article is automatically deleted from DynamoDB
   blogExpiryDays:
     Type: String
     Default: 120
-    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+    Description: Number of days after which a blog post is automatically deleted from DynamoDB
   eventsExpiryDays:
     Type: String
     Default: 2
@@ -125,6 +129,7 @@ Resources:
                   - !Sub ${newsDDBTable.Arn}
                   - !Sub ${blogsDDBTable.Arn}
                   - !Sub ${clubsDDBTable.Arn}
+                  - !Sub ${athleticsNewsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
                   - "ssm:GetParameter"
@@ -167,6 +172,7 @@ Resources:
                   - !Sub ${newsDDBTable.Arn}
                   - !Sub ${blogsDDBTable.Arn}
                   - !Sub ${clubsDDBTable.Arn}
+                  - !Sub ${athleticsNewsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
                   - "dynamoDB:DeleteItem"
@@ -174,10 +180,6 @@ Resources:
                   - "dynamodb:PutItem"
                 Resource:
                   - !Sub ${esHashDDBTable.Arn}
-              - Effect: "Allow"
-                Action:
-                  - "comprehend:*"
-                Resource: "*"
               - Effect: Allow
                 Action:
                   - 'es:ESHttpGet'
@@ -252,6 +254,21 @@ Resources:
       Environment:
         Variables:
           NEWS_TABLE_NAME: !Ref newsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+
+  getAthleticsNewsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: get_athletics_news_data.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO News page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions/get_athletics_news_data
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          ATHLETICS_NEWS_TABLE_NAME: !Ref athleticsNewsTable
           DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
   getBlogData:
@@ -330,6 +347,13 @@ Resources:
       Type: String
       Value: "2021-05-01 06:07:08"
 
+  athleticsNewsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "AthleticsNewsQueryTime"
+      Type: String
+      Value: "2020-01-01 06:07:08"
+
   blogsQueryTime:
     Type: AWS::SSM::Parameter
     Properties:
@@ -364,6 +388,29 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Ref newsTable
+      AttributeDefinitions:
+        - AttributeName: "newsId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "newsId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+      TimeToLiveSpecification:
+        AttributeName: "expiresOn"
+        Enabled: True
+
+  athleticsNewsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref athleticsNewsTable
       AttributeDefinitions:
         - AttributeName: "newsId"
           AttributeType: "S"

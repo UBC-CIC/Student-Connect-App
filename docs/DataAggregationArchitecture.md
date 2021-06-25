@@ -65,6 +65,10 @@ The workflow is as follows:
 Here are the schema outlines for the different DynamoDB Tables.
 They are not final yet and can be modified as needed to simplify keys or remove information that is not necessary.
 All attribute names are in camelCase standard.
+NOTE: All datetimes mentioned in the items are in "America/Vancouver" timezone. This is on the assumption that the
+datetime mentioned in all the websites are "America/Vancouver" timezone unless explicitly stated otherwise. As such, if 
+a datetime is mentioned as `2021-05-23 13:00:00`, the document parsers assume it as timezone and do not perform any extra
+conversion (aside from Time-To-Live calculations in Unix time)
 
 ### Events Schema
 <hr>
@@ -220,6 +224,39 @@ For Example,
         "height": "225"
       }
     ]
+  }
+```
+
+### Athletics News Schema
+<hr>
+
+```
+  {
+    "newsId": MD5 hash of the news link, since that is the unique identifier,
+    "title": Title of the article,
+    "link": Link to the article",
+    "summary": Text summary of the article,
+    "mediaThumbnail": Link to the thumbnail of the article,
+    "categories": String list of all categories of the athletics news
+    "dateModified": Datetime in YYYY-MM-DD HH:MM:SS format, e.g 2021-06-24 20:42:53
+  }
+```
+
+For Example,
+
+```json
+  {
+    "newsId": "5f859c64a56d5458e3ba14919a447a9b",
+    "title": "Steve Manuel - 2020 Community Sport Hero",
+    "link": "http://goheat.prestosports.com/sports/wvball/2020-21/releases/20210303_PacSport_Manuel",
+    "summary": "The UBCO Heat women's volleyball coach receives a Community Sport Hero award for his achievements in 2020.",
+    "mediaThumbnail": "http://goheat.prestosports.com/sports/wvball/2020-21/photos/0001/WVB-Screenshot_2021-03-03_Steve_Manuel_PacificSport_Okanagan.jpg?max_width=640&max_height=480",
+    "categories": [
+      "Female",
+      "Volleyball",
+      "Sports"
+    ],
+    "dateModified": "2021-06-24 20:42:53"
   }
 ```
 

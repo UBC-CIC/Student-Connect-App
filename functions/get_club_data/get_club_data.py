@@ -39,9 +39,9 @@ def parse_club_html_nodes(club_html_nodes):
         club_item["imageLink"] = image_link
 
         paragraphs = node.find_all("p")
-        club_item["description"]= ""
+        club_item["description"] = ""
         if len(paragraphs) == 0:
-            club_item["description"] = "None"
+            club_item["description"] = "Null"
         else:
             for index, paragraph in enumerate(paragraphs):
                 club_item["description"] = club_item["description"] + paragraphs[index].text + "\n"
