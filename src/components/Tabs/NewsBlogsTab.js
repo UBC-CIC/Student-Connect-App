@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NewsBlogsTab(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
-    const {allNews,allBlogs} = props
+    const {allNews,allBlogs,allSportsNews} = props
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
@@ -98,6 +98,22 @@ export default function NewsBlogsTab(props) {
         )
 
     })
+    console.log(allSportsNews)
+
+    const sportsNewsList=allSportsNews.map((item)=>{
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+                <HomePageNewsCard title={item.title}
+                                  categories={item.categories}
+                                  link={item.link}
+                                  description={item.summary}
+                                  photo={item.mediaThumbnail}
+                                  date={item.dateModified}
+                />
+            </Grid>
+
+        )
+    })
 
     return (
         <div className={classes.root}>
@@ -116,6 +132,8 @@ export default function NewsBlogsTab(props) {
                     >
                     <Tab icon={<RssFeedIcon/>}label="News" {...a11yProps(0)}  />
                     <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(1)} />
+                    <Tab icon={<BookIcon/>}label="Sports News" {...a11yProps(2)} />
+
                 </Tabs>
             </AppBar>
             <TabPanel value={value} index={0}>
@@ -128,6 +146,13 @@ export default function NewsBlogsTab(props) {
                     {blogList}
                 </Grid>
             </TabPanel>
+            <TabPanel value={value} index={2}>
+                <Grid container spacing={3} alignItems="stretch">
+                    {sportsNewsList}
+
+                </Grid>
+            </TabPanel>
+
         </div>
     );
 }

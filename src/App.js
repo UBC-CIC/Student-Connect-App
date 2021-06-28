@@ -13,7 +13,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 import AWS from 'aws-sdk';
 import React, {useEffect} from "react";
-import {fetchAllNews, fetchNews} from "./actions/newsActions";
+import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "./actions/newsActions";
 import { connect } from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
@@ -22,6 +22,7 @@ import {listClubs, listClubsTables} from "./graphql/queries";
 import { API, graphqlOperation } from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import Amplify, { Auth } from 'aws-amplify';
+import SignIn from "./views/SignIn";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -56,7 +57,8 @@ main().catch(error => console.error(error));
 function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs}= props
+    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews}= props
+  const signInUrl = process.env.REACT_APP_SignInUrl
 
   useEffect(() => {
     main()
@@ -68,14 +70,18 @@ function App(props) {
     fetchAllEvents()
     fetchAllNews()
     fetchAllBlogs()
+    fetchSportsNews()
+    fetchAllSportsNews()
+
   }, []);
 
   return (
     <div className={classes.app}>
       <Router>
-        <Redirect to="/home" />
+        <Redirect to='/home'/>
         <Navbar/>
         <Container className={classes.container} >
+          {/*<SignIn/>*/}
           <Route path ='/home' exact component={Home}/>
           <Route path ='/explore' exact component={Explore}/>
           <Route path ='/clubs' exact component={Clubs}/>
@@ -111,6 +117,8 @@ const mapDispatchToProps = {
   fetchAllEvents,
   fetchAllNews,
   fetchAllBlogs,
+  fetchSportsNews,
+  fetchAllSportsNews
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

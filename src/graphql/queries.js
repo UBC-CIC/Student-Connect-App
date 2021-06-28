@@ -319,3 +319,40 @@ export const listEventsTables = /* GraphQL */ `
     }
   }
 `;
+export const getAthleticsNewsTable = /* GraphQL */ `
+  query GetAthleticsNewsTable($newsId: String!) {
+    getAthleticsNewsTable(newsId: $newsId) {
+      newsId
+      title
+      link
+      summary
+      mediaThumbnail
+      categories
+      dateModified
+    }
+  }
+`;
+export const listAthleticsNewsTables = /* GraphQL */ `
+  query ListAthleticsNewsTables(
+    $filter: TableAthleticsNewsTableFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listAthleticsNewsTables(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        newsId
+        title
+        link
+        summary
+        mediaThumbnail
+        categories
+        dateModified
+      }
+      nextToken
+    }
+  }
+`;

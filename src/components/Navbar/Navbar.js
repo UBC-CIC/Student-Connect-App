@@ -155,7 +155,8 @@ export default function MiniDrawer() {
                         </Typography>
 
                     <Container>
-                        <Button className={classes.signOutButton} variant={'contained'} startIcon={<ExitToAppIcon/>}>
+                        <Button className={classes.signOutButton} variant={'contained'} startIcon={<ExitToAppIcon/>}
+                        href={process.env.REACT_APP_SignOutUrl}>
                             Sign out
                         </Button>
                     </Container>

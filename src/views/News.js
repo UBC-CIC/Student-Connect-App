@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 function News(props){
     const classes = useStyles()
-    const {allNews,allBlogs} = props
+    const {allNews,allBlogs,allSportsNews} = props
     return(
         <div>
             <Container maxWidth={'xl'} >
@@ -50,7 +50,7 @@ function News(props){
                 <Divider className={classes.divider}/>
             </Container>
             <Container maxWidth={'xl'} >
-                <NewsBlogsTab allNews={allNews} allBlogs={allBlogs}/>
+                <NewsBlogsTab allNews={allNews} allBlogs={allBlogs} allSportsNews={allSportsNews}/>
 
             </Container>
 
@@ -62,7 +62,8 @@ function News(props){
 const mapStateToProps = (state) => {
     return {
         allNews: state.allNews,
-        allBlogs:state.allBlogs
+        allBlogs:state.allBlogs,
+        allSportsNews:state.allSportsNews
     };
 };
 

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import {newsReducer, allNewsReducer}from "./newsReducer";
+import {newsReducer, allNewsReducer, allSportsNewsReducer, sportsNewsReducer} from "./newsReducer";
 import {eventsReducer,allEventsReducer} from "./eventsReducer";
 import {blogsReducer,allBlogsReducer} from "./blogsReducer";
 import {clubsReducer,allClubsReducer} from "./clubsReducer";
@@ -12,6 +12,8 @@ export default combineReducers({
     allClubs:allClubsReducer,
     allEvents:allEventsReducer,
     allNews:allNewsReducer,
-    allBlogs:allBlogsReducer
+    allBlogs:allBlogsReducer,
+    sportsNews:sportsNewsReducer,
+    allSportsNews:allSportsNewsReducer
 
 });
