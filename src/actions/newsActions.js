@@ -37,7 +37,7 @@ export const fetchAllNews = () => {
         API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
             let res = response.data.listNewsTables.items
             res.sort(function(a, b) {
-                return new Date(new Date(b.dateModified)-a.dateModified)
+                return new Date(new Date(b.dateModified)-new Date(a.dateModified))
             });
             res.map((item)=>{
                 item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
@@ -68,8 +68,16 @@ export const fetchSportsNews = () => {
         lambda.invoke(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
             else{
-                let results = (JSON.parse(JSON.parse(data.Payload)));
-                dispatch(fetchSportsNewsSuccess(results.hits.hits))
+                let results = (JSON.parse(JSON.parse(data.Payload))).hits.hits;
+                results.sort(function(a, b) {
+                    return (new Date(b._source.dateModified)-new Date(a._source.dateModified))
+                });
+                results.map((item)=>{
+                    item._source.dateModified = new Date(item._source.dateModified).toLocaleDateString('en-CA');
+
+                })
+                dispatch(fetchSportsNewsSuccess(results))
+
             }
         });
     }
@@ -85,7 +93,7 @@ export const fetchAllSportsNews = () => {
         API.graphql(graphqlOperation(listAthleticsNewsTables, {limit: 200})).then((response) => {
             let res = response.data.listAthleticsNewsTables.items
             res.sort(function(a, b) {
-                return new Date(new Date(b.dateModified)-a.dateModified)
+                return new Date(new Date(b.dateModified)-new Date(a.dateModified))
             });
             res.map((item)=>{
                 item.categories=(bracketRemover(item.categories).split(","))

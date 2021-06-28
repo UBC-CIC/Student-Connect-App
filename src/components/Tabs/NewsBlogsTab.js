@@ -10,6 +10,8 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
+import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
+import {Menu, MenuItem} from "@material-ui/core";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -57,18 +59,17 @@ const useStyles = makeStyles((theme) => ({
     },
     grid:{
         display: 'flex'
-    }
+    },
+    sortDropDown:{
+        textTransform:'none',
+    },
+
 }));
 
 export default function NewsBlogsTab(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
     const {allNews,allBlogs,allSportsNews} = props
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
-    console.log(allNews)
     const newsList= allNews.map((item)=>{
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -83,7 +84,10 @@ export default function NewsBlogsTab(props) {
 
         )
     })
-    console.log(allBlogs)
+    const handleChange = (event, newValue) => {
+        setValue(newValue);
+    };
+
     const blogList=allBlogs.map((item)=>{
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -98,22 +102,23 @@ export default function NewsBlogsTab(props) {
         )
 
     })
-    console.log(allSportsNews)
 
     const sportsNewsList=allSportsNews.map((item)=>{
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
-                <HomePageNewsCard title={item.title}
-                                  categories={item.categories}
-                                  link={item.link}
-                                  description={item.summary}
-                                  photo={item.mediaThumbnail}
-                                  date={item.dateModified}
+                <HomePageNewsCard title={item._source.title}
+                                  categories={item._source.categories}
+                                  link={item._source.link}
+                                  description={item._source.summary}
+                                  photo={item._source.mediaThumbnail}
+                                  date={item._source.dateModified}
                 />
             </Grid>
 
         )
     })
+
+
 
     return (
         <div className={classes.root}>
@@ -131,8 +136,8 @@ export default function NewsBlogsTab(props) {
                     }}>
                     >
                     <Tab icon={<RssFeedIcon/>}label="News" {...a11yProps(0)}  />
-                    <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(1)} />
-                    <Tab icon={<BookIcon/>}label="Sports News" {...a11yProps(2)} />
+                    <Tab icon={<SportsBasketballIcon/>}label="Sports News" {...a11yProps(1)} />
+                    <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(2)} />
 
                 </Tabs>
             </AppBar>
@@ -143,15 +148,16 @@ export default function NewsBlogsTab(props) {
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <Grid container spacing={3} alignItems="stretch">
-                    {blogList}
-                </Grid>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <Grid container spacing={3} alignItems="stretch">
                     {sportsNewsList}
 
                 </Grid>
             </TabPanel>
+            <TabPanel value={value} index={2}>
+                <Grid container spacing={3} alignItems="stretch">
+                    {blogList}
+                </Grid>
+            </TabPanel>
+
 
         </div>
     );

@@ -95,17 +95,13 @@ function Events(props){
     const sortOldToNew = () => {
         setAnchorEl(null);
         allEvents.sort(function(a, b) {
-            var c = new Date(a.startDate);
-            var d = new Date(b.startDate);
-            return c-d
+            return new Date(a.startDate)-new Date(b.startDate)
 
     })};
     const sortNewToOld = () => {
         setAnchorEl(null);
         allEvents.sort(function(a, b) {
-            var c = new Date(a.startDate);
-            var d = new Date(b.startDate);
-            return d-c
+            return new Date(b.startDate)-new Date(a.startDate)
 
         })};
 

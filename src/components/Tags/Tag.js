@@ -1,7 +1,9 @@
 
 import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import {Button, withStyles} from "@material-ui/core";
+import {Button, IconButton, withStyles} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import React from "react";
 const StyledButton = withStyles({
     root: {
         background: '#40B4E5',
@@ -26,11 +28,13 @@ const StyledButton = withStyles({
 export function Tag(props){
     const {categories} = props
     return(
-        <div>
+            categories ?
+                    <div>
+                    {categories.map(category => <StyledButton  >
+                        {category}</StyledButton>)}
+                    </div>
+                : null
 
-            {categories.map(category => <StyledButton  >
-                {category}</StyledButton>)}
-        </div>
         // <StyledButton>{categories[0]}</StyledButton>
     )
 
