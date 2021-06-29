@@ -74,6 +74,10 @@ export const fetchSportsNews = () => {
                 });
                 results.map((item)=>{
                     item._source.dateModified = new Date(item._source.dateModified).toLocaleDateString('en-CA');
+                    let male = item._source.categories.indexOf('Male')
+                    let female = item._source.categories.indexOf('Female')
+                    if(male>-1) item._source.categories[male]='Men\'s'
+                    if (female>-1) item._source.categories[female]='Women\'s'
 
                 })
                 dispatch(fetchSportsNewsSuccess(results))

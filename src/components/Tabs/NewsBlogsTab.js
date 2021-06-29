@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
-import {Menu, MenuItem} from "@material-ui/core";
+import {Button, Menu, MenuItem} from "@material-ui/core";
+import SortIcon from "@material-ui/icons/Sort";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -69,6 +70,15 @@ const useStyles = makeStyles((theme) => ({
 export default function NewsBlogsTab(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+
+    };
+
     const {allNews,allBlogs,allSportsNews} = props
     const newsList= allNews.map((item)=>{
         return(
@@ -119,6 +129,44 @@ export default function NewsBlogsTab(props) {
     })
 
 
+    const sortOldToNew = () => {
+        setAnchorEl(null);
+        switch (value){
+            case 0:
+                allNews.sort(function(a, b) {
+                    return new Date(a.dateModified)-new Date(b.dateModified)
+
+                })
+                break
+            case 1:
+                allSportsNews.sort(function(a, b) {
+                    return new Date(a._source.dateModified)-new Date(b._source.dateModified)
+                })
+                break
+            default:
+                break
+
+        }
+    }
+    const sortNewToOld = () => {
+        setAnchorEl(null);
+        switch (value){
+            case 0:
+                allNews.sort(function(a, b) {
+                    return new Date(b.dateModified)-new Date(a.dateModified)
+                })
+                console.log(allNews)
+                break
+            case 1:
+                allSportsNews.sort(function(a, b) {
+                    return new Date(b._source.dateModified)-new Date(a._source.dateModified)
+                })
+                break
+            default:
+                break
+
+        }
+    }
 
     return (
         <div className={classes.root}>
@@ -141,6 +189,21 @@ export default function NewsBlogsTab(props) {
 
                 </Tabs>
             </AppBar>
+                <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
+                    Sort By
+                </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+
+                >
+                    <MenuItem className={classes.sortDropDown} onClick={() => sortOldToNew()}>Most recent</MenuItem>
+                    <MenuItem className={classes.sortDropDown} onClick={() => sortNewToOld()}>Least Recent</MenuItem>
+
+                </Menu>
             <TabPanel value={value} index={0}>
                 <Grid container spacing={3} alignItems="stretch">
                     {newsList}

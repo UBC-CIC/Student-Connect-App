@@ -112,6 +112,12 @@ function Home(props) {
                 <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Sports News
+                </Typography>
+
+                <Divider className={classes.divider}/>
+
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Events
                 </Typography>
                 <EventsCarousel/>
@@ -151,7 +157,7 @@ function Home(props) {
 const mapStateToProps = (state) => {
     return {
         news: state.news,
-        blogs:state.blogs
+        blogs:state.blogs,
     };
 };
 

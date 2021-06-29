@@ -16,6 +16,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {Tag} from '../Tags/Tag'
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {EventCardAccordion} from "../Accordion/Accordions";
+import {CardFooterButtons} from "../Button/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -120,12 +121,7 @@ export function EventCard (props){
                             <Tag categories={categories}/>
                         </Grid>
                         <Grid item xs={12}>
-                            <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
-                                Read more
-                            </Button>
-                            <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
-                                Like
-                            </Button>
+                            <CardFooterButtons link = {link}/>
                         </Grid>
                     </Grid>
                 </CardContent>
@@ -171,12 +167,7 @@ export function HomeEventCard (props){
 
                             </Grid>
                             <Grid item>
-                                <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
-                                    Read more
-                                </Button>
-                                <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
-                                    Like
-                                </Button>
+                                <CardFooterButtons link = {link}/>
 
                             </Grid>
 

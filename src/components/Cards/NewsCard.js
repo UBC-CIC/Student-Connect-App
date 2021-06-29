@@ -13,6 +13,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {NewsCardAccordion} from "../Accordion/Accordions";
+import {CardFooterButtons} from "../Button/Button";
 
 export function BigNewsCard(props){
     const classes = useStyles();
@@ -119,13 +120,7 @@ export function HomePageNewsCard(props){
 
                                 </Grid>
                                 <Grid item>
-                                    <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
-                                        Read more
-                                    </Button>
-                                    <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
-                                        Like
-                                    </Button>
-
+                                    <CardFooterButtons link={link}/>
                                 </Grid>
 
                             </Grid>

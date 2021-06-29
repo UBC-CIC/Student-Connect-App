@@ -30,8 +30,8 @@ export function Tag(props){
     return(
             categories ?
                     <div>
-                    {categories.map(category => <StyledButton  >
-                        {category}</StyledButton>)}
+                    {categories.map(category =>
+                        <StyledButton>{category}</StyledButton>)}
                     </div>
                 : null
 
