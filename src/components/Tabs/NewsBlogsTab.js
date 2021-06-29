@@ -11,8 +11,10 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
-import {Button, Menu, MenuItem} from "@material-ui/core";
+import {Button, IconButton, Menu, MenuItem} from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import Container from "@material-ui/core/Container";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -60,6 +62,16 @@ const useStyles = makeStyles((theme) => ({
     },
     grid:{
         display: 'flex'
+    },
+    button:{
+        backgroundColor:"#0055B7",
+        color:"white",
+        textTransform:'none',
+        float:'left',
+        paddingLeft:"20px",
+        paddingRight:"20px",
+        marginTop: '20px'
+
     },
     sortDropDown:{
         textTransform:'none',
@@ -170,6 +182,7 @@ export default function NewsBlogsTab(props) {
 
     return (
         <div className={classes.root}>
+<Container>
 
             <AppBar position="static" className={classes.tabBar}>
                 <Tabs
@@ -189,6 +202,8 @@ export default function NewsBlogsTab(props) {
 
                 </Tabs>
             </AppBar>
+            {(value===0||value===1) ?
+                <div>
                 <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                     Sort By
                 </Button>
@@ -200,10 +215,13 @@ export default function NewsBlogsTab(props) {
                     onClose={handleClose}
 
                 >
-                    <MenuItem className={classes.sortDropDown} onClick={() => sortOldToNew()}>Most recent</MenuItem>
-                    <MenuItem className={classes.sortDropDown} onClick={() => sortNewToOld()}>Least Recent</MenuItem>
-
+                    <MenuItem className={classes.sortDropDown} onClick={() => sortNewToOld()}>Most recent</MenuItem>
+                    <MenuItem className={classes.sortDropDown} onClick={() => sortOldToNew()}>Least Recent</MenuItem>
                 </Menu>
+                </div>
+                : null}
+</Container>
+
             <TabPanel value={value} index={0}>
                 <Grid container spacing={3} alignItems="stretch">
                     {newsList}
