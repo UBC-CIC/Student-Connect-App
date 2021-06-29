@@ -14,6 +14,10 @@ import Grid from "@material-ui/core/Grid";
 import {clubCategories} from "../../assets/ClubCategories";
 import {connect} from "react-redux";
 import ClubCard from "../Cards/ClubCard";
+import Button from "@material-ui/core/Button";
+import {Accordion, AccordionDetails, ButtonGroup} from "@material-ui/core";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -61,8 +65,24 @@ const useStyles = makeStyles((theme) => ({
     },
     grid:{
         display: 'flex'
+    },
+    button:{
+        backgroundColor:"#0055B7",
+        color:"white",
+        textTransform:'none',
+        float:'left',
+        paddingLeft:"20px",
+        paddingRight:"20px",
+        marginRight: theme.spacing(1),
+        marginTop: theme.spacing(1)
+
+    },
+    title:{
+    fontWeight: '400'
     }
-}));
+    }
+
+));
 
 
 function ClubsTabs(props) {
@@ -98,31 +118,34 @@ function ClubsTabs(props) {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static" className={classes.tabBar}>
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    indicatorColor="secondary"
-                    textColor="white"
-                    variant="scrollable"
-                    scrollButtons="auto"
-                    classes={{
-                        indicator: classes.indicator
-                    }}>
-
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
                 >
-                    {clubCategories.map((option,index)=>
-                        <Tab label={option} {...a11yProps(index)} onClick={()=>getCategories(option)} />
+                    <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
+                        Categories
+                    </Typography>
+                </AccordionSummary>
+                <AccordionDetails>
 
-                    )}
+                <Grid container spacing={3}>
+                        <Grid item>
 
-                </Tabs>
-            </AppBar>
-            <Container >
+                        {clubCategories.map((option,index)=>
+                            <Button className={classes.button} label={option} onClick={()=>getCategories(option)} >
+                                {option}
+                            </Button>
+                        )}
+                        </Grid>
+
+                    </Grid>
+                </AccordionDetails>
+            </Accordion>
                 <Grid container spacing={4}>
                     {clubsList}
                 </Grid>
-            </Container>
         </div>
     );
 }
