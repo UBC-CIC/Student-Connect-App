@@ -5,6 +5,7 @@ node_modules/
 awsconfiguration.json
 .secret-*
 .env
+.cert
 
 #amplify
 amplify/\#current-cloud-backend

@@ -9,12 +9,19 @@ import Button from "@material-ui/core/Button";
 import List from "@material-ui/core/List";
 import CloseIcon from '@material-ui/icons/Close';
 import {PreferenceListItem} from "../ListItem/ListItem";
-import {newsBlogsClubsOptions,academicOptions,eventsOptions} from "../../assets/SurveyCategories";
+import {
+    newsBlogsClubsOptions,
+    academicOptions,
+    eventsOptions,
+    mensSportsOptions,
+    womensSportOptions, womensSportsOptions
+} from "../../assets/SurveyCategories";
 import BookIcon from "@material-ui/icons/Book";
 import EditIcon from '@material-ui/icons/Edit';
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 import EventIcon from '@material-ui/icons/Event';
+import {Sports} from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -76,9 +83,11 @@ export default function UserPreferenceModal(props){
                     </Toolbar>
                 </AppBar>
                 <List>
-                    <PreferenceListItem label={"News, Blogs and Clubs"} nestedItem={newsBlogsClubsOptions} icon={<RssFeedIcon/>}/>
-                    <PreferenceListItem label={"Events"} nestedItem={eventsOptions} icon={<EventIcon/>}/>
-                    <PreferenceListItem label={"Academic"} nestedItem={academicOptions} icon={<BookIcon/>}/>
+                    <PreferenceListItem label={"News, Blogs and Clubs"} nestedItem={newsBlogsClubsOptions.map(item=> item.name)} icon={<RssFeedIcon/>}/>
+                    <PreferenceListItem label={"Events"} nestedItem={eventsOptions.map(item=> item.name)} icon={<EventIcon/>}/>
+                    <PreferenceListItem label={"Academic"} nestedItem={academicOptions.map(item=> item.name)} icon={<BookIcon/>}/>
+                    <PreferenceListItem label={"Men's Sports"} nestedItem={mensSportsOptions.map(item=> item.name)} icon={<Sports/>}/>
+                    <PreferenceListItem label={"Women's Sports"} nestedItem={womensSportsOptions.map(item=> item.name)} icon={<Sports/>}/>
 
 
                 </List>

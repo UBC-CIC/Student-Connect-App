@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
-import {NewsBlogsClubs, Academic, Events} from "./SurveySections";
+import {NewsBlogsClubs, Academic, Events, Sports} from "./SurveySections";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
@@ -195,17 +195,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['News, Blogs, Clubs', 'Academic', 'Events'];
+    return ['News, Blogs, Clubs', 'Academic', 'Events', 'Sports'];
 }
 
 function getStepContent(step) {
     switch (step) {
+        case 3:
+            return <Sports/>
         case 0:
             return <NewsBlogsClubs/>;
         case 1:
             return <Academic/>;
-        default:
+        case 2:
             return <Events/>;
+
+        default:
+            return <div>error</div>
     }
 }
 

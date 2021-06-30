@@ -18,38 +18,8 @@ import Button from "@material-ui/core/Button";
 import {Accordion, AccordionDetails, ButtonGroup} from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
-function TabPanel(props) {
-    const { children, value, index, ...other } = props;
+import CategoryIcon from '@material-ui/icons/Category';
 
-    return (
-        <div
-            role="tabpanel"
-            hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
-            {...other}
-        >
-            {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
-                </Box>
-            )}
-        </div>
-    );
-}
-
-TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-};
-
-function a11yProps(index) {
-    return {
-        id: `simple-tab-${index}`,
-        'aria-controls': `simple-tabpanel-${index}`,
-    };
-}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -77,9 +47,14 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(1)
 
     },
-    title:{
-    fontWeight: '400'
-    }
+        title:{
+        fontWeight: '400'
+        },
+        accordion:{
+        borderBottom:"10px",
+            borderBottomColor:"#00A7E1",
+            boxShadow:"none"
+        }
     }
 
 ));
@@ -118,12 +93,13 @@ function ClubsTabs(props) {
 
     return (
         <div className={classes.root}>
-            <Accordion>
+            <Accordion className={classes.accordion}>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
+                    <CategoryIcon style={{marginRight:"20px", color:"#00A7E1"}}/>
                     <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
                         Categories
                     </Typography>

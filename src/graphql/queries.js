@@ -45,6 +45,44 @@ export const getUserPreference = /* GraphQL */ `
         subjectDepartments
         universityServices
       }
+      sportsPreference {
+        mensSportsInterest
+        womensSportsInterest
+        mensSportsList {
+          baseball
+          basketball
+          crew
+          crossCountry
+          football
+          golf
+          iceHockey
+          lacrosse
+          skiing
+          soccer
+          squash
+          swimmingAndDriving
+          tennis
+          trackAndField
+          wrestling
+        }
+        womensSportsList {
+          basketball
+          crew
+          crossCountry
+          fieldHockey
+          golf
+          iceHockey
+          lacrosse
+          skiing
+          soccer
+          softball
+          squash
+          swimmingAndDriving
+          tennis
+          trackAndField
+          volleyball
+        }
+      }
       id
       newsBlogsClubsPreference {
         academics
@@ -56,7 +94,6 @@ export const getUserPreference = /* GraphQL */ `
         recreation
         religion
         research
-        sports
       }
       owner
       updatedAt
@@ -119,6 +156,10 @@ export const listUserPreferences = /* GraphQL */ `
           subjectDepartments
           universityServices
         }
+        sportsPreference {
+          mensSportsInterest
+          womensSportsInterest
+        }
         id
         newsBlogsClubsPreference {
           academics
@@ -130,7 +171,6 @@ export const listUserPreferences = /* GraphQL */ `
           recreation
           religion
           research
-          sports
         }
         owner
         updatedAt
