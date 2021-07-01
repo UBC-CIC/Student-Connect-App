@@ -12,6 +12,8 @@ from datetime import datetime
 
 from typing import Set
 
+from requests import RequestException
+
 """
 File for development purposes, tests python code locally
 """
@@ -164,11 +166,28 @@ def get_all_events(url):
         events.extend(parse_events(json_response))
     return events
 
-with open("../parsed_data/newResult2.json", "r") as file:
 
-    test_string = "he'l'l'o"
-    new_string = test_string.replace("'", '"')
-    print(new_string)
+with open("../parsed_data/newResult2.json", "r") as file:
+    url = "https://www.ubcsuo.ca/club-directory-listing/o"
+    club_html_nodes = []
+    html_result = requests.get(url).text
+    html_soup = BeautifulSoup(html_result, "html.parser")
+    links_block = html_soup.find("div", {"class": "view-content"})
+    club_links = links_block.find_all("a")
+    for club_link in club_links:
+        if club_link.attrs['href'] == "/health-dental" \
+                or club_link.attrs['href'] == "/u-pass" \
+                or club_link.attrs['href'] == "/club-directory":
+            continue
+        else:
+            club_page_url = f"{STUDENT_UNION_BASE_URL}{club_link.attrs['href']}"
+            try:
+                club_html = requests.get(club_page_url).text
+                club_soup = BeautifulSoup(club_html, "html.parser")
+                club_html_nodes.append(club_soup.find("div", {"class": "club-item-content"}))
+            except RequestException as e:
+                print(f"Network request for club:{club_page_url} failed")
+    print(club_html_nodes)
 
     # json_response = feedparser.parse(requests.get("https://events.ok.ubc.ca/events/feed/").text)
     # file.write(json.dumps(json_response, indent=4))

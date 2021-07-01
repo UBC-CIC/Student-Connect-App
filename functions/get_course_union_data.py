@@ -51,7 +51,7 @@ def parse_club_html_nodes(club_html_nodes):
     return clubs
 
 def get_course_unions(url):
-    letter_list = ["B", "C", "E", "G", "H", "M", "N", "P", "Q", "S", "V"]
+    letter_list = ["A", "B", "C", "E", "G", "H", "M", "N", "P", "Q", "S", "V"]
     club_jsons = []
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(url)

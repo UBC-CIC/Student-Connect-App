@@ -311,7 +311,7 @@ For Example,
     }
 ```
 
-## Elasticsearch Schema
+### Elasticsearch Schema
 <hr>
 
 The documents in Elasticsearch have the same schema as the individual Website Data DynamoDB tables, with the addition

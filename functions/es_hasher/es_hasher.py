@@ -56,6 +56,7 @@ def lambda_handler(event, context):
     """
     Lambda entry-point
     """
+    # TODO Pass in data source to update via event parameter
     try:
         # Get all hashes of all items currently in Elasticsearch via ESHash DynamoDB Table
         hash_table = DYNAMODB_RESOURCE.Table(ES_HASH_TABLE)

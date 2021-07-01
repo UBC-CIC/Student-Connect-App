@@ -10,6 +10,7 @@ Globals:
     Environment:
       Variables:
         DEBUG_MODE: True
+        BUCKET_NAME: !Ref DataStoreBucket
 
 Parameters:
   deploymentBucketName:
@@ -92,6 +93,12 @@ Outputs:
       Name: !Sub "${AWS::StackName}-ESDomainName"
 
 Resources:
+
+  DataStoreBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub "engagement-app-datastore-bucket-${AWS::Region}-${AWS::AccountId}"
+
   DataGrabberLambdaIAMRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -135,6 +142,10 @@ Resources:
                   - "ssm:GetParameter"
                   - "ssm:PutParameter"
                 Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "s3:PutObject"
+                Resource: !Sub ${DataStoreBucket.Arn}
 
   esHasherLambdaIAMRole:
     Type: "AWS::IAM::Role"
@@ -225,6 +236,226 @@ Resources:
                 Resource:
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
+
+  StatesExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "states.${AWS::Region}.amazonaws.com"
+            Action: "sts:AssumeRole"
+
+  TranscribeStateMachine:
+    Type: "AWS::StepFunctions::StateMachine"
+    Properties:
+      RoleArn: !GetAtt StatesExecutionRole.Arn
+      DefinitionString:
+        !Sub |-
+        {
+          "StartAt": "Check if Events refresh",
+          "States": {
+            "Check if Events refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "Events",
+                  "Next": "Get Events Data"
+                }
+              ],
+              "Default": "Check if News refresh"
+            },
+            "Get Events Data": {
+              "Type":  "Task",
+              "Resource": "${getEventsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.eventsResult",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if News refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "News",
+                  "Next": "Get News Data"
+                }
+              ],
+              "Default": "Check if Blogs refresh"
+            },
+            "Get News Data": {
+              "Type":  "Task",
+              "Resource": "${getNewsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.newsResult",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Blogs refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "Blogs",
+                  "Next": "Get Blogs Data"
+                }
+              ],
+              "Default": "Check if Athletics News refresh"
+            },
+            "Get Blogs Data": {
+              "Type":  "Task",
+              "Resource": "${getBlogData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.blogResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Athletics News refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "AthleticsNews",
+                  "Next": "Get Athletics News Data"
+                }
+              ],
+              "Default": "Check if Clubs refresh"
+            },
+            "Get Athletics News Data": {
+              "Type":  "Task",
+              "Resource": "${getAthleticsNewsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.athleticsNewsResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Clubs refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "",
+                  "Next": "Get Clubs Data"
+                }
+              ],
+              "Default": "Complete"
+            },
+            "Get Clubs Data": {
+              "Type":  "Task",
+              "Resource": "${getClubData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.clubResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Update Elasticsearch": {
+              "Type": "Task",
+              "Resource": "${esHasher.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.esHasherResult",
+              "Next": "Complete"
+            },
+            "Complete": {
+              "Type": "Succeed"
+            }
+          }
+        }
+
+
+  CloudwatchEventRuleIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "events.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: StartStateMachinePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'states:DescribeExecution'
+                  - 'states:StartExecution'
+                Resource:
+                  - !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:${TranscribeStateMachine.Name}:*'
+                  - !Ref TranscribeStateMachine
+
+  EventsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: Triggers the State machine to retrieve and save Events data, every day
+      Name: EventsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt TranscribeStateMachine.Arn
+          Id: EventsTarget
+          Input: '{"dataType": "Events"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  NewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: Triggers the State machine to retrieve and save News data, every 7 days
+      Name: NewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(10080 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt TranscribeStateMachine.Arn
+          Id: NewsTarget
+          Input: '{"dataType": "News"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  BlogsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
+      Name: BlogsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(10080 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt TranscribeStateMachine.Arn
+          Id: BlogsTarget
+          Input: '{"dataType": "Blogs"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  AthleticsNewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
+      Name: AthleticsNewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(10080 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt TranscribeStateMachine.Arn
+          Id: AthleticsNewsTarget
+          Input: '{"dataType": "AthleticsNews"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  ClubsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    Properties:
+      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
+      Name: ClubsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(525600 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt TranscribeStateMachine.Arn
+          Id: ClubsTarget
+          Input: '{"dataType": "Clubs"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
   getEventsData:
     Type: 'AWS::Serverless::Function'

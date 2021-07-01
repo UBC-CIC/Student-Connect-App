@@ -33,8 +33,9 @@ def pwd_generator(size=8):
 
 def configure_cognito_lambda_handler(event, context):
     """
-    Lambda function that creates a cognito identity pool user that is authorized to access the elasticsearch
-    cluster via Kibana
+    Lambda function that creates a Cognito Identity Pool user with a pre-generated password
+    that is authorized to access the elasticsearch cluster via Kibana.
+    This function runs once during build time and is used as a lambda based custom-resource
     """
     LOGGER.info("Received event: %s" % json.dumps(event))
 

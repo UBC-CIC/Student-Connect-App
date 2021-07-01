@@ -66,6 +66,7 @@ def search_es_index(index, categories):
     :return: Returns the result of the Elasticsearch query
     """
     query_body = {
+        "from": 0, "size": 30,
         "query": {
             "more_like_this": {
                 "fields": [
