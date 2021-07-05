@@ -27,20 +27,33 @@ const BlueCheckbox = withStyles({
 })((props) => <Checkbox color="default" {...props} />);
 
 export default function SurveyCheckbox(props) {
+    const {label, backendName,category,userPreference} = props
+
+    function checkSport() {
+        if(category==="mensSportsList" || category==="womensSportsList"){
+            console.log(category)
+            return userPreference.sportsPreference[category][backendName]
+        }
+        return userPreference[category][backendName]
+
+    }
     const classes = useStyles()
     const [state, setState] = React.useState({
-        checkedA: false,
+        checked: checkSport(),
     });
 
     const handleChange = (event) => {
-        setState({ ...state, [event.target.name]: event.target.checked });
-    };
-    const {label} = props
+        setState({ checked: event.target.checked });
 
+            console.log(props)
+            props.handleChange({category:category,
+                backendName:backendName})
+    }
     return (
         <FormGroup row>
             <FormControlLabel
-                control={<BlueCheckbox checked={state.checkedA} onChange={handleChange} name="checkedA"/>}
+                control={<BlueCheckbox checked={state.checked} label={backendName} onChange={handleChange} name="checked"
+                />}
                 label={<Typography variant={"caption"}>{label}</Typography>}
             />
         </FormGroup>

@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export function NewsBlogsClubs(){
+export function NewsBlogsClubs(props){
     const classes = useStyles();
     return(
         <div>
@@ -41,14 +41,17 @@ export function NewsBlogsClubs(){
             </Typography>
             <Divider className={classes.divider}/>
 
-            {newsBlogsClubsOptions.map(option => <SurveyCheckbox label={option.name}/>)}
+            {newsBlogsClubsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                                 handleChange={props.handleChange} category={"newsBlogsClubsPreference"}
+                                                                 userPreference={props.userPreference}/>)}
 
         </div>
 
     )
 }
-export function Events(){
+export function Events(props){
     const classes = useStyles();
+
 
 
     return(
@@ -57,13 +60,15 @@ export function Events(){
                 You would be interested in attending events organised in which of the following areas?
             </Typography>
             <Divider className={classes.divider}/>
-            {eventsOptions.map(option => <SurveyCheckbox label={option.name}/>)}
+            {eventsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                         handleChange={props.handleChange} category={"eventsPreference"}
+                                                         userPreference={props.userPreference}/>) }
 
         </div>
 
     )
 }
-export function Academic(){
+export function Academic(props){
     const classes = useStyles();
 
     return(
@@ -74,13 +79,15 @@ export function Academic(){
                 </Typography>
                 <Divider className={classes.divider}/>
 
-                {academicOptions.map(option => <SurveyCheckbox label={option.name}/>)}
+                {academicOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                               handleChange={props.handleChange} category={"academicPreference"}
+                                                               userPreference={props.userPreference}/>)}
             </div>
         </div>
 
     )
 }
-export function Sports(){
+export function Sports(props){
     const classes = useStyles();
 
     return(
@@ -95,13 +102,17 @@ export function Sports(){
                 </Typography>
 
 
-                {mensSportsOptions.map(option => <SurveyCheckbox label={option.name}/>)}
+                {mensSportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                                 handleChange={props.handleChange} category={"mensSportsList"}
+                                                                 userPreference={props.userPreference}/>)}
                 <Divider className={classes.divider}/>
                 <Typography align={'left'} variant="subtitle1" className={classes.title}>
                     Women's Sports
                 </Typography>
 
-                {womensSportsOptions.map(option => <SurveyCheckbox label={option.name}/>)}
+                {womensSportsOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
+                                                                   handleChange={props.handleChange} category={"womensSportsList"}
+                                                                   userPreference={props.userPreference}/>)}
 
             </div>
         </div>

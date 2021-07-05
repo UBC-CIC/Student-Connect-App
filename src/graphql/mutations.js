@@ -52,8 +52,6 @@ export const createUserPreference = /* GraphQL */ `
         universityServices
       }
       sportsPreference {
-        mensSportsInterest
-        womensSportsInterest
         mensSportsList {
           baseball
           basketball
@@ -92,7 +90,7 @@ export const createUserPreference = /* GraphQL */ `
       id
       newsBlogsClubsPreference {
         academics
-        actvism
+        activism
         careerDevelopment
         culture
         gradSchool
@@ -157,8 +155,6 @@ export const deleteUserPreference = /* GraphQL */ `
         universityServices
       }
       sportsPreference {
-        mensSportsInterest
-        womensSportsInterest
         mensSportsList {
           baseball
           basketball
@@ -197,7 +193,7 @@ export const deleteUserPreference = /* GraphQL */ `
       id
       newsBlogsClubsPreference {
         academics
-        actvism
+        activism
         careerDevelopment
         culture
         gradSchool
@@ -262,8 +258,6 @@ export const updateUserPreference = /* GraphQL */ `
         universityServices
       }
       sportsPreference {
-        mensSportsInterest
-        womensSportsInterest
         mensSportsList {
           baseball
           basketball
@@ -302,7 +296,7 @@ export const updateUserPreference = /* GraphQL */ `
       id
       newsBlogsClubsPreference {
         academics
-        actvism
+        activism
         careerDevelopment
         culture
         gradSchool

@@ -20,6 +20,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
 import {ButtonGroup} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
+import {mensSportsOptions} from "../../assets/SurveyCategories";
 const QontoConnector = withStyles({
     alternativeLabel: {
         top: 10,
@@ -198,19 +199,77 @@ function getSteps() {
     return ['News, Blogs, Clubs', 'Academic', 'Events', 'Sports'];
 }
 
-function getStepContent(step) {
-    switch (step) {
-        case 3:
-            return <Sports/>
-        case 0:
-            return <NewsBlogsClubs/>;
-        case 1:
-            return <Academic/>;
-        case 2:
-            return <Events/>;
-
-        default:
-            return <div>error</div>
+const userPreference ={
+    SPUID: 'cyedward',
+    academicPreference: {
+        arts: false,
+        biology: false,
+        business: false,
+        chemistry: false,
+        computerScience: false,
+        economics: false,
+        engineering: false,
+        history: false,
+        mathematics: false,
+        philosophy: false,
+        physics: false,
+        psychology: false,
+        science: false,
+        statistics: false,
+    },
+    emailNotification :false,
+    eventsPreference: {
+        faculties: false,
+        studentServices: false,
+        subjectDepartments: false,
+        universityServices: false,
+    },
+    sportsPreference : {
+        mensSportsList: {
+            baseball: false,
+            basketball: false,
+            crew: false,
+            crossCountry: false,
+            football: false,
+            golf: false,
+            iceHockey: false,
+            lacrosse: false,
+            skiing: false,
+            soccer: false,
+            squash: false,
+            swimmingAndDriving: false,
+            tennis: false,
+            trackAndField: false,
+            wrestling: false,
+        },
+        womensSportsList: {
+            basketball: false,
+            crew: false,
+            crossCountry: false,
+            fieldHockey: false,
+            golf: false,
+            iceHockey: false,
+            lacrosse: false,
+            skiing: false,
+            soccer: false,
+            softball: false,
+            squash: false,
+            swimmingAndDriving: false,
+            tennis: false,
+            trackAndField: false,
+            volleyball: false,
+        }
+    },
+    newsBlogsClubsPreference: {
+        academics: false,
+        activism: false,
+        careerDevelopment: false,
+        culture: false,
+        gradSchool: false,
+        healthAndWellbeing: false,
+        recreation: false,
+        religion: false,
+        research: false,
     }
 }
 
@@ -218,6 +277,33 @@ export default function Survey() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
+    const handleChange=(param)=> {
+        console.log(param)
+        if(param.category==="mensSportsList" || param.category==="womensSportsList"){
+            userPreference.sportsPreference[param.category][param.backendName]=!userPreference.sportsPreference[param.category][param.backendName]
+        console.log(userPreference)
+        }else{
+            userPreference[param.category][param.backendName]=!userPreference[param.category][param.backendName]
+            console.log(userPreference)
+
+        }
+    }
+
+    function getStepContent(step) {
+        switch (step) {
+            case 0:
+                return <NewsBlogsClubs handleChange={handleChange} userPreference={userPreference}/>;
+            case 1:
+                return <Academic handleChange={handleChange} userPreference={userPreference}/>;
+            case 2:
+                return <Events handleChange={handleChange} userPreference={userPreference}/>;
+            case 3:
+                return <Sports handleChange={handleChange} userPreference={userPreference}/>
+
+            default:
+                return <div>error</div>
+        }
+    }
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);

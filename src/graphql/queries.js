@@ -46,8 +46,6 @@ export const getUserPreference = /* GraphQL */ `
         universityServices
       }
       sportsPreference {
-        mensSportsInterest
-        womensSportsInterest
         mensSportsList {
           baseball
           basketball
@@ -86,7 +84,7 @@ export const getUserPreference = /* GraphQL */ `
       id
       newsBlogsClubsPreference {
         academics
-        actvism
+        activism
         careerDevelopment
         culture
         gradSchool
@@ -156,14 +154,10 @@ export const listUserPreferences = /* GraphQL */ `
           subjectDepartments
           universityServices
         }
-        sportsPreference {
-          mensSportsInterest
-          womensSportsInterest
-        }
         id
         newsBlogsClubsPreference {
           academics
-          actvism
+          activism
           careerDevelopment
           culture
           gradSchool

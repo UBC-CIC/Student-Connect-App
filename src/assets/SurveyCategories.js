@@ -69,7 +69,7 @@ const womensSportsOptions=
         {name: 'Lacrosse', backendName:'lacrosse'},
         {name: 'Skiing', backendName:'skiing'},
         {name: 'Soccer', backendName:'soccer'},
-        {name: 'softball', backendName:'Softball'},
+        {name: 'Softball', backendName:'softball'},
         {name: 'Squash', backendName:'squash'},
         {name: 'Swimming And Driving', backendName:'swimmingAndDriving'},
         {name: 'Tennis', backendName:'tennis'},
