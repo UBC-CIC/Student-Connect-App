@@ -2,7 +2,7 @@ import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider} from "@material-ui/core";
+import {Divider, Switch} from "@material-ui/core";
 import {
     newsBlogsClubsOptions,
     academicOptions,
@@ -10,6 +10,7 @@ import {
     mensSportsOptions,
     womensSportOptions, womensSportsOptions
 } from '../../assets/SurveyCategories'
+import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',
@@ -115,6 +116,40 @@ export function Sports(props){
                                                                    userPreference={props.userPreference}/>)}
 
             </div>
+        </div>
+
+    )
+}
+
+export function Email(props){
+    const classes = useStyles();
+    const {userPreference} = props
+    const [state, setState] = React.useState({
+        checkedA: userPreference.emailNotification
+    });
+    const handleChange = (event) => {
+        setState({ ...state, [event.target.name]: event.target.checked });
+        props.handleSwitchChange(event.target.checked)
+    };
+
+    return(
+        <div>
+            <Grid spacing={5}>
+                <Grid item xs={12}>
+                <Typography align={'left'} variant="h6" className={classes.title}>
+                    Would you like to receive emails about things that you might be interested in?
+                </Typography>
+                </Grid>
+                <Grid item xs={5}>
+                    <Switch
+                        checked={state.checkedA}
+                        onChange={handleChange}
+                        name="checkedA"
+                        color="primary"
+                    />
+                </Grid>
+
+            </Grid>
         </div>
 
     )

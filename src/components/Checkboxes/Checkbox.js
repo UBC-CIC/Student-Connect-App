@@ -31,7 +31,6 @@ export default function SurveyCheckbox(props) {
 
     function checkSport() {
         if(category==="mensSportsList" || category==="womensSportsList"){
-            console.log(category)
             return userPreference.sportsPreference[category][backendName]
         }
         return userPreference[category][backendName]
@@ -44,10 +43,10 @@ export default function SurveyCheckbox(props) {
 
     const handleChange = (event) => {
         setState({ checked: event.target.checked });
-
-            console.log(props)
-            props.handleChange({category:category,
-                backendName:backendName})
+        props.handleChange({category:category,
+                backendName:backendName,
+                checked:!state.checked
+        })
     }
     return (
         <FormGroup row>

@@ -14,7 +14,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
 import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
-import {NewsBlogsClubs, Academic, Events, Sports} from "./SurveySections";
+import {NewsBlogsClubs, Academic, Events, Sports, Email} from "./SurveySections";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
@@ -196,7 +196,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['News, Blogs, Clubs', 'Academic', 'Events', 'Sports'];
+    return ['News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email'];
 }
 
 const userPreference ={
@@ -278,16 +278,21 @@ export default function Survey() {
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
     const handleChange=(param)=> {
-        console.log(param)
         if(param.category==="mensSportsList" || param.category==="womensSportsList"){
-            userPreference.sportsPreference[param.category][param.backendName]=!userPreference.sportsPreference[param.category][param.backendName]
-        console.log(userPreference)
+            userPreference.sportsPreference[param.category][param.backendName]=param.checked
+            console.log(param.category,param.backendName,param.checked)
         }else{
-            userPreference[param.category][param.backendName]=!userPreference[param.category][param.backendName]
-            console.log(userPreference)
+            userPreference[param.category][param.backendName]=param.checked
+            console.log(param.category,param.backendName,param.checked)
 
         }
     }
+    const handleSwitchChange=(param)=>{
+        userPreference.emailNotification=param
+        console.log(userPreference)
+
+    }
+
 
     function getStepContent(step) {
         switch (step) {
@@ -299,6 +304,8 @@ export default function Survey() {
                 return <Events handleChange={handleChange} userPreference={userPreference}/>;
             case 3:
                 return <Sports handleChange={handleChange} userPreference={userPreference}/>
+            case 4:
+                return <Email handleSwitchChange={handleSwitchChange} userPreference={userPreference}/>
 
             default:
                 return <div>error</div>
@@ -316,6 +323,7 @@ export default function Survey() {
     const handleSave = () => {
         console.log('save')
     };
+
 
     return (
         <Container maxWidth={'xl'} >
