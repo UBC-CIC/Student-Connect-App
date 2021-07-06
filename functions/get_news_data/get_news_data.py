@@ -23,7 +23,7 @@ NEWS_TABLE = os.environ["NEWS_TABLE_NAME"]
 EXPIRY_DAYS_OFFSET = int(os.environ["DOCUMENT_EXPIRY_DAYS"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
-S3_CLIENT = boto3.client('s3')
+S3_CLIENT = boto3.client("s3")
 S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 
@@ -91,8 +91,8 @@ def lambda_handler(event, context):
             news_item = news_parser(item)
             news_items.append(news_item)
         except Exception as e:
-            S3_CLIENT(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
-                      Key=f'ErrorLog/News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+            S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
+                                 Key=f'ErrorLog/News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
             LOGGER.error(f"Error in parsing a news item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/News")
             detailed_exception(LOGGER)
 
@@ -115,8 +115,8 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(news_items, indent=4))
     LOGGER.debug(json.dumps(filtered_news_items, indent=4))
 
-    S3_CLIENT(Body=json.dumps(filtered_news_items, indent=4), Bucket=S3_BUCKET_NAME,
-              Key=f'News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+    S3_CLIENT.put_object(Body=json.dumps(filtered_news_items, indent=4), Bucket=S3_BUCKET_NAME,
+                         Key=f'News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
     table = DYNAMODB_RESOURCE.Table(NEWS_TABLE)
     # Create a TTL for each item and insert into DynamoDB

@@ -144,8 +144,8 @@ Resources:
                 Resource: "*"
               - Effect: "Allow"
                 Action:
-                  - "s3:PutObject"
-                Resource: !Sub ${DataStoreBucket.Arn}
+                  - "s3:*"
+                Resource: !Sub "${DataStoreBucket.Arn}/*"
 
   esHasherLambdaIAMRole:
     Type: "AWS::IAM::Role"
@@ -248,6 +248,21 @@ Resources:
               Service:
                 - !Sub "states.${AWS::Region}.amazonaws.com"
             Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource:
+                  - !GetAtt getEventsData.Arn
+                  - !GetAtt getNewsData.Arn
+                  - !GetAtt getAthleticsNewsData.Arn
+                  - !GetAtt getBlogData.Arn
+                  - !GetAtt getClubData.Arn
+                  - !GetAtt esHasher.Arn
 
   TranscribeStateMachine:
     Type: "AWS::StepFunctions::StateMachine"
@@ -394,7 +409,7 @@ Resources:
       Name: EventsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(1440 minutes)
-      State: "DISABLED"
+      State: "ENABLED"
       Targets:
         - Arn: !GetAtt TranscribeStateMachine.Arn
           Id: EventsTarget
@@ -408,7 +423,7 @@ Resources:
       Name: NewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(10080 minutes)
-      State: "DISABLED"
+      State: "ENABLED"
       Targets:
         - Arn: !GetAtt TranscribeStateMachine.Arn
           Id: NewsTarget
@@ -422,7 +437,7 @@ Resources:
       Name: BlogsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(10080 minutes)
-      State: "DISABLED"
+      State: "ENABLED"
       Targets:
         - Arn: !GetAtt TranscribeStateMachine.Arn
           Id: BlogsTarget
@@ -436,7 +451,7 @@ Resources:
       Name: AthleticsNewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(10080 minutes)
-      State: "DISABLED"
+      State: "ENABLED"
       Targets:
         - Arn: !GetAtt TranscribeStateMachine.Arn
           Id: AthleticsNewsTarget

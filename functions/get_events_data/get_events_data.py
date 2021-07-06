@@ -21,7 +21,7 @@ EVENTS_TABLE = os.environ["EVENTS_TABLE_NAME"]
 EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
-S3_CLIENT = boto3.client('s3')
+S3_CLIENT = boto3.client("s3")
 S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 
@@ -110,7 +110,7 @@ def get_events_items_from_web(events_link):
     events = []
     try:
         json_response = requests.get(events_link).json()
-        events.extend(parse_events(json_response["events"]))
+        events.extend(json_response["events"])
         while json_response.get("next_rest_url") is not None:
             next_page = json_response["next_rest_url"]
             json_response = requests.get(next_page).json()
@@ -141,8 +141,8 @@ def lambda_handler(event, context):
             events_item = event_parser(item)
             events_items.append(events_item)
         except Exception as e:
-            S3_CLIENT(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
-                      Key=f'ErrorLog/Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+            S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
+                                 Key=f'ErrorLog/Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
             LOGGER.error(f"Error in parsing an events item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Events")
             detailed_exception(LOGGER)
 
@@ -165,8 +165,8 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(events_items, indent=4))
     LOGGER.debug(json.dumps(filtered_events_items, indent=4))
 
-    S3_CLIENT(Body=filtered_events_items, Bucket=S3_BUCKET_NAME,
-              Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+    S3_CLIENT.put_object(Body=json.dumps(filtered_events_items), Bucket=S3_BUCKET_NAME,
+                         Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
     table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
     # Create a TTL for each item and insert into DynamoDB
