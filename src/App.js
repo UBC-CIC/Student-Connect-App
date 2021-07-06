@@ -23,6 +23,7 @@ import { API, graphqlOperation } from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import Amplify, { Auth } from 'aws-amplify';
 import SignIn from "./views/SignIn";
+import {getUserPreferenceAction} from "./actions/userAction";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -47,6 +48,7 @@ const main = async () => {
     sessionToken:process.env.REACT_APP_sessionToken,
     region: 'ca-central-1',
   });
+
   console.log(Auth.currentUserInfo())
 
 
@@ -57,7 +59,7 @@ main().catch(error => console.error(error));
 function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews}= props
+    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction}= props
   const signInUrl = process.env.REACT_APP_SignInUrl
 
   useEffect(() => {
@@ -72,6 +74,7 @@ function App(props) {
     fetchAllBlogs()
     fetchSportsNews()
     fetchAllSportsNews()
+    getUserPreferenceAction('cyedward')
 
   }, []);
 
@@ -118,7 +121,8 @@ const mapDispatchToProps = {
   fetchAllNews,
   fetchAllBlogs,
   fetchSportsNews,
-  fetchAllSportsNews
+  fetchAllSportsNews,
+  getUserPreferenceAction
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

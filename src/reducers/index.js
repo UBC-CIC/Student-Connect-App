@@ -3,6 +3,7 @@ import {newsReducer, allNewsReducer, allSportsNewsReducer, sportsNewsReducer} fr
 import {eventsReducer,allEventsReducer} from "./eventsReducer";
 import {blogsReducer,allBlogsReducer} from "./blogsReducer";
 import {clubsReducer,allClubsReducer} from "./clubsReducer";
+import {preferenceReducer} from "./userReducer";
 
 export default combineReducers({
     news: newsReducer,
@@ -14,6 +15,7 @@ export default combineReducers({
     allNews:allNewsReducer,
     allBlogs:allBlogsReducer,
     sportsNews:sportsNewsReducer,
-    allSportsNews:allSportsNewsReducer
+    allSportsNews:allSportsNewsReducer,
+    userPreference: preferenceReducer
 
 });

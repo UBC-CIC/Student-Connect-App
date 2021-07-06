@@ -202,7 +202,7 @@ function getSteps() {
 }
 
 const userPreference ={
-    SPUID: 'cyedward',
+    id: 'cyedward',
     academicPreference: {
         arts: false,
         biology: false,
@@ -275,7 +275,7 @@ const userPreference ={
     }
 }
 
- function Survey() {
+ function Survey(props) {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -319,7 +319,9 @@ const userPreference ={
     };
 
     const handleSave = () => {
+
         createUserPreferenceAction(userPreference)
+        props.history.push('/home')
     };
 
 
@@ -354,10 +356,13 @@ const userPreference ={
                                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.prevButton} startIcon={<ArrowBackIcon/>}>
                                 </Button>
                                 {activeStep === steps.length - 1 ?
-                                    <Button startIcon={<DoneIcon/>} onClick={handleSave}/>: <Button
+                                    <Button startIcon={<DoneIcon/>} onClick={handleSave} />
+                                    :
+                                    <Button
                                     onClick={handleNext}
                                     className={classes.nextButton}
                                     startIcon={<ArrowForwardIcon/>}
+
                                 >
                                 </Button>
                                 }

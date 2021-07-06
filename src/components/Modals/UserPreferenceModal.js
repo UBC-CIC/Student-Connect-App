@@ -52,6 +52,8 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function UserPreferenceModal(props){
     const classes = useStyles();
+    const {userPreference} = props
+    console.log(userPreference)
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -62,6 +64,17 @@ export default function UserPreferenceModal(props){
         setOpen(false);
     };
 
+    const handleChange=(param)=> {
+        if(param.category==="mensSportsList" || param.category==="womensSportsList"){
+            userPreference.sportsPreference[param.category][param.backendName]=param.checked
+        }else{
+            userPreference[param.category][param.backendName]=param.checked
+
+        }
+    }
+    const handleSwitchChange=(param)=>{
+        userPreference.emailNotification=param
+    }
 
     return(
         <div>
@@ -83,11 +96,18 @@ export default function UserPreferenceModal(props){
                     </Toolbar>
                 </AppBar>
                 <List>
-                    <PreferenceListItem label={"News, Blogs and Clubs"} nestedItem={newsBlogsClubsOptions.map(item=> item.name)} icon={<RssFeedIcon/>}/>
-                    <PreferenceListItem label={"Events"} nestedItem={eventsOptions.map(item=> item.name)} icon={<EventIcon/>}/>
-                    <PreferenceListItem label={"Academic"} nestedItem={academicOptions.map(item=> item.name)} icon={<BookIcon/>}/>
-                    <PreferenceListItem label={"Men's Sports"} nestedItem={mensSportsOptions.map(item=> item.name)} icon={<Sports/>}/>
-                    <PreferenceListItem label={"Women's Sports"} nestedItem={womensSportsOptions.map(item=> item.name)} icon={<Sports/>}/>
+                    <PreferenceListItem label={"News, Blogs and Clubs"}
+                                        nestedItem={newsBlogsClubsOptions.map(item=>({ name: item.name,
+                                            backendName: item.backendName, checked:userPreference["newsBlogsClubsPreference"][item.backendName] }))} icon={<RssFeedIcon/>}/>
+                    <PreferenceListItem label={"Events"}
+                                        nestedItem={eventsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["eventsPreference"][item.backendName] }) )} icon={<EventIcon/>}/>
+                    <PreferenceListItem label={"Academic"}
+                                        nestedItem={academicOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["academicPreference"][item.backendName] }) )} icon={<BookIcon/>}/>
+                    <PreferenceListItem label={"Men's Sports"}
+                                        nestedItem={mensSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["mensSportsList"][item.backendName] }) )} icon={<Sports/>}/>
+                    <PreferenceListItem label={"Women's Sports"}
+                                        nestedItem={womensSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["womensSportsList"][item.backendName]  }) )
+                    } icon={<Sports/>}/>
 
 
                 </List>

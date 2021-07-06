@@ -4,7 +4,6 @@
 export const onCreateUserData = /* GraphQL */ `
   subscription OnCreateUserData {
     onCreateUserData {
-      SPUID
       campus
       createdAt
       displayName
@@ -20,7 +19,6 @@ export const onCreateUserData = /* GraphQL */ `
 export const onCreateUserPreference = /* GraphQL */ `
   subscription OnCreateUserPreference {
     onCreateUserPreference {
-      SPUID
       academicPreference {
         arts
         biology
@@ -101,7 +99,6 @@ export const onCreateUserPreference = /* GraphQL */ `
 export const onDeleteUserData = /* GraphQL */ `
   subscription OnDeleteUserData {
     onDeleteUserData {
-      SPUID
       campus
       createdAt
       displayName
@@ -117,7 +114,6 @@ export const onDeleteUserData = /* GraphQL */ `
 export const onDeleteUserPreference = /* GraphQL */ `
   subscription OnDeleteUserPreference {
     onDeleteUserPreference {
-      SPUID
       academicPreference {
         arts
         biology
@@ -198,7 +194,6 @@ export const onDeleteUserPreference = /* GraphQL */ `
 export const onUpdateUserData = /* GraphQL */ `
   subscription OnUpdateUserData {
     onUpdateUserData {
-      SPUID
       campus
       createdAt
       displayName
@@ -214,7 +209,6 @@ export const onUpdateUserData = /* GraphQL */ `
 export const onUpdateUserPreference = /* GraphQL */ `
   subscription OnUpdateUserPreference {
     onUpdateUserPreference {
-      SPUID
       academicPreference {
         arts
         biology

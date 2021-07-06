@@ -2,6 +2,7 @@ import {Button, Card, Container, Divider, Grid, Modal,Fade, Switch, Typography} 
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
+import {connect} from "react-redux";
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: theme.spacing(8),
@@ -44,8 +45,14 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-function Settings(){
+function Settings(props){
     const classes = useStyles();
+    const{userPreference}=props
+    console.log(userPreference)
+    const [state, setState] = React.useState({
+        checked: props.userPreference.emailNotification
+    });
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
         setOpen(true);
@@ -54,6 +61,12 @@ function Settings(){
     const handleClose = () => {
         setOpen(false);
     };
+    const handleSwitchChange=()=>{
+        setState({checked:!state.checked})
+        props.userPreference.emailNotification=!state.checked
+
+    }
+
 
     return(
 
@@ -79,7 +92,7 @@ function Settings(){
 
                     </Grid>
                     <Grid item xs={2}>
-                        <UserPreferenceModal/>
+                        <UserPreferenceModal userPreference={userPreference}/>
                     </Grid>
 
                 </Grid>
@@ -103,7 +116,8 @@ function Settings(){
                         </Grid>
 
                         <Grid item xs={2}>
-                            <Switch className={classes.switch}/>
+                            <Switch checked={state.checked}  onChange={handleSwitchChange}
+                                    className={classes.switch}/>
                         </Grid>
                     </Grid>
 
@@ -115,5 +129,10 @@ function Settings(){
     )
 
 }
+const mapStateToProps = (state) => {
+    return {
+        userPreference: state.userPreference,
+    };
+};
 
-export default Settings
+export default connect(mapStateToProps)(Settings)

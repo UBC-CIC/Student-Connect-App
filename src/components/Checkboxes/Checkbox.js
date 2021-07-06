@@ -26,7 +26,7 @@ const BlueCheckbox = withStyles({
     checked: {},
 })((props) => <Checkbox color="default" {...props} />);
 
-export default function SurveyCheckbox(props) {
+export function SurveyCheckbox(props) {
     const {label, backendName,category,userPreference} = props
 
     function checkSport() {
@@ -54,6 +54,27 @@ export default function SurveyCheckbox(props) {
                 control={<BlueCheckbox checked={state.checked} label={backendName} onChange={handleChange} name="checked"
                 />}
                 label={<Typography variant={"caption"}>{label}</Typography>}
+            />
+        </FormGroup>
+    );
+}
+export function SettingsPageCheckbox(props) {
+    const classes = useStyles()
+    const {name, backendName,checked} = props
+    console.log(name,backendName,checked)
+    const [state, setState] = React.useState({
+        checked: checked,
+    });
+
+    const handleChange = (event) => {
+        setState({ checked: event.target.checked });
+    }
+    return (
+        <FormGroup row>
+            <FormControlLabel
+                control={<BlueCheckbox checked={state.checked} label={name} onChange={handleChange} name="checked"
+                />}
+                label={<Typography variant={"caption"}>{name}</Typography>}
             />
         </FormGroup>
     );

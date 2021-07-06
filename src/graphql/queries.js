@@ -4,7 +4,6 @@
 export const getUserData = /* GraphQL */ `
   query GetUserData($id: ID!) {
     getUserData(id: $id) {
-      SPUID
       campus
       createdAt
       displayName
@@ -20,7 +19,6 @@ export const getUserData = /* GraphQL */ `
 export const getUserPreference = /* GraphQL */ `
   query GetUserPreference($id: ID!) {
     getUserPreference(id: $id) {
-      SPUID
       academicPreference {
         arts
         biology
@@ -106,7 +104,6 @@ export const listUserDatas = /* GraphQL */ `
   ) {
     listUserDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        SPUID
         campus
         createdAt
         displayName
@@ -129,7 +126,6 @@ export const listUserPreferences = /* GraphQL */ `
   ) {
     listUserPreferences(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        SPUID
         academicPreference {
           arts
           biology

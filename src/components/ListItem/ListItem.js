@@ -5,7 +5,7 @@ import Divider from "@material-ui/core/Divider";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {newsBlogsClubsOptions} from "../../assets/SurveyCategories";
-import SurveyCheckbox from "../Checkboxes/Checkbox";
+import {SettingsPageCheckbox} from "../Checkboxes/Checkbox";
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
@@ -50,7 +50,7 @@ export  function PreferenceListItem(props){
             <List component="div" disablePadding>
                 {nestedItem.map(option =>
                     <ListItem button className={classes.nested}>
-                        <SurveyCheckbox label={option} />
+                        <SettingsPageCheckbox name={option.name} backendName={option.backendName} checked={option.checked} />
                     </ListItem>
                 )}
             </List>

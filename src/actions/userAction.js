@@ -19,10 +19,12 @@ export const getUserDataSuccess = (payload) => {
     }
 }
 export const getUserPreferenceAction = (id) => {
+    console.log(id)
     return (dispatch) => {
-        API.graphql(graphqlOperation(getUserPreference, {input: id})).then((response) => {
+        API.graphql(graphqlOperation(getUserPreference, {id: id})).then((response) => {
             let res = response.data
-            dispatch(getUserPreferenceSuccess(res))
+            console.log(res)
+            dispatch(getUserPreferenceSuccess(res.getUserPreference))
         })
     }
 }

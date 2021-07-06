@@ -7,7 +7,6 @@ export const createUserData = /* GraphQL */ `
     $input: CreateUserDataInput!
   ) {
     createUserData(condition: $condition, input: $input) {
-      SPUID
       campus
       createdAt
       displayName
@@ -26,7 +25,6 @@ export const createUserPreference = /* GraphQL */ `
     $input: CreateUserPreferenceInput!
   ) {
     createUserPreference(condition: $condition, input: $input) {
-      SPUID
       academicPreference {
         arts
         biology
@@ -110,7 +108,6 @@ export const deleteUserData = /* GraphQL */ `
     $input: DeleteUserDataInput!
   ) {
     deleteUserData(condition: $condition, input: $input) {
-      SPUID
       campus
       createdAt
       displayName
@@ -129,7 +126,6 @@ export const deleteUserPreference = /* GraphQL */ `
     $input: DeleteUserPreferenceInput!
   ) {
     deleteUserPreference(condition: $condition, input: $input) {
-      SPUID
       academicPreference {
         arts
         biology
@@ -213,7 +209,6 @@ export const updateUserData = /* GraphQL */ `
     $input: UpdateUserDataInput!
   ) {
     updateUserData(condition: $condition, input: $input) {
-      SPUID
       campus
       createdAt
       displayName
@@ -232,7 +227,6 @@ export const updateUserPreference = /* GraphQL */ `
     $input: UpdateUserPreferenceInput!
   ) {
     updateUserPreference(condition: $condition, input: $input) {
-      SPUID
       academicPreference {
         arts
         biology

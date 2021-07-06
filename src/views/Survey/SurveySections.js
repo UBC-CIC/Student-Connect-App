@@ -1,4 +1,4 @@
-import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
+import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
@@ -7,8 +7,7 @@ import {
     newsBlogsClubsOptions,
     academicOptions,
     eventsOptions,
-    mensSportsOptions,
-    womensSportOptions, womensSportsOptions
+    mensSportsOptions, womensSportsOptions
 } from '../../assets/SurveyCategories'
 import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
