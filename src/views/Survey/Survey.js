@@ -21,6 +21,8 @@ import DoneIcon from '@material-ui/icons/Done';
 import {ButtonGroup} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import {mensSportsOptions} from "../../assets/SurveyCategories";
+import {createUserPreferenceAction} from "../../actions/userAction";
+import {connect} from "react-redux";
 const QontoConnector = withStyles({
     alternativeLabel: {
         top: 10,
@@ -273,24 +275,20 @@ const userPreference ={
     }
 }
 
-export default function Survey() {
+ function Survey() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
     const handleChange=(param)=> {
         if(param.category==="mensSportsList" || param.category==="womensSportsList"){
             userPreference.sportsPreference[param.category][param.backendName]=param.checked
-            console.log(param.category,param.backendName,param.checked)
         }else{
             userPreference[param.category][param.backendName]=param.checked
-            console.log(param.category,param.backendName,param.checked)
 
         }
     }
     const handleSwitchChange=(param)=>{
         userPreference.emailNotification=param
-        console.log(userPreference)
-
     }
 
 
@@ -321,7 +319,7 @@ export default function Survey() {
     };
 
     const handleSave = () => {
-        console.log('save')
+        createUserPreferenceAction(userPreference)
     };
 
 
@@ -355,12 +353,14 @@ export default function Survey() {
                             <ButtonGroup>
                                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.prevButton} startIcon={<ArrowBackIcon/>}>
                                 </Button>
-                                <Button
+                                {activeStep === steps.length - 1 ?
+                                    <Button startIcon={<DoneIcon/>} onClick={handleSave}/>: <Button
                                     onClick={handleNext}
                                     className={classes.nextButton}
+                                    startIcon={<ArrowForwardIcon/>}
                                 >
-                                    {activeStep === steps.length - 1 ? <DoneIcon/>: <ArrowForwardIcon/>}
                                 </Button>
+                                }
 
                             </ButtonGroup>
                         </div>
@@ -371,3 +371,4 @@ export default function Survey() {
         </Container>
     );
 }
+export default connect(null, {createUserPreferenceAction})(Survey);

@@ -47,11 +47,15 @@ export const createUserDataSuccess = (payload) => {
 }
 
 export const createUserPreferenceAction = (payload) => {
-    return (dispatch) => {
-        API.graphql(graphqlOperation(createUserPreference, {input: payload})).then((response) => {
-            dispatch(createUserPreferenceSuccess(response))
-        })
-    }
+    console.log(payload)
+    API.graphql(graphqlOperation(createUserPreference, {input: payload})).then((response) => {
+        console.log(response)
+
+    }).catch((err) => {
+        console.log("Error: ", err);
+    })
+
+
 }
 export const createUserPreferenceSuccess = (payload) => {
     return {
