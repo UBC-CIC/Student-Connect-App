@@ -39,7 +39,7 @@ TODO Check if needed
 
 ### Credits
 This prototype was architected and developed by Edward Chen and Neelim Novo, with guidance from the [UBC CIC](https://cic.ubc.ca/)
-technical and project teams. The application's frontend and backend were developed by them respectively.
+technical and project management teams.
 
 ### License
 This project is distributed under the [MIT License](./LICENSE).
