@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
 import {connect} from "react-redux";
+import {updateUserEmailPreferenceAction, updateUserPreferenceAction} from "../actions/userAction";
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: theme.spacing(8),
@@ -61,11 +62,6 @@ function Settings(props){
     const handleClose = () => {
         setOpen(false);
     };
-    const handleSwitchChange=()=>{
-        setState({checked:!state.checked})
-        props.userPreference.emailNotification=!state.checked
-
-    }
 
 
     return(
@@ -98,30 +94,6 @@ function Settings(props){
                 </Grid>
 
             </Card>
-            </Container>
-            <Container>
-                <Card className={classes.card}>
-                    <Grid container spacing={3} className={classes.root} >
-                        <Grid item xs={12}>
-                            <Typography align={'left'}>
-
-                            Email
-                        </Typography>
-
-                    </Grid>
-                        <Grid item xs={10}>
-                            <Typography align={'left'}>
-                            Email me about events and clubs that I might be interested in
-                            </Typography>
-                        </Grid>
-
-                        <Grid item xs={2}>
-                            <Switch checked={state.checked}  onChange={handleSwitchChange}
-                                    className={classes.switch}/>
-                        </Grid>
-                    </Grid>
-
-                </Card>
             </Container>
 
         </div>

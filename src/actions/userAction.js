@@ -2,7 +2,13 @@ import {API, graphqlOperation} from "aws-amplify";
 import {getUserData, getUserPreference, listAthleticsNewsTables} from "../graphql/queries";
 import {bracketRemover} from "../helpers/HtmlTagCleaner";
 import {fetchAllSportsNewsSuccess} from "./newsActions";
-import {createUserData, createUserPreference} from "../graphql/mutations";
+import {
+    createUserData,
+    createUserPreference,
+    updateUserEmailPreference,
+    updateUserPreference
+} from "../graphql/mutations";
+import {onUpdateUserPreference} from "../graphql/subscriptions";
 
 export const getUserDataAction = (id) => {
     return (dispatch) => {
@@ -64,4 +70,15 @@ export const createUserPreferenceSuccess = (payload) => {
         type: "CREATE_USER_PREFERENCE_SUCCESS",
         payload: payload
     }
+}
+export const updateUserPreferenceAction = (payload) => {
+    if(payload.createdAt)delete payload.createdAt
+    if(payload.owner) delete payload.owner
+    if(payload.updatedAt) delete payload.updatedAt
+    console.log(payload)
+    API.graphql(graphqlOperation(updateUserPreference, {input: payload})).then((response) => {
+            console.log(response)
+    }).catch((err) => {
+            console.log("Error updating user preference: ", err);
+    })
 }

@@ -60,14 +60,30 @@ export function SurveyCheckbox(props) {
 }
 export function SettingsPageCheckbox(props) {
     const classes = useStyles()
-    const {name, backendName,checked} = props
-    console.log(name,backendName,checked)
+    const {name, category, backendName,checked,userPreference} = props
+    function checkSport() {
+        if(category==="mensSportsList" || category==="womensSportsList"){
+            return userPreference.sportsPreference[category][backendName]
+        }
+        return userPreference[category][backendName]
+
+    }
+
     const [state, setState] = React.useState({
-        checked: checked,
+        checked: checkSport(),
     });
 
     const handleChange = (event) => {
-        setState({ checked: event.target.checked });
+        setState({ checked: event.target.checked })
+        if(category==='mensSportsList'){
+            userPreference.sportsPreference.mensSportsList[backendName]=event.target.checked
+
+        }else if(category==='womensSportsList'){
+            userPreference.sportsPreference.womensSportsList[backendName]=event.target.checked
+        }else{
+            userPreference[category][backendName]=event.target.checked
+        }
+
     }
     return (
         <FormGroup row>
