@@ -2,6 +2,7 @@ import hashlib
 import time
 import boto3
 import os
+import bs4
 import requests
 import json
 import sys
@@ -9,6 +10,7 @@ import logging
 from bs4 import BeautifulSoup
 from requests import RequestException
 from selenium import webdriver
+from typing import List
 from webdriver_manager.chrome import ChromeDriverManager
 from common_lib import detailed_exception
 
@@ -30,7 +32,13 @@ CLUB_LISTING = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
                 "w", "x", "y", "z"]
 
 
-def parse_club_html_nodes(club_html_nodes):
+def parse_club_html_nodes(club_html_nodes: List[bs4.element.Tag]):
+    """
+    Given a list of HTML items that contain club information, the club information is parsed from
+    them into a list of club item dictionaries
+    :param club_html_nodes: List of Beautiful Soup HTML Tags
+    :return: List of parsed clubs
+    """
     clubs = []
     for node in club_html_nodes:
         club_item = {}
@@ -65,7 +73,14 @@ def parse_club_html_nodes(club_html_nodes):
     return clubs
 
 
-def get_all_clubs(url):
+def get_all_clubs(url: str):
+    """
+    Given the url for the clubs directory, it loops through letters of the alphabet, checks if clubs exist
+    under that letter, searches the website HTML to find individual club pages, parses the individual club information
+    and returns it in a list of dictionaries
+    :param url: URL for club directory
+    :return: List of dictionaries containing parsed club items
+    """
     club_result = []
     club_html_nodes = []
     for letter in CLUB_LISTING:
@@ -97,7 +112,19 @@ def get_all_clubs(url):
     return club_result
 
 
-def get_course_unions(url):
+def get_course_unions(url: str):
+    """
+    Uses Selenium to simulate navigating through the existing course-union lettered pages
+    and grabbing course-union information from the HTML document. The course-union HTML items
+    are parsed, saved into a dictionary and returned in a list
+    :param url: URL for the course-union directory
+    :return: List of parsed course union dictionaries
+    """
+    """
+    NOTE: the letter list is hardcoded as the letter A contains an example course-union
+    Further testing was not done on refining this since the SUO website will be rebuilt soon
+    This is however the code that was used to get the initial list of course unions
+    """
     letter_list = ["B", "C", "E", "G", "H", "M", "N", "P", "Q", "S", "V"]
     course_union_jsons = []
     chrome_options = webdriver.ChromeOptions()
@@ -142,15 +169,18 @@ def lambda_handler(event, context):
 
     clubs.extend(course_unions)
 
+    """
+    NOTE: this snippet of code was initially used for club + course union saving
+    However, the clubs + course unions were manually categorised later on a local file 
+    to improve the user experience for the pilot phase of the app
+    Which was subsequently uploaded to S3, read from there and then persisted to DynamoDB without a TTL
+    The code remains here as referential purposes for what an automated lambda would be like given the
+    source data was categorised
+    """
     table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
     for club in clubs:
         club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
         table.put_item(Item=club)
-
-    # clubs_table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
-    # for index, club in enumerate(clubs_list):
-    #     club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
-    #     clubs_table.put_item(Item=club)
 
     return {"status": "completed"}
 

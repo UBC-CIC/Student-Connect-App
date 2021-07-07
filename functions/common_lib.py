@@ -28,7 +28,7 @@ def detailed_exception(logger: logging.Logger):
     logger.error(err_msg)
 
 
-def get_adjusted_unix_time(datetime_string, format_string, offset_hours):
+def get_adjusted_unix_time(datetime_string: str, format_string: str, offset_hours: int):
     """
     Given a datetime string in a specific format, it adds the offset hours to the datetime objects
     and returns the result in Unix time format
@@ -64,6 +64,6 @@ def insert_into_ddb_with_ttl(dynamodb_resource, table_name, insertion_list, ttl_
     table = dynamodb_resource.Table(table_name)
     # Create a TTL for each item and insert into DynamoDB
     for item in insertion_list:
-        item["expiresOn"] = get_adjusted_unix_time(item["endDate"], "%Y-%m-%d %H:%M:%S",
+        item["expiresOn"] = get_adjusted_unix_time(item[date_field], "%Y-%m-%d %H:%M:%S",
                                                    ttl_offset * 24)
         table.put_item(Item=item)

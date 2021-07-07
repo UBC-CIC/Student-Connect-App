@@ -25,10 +25,11 @@ S3_CLIENT = boto3.client("s3")
 S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 
-def event_parser(event_json):
+def event_parser(event_json: dict):
     """
     Parses individual event items from the REST API Response by keeping specific information
-    and transforming some
+    and transforming some. Replaces values with "Null" if a certain item field is not present in the raw
+    item data
 
     :param event_json: Individual JSON item to format
     :return: Parsed JSON formatted Event item dictionary
@@ -75,38 +76,14 @@ def event_parser(event_json):
     return parsed_event
 
 
-def parse_events(events_response):
+def get_events_items_from_web(events_link: str):
     """
-    Loops through the list of events in the REST API response and parses them
-
-    :param events_response:
-    :return: JSON formatted list of event items
+    Performs a GET request on the events_link provided, loops through all the pages of the paginated result
+    and returns a list of the raw event items.
+    Logs a network error if any an returns an empty list in that case
+    :param events_link: URL of the API to perform a get request on
+    :return: List of raw event items
     """
-    events = []
-    event_list = events_response["events"]
-    for event in event_list:
-        events.append(event_parser(event))
-    return events
-
-
-# def get_all_events(url):
-#     """
-#     Returns a list of all parsed events from the events page REST API, by looping through all result pages
-#
-#     :param url: The events page REST API url
-#     :return: JSON formatted list of parsed events
-#     """
-#     events = []
-#     json_response = requests.get(url).json()
-#     events.extend(parse_events(json_response))
-#     while json_response.get("next_rest_url") is not None:
-#         next_page = json_response["next_rest_url"]
-#         json_response = requests.get(next_page).json()
-#         events.extend(parse_events(json_response))
-#     return events
-
-
-def get_events_items_from_web(events_link):
     events = []
     try:
         json_response = requests.get(events_link).json()
@@ -132,10 +109,11 @@ def lambda_handler(event, context):
     filtered_events_items = []
 
     response_items = get_events_items_from_web(events_link)
-
     if len(response_items) == 0:
         return {"status": "No items in API"}
 
+    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # error to S3
     for item in response_items:
         try:
             events_item = event_parser(item)
@@ -146,18 +124,16 @@ def lambda_handler(event, context):
             LOGGER.error(f"Error in parsing an events item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Events")
             detailed_exception(LOGGER)
 
+    # Filter the parsed items based on last query time to get only new items
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
-
         for events_item in events_items:
             if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
                     < datetime.strptime(events_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
                 filtered_events_items.append(events_item)
-
         SSM_CLIENT.put_parameter(Name="EventsQueryTime",
                                  Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
                                  Overwrite=True)
-
     except SSM_CLIENT.exceptions.InternalServerError as e:
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
@@ -165,42 +141,15 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(events_items, indent=4))
     LOGGER.debug(json.dumps(filtered_events_items, indent=4))
 
+    # Save new items to central data lake S3
     S3_CLIENT.put_object(Body=json.dumps(filtered_events_items), Bucket=S3_BUCKET_NAME,
                          Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
+    # Insert items into DynamoDB table with appropriate TTL
     table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
-    # Create a TTL for each item and insert into DynamoDB
     for events_item in filtered_events_items:
         events_item["expiresOn"] = get_adjusted_unix_time(events_item["endDate"], "%Y-%m-%d %H:%M:%S",
                                                           EVENTS_EXPIRY_OFFSET * 24)
         table.put_item(Item=events_item)
 
     return {"status": "completed"}
-
-    # try:
-    #     last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
-    #     events = get_all_events(base_url)
-    #
-    #     # Filter the events to keep the new ones since the last query
-    #     for event_item in events:
-    #         if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
-    #                 < datetime.strptime(event_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
-    #             newly_updated_events.append(event_item)
-    #
-    #     SSM_CLIENT.put_parameter(Name="EventsQueryTime",
-    #                              Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
-    #                              Overwrite=True)
-    # except Exception as error:
-    #     detailed_exception(LOGGER)
-    #
-    # LOGGER.debug(json.dumps(events, indent=4))
-    # LOGGER.debug(json.dumps(newly_updated_events, indent=4))
-    #
-    # table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
-    # # Create a TTL for each item and insert into DynamoDB
-    # for event_item in newly_updated_events:
-    #     event_item["expiresOn"] = get_adjusted_unix_time(event_item["endDate"], "%Y-%m-%d %H:%M:%S",
-    #                                                      EVENTS_EXPIRY_OFFSET * 24)
-    #     table.put_item(Item=event_item)
-    #
-    # return {"status": "completed"}

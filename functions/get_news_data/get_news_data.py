@@ -1,5 +1,4 @@
 import logging
-from datetime import datetime
 import boto3
 import os
 import pytz
@@ -7,7 +6,7 @@ import requests
 import json
 import feedparser
 from requests import RequestException
-
+from datetime import datetime
 from common_lib import detailed_exception, get_adjusted_unix_time
 
 # Log level
@@ -27,7 +26,7 @@ S3_CLIENT = boto3.client("s3")
 S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 
-def news_parser(news_json):
+def news_parser(news_json: dict):
     """
     Given a news JSON item from the unaltered API Response, it retains specific information and creates a JSON formatted
     dictionary containing data needed by the DynamoDB table. Variable names for the dictionary are in camelCase.
@@ -47,22 +46,13 @@ def news_parser(news_json):
     return parsed_news
 
 
-def get_all_news(url):
+def get_news_items_from_web(news_link: str):
     """
-    Calls the news RSS API, parses the resulting response and returns a list of parsed news_items to be stored in
-    DynamoDB
-
-    :param url: Url for the RSS API for UBCO news
-    :return: Parsed news items in a JSON formatted list
+    Makes a network request to the news RSS Feed and returns the result of the request.
+    Logs a network error if any an returns an empty list in that case
+    :param news_link: URL for the new RSS Feed
+    :return: List of news items
     """
-    news = []
-    json_response = feedparser.parse(requests.get(url).text)
-    for news_item in json_response["entries"]:
-        news.append(news_parser(news_item))
-    return news
-
-
-def get_news_items_from_web(news_link):
     json_response = []
     try:
         feed_response = requests.get(news_link).text
@@ -82,10 +72,11 @@ def lambda_handler(event, context):
     filtered_news_items = []
 
     response_items = get_news_items_from_web(news_link)
-
     if len(response_items) == 0:
         return {"status": "No items in RSS Feed"}
 
+    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # error to S3
     for item in response_items:
         try:
             news_item = news_parser(item)
@@ -96,18 +87,16 @@ def lambda_handler(event, context):
             LOGGER.error(f"Error in parsing a news item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/News")
             detailed_exception(LOGGER)
 
+    # Filter the parsed items based on last query time to get only new items
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="NewsQueryTime")["Parameter"]["Value"]
-
         for news_item in news_items:
             if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
                     < datetime.strptime(news_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
                 filtered_news_items.append(news_item)
-
         SSM_CLIENT.put_parameter(Name="NewsQueryTime",
                                  Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
                                  Overwrite=True)
-
     except SSM_CLIENT.exceptions.InternalServerError as e:
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
@@ -115,42 +104,16 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(news_items, indent=4))
     LOGGER.debug(json.dumps(filtered_news_items, indent=4))
 
+    # Save new items to central data lake S3
     S3_CLIENT.put_object(Body=json.dumps(filtered_news_items, indent=4), Bucket=S3_BUCKET_NAME,
                          Key=f'News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
+    # Insert items into DynamoDB table with appropriate TTL
     table = DYNAMODB_RESOURCE.Table(NEWS_TABLE)
-    # Create a TTL for each item and insert into DynamoDB
     for events_item in filtered_news_items:
-        events_item["expiresOn"] = get_adjusted_unix_time(events_item["endDate"], "%Y-%m-%d %H:%M:%S",
+        events_item["expiresOn"] = get_adjusted_unix_time(events_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                           EXPIRY_DAYS_OFFSET * 24)
         table.put_item(Item=events_item)
 
     return {"status": "completed"}
 
-    # try:
-    #     last_query_time = SSM_CLIENT.get_parameter(Name="NewsQueryTime")["Parameter"]["Value"]
-    #     news = get_all_news(base_url)
-    #
-    #     # Filter the news to keep the ones since the last query
-    #     for news_item in news:
-    #         if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
-    #                 < datetime.strptime(news_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
-    #             newly_updated_news.append(news_item)
-    #
-    #     SSM_CLIENT.put_parameter(Name="NewsQueryTime",
-    #                              Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
-    #                              Overwrite=True)
-    # except Exception as error:
-    #     detailed_exception(LOGGER)
-    #
-    # LOGGER.debug(json.dumps(news, indent=4))
-    # LOGGER.debug(json.dumps(newly_updated_news, indent=4))
-    #
-    # table = DYNAMODB_RESOURCE.Table(NEWS_TABLE)
-    # # Create a TTL for each item and insert into DynamoDB
-    # for news_item in newly_updated_news:
-    #     news_item["expiresOn"] = get_adjusted_unix_time(news_item["dateModified"], "%Y-%m-%d %H:%M:%S",
-    #                                                     EXPIRY_DAYS_OFFSET * 24)
-    #     table.put_item(Item=news_item)
-    #
-    # return {"status": "completed"}
