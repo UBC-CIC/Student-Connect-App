@@ -1,14 +1,14 @@
-import {Collapse, ListItem, ListItemIcon, ListItemText, Switch, Typography} from "@material-ui/core";
-import {ExpandLess, ExpandMore, StarBorder} from "@material-ui/icons";
+import {Collapse, ListItem, ListItemIcon, ListItemText, Typography} from "@material-ui/core";
+import {ExpandLess, ExpandMore} from "@material-ui/icons";
 import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import React from "react";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
-import {newsBlogsClubsOptions} from "../../assets/SurveyCategories";
 import {SettingsPageCheckbox} from "../Checkboxes/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
@@ -94,7 +94,6 @@ export  function EmailItem(props){
     const handleSwitchChange=()=>{
         setState({checked:!state.checked})
         props.userPreference.emailNotification=!state.checked
-        console.log(props.userPreference)
 
     }
 

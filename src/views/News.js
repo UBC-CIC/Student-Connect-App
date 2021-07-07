@@ -1,15 +1,11 @@
 import Container from "@material-ui/core/Container";
-
-import {Lduh} from '../components/Tags/Tag'
-import IconLabelTabs from '../components/Tabs/Tabs'
-import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
 import React from "react";
-import {NewsBlogsClubs} from "./Survey/SurveySections";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
+
 const category = ['lduh','aldo','dddd']
 const useStyles = makeStyles((theme) => ({
     root: {

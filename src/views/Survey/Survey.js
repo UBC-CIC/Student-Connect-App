@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles, withStyles } from '@material-ui/core/styles';
+import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -13,16 +13,15 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
-import SurveyCheckbox from "../../components/Checkboxes/Checkbox";
-import {NewsBlogsClubs, Academic, Events, Sports, Email} from "./SurveySections";
+import {Academic, Email, Events, NewsBlogsClubs, Sports} from "./SurveySections";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
 import {ButtonGroup} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import {mensSportsOptions} from "../../assets/SurveyCategories";
 import {createUserPreferenceAction} from "../../actions/userAction";
 import {connect} from "react-redux";
+
 const QontoConnector = withStyles({
     alternativeLabel: {
         top: 10,

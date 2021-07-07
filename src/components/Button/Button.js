@@ -3,6 +3,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+
 const useStyles = makeStyles((theme) => ({
     learnMoreButton:{
         textTransform:"none",

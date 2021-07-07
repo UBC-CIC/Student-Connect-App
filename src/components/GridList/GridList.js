@@ -2,7 +2,6 @@ import {GridList, GridListTile} from "@material-ui/core";
 import {GridListEventCard} from "../Cards/EventCard";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {HomePageNewsCard} from "../Cards/NewsCard";
 
 
 const useStyles = makeStyles((theme) => ({

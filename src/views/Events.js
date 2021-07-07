@@ -1,25 +1,14 @@
 import {EventCard} from "../components/Cards/EventCard";
 import Container from "@material-ui/core/Container";
-import {
-    Button,
-    ButtonGroup,
-    Divider,
-    FormControl,
-    Input,
-    InputAdornment,
-    InputBase,
-    InputLabel, Menu, MenuItem
-} from "@material-ui/core";
+import {Button, Divider, Menu, MenuItem} from "@material-ui/core";
 import SortIcon from '@material-ui/icons/Sort';
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from '@material-ui/icons/Search';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {connect} from "react-redux";
 import defaultImg from '../assets/img/event_img.png'
-import {array} from "prop-types";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',

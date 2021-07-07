@@ -1,7 +1,6 @@
-import {AppBar, Collapse, Dialog, Fade, ListItem, ListItemIcon, ListItemText, Slide} from "@material-ui/core";
+import {AppBar, Dialog, Slide} from "@material-ui/core";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import Divider from "@material-ui/core/Divider";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
@@ -10,11 +9,11 @@ import List from "@material-ui/core/List";
 import CloseIcon from '@material-ui/icons/Close';
 import {EmailItem, PreferenceListItem} from "../ListItem/ListItem";
 import {
-    newsBlogsClubsOptions,
     academicOptions,
     eventsOptions,
     mensSportsOptions,
-    womensSportOptions, womensSportsOptions
+    newsBlogsClubsOptions,
+    womensSportsOptions
 } from "../../assets/SurveyCategories";
 import BookIcon from "@material-ui/icons/Book";
 import EditIcon from '@material-ui/icons/Edit';
@@ -55,7 +54,6 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function UserPreferenceModal(props){
     const classes = useStyles();
     const {userPreference} = props
-    console.log(userPreference)
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -63,14 +61,10 @@ export default function UserPreferenceModal(props){
     };
 
     const handleSave = () => {
-        console.log(userPreference)
         updateUserPreferenceAction(userPreference)
         setOpen(false);
     };
 
-    const handleSwitchChange=(param)=>{
-        userPreference.emailNotification=param
-    }
 
     return(
         <div>

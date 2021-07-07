@@ -1,9 +1,7 @@
-
-
 // ===================================---FETCH NEWS---=============================================
 import AWS from "aws-sdk";
 import {API, graphqlOperation} from "aws-amplify";
-import {listAthleticsNewsTables, listEventsTables, listNewsTables} from "../graphql/queries";
+import {listAthleticsNewsTables, listNewsTables} from "../graphql/queries";
 import {bracketRemover} from "../helpers/HtmlTagCleaner";
 
 export const fetchNews = () => {

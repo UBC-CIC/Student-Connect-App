@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Home from "./views/Home";
 import Survey from "./views/Survey/Survey";
-import {BrowserRouter as Router, Switch,Route,Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import Clubs from './views/Clubs'
 import Events from "./views/Events";
 import Settings from "./views/Settings";
@@ -14,16 +14,14 @@ import Explore from "./views/Explore";
 import AWS from 'aws-sdk';
 import React, {useEffect} from "react";
 import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "./actions/newsActions";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
-import {listClubs, listClubsTables} from "./graphql/queries";
-import { API, graphqlOperation } from 'aws-amplify';
+import {Auth} from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
-import Amplify, { Auth } from 'aws-amplify';
-import SignIn from "./views/SignIn";
 import {getUserPreferenceAction} from "./actions/userAction";
+
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {

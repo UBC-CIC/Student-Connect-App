@@ -1,6 +1,5 @@
 import Carousel from "react-material-ui-carousel";
 import React from "react";
-import ClubCard from "../Cards/ClubCard";
 import {connect} from "react-redux";
 import {HomePageNewsCard} from "../Cards/NewsCard";
 

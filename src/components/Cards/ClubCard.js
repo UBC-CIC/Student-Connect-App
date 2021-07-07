@@ -1,16 +1,14 @@
 import React from 'react'
 import {makeStyles} from "@material-ui/core/styles";
-import {ButtonBase, Card, Icon, IconButton, Paper} from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
+import {Card, IconButton, Paper} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import EmailIcon from '@material-ui/icons/Email';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import LanguageIcon from '@material-ui/icons/Language';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import {Tag} from "../Tags/Tag";
-import {HomePageNewsCard} from "./NewsCard";
-import {ClubCardAccordion, NewsCardAccordion} from "../Accordion/Accordions";
+import {ClubCardAccordion} from "../Accordion/Accordions";
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+
 function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {

@@ -4,12 +4,14 @@ import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {Divider, Switch} from "@material-ui/core";
 import {
-    newsBlogsClubsOptions,
     academicOptions,
     eventsOptions,
-    mensSportsOptions, womensSportsOptions
+    mensSportsOptions,
+    newsBlogsClubsOptions,
+    womensSportsOptions
 } from '../../assets/SurveyCategories'
 import Grid from "@material-ui/core/Grid";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         width: '100%',

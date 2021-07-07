@@ -1,9 +1,9 @@
-import {Button, Card, Container, Divider, Grid, Modal,Fade, Switch, Typography} from "@material-ui/core";
+import {Card, Container, Divider, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
 import {connect} from "react-redux";
-import {updateUserEmailPreferenceAction, updateUserPreferenceAction} from "../actions/userAction";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         paddingTop: theme.spacing(8),
@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 function Settings(props){
     const classes = useStyles();
     const{userPreference}=props
-    console.log(userPreference)
     const [state, setState] = React.useState({
         checked: props.userPreference.emailNotification
     });

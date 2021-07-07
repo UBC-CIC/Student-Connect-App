@@ -1,7 +1,6 @@
 import AWS from "aws-sdk";
-import { API, graphqlOperation } from 'aws-amplify';
-import {createTodo} from "../graphql/mutations";
-import {listClubs, listClubsTables} from "../graphql/queries";
+import {API, graphqlOperation} from 'aws-amplify';
+import {listClubsTables} from "../graphql/queries";
 
 export const fetchClubs = () => {
     return (dispatch) => {

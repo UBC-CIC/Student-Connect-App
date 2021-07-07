@@ -1,14 +1,6 @@
 import {API, graphqlOperation} from "aws-amplify";
-import {getUserData, getUserPreference, listAthleticsNewsTables} from "../graphql/queries";
-import {bracketRemover} from "../helpers/HtmlTagCleaner";
-import {fetchAllSportsNewsSuccess} from "./newsActions";
-import {
-    createUserData,
-    createUserPreference,
-    updateUserEmailPreference,
-    updateUserPreference
-} from "../graphql/mutations";
-import {onUpdateUserPreference} from "../graphql/subscriptions";
+import {getUserData, getUserPreference} from "../graphql/queries";
+import {createUserData, createUserPreference, updateUserPreference} from "../graphql/mutations";
 
 export const getUserDataAction = (id) => {
     return (dispatch) => {

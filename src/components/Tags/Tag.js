@@ -1,9 +1,6 @@
-
-import LocalOfferIcon from '@material-ui/icons/LocalOffer';
-import {Button, IconButton, withStyles} from "@material-ui/core";
-import {makeStyles} from "@material-ui/core/styles";
-import TwitterIcon from "@material-ui/icons/Twitter";
+import {Button, withStyles} from "@material-ui/core";
 import React from "react";
+
 const StyledButton = withStyles({
     root: {
         background: '#40B4E5',

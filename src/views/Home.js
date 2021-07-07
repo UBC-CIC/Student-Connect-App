@@ -1,16 +1,13 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Divider} from "@material-ui/core";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import * as PropTypes from "prop-types";
-import EventGridList from "../components/GridList/GridList";
-import NewsGridList from "../components/GridList/NewsGridList";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import EventsCarousel from "../components/Carousel/EventsCarousel";
-import BlogsCarousel from "../components/Carousel/BlogsCarousel";
 import ClubsCarousel from "../components/Carousel/ClubsCarousel";
 
 const useStyles = makeStyles((theme) => ({

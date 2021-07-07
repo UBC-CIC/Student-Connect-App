@@ -1,8 +1,7 @@
 import AWS from "aws-sdk";
 import {bracketRemover, eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
-import {listClubsTables, listEventsTables} from "../graphql/queries";
-import {fetchAllClubsSuccess} from "./clubAction";
+import {listEventsTables} from "../graphql/queries";
 
 export const fetchEvents = () => {
     return (dispatch) => {
@@ -11,7 +10,7 @@ export const fetchEvents = () => {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "events",
-                'categories': "Health Psychology Research Recreation Careers",
+                'categories': "Health Psychology Research Recreation Careers Centre for Teaching and Learning",
             }),
         };
         lambda.invoke(params, function(err, data) {
@@ -22,6 +21,10 @@ export const fetchEvents = () => {
                 results=results.hits.hits
                 results.map((item)=>{
                     item._source.excerpt= htmlTagCleaner(item._source.excerpt)
+                    if(item._source.startDate) item._source.startDate = eventDateCleaner(item._source.startDate)
+                    if(item._source.endDate) item._source.endDate = eventDateCleaner(item._source.endDate)
+                    if(item._source.endDate) item._source.endDate = eventEndDateCleaner(item._source.startDate,item._source.endDate)
+
                 })
 
                 results.sort(function(a, b) {

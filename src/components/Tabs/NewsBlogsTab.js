@@ -5,16 +5,16 @@ import Tab from "@material-ui/core/Tab";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
 import BookIcon from "@material-ui/icons/Book";
 import Grid from "@material-ui/core/Grid";
-import {BigNewsCard, HomePageNewsCard} from "../Cards/NewsCard";
+import {HomePageNewsCard} from "../Cards/NewsCard";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
 import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
-import {Button, IconButton, Menu, MenuItem} from "@material-ui/core";
+import {Button, Menu, MenuItem} from "@material-ui/core";
 import SortIcon from "@material-ui/icons/Sort";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import Container from "@material-ui/core/Container";
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 
@@ -167,7 +167,6 @@ export default function NewsBlogsTab(props) {
                 allNews.sort(function(a, b) {
                     return new Date(b.dateModified)-new Date(a.dateModified)
                 })
-                console.log(allNews)
                 break
             case 1:
                 allSportsNews.sort(function(a, b) {

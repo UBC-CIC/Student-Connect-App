@@ -1,15 +1,10 @@
-import ClubCard from "../components/Cards/ClubCard";
 import {makeStyles} from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import {Divider, FormControl, Input, InputAdornment} from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import Grid from "@material-ui/core/Grid";
-import EventCard from "../components/Cards/EventCard";
+import {Divider} from "@material-ui/core";
 import ClubsTabs from "../components/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
-import {connect} from "react-redux";
-import {HomePageNewsCard} from "../components/Cards/NewsCard";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',

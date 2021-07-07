@@ -1,29 +1,15 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Button from '@material-ui/core/Button';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import StarIcon from '@material-ui/icons/StarBorder';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Box from '@material-ui/core/Box';
-import {Divider, GridList, GridListTile, GridListTileBar, Paper} from "@material-ui/core";
-import {BigNewsCard, HomePageNewsCard} from "../components/Cards/NewsCard";
+import {Divider} from "@material-ui/core";
+import {BigNewsCard} from "../components/Cards/NewsCard";
 import {HomeEventCard} from "../components/Cards/EventCard";
-import IconButton from "@material-ui/core/IconButton";
 import * as PropTypes from "prop-types";
-import {EventGridList, NewsGridList} from "../components/GridList/GridList";
-import {NewsCarousel, Item, ClubsCarousel} from '../components/Carousel/Carousel'
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardMedia from "@material-ui/core/CardMedia";
-import ClubCard from "../components/Cards/ClubCard";
+import {EventGridList} from "../components/GridList/GridList";
+import {NewsCarousel} from '../components/Carousel/Carousel'
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

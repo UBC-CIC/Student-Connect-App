@@ -1,11 +1,6 @@
 import React from 'react';
 import Carousel from 'react-material-ui-carousel'
-import { Paper, Button } from '@material-ui/core'
 import {HomePageNewsCard} from "../Cards/NewsCard";
-import {GridListEventCard, HomeEventCard} from "../Cards/EventCard";
-import ClubCard from "../Cards/ClubCard";
-import News from "../../views/News";
-import {connect} from "react-redux";
 
 
 export function NewsCarousel(props)

@@ -1,7 +1,7 @@
 import AWS from "aws-sdk";
 import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
-import {listBlogsTables, listNewsTables} from "../graphql/queries";
+import {listBlogsTables} from "../graphql/queries";
 
 export const fetchBlogs = () => {
     return (dispatch) => {
