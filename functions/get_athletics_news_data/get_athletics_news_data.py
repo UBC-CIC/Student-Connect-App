@@ -145,11 +145,13 @@ def lambda_handler(event, context):
     athletics_link = "https://goheat.prestosports.com/landing/headlines-featured?feed=rss_2.0"
     news_items = []
     filtered_news_items = []
-    response_items = get_news_items_from_web(athletics_link)
 
+    response_items = get_news_items_from_web(athletics_link)
     if len(response_items) == 0:
         return {"status": "No items in feed"}
 
+    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # error to S3
     for item in response_items:
         try:
             news_item = news_parser(item)
@@ -160,18 +162,16 @@ def lambda_handler(event, context):
             LOGGER.error(f"Error in parsing a news item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/AthleticsNews")
             detailed_exception(LOGGER)
 
+    # Filter the parsed items based on last query time to get only new items
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="AthleticsNewsQueryTime")["Parameter"]["Value"]
-
         for news_item in news_items:
             if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
                     < datetime.strptime(news_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
                 filtered_news_items.append(news_item)
-
         SSM_CLIENT.put_parameter(Name="AthleticsNewsQueryTime",
                                  Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
                                  Overwrite=True)
-
     except SSM_CLIENT.exceptions.InternalServerError as e:
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
@@ -179,11 +179,13 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(news_items, indent=4))
     LOGGER.debug(json.dumps(filtered_news_items, indent=4))
 
-    S3_CLIENT.put_object(Body=json.dumps(filtered_news_items, indent=4), Bucket=S3_BUCKET_NAME,
-                         Key=f'AthleticsNews/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
+    # Save new items to central data lake S3
+    if len(filtered_news_items) != 0:
+        S3_CLIENT.put_object(Body=json.dumps(filtered_news_items, indent=4), Bucket=S3_BUCKET_NAME,
+                             Key=f'AthleticsNews/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
+    # Insert items into DynamoDB table with appropriate TTL
     table = DYNAMODB_RESOURCE.Table(ATHLETICS_NEWS_TABLE)
-    # Create a TTL for each item and insert into DynamoDB
     for news_item in filtered_news_items:
         news_item["expiresOn"] = get_adjusted_unix_time(news_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                         EXPIRY_DAYS_OFFSET * 24)

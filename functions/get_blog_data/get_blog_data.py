@@ -140,8 +140,9 @@ def lambda_handler(event, context):
     LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
 
     # Save new items to central data lake S3
-    S3_CLIENT.put_object(Body=json.dumps(filtered_blogs_items, indent=4), Bucket=S3_BUCKET_NAME,
-                         Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+    if len(filtered_blogs_items) != 0:
+        S3_CLIENT.put_object(Body=json.dumps(filtered_blogs_items, indent=4), Bucket=S3_BUCKET_NAME,
+                             Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
 
     # Insert items into DynamoDB table with appropriate TTL
     table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
