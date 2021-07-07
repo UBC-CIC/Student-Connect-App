@@ -17,7 +17,7 @@ TODO This prototype aims to address
 
 
 ## High Level Architecture
-![alt text](images/architectureDiagram.jpg)
+![alt text](docs/architectureDiagram.jpg)
 
 ### Application Screenshots
 TODO 
