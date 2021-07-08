@@ -19,27 +19,27 @@ TODO This prototype aims to address
 ## High Level Architecture
 ![alt text](docs/architectureDiagram.jpg)
 
-### Application Screenshots
+## Application Screenshots
 TODO 
 
-### Stack Details
+## Stack Details
 * [Authentication](./docs/AuthenticationArchitecture.md)
 * [Frontend User Interface](./docs/FrontendArchitecture.md)
 * [Backend Data Aggregation](./docs/DataAggregationArchitecture.md)
 
 
-### Deployment
-To deploy this solution into your AWS Account please follow our [Deployment Guide](docs/deployment_guide.md)
+## Deployment
+To deploy this solution into your AWS Account please follow our [Deployment Guide](docs/DeploymentGuide.md)
 
 ## User Guide
 TODO Check if needed, otherwise delete
 
-### Changelog
+## Changelog
 TODO Check if needed
 
-### Credits
+## Credits
 This prototype was architected and developed by Edward Chen and Neelim Novo, with guidance from the [UBC CIC](https://cic.ubc.ca/)
 technical and project management teams.
 
-### License
+## License
 This project is distributed under the [MIT License](./LICENSE).

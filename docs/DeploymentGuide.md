@@ -1,6 +1,6 @@
 # Deployment Guide
 
-To deploy this solution, deploy the backend first, and then the frontend
+To deploy this solution, deploy the ***backend*** first, and then the ***frontend***
 
 ## Backend Deployment
 <hr/>
