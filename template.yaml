@@ -56,10 +56,6 @@ Parameters:
     Type: String
     Default: kibana
     Description: The name of the user that is used to log into kibana.
-  #  KibanaUserEmail:
-  #    AllowedPattern: ^[0-9a-zA-Z-/_.@]*$
-  #    Default: kibana
-  #    Type: String
   ESDomainName:
     Type: String
     Default: 'engagement-app-data-index'
@@ -891,18 +887,6 @@ Resources:
     Properties:
       Domain: !Sub 'kibana-${AWS::StackName}-${AWS::Region}-${AWS::AccountId}'
       UserPoolId: !Ref CognitoUserPool
-
-  #  CognitoUserPoolUser:
-  #    Type: "AWS::Cognito::UserPoolUser"
-  #    Properties:
-  #      Username: !Ref KibanaUserEmail
-  #      UserPoolId: !Ref CognitoUserPool
-  #      MessageAction: "SUPPRESS"
-  #      UserAttributes:
-  #        - Name: "email_verified"
-  #          Value: "true"
-  #        - Name: "email"
-  #          Value: !Ref KibanaUserEmail
 
   ESCognito:
     Type: Custom::ESName
