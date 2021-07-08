@@ -70,9 +70,9 @@ Outputs:
   getESDocumentsLambdaFunctionArn:
     Value: !GetAtt getESDocuments.Arn
     Description: The arn of the lambda that queries elasticsearch with a given payload
-  eventsDDBTable:
-    Value: !GetAtt eventsDDBTable.Arn
-    Description: ARN of the DynamoDB table that contains the events data
+  dataLakeBucketName:
+    Value: !Ref DataStoreBucket
+    Description: Name of the central Data Lake S3 bucket
   KibanaPassword:
     Description: The password for the kibana user
     Value: !GetAtt ESCognito.KibanaPassword
@@ -260,7 +260,7 @@ Resources:
                   - !GetAtt getClubData.Arn
                   - !GetAtt esHasher.Arn
 
-  TranscribeStateMachine:
+  DataGrabberStateMachine:
     Type: "AWS::StepFunctions::StateMachine"
     Properties:
       RoleArn: !GetAtt StatesExecutionRole.Arn
@@ -395,8 +395,8 @@ Resources:
                   - 'states:DescribeExecution'
                   - 'states:StartExecution'
                 Resource:
-                  - !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:${TranscribeStateMachine.Name}:*'
-                  - !Ref TranscribeStateMachine
+                  - !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:${DataGrabberStateMachine.Name}:*'
+                  - !Ref DataGrabberStateMachine
 
   EventsUpdateEvent:
     Type: "AWS::Events::Rule"
@@ -407,7 +407,7 @@ Resources:
       ScheduleExpression: rate(1440 minutes)
       State: "ENABLED"
       Targets:
-        - Arn: !GetAtt TranscribeStateMachine.Arn
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
           Id: EventsTarget
           Input: '{"dataType": "Events"}'
           RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
@@ -421,7 +421,7 @@ Resources:
       ScheduleExpression: rate(10080 minutes)
       State: "ENABLED"
       Targets:
-        - Arn: !GetAtt TranscribeStateMachine.Arn
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
           Id: NewsTarget
           Input: '{"dataType": "News"}'
           RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
@@ -435,7 +435,7 @@ Resources:
       ScheduleExpression: rate(10080 minutes)
       State: "ENABLED"
       Targets:
-        - Arn: !GetAtt TranscribeStateMachine.Arn
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
           Id: BlogsTarget
           Input: '{"dataType": "Blogs"}'
           RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
@@ -449,7 +449,7 @@ Resources:
       ScheduleExpression: rate(10080 minutes)
       State: "ENABLED"
       Targets:
-        - Arn: !GetAtt TranscribeStateMachine.Arn
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
           Id: AthleticsNewsTarget
           Input: '{"dataType": "AthleticsNews"}'
           RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
@@ -463,7 +463,7 @@ Resources:
       ScheduleExpression: rate(525600 minutes)
       State: "DISABLED"
       Targets:
-        - Arn: !GetAtt TranscribeStateMachine.Arn
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
           Id: ClubsTarget
           Input: '{"dataType": "Clubs"}'
           RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn

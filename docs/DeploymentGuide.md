@@ -56,7 +56,7 @@ Some system installation requirements before starting deployment:
       ![outputs tab image](./OutputsTab.PNG)
         
     * Find the values for the KibanaUrl, KibanaUser and KibanaPassword. 
-      Visit the KibanaUrl and login with the default Kibana Username (always set as `kibana`) and the pre-generated
+      Visit the KibanaUrl and login with the default Kibana Username (always set as `kibana`), and the pre-generated
       8 letter Kibana password. After logging in, it will prompt you to change the password.
       Keep this password noted, as it is not linked to any email for resetting, it exists as part of a Cognito User.
       
@@ -65,14 +65,32 @@ Some system installation requirements before starting deployment:
    ![Kibana Stacks](./ElasticsearchStacks.PNG)
    * Then click on **Index Patterns** on the left Menu and then **Create Index Pattern** 
    ![Elasticsearch Index Patterns](./IndexPatterns.PNG)
-   * Type in a valid index pattern (as of now, the valid options are `events`, `news`, `blogs`, `athleticsnews`, `clubs`
+   * Type in a valid index pattern (as of now, the valid options are `events`, `news`, `blogs`, `athleticsnews`, `clubs`**
    as these are the data sources we have), then click **Next Step** and proceed with the defaults to have the index setup.
    * Use the hamburger menu on the left and navigate to the **Discover** tab, then pick an index to visualise its data.
     
     If the deployment has proceeded perfectly, some data should be shown here:
     ![Elasticsearch Index Visualisation](./IndexVisualisation.PNG)
    
-4) TODO Insert manual club data adding here
+4) ** This is a temporary step for this phase of the development. The club and course union website did not have categories
+   for the clubs, so they were categorised via a non-programmatic manual process. Hence, they are manually added into the
+   Elasticsearch index as this is not a part of the automatic data gathering process. To add the clubs data, the steps are:
+   * Login to the AWS Console and visit the S3 console. Find the bucket named 
+     `engagement-app-datastore-<AWS_REGION>-<AWS_ACCOUNT_ID>` and click on it
+   * Drag and drop the `AllUBCOClubs.json` file in the `docs` folder of this repository to the S3 bucket, then click
+    **Upload** at the bottom and leave all other options at default.
+   * Now navigate to the Step Functions console, and find the State machine with the name 
+     `DataGrabberStateMachine-XXXXXXXXXXXX`, then click on it      
+   * Next click on **Start Execution** and enter the input as the following
+    ```json
+    {
+        "dataType": "Clubs"
+    }
+    ```
+   Once the Step Function execution is complete and successful, the clubs data should be present in Elasticsearch.
+   Ideally this step should not be manual and should be automated, the details of achieving this are mentioned
+   in the [Post Proof-of-Concept tasks](https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/main/docs/DataAggregationArchitecture.md#post-proof-of-concept-tasks-for-backend-development)
+       
    
 
 

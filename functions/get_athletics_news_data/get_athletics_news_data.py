@@ -1,6 +1,5 @@
 import hashlib
 import logging
-from datetime import datetime, timedelta
 import boto3
 import os
 import pytz
@@ -8,7 +7,7 @@ import requests
 import json
 import feedparser
 from requests import RequestException
-
+from datetime import datetime, timedelta
 from common_lib import detailed_exception, get_adjusted_unix_time
 
 # Log level

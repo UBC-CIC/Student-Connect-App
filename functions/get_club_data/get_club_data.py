@@ -14,7 +14,6 @@ from typing import List
 from webdriver_manager.chrome import ChromeDriverManager
 from common_lib import detailed_exception
 
-# sys.setrecursionlimit(3000)
 
 # Log level
 logging.basicConfig()
@@ -23,6 +22,7 @@ LOGGER.setLevel(logging.INFO)
 
 
 CLUBS_TABLE = os.environ["CLUBS_TABLE_NAME"]
+S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 
 STUDENT_UNION_BASE_URL = "https://www.ubcsuo.ca"
@@ -149,38 +149,48 @@ def lambda_handler(event, context):
     """
     Lambda entry-point
     """
-    club_link = "https://www.ubcsuo.ca/club-directory-listing"
-    course_union_link = "https://www.ubcsuo.ca/course-union-directory"
 
-    try:
-        clubs = get_all_clubs(club_link)
-        print(f"Received all clubs: {len(clubs)}")
-        LOGGER.info(f"There are {len(clubs)} clubs")
-    except Exception as e:
-        detailed_exception(LOGGER)
-        return {"error": "Error in Parsing"}
-
-    try:
-        course_unions = get_course_unions(course_union_link)
-    except Exception as e:
-        LOGGER.error("Error in Selenium parsing")
-        detailed_exception(LOGGER)
-        return {"error": "Error in Selenium parsing"}
-
-    clubs.extend(course_unions)
+    s3_client = boto3.client('s3')
+    response = s3_client.get_object(Bucket=S3_BUCKET_NAME, Key="AllUBCOClubs.json")
+    clubs_json = json.loads(response['Body'].read())
+    LOGGER.info(json.dumps(str(clubs_json), indent=4))
+    table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
+    for club in clubs_json:
+        club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
+        table.put_item(Item=club)
 
     """
-    NOTE: this snippet of code was initially used for club + course union saving
+    NOTE: The snippet of code below was initially used for club + course union saving
     However, the clubs + course unions were manually categorised later on a local file 
     to improve the user experience for the pilot phase of the app
     Which was subsequently uploaded to S3, read from there and then persisted to DynamoDB without a TTL
     The code remains here as referential purposes for what an automated lambda would be like given the
-    source data was categorised
+    source data was categorised. The code above is a temporary replacement for the manual overloading of categorised
+    club data
     """
-    table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
-    for club in clubs:
-        club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
-        table.put_item(Item=club)
+    # club_link = "https://www.ubcsuo.ca/club-directory-listing"
+    # course_union_link = "https://www.ubcsuo.ca/course-union-directory"
+    # try:
+    #     clubs = get_all_clubs(club_link)
+    #     print(f"Received all clubs: {len(clubs)}")
+    #     LOGGER.info(f"There are {len(clubs)} clubs")
+    # except Exception as e:
+    #     detailed_exception(LOGGER)
+    #     return {"error": "Error in Parsing"}
+    #
+    # try:
+    #     course_unions = get_course_unions(course_union_link)
+    # except Exception as e:
+    #     LOGGER.error("Error in Selenium parsing")
+    #     detailed_exception(LOGGER)
+    #     return {"error": "Error in Selenium parsing"}
+    #
+    # clubs.extend(course_unions)
+    #
+    # table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
+    # for club in clubs:
+    #     club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
+    #     table.put_item(Item=club)
 
     return {"status": "completed"}
 
