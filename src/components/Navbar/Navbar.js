@@ -24,6 +24,7 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ExploreIcon from '@material-ui/icons/Explore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import HelpIcon from '@material-ui/icons/Help';
+import {Auth} from "aws-amplify";
 
 const drawerWidth = 240;
 
@@ -125,6 +126,9 @@ export default function MiniDrawer() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
+    function signOut(){
+        Auth.signOut()
+    }
 
     return (
         <div className={classes.root}>
@@ -154,7 +158,7 @@ export default function MiniDrawer() {
 
                     <Container>
                         <Button className={classes.signOutButton} variant={'contained'} startIcon={<ExitToAppIcon/>}
-                        href={process.env.REACT_APP_SignOutUrl}>
+                        href={process.env.REACT_APP_logOutAction} onClick={signOut}>
                             Sign out
                         </Button>
                     </Container>
@@ -191,7 +195,8 @@ export default function MiniDrawer() {
                 </List>
                 <Divider />
                 <List>
-                    <MenuItem component={Link} to="/home" >
+                    <MenuItem component={Link} to="/" >
+
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
                         <ListItemText primary={"For you"} />
                     </MenuItem>

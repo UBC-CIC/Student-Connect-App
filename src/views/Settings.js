@@ -49,9 +49,6 @@ const useStyles = makeStyles((theme) => ({
 function Settings(props){
     const classes = useStyles();
     const{userPreference}=props
-    const [state, setState] = React.useState({
-        checked: props.userPreference.emailNotification
-    });
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {

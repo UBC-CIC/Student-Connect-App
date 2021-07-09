@@ -1,0 +1,122 @@
+video {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    background-size: cover;
+    /* Change opacity to 1.0 for full video clarity, or lower it to "tint" it */
+    opacity: 0.50;
+    overflow: hidden;
+}
+
+/* Below CSS typewriter effect settings adapted from here: https://css-tricks.com/snippets/css/typewriter-effect/ */
+.line {
+    position: relative;
+    color: whitesmoke;
+    top: 50%;
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    /* transform: translateY(-50%); */
+}
+
+.line-static {
+    color: whitesmoke;
+    text-align: center;
+}
+
+.lightMode {
+    color: #242424 !important;
+    border-right: 2px solid #242424;
+}
+
+.lightMode-static {
+    color: #242424 !important;
+}
+
+/* Animation */
+.anim-typewriter{
+    animation: typewriter 4s steps(44) 1s 1 normal both,
+    blinkTextCursor 1000ms steps(44) infinite normal;
+}
+
+.anim-typewriter-light {
+    animation: typewriter 4s steps(44) 1s 1 normal both,
+    blinkTextCursorLight 1000ms steps(44) infinite normal;
+}
+
+/* when the screen size is bigger than phone size, englarge the header */
+
+@media only screen and (min-width: 1240px) {
+    .typewriter > p {
+       font-size: 4rem;
+    }
+}
+
+@media only screen and (min-width: 600px) and (max-width: 1240px) {
+     .typewriter > p {
+        font-size: 3rem;
+     }
+}
+
+@media only screen and (max-width: 600px) {
+    .typewriter > p {
+       font-size: 2rem;
+    }
+}
+
+@keyframes typewriter{
+    from{width: 0;}
+    /* Modify the width below to match the length of the application name*/
+    to{width: 11.5em;}
+}
+@keyframes blinkTextCursor{
+    from{border-right-color: rgba(255,255,255,.75);}
+    to{border-right-color: transparent;}
+}
+
+@keyframes blinkTextCursorLight{
+    from{border-right-color: #242424;}
+    to{border-right-color: transparent;}
+}
+
+
+/* =====================LOGIN FORM SETTINGS===============================*/
+
+.login-box {
+    box-shadow: 0px 3px 10px -6px black;
+    max-width: 600px;
+    padding: 20px 40px;
+    background-color: whitesmoke;
+}
+
+@media only screen and (min-width: 600px) {
+    .login-box {
+        max-width: 420px !important;
+        min-width: 420px;
+        border-radius: 6px;
+    }
+}
+
+.login-wrapper-top {
+    padding: 20px 0;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+.login-wrapper-top-header {
+    font-family: 'Roboto', sans-serif !important;
+    font-weight: 500;
+    font-size: 1.8rem;
+    /* color: whitesmoke; */
+}
+
+.input-box {
+    padding: 6px 0;
+}

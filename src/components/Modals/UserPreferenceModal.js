@@ -64,6 +64,9 @@ export default function UserPreferenceModal(props){
         updateUserPreferenceAction(userPreference)
         setOpen(false);
     };
+    const handleClose = () => {
+        setOpen(false);
+    };
 
 
     return(
@@ -71,10 +74,10 @@ export default function UserPreferenceModal(props){
             <Button className={classes.modifyButton} onClick={handleClickOpen} startIcon={<EditIcon/>}>
                 Modify
             </Button>
-            <Dialog fullScreen open={open} onClose={handleSave} TransitionComponent={Transition}>
+            <Dialog fullScreen open={open} onClose={handleClose} TransitionComponent={Transition}>
                 <AppBar className={classes.appBar}>
                     <Toolbar>
-                        <IconButton edge="start" color="inherit" onClick={handleSave} aria-label="close">
+                        <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
                         <Typography variant="h6" className={classes.title}>

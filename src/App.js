@@ -21,6 +21,7 @@ import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
 import {Auth} from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import {getUserPreferenceAction} from "./actions/userAction";
+import SignIn from "./views/SignIn";
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -66,36 +67,31 @@ function App(props) {
     fetchEvents()
     fetchBlogs()
     fetchClubs()
-    fetchAllClubs()
-    fetchAllEvents()
-    fetchAllNews()
-    fetchAllBlogs()
-    fetchSportsNews()
-    fetchAllSportsNews()
-    getUserPreferenceAction('cyedward')
+    // fetchAllClubs()
+    // fetchAllEvents()
+    // fetchAllNews()
+    // fetchAllBlogs()
+    // fetchSportsNews()
+    // fetchAllSportsNews()
+    // getUserPreferenceAction('cyedward')
 
   }, []);
 
   return (
     <div className={classes.app}>
-      <Router>
-        <Redirect to='/home'/>
         <Navbar/>
         <Container className={classes.container} >
-          {/*<SignIn/>*/}
-          <Route path ='/home' exact component={Home}/>
+          <Route path ='/' exact component={Home}/>
           <Route path ='/explore' exact component={Explore}/>
           <Route path ='/clubs' exact component={Clubs}/>
           <Route path ='/events' exact component={Events}/>
           <Route path ='/settings' exact component={Settings}/>
           <Route path ='/news' exact component={News}/>
           <Route path = '/survey' exact component={Survey}/>
-
         </Container>
         <Footer/>
         <AmplifySignOut/>
 
-      </Router>
 
 
 
