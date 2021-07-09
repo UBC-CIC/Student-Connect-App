@@ -4,12 +4,17 @@
 ## Data Aggregation
 
 Here is a diagram representing the processing flow for data aggregation from websites with desired content:
+NOTE: Step Functions are shown in the diagram as numbered boxes on the Lambdas for simplicity, and to easily demonstrate
+scalability
 
 ![Data Aggregation Workflow](./DataAggregationWorkflow.png)
 
 The workflow is as follows:
 
-* A Lambda function (marked by the blue `1`) is designed to gather desired data from a source, and persist it 
+* A Cloudwatch Time-based event is used to trigger the Step Functions workflow which starts 
+  with the Data Parsing Lambda first.
+
+* The Data Parsing Lambda function (marked by the blue `1`) is designed to gather desired data from a source, and persist it 
   into a DynamoDB Table. Let's refer to the list of data items obtained from the website as documents henceforth
   The Lambda performs the following tasks:
   - Parses raw, unstructured documents into a semi-structured document format, while making sure it has a 
@@ -26,12 +31,16 @@ The workflow is as follows:
     values, the corresponding document is updated based on the unique document ID which (by an assumption or fact) 
     does not change. This ensures the documents are upto-date, reflecting any changes made by the web content
     
-* For every data source, a subsequent data parser Lambda can be added along with a DynamoDB table to store the intermediate results
-  before it is used for recommendation and analytics
+  - Adds the new, parsed data to an S3 bucket that acts like a central data lake. The items in this bucket will not expire,
+    hence creating a data lake to build other application features on top of it (such as analytics)
+    
+  - The lambda also saves error logs to S3 if there is any issue in parsing a raw, unstructured document, so it can 
+    be investigated later to fix the parsing
+    
   
 * The data is then ingested into Amazon Elasticsearch service by the help of:
-  - A DynamoDB table that contains a list of hashes and data source name for all documents in Elasticsearch.
-    The document hash represents the id of a item in Elasticsearch, e.g: 
+  - A DynamoDB table (Document Hash Table) that contains a list of hashes and data source name for all documents in Elasticsearch.
+    The document hash represents the id of an item in Elasticsearch, e.g: 
     ```json
     {
       "documentHash": "0106aafb1262b33ef02e37f090cde0f3",
@@ -41,7 +50,8 @@ The workflow is as follows:
     
   - A Lambda function that updates data in the Document Hash DynamoDB Table and Elasticsearch
   
-* The Lambda function (marked by the orange `2`) is designed to iterate through the ***N*** Website Data DynamoDB tables 
+* The Document Hasher Lambda function (marked by the orange `2`, and triggered by Step Functions after the 
+  Lambda marked by blue `2`) is designed to iterate through the ***N*** Website Data DynamoDB tables 
   and add them to Elasticsearch for recommendation purposes. It does so by doing the following:
   - Creates a hash out of the entire document string for all document items in the Website Data DynamoDB tables,
     thereby creating a list of hashes (L1). This list represents items present in the website.
@@ -58,6 +68,15 @@ The workflow is as follows:
   This makes sure any small change to a document on the website is accurately reflected into Elasticsearch, and hence
   the recommendation feeds as well
 
+* Hence to add a new data source, the following are simply added
+    - A new Cloudwatch Time-Based Event based on the frequency with which the data should be grabbed
+    - A new Parameter Store parameter to save the last query date for this particular data source
+    - A Data Parser Lambda to parse the categorised data from a website or API. It is connected to the central S3 for
+      long-term data archival and error logging
+    - A DynamoDB Table to store the intermediate results before it is compared with the upto date data in the ESHashTable
+      and Elasticsearch
+    - The Document Hasher Lambda is simply updated to include the name of the new DynamoDB table and include it in 
+    Elasticsearch
 
 ## Database Schemas
 <hr>

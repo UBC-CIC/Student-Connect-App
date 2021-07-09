@@ -1,3 +1,4 @@
+import json
 import logging
 import boto3
 import os
@@ -70,39 +71,39 @@ def lambda_handler(event, context):
         for es_item_hash_string in es_hash_items:
             es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
 
-        # Update ESHashTable and Elasticsearch with respect to events, news and blogs
-        for table_name in ["Events", "News", "Blogs", "AthleticsNews"]:
-            # Get all items for the specific table_name
-            item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
-            response = item_table.scan(ConsistentRead=True)
-            table_items = response["Items"]
-            while response.get("LastEvaluatedKey") in response:
-                response = item_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
-                table_items.extend(response["Items"])
+        # Update ESHashTable and Elasticsearch with respect to data sources
+        table_name = event["dataType"]
+        # Get all items from the table of the dataType being refreshed
+        item_table = DYNAMODB_RESOURCE.Table(f"{table_name}Table")
+        response = item_table.scan(ConsistentRead=True)
+        table_items = response["Items"]
+        while response.get("LastEvaluatedKey") in response:
+            response = item_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
+            table_items.extend(response["Items"])
 
-            # Hash all items in the item table
-            item_hash_list = []
-            for item in table_items:
-                item_hash = hashlib.md5(str(item).encode("utf-8")).hexdigest()
-                item_hash_list.append(item_hash)
+        # Hash all items in the item table
+        item_hash_list = []
+        for item in table_items:
+            item_hash = hashlib.md5(str(item).encode("utf-8")).hexdigest()
+            item_hash_list.append(item_hash)
 
-            for es_item_hash_string in es_hash_list_map.get(table_name):
-                if es_item_hash_string not in item_hash_list:
-                    # If an item hash is in the ESHashTable but not the datastore tables
-                    # That item is outdated and should be removed from ESHashTable and Elasticsearch
-                    hash_table.delete_item(Key={"documentHash": es_item_hash_string})
-                    ES_CLIENT.delete(index=table_name.lower(), id=es_item_hash_string)
+        for es_item_hash_string in es_hash_list_map.get(table_name):
+            if es_item_hash_string not in item_hash_list:
+                # If an item hash is in the ESHashTable but not the datastore tables
+                # That item is outdated and should be removed from ESHashTable and Elasticsearch
+                hash_table.delete_item(Key={"documentHash": es_item_hash_string})
+                ES_CLIENT.delete(index=table_name.lower(), id=es_item_hash_string)
 
-            # Insert new items from item table into hashtable and Elasticsearch
-            for index, item in enumerate(table_items):
-                if item_hash_list[index] not in es_hash_list_map.get(table_name):
-                    # If an item hash is in the datastore table but not in the ESHashTable
-                    # That item is new and should be added to ESHashTable and Elasticsearch
-                    hash_table.put_item(Item={
-                        "documentHash": item_hash_list[index],
-                        "documentType": table_name
-                    })
-                    ES_CLIENT.index(index=table_name.lower(), body=item, id=item_hash_list[index])
+        # Insert new items from item table into hashtable and Elasticsearch
+        for index, item in enumerate(table_items):
+            if item_hash_list[index] not in es_hash_list_map.get(table_name):
+                # If an item hash is in the datastore table but not in the ESHashTable
+                # That item is new and should be added to ESHashTable and Elasticsearch
+                hash_table.put_item(Item={
+                    "documentHash": item_hash_list[index],
+                    "documentType": table_name
+                })
+                ES_CLIENT.index(index=table_name.lower(), body=item, id=item_hash_list[index])
     except Exception as e:
         detailed_exception(LOGGER)
         return {"status": "error"}
