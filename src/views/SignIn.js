@@ -55,7 +55,9 @@ function SignIn(props) {
 
 
     useEffect(() => {
+        console.log(Auth.currentAuthenticatedUser())
         updateCurrentLoginState(loginState);
+        console.log(loginState)
     }, [loginState]);
 
     const [user, setUser] = useState(null);
@@ -67,21 +69,22 @@ function SignIn(props) {
 
 
     useEffect(() => {
-        Hub.listen("auth", ({payload: {event, data}}) => {
+        Hub.listen('auth', ({ payload: { event, data } }) => {
+            console.log(event)
             switch (event) {
-                case "signIn":
-                case "cognitoHostedUI":
+                case 'signIn':
+                case 'cognitoHostedUI':
                     getUser().then(userData => setUser(userData));
                     break;
-                case "signOut":
+                case 'signOut':
+                    setUser(null);
                     break;
-                case "signIn_failure":
-                case "cognitoHostedUI_failure":
-                    console.log("Sign in failure", data);
+                case 'signIn_failure':
+                case 'cognitoHostedUI_failure':
+                    console.log('Sign in failure', data);
                     break;
             }
-        });
-    }, []);
+        })});
 
 
     return (
@@ -89,16 +92,21 @@ function SignIn(props) {
             <Grid item xs={12}>
                 {
                     currentLoginState !== "signedIn" && (
-                        <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
-                               title={"CIC React Login Template"} darkMode={true}
-                               disableSignUp={false}
-                        />
+                        <div>
+                            <Button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</Button>
+                            <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
+                                   title={"CIC React Login Template"} darkMode={true}
+                                   disableSignUp={false}
+                            />
+
+                        </div>
+
                     )
                 }
                 {
                     currentLoginState === "signedIn" && (
                         <div>
-                            <App/>
+                            <App user={user}/>
 
 
                         </div>

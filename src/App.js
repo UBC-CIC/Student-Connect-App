@@ -18,10 +18,11 @@ import {connect} from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
-import {Auth} from 'aws-amplify';
+import {Amplify, Auth} from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import {getUserPreferenceAction} from "./actions/userAction";
 import SignIn from "./views/SignIn";
+import awsConfig from '../src/aws-exports'
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -48,7 +49,6 @@ const main = async () => {
     region: 'ca-central-1',
   });
 
-  console.log(Auth.currentUserInfo())
 
 
 };
@@ -58,21 +58,29 @@ main().catch(error => console.error(error));
 function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction}= props
+    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,user}= props
+  console.log(user)
   const signInUrl = process.env.REACT_APP_SignInUrl
 
   useEffect(() => {
+    Amplify.configure(awsConfig);
+    Auth.currentAuthenticatedUser().then((response)=>{
+      console.log(response)
+    }).catch((err) => {
+      console.log(err);
+    })
+
     main()
     fetchNews()
     fetchEvents()
     fetchBlogs()
     fetchClubs()
-    // fetchAllClubs()
-    // fetchAllEvents()
-    // fetchAllNews()
-    // fetchAllBlogs()
-    // fetchSportsNews()
-    // fetchAllSportsNews()
+    fetchAllClubs()
+    fetchAllEvents()
+    fetchAllNews()
+    fetchAllBlogs()
+    fetchSportsNews()
+    fetchAllSportsNews()
     // getUserPreferenceAction('cyedward')
 
   }, []);
