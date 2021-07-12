@@ -54,12 +54,14 @@ def lambda_handler(event, context):
     try:
         # Get all hashes of all items currently in Elasticsearch via ESHash DynamoDB Table
         hash_table = DYNAMODB_RESOURCE.Table(ES_HASH_TABLE)
+        # TODO Use  Projection Expression to have scan result only return document items as specified by Step Functions
         response = hash_table.scan()
-        es_hash_items = response["Items"]
+        es_hash_items_response = response["Items"]
         while response.get("LastEvaluatedKey") in response:
             response = hash_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
-            es_hash_items.extend(response["Items"])
+            es_hash_items_response.extend(response["Items"])
 
+        # TODO make this generic to keep hash list based on Step Functions input
         es_hash_list_map = {
             "Events": [],
             "News": [],
@@ -68,7 +70,7 @@ def lambda_handler(event, context):
             "Clubs": []
         }
         # Separate the hashes in the ESHashTable by document type into individual lists
-        for es_item_hash_string in es_hash_items:
+        for es_item_hash_string in es_hash_items_response:
             es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
 
         # Update ESHashTable and Elasticsearch with respect to data sources

@@ -25,13 +25,17 @@ Some system installation requirements before starting deployment:
    For Mac, Linux and Windows Subsystem for Linux users:
 
    ```   
-   deploy.sh --aws-region <AWS_REGION> --aws-profile <AWS_PROFILE> --stack-name <STACK_NAME>
+   deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
    ```
 
    For Windows users:
    ```   
-   deploy.bat aws-region:<AWS_REGION> aws-profile:<AWS_PROFILE> stack-name:<STACK_NAME>
+   deploy.bat aws-profile:<AWS_PROFILE> aws-region:<AWS_REGION> stack-name:<STACK_NAME>
    ```
+    Where,
+    * AWS_PROFILE: Name of the profile setup in your AWS config for the SAM CLI to use for deployment
+    * AWS_REGION: AWS Region to deploy the application in
+    * STACK_NAME: Name given to your application, only allows lower case a-z letters with the addition of numbers and hyphens.
 
    This script will:
    <ul>
@@ -41,12 +45,20 @@ Some system installation requirements before starting deployment:
    <li>and finally deploy them using the cloudformation template, template.yaml </li>
    </ul>
     
-    After running the script, at one point the terminal will prompt:
+    After running the script, at one point it will run a guided SAM deployment:
+   
+    Pick the default options for each prompt, except for:
+    
+    ```
+    Confirm changes before deploy [y/N]:
+    ```   
+    and
     ```
     Deploy this changeset? [y/N]:
     ```
-   Enter `y` or `Y` to confirm the deployment 
-   
+    which will need either `y` or `Y` to confirm the deployment.
+   Here are what all the deployment prompts look like for a proper deployment:
+   ![Deployment Prompts](./DeploymentPrompts.png)
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
    

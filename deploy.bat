@@ -23,4 +23,4 @@ cd ..
 
 CALL sam build
 
-CALL sam deploy --profile %aws-profile% --region %aws-region% --stack-name %stack-name%
+CALL sam deploy --profile %aws-profile% --region %aws-region% --stack-name %stack-name% --guided

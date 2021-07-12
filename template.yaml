@@ -346,7 +346,7 @@ Resources:
               "Choices": [
                 {
                   "Variable": "$.dataType",
-                  "StringEquals": "",
+                  "StringEquals": "Clubs",
                   "Next": "Get Clubs Data"
                 }
               ],
@@ -400,6 +400,8 @@ Resources:
 
   EventsUpdateEvent:
     Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
     Properties:
       Description: Triggers the State machine to retrieve and save Events data, every day
       Name: EventsEventRule
@@ -414,11 +416,13 @@ Resources:
 
   NewsUpdateEvent:
     Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
     Properties:
       Description: Triggers the State machine to retrieve and save News data, every 7 days
       Name: NewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(10080 minutes)
+      ScheduleExpression: rate(1440 minutes)
       State: "ENABLED"
       Targets:
         - Arn: !GetAtt DataGrabberStateMachine.Arn
@@ -428,11 +432,13 @@ Resources:
 
   BlogsUpdateEvent:
     Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
     Properties:
       Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
       Name: BlogsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(10080 minutes)
+      ScheduleExpression: rate(1440 minutes)
       State: "ENABLED"
       Targets:
         - Arn: !GetAtt DataGrabberStateMachine.Arn
@@ -442,11 +448,13 @@ Resources:
 
   AthleticsNewsUpdateEvent:
     Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
     Properties:
       Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
       Name: AthleticsNewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(10080 minutes)
+      ScheduleExpression: rate(1440 minutes)
       State: "ENABLED"
       Targets:
         - Arn: !GetAtt DataGrabberStateMachine.Arn
@@ -456,6 +464,8 @@ Resources:
 
   ClubsUpdateEvent:
     Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
     Properties:
       Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
       Name: ClubsEventRule
@@ -554,10 +564,6 @@ Resources:
       Role: !GetAtt esHasherLambdaIAMRole.Arn
       Environment:
         Variables:
-          EVENTS_TABLE_NAME: !Ref eventsTable
-          BLOGS_TABLE_NAME: !Ref blogsTable
-          NEWS_TABLE_NAME: !Ref newsTable
-          CLUBS_TABLE_NAME: !Ref clubsTable
           ES_HASH_TABLE_NAME: !Ref esHashTable
           ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 

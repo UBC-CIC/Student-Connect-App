@@ -12,13 +12,16 @@ scalability
 The workflow is as follows:
 
 * A Cloudwatch Time-based event is used to trigger the Step Functions workflow which starts 
-  with the Data Parsing Lambda first.
-
-* The Data Parsing Lambda function (marked by the blue `1`) is designed to gather desired data from a source, and persist it 
-  into a DynamoDB Table. Let's refer to the list of data items obtained from the website as documents henceforth
+  with the Data Parsing Lambda first. It passes a dataType parameter for the document type to update, 
+  e.g `events`, `news`, `blogs` etc, and Step Functions will choose the appropriate Data Parsing Lambda function
+  to trigger.
+  
+* The Data Parsing Lambda function (marked by the blue `1`) is designed to gather desired data from a source, 
+  and persist it into its own DynamoDB Table. Let's refer to the list of data items obtained from the website as 
+  documents henceforth.
   The Lambda performs the following tasks:
   - Parses raw, unstructured documents into a semi-structured document format, while making sure it has a 
-    unique identifier. The schema for the semi-structure data is detailed below in
+    unique identifier. The schema for the semi-structured data is detailed below in
     the [**Database Schemas**](#database-schemas) section
     
   - Sets up a Time-To-Live for the document if necessary
@@ -28,8 +31,9 @@ The workflow is as follows:
     already existing data in DynamoDB
     
   - Adds the new, parsed data to the website's specific DynamoDB table. If the document only has one or more modified
-    values, the corresponding document is updated based on the unique document ID which (by an assumption or fact) 
-    does not change. This ensures the documents are upto-date, reflecting any changes made by the web content
+    values, the corresponding document is updated based on the unique document ID which does not change(it has been 
+    assumed the ID's provided by the websites are unique, if not guaranteed to be). This ensures the documents 
+    are upto-date, reflecting any changes made by the web content
     
   - Adds the new, parsed data to an S3 bucket that acts like a central data lake. The items in this bucket will not expire,
     hence creating a data lake to build other application features on top of it (such as analytics)
@@ -51,13 +55,14 @@ The workflow is as follows:
   - A Lambda function that updates data in the Document Hash DynamoDB Table and Elasticsearch
   
 * The Document Hasher Lambda function (marked by the orange `2`, and triggered by Step Functions after the 
-  Lambda marked by blue `2`) is designed to iterate through the ***N*** Website Data DynamoDB tables 
-  and add them to Elasticsearch for recommendation purposes. It does so by doing the following:
-  - Creates a hash out of the entire document string for all document items in the Website Data DynamoDB tables,
+  Lambda marked by blue `2`) is designed to update the document items present in Elasticsearch with the aid
+  of the Document Hash Table. The document data type to update is passed through from Step Functions:
+  - Creates a hash out of the entire document string for all document items in the Website Data DynamoDB table (as 
+    specified in the `dataType` parameter in Step Functions),
     thereby creating a list of hashes (L1). This list represents items present in the website.
     
-  - Get a list of all document hashes (L2) from the Document Hash DynamoDB Table for the particular document type.
-    This list represents items present in Elasticsearch
+  - Get a list of all document hashes (L2) from the Document Hash DynamoDB Table for the particular document type 
+    i.e `events`, `news`, `blogs` etc. This list represents items present in Elasticsearch.
     
   - Compare the list L1 and L2.
     - If a hash is in L2 but not in L1, that means a document is outdated since it does not match what is present in the 
@@ -66,17 +71,20 @@ The workflow is as follows:
     to the DynamoDB table and the document itself with the hash as id to Elasticsearch
       
   This makes sure any small change to a document on the website is accurately reflected into Elasticsearch, and hence
-  the recommendation feeds as well
+  the recommendation feeds as well that Elasticsearch feeds into
 
 * Hence to add a new data source, the following are simply added
-    - A new Cloudwatch Time-Based Event based on the frequency with which the data should be grabbed
+    - A new Cloudwatch Time-Based Event based on the frequency with which the data should be grabbed, and the `dataType`
+      to add. Name should be in PascalCase.
     - A new Parameter Store parameter to save the last query date for this particular data source
     - A Data Parser Lambda to parse the categorised data from a website or API. It is connected to the central S3 for
-      long-term data archival and error logging
+      long-term data archival and error logging, and uses the Parameter Store parameter for filtering
     - A DynamoDB Table to store the intermediate results before it is compared with the upto date data in the ESHashTable
-      and Elasticsearch
-    - The Document Hasher Lambda is simply updated to include the name of the new DynamoDB table and include it in 
-    Elasticsearch
+      and Elasticsearch. The name should match the `dataType` value as specified in the Cloudwatch event
+    - Update the Website Grabber and Document Hasher Lambda IAM roles to have access to the new DynamoDB Tables
+    - The Document Hasher Lambda script is decoupled from a code stand-point. By ensuring the Cloudwatch event `dataType`
+      and DynamoDB table have the same value in PascalCase, it will work automatically as the value is passed in for both
+      via Step Functions
 
 ## Database Schemas
 <hr>
