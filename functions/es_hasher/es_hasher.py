@@ -55,7 +55,6 @@ def lambda_handler(event, context):
     try:
         # Get all hashes of all items currently in Elasticsearch via ESHash DynamoDB Table
         hash_table = DYNAMODB_RESOURCE.Table(ES_HASH_TABLE)
-        # TODO Use  Projection Expression to have scan result only return document items as specified by Step Functions
         response = hash_table.scan(FilterExpression=Key('documentType').eq(event['dataType']))
         es_hash_items_response = response["Items"]
         while response.get("LastEvaluatedKey") in response:
@@ -63,7 +62,6 @@ def lambda_handler(event, context):
                                        ExclusiveStartKey=response["LastEvaluatedKey"])
             es_hash_items_response.extend(response["Items"])
 
-        # TODO make this generic to keep hash list based on Step Functions input
         # es_hash_list_map = {
         #     "Events": [],
         #     "News": [],
