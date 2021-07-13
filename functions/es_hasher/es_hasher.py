@@ -5,6 +5,7 @@ import os
 import certifi
 import hashlib
 from aws_requests_auth.aws_auth import AWSRequestsAuth
+from boto3.dynamodb.conditions import Key
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from common_lib import detailed_exception
 
@@ -55,23 +56,28 @@ def lambda_handler(event, context):
         # Get all hashes of all items currently in Elasticsearch via ESHash DynamoDB Table
         hash_table = DYNAMODB_RESOURCE.Table(ES_HASH_TABLE)
         # TODO Use  Projection Expression to have scan result only return document items as specified by Step Functions
-        response = hash_table.scan()
+        response = hash_table.scan(FilterExpression=Key('documentType').eq(event['dataType']))
         es_hash_items_response = response["Items"]
         while response.get("LastEvaluatedKey") in response:
-            response = hash_table.scan(ExclusiveStartKey=response["LastEvaluatedKey"])
+            response = hash_table.scan(FilterExpression=Key('documentType').eq(event['dataType']),
+                                       ExclusiveStartKey=response["LastEvaluatedKey"])
             es_hash_items_response.extend(response["Items"])
 
         # TODO make this generic to keep hash list based on Step Functions input
-        es_hash_list_map = {
-            "Events": [],
-            "News": [],
-            "Blogs": [],
-            "AthleticsNews": [],
-            "Clubs": []
-        }
-        # Separate the hashes in the ESHashTable by document type into individual lists
-        for es_item_hash_string in es_hash_items_response:
-            es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
+        # es_hash_list_map = {
+        #     "Events": [],
+        #     "News": [],
+        #     "Blogs": [],
+        #     "AthleticsNews": [],
+        #     "Clubs": []
+        # }
+        # # Separate the hashes in the ESHashTable by document type into individual lists
+        # for es_item_hash_string in es_hash_items_response:
+        #     es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
+
+        es_hash_items = []
+        for response_item in es_hash_items_response:
+            es_hash_items.append(response_item["documentHash"])
 
         # Update ESHashTable and Elasticsearch with respect to data sources
         table_name = event["dataType"]
@@ -89,16 +95,16 @@ def lambda_handler(event, context):
             item_hash = hashlib.md5(str(item).encode("utf-8")).hexdigest()
             item_hash_list.append(item_hash)
 
-        for es_item_hash_string in es_hash_list_map.get(table_name):
-            if es_item_hash_string not in item_hash_list:
+        for es_hash_item_string in es_hash_items:
+            if es_hash_item_string not in item_hash_list:
                 # If an item hash is in the ESHashTable but not the datastore tables
                 # That item is outdated and should be removed from ESHashTable and Elasticsearch
-                hash_table.delete_item(Key={"documentHash": es_item_hash_string})
-                ES_CLIENT.delete(index=table_name.lower(), id=es_item_hash_string)
+                hash_table.delete_item(Key={"documentHash": es_hash_item_string})
+                ES_CLIENT.delete(index=table_name.lower(), id=es_hash_item_string)
 
         # Insert new items from item table into hashtable and Elasticsearch
         for index, item in enumerate(table_items):
-            if item_hash_list[index] not in es_hash_list_map.get(table_name):
+            if item_hash_list[index] not in es_hash_items:
                 # If an item hash is in the datastore table but not in the ESHashTable
                 # That item is new and should be added to ESHashTable and Elasticsearch
                 hash_table.put_item(Item={
