@@ -19,4 +19,4 @@ cd ..
 
 sam build
 
-sam deploy --profile ${aws-profile} --region ${aws-region} --stack-name ${stack-name} --guided
+sam deploy --profile ${awsProfile} --region ${awsRegion} --stack-name ${stackName} --guided
