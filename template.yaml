@@ -10,6 +10,7 @@ Globals:
     Environment:
       Variables:
         DEBUG_MODE: True
+        BUCKET_NAME: !Ref DataStoreBucket
 
 Parameters:
   deploymentBucketName:
@@ -22,6 +23,10 @@ Parameters:
   newsTable:
     Type: String
     Default: NewsTable
+    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
+  athleticsNewsTable:
+    Type: String
+    Default: AthleticsNewsTable
     Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
   blogsTable:
     Type: String
@@ -38,11 +43,11 @@ Parameters:
   newsExpiryDays:
     Type: String
     Default: 60
-    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+    Description: Number of days after which a news article is automatically deleted from DynamoDB
   blogExpiryDays:
     Type: String
     Default: 120
-    Description: Number of days after which the news article/blog post is automatically deleted from DynamoDB
+    Description: Number of days after which a blog post is automatically deleted from DynamoDB
   eventsExpiryDays:
     Type: String
     Default: 2
@@ -51,10 +56,6 @@ Parameters:
     Type: String
     Default: kibana
     Description: The name of the user that is used to log into kibana.
-  #  KibanaUserEmail:
-  #    AllowedPattern: ^[0-9a-zA-Z-/_.@]*$
-  #    Default: kibana
-  #    Type: String
   ESDomainName:
     Type: String
     Default: 'engagement-app-data-index'
@@ -69,9 +70,9 @@ Outputs:
   getESDocumentsLambdaFunctionArn:
     Value: !GetAtt getESDocuments.Arn
     Description: The arn of the lambda that queries elasticsearch with a given payload
-  eventsDDBTable:
-    Value: !GetAtt eventsDDBTable.Arn
-    Description: ARN of the DynamoDB table that contains the events data
+  dataLakeBucketName:
+    Value: !Ref DataStoreBucket
+    Description: Name of the central Data Lake S3 bucket
   KibanaPassword:
     Description: The password for the kibana user
     Value: !GetAtt ESCognito.KibanaPassword
@@ -88,6 +89,12 @@ Outputs:
       Name: !Sub "${AWS::StackName}-ESDomainName"
 
 Resources:
+
+  DataStoreBucket:
+    Type: "AWS::S3::Bucket"
+    Properties:
+      BucketName: !Sub "engagement-app-datastore-bucket-${AWS::Region}-${AWS::AccountId}"
+
   DataGrabberLambdaIAMRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -125,11 +132,16 @@ Resources:
                   - !Sub ${newsDDBTable.Arn}
                   - !Sub ${blogsDDBTable.Arn}
                   - !Sub ${clubsDDBTable.Arn}
+                  - !Sub ${athleticsNewsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
                   - "ssm:GetParameter"
                   - "ssm:PutParameter"
                 Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "s3:*"
+                Resource: !Sub "${DataStoreBucket.Arn}/*"
 
   esHasherLambdaIAMRole:
     Type: "AWS::IAM::Role"
@@ -167,6 +179,7 @@ Resources:
                   - !Sub ${newsDDBTable.Arn}
                   - !Sub ${blogsDDBTable.Arn}
                   - !Sub ${clubsDDBTable.Arn}
+                  - !Sub ${athleticsNewsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
                   - "dynamoDB:DeleteItem"
@@ -174,10 +187,6 @@ Resources:
                   - "dynamodb:PutItem"
                 Resource:
                   - !Sub ${esHashDDBTable.Arn}
-              - Effect: "Allow"
-                Action:
-                  - "comprehend:*"
-                Resource: "*"
               - Effect: Allow
                 Action:
                   - 'es:ESHttpGet'
@@ -224,6 +233,251 @@ Resources:
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
 
+  StatesExecutionRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - !Sub "states.${AWS::Region}.amazonaws.com"
+            Action: "sts:AssumeRole"
+      Policies:
+        - PolicyName: StatesExecutionPolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - "lambda:InvokeFunction"
+                Resource:
+                  - !GetAtt getEventsData.Arn
+                  - !GetAtt getNewsData.Arn
+                  - !GetAtt getAthleticsNewsData.Arn
+                  - !GetAtt getBlogData.Arn
+                  - !GetAtt getClubData.Arn
+                  - !GetAtt esHasher.Arn
+
+  DataGrabberStateMachine:
+    Type: "AWS::StepFunctions::StateMachine"
+    Properties:
+      RoleArn: !GetAtt StatesExecutionRole.Arn
+      DefinitionString:
+        !Sub |-
+        {
+          "StartAt": "Check if Events refresh",
+          "States": {
+            "Check if Events refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "Events",
+                  "Next": "Get Events Data"
+                }
+              ],
+              "Default": "Check if News refresh"
+            },
+            "Get Events Data": {
+              "Type":  "Task",
+              "Resource": "${getEventsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.eventsResult",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if News refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "News",
+                  "Next": "Get News Data"
+                }
+              ],
+              "Default": "Check if Blogs refresh"
+            },
+            "Get News Data": {
+              "Type":  "Task",
+              "Resource": "${getNewsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.newsResult",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Blogs refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "Blogs",
+                  "Next": "Get Blogs Data"
+                }
+              ],
+              "Default": "Check if Athletics News refresh"
+            },
+            "Get Blogs Data": {
+              "Type":  "Task",
+              "Resource": "${getBlogData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.blogResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Athletics News refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "AthleticsNews",
+                  "Next": "Get Athletics News Data"
+                }
+              ],
+              "Default": "Check if Clubs refresh"
+            },
+            "Get Athletics News Data": {
+              "Type":  "Task",
+              "Resource": "${getAthleticsNewsData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.athleticsNewsResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Check if Clubs refresh": {
+              "Type": "Choice",
+              "Choices": [
+                {
+                  "Variable": "$.dataType",
+                  "StringEquals": "Clubs",
+                  "Next": "Get Clubs Data"
+                }
+              ],
+              "Default": "Complete"
+            },
+            "Get Clubs Data": {
+              "Type":  "Task",
+              "Resource": "${getClubData.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.clubResults",
+              "Next": "Update Elasticsearch"
+            },
+            "Update Elasticsearch": {
+              "Type": "Task",
+              "Resource": "${esHasher.Arn}",
+              "InputPath": "$",
+              "ResultPath": "$.esHasherResult",
+              "Next": "Complete"
+            },
+            "Complete": {
+              "Type": "Succeed"
+            }
+          }
+        }
+
+
+  CloudwatchEventRuleIAMRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: "Allow"
+            Principal:
+              Service:
+                - "events.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Policies:
+        - PolicyName: StartStateMachinePolicy
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+              - Effect: Allow
+                Action:
+                  - 'states:DescribeExecution'
+                  - 'states:StartExecution'
+                Resource:
+                  - !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:${DataGrabberStateMachine.Name}:*'
+                  - !Ref DataGrabberStateMachine
+
+  EventsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Events data, every day
+      Name: EventsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
+          Id: EventsTarget
+          Input: '{"dataType": "Events"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  NewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save News data, every 7 days
+      Name: NewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
+          Id: NewsTarget
+          Input: '{"dataType": "News"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  BlogsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
+      Name: BlogsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
+          Id: BlogsTarget
+          Input: '{"dataType": "Blogs"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  AthleticsNewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
+      Name: AthleticsNewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
+          Id: AthleticsNewsTarget
+          Input: '{"dataType": "AthleticsNews"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
+  ClubsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
+      Name: ClubsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(525600 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt DataGrabberStateMachine.Arn
+          Id: ClubsTarget
+          Input: '{"dataType": "Clubs"}'
+          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+
   getEventsData:
     Type: 'AWS::Serverless::Function'
     Properties:
@@ -252,6 +506,21 @@ Resources:
       Environment:
         Variables:
           NEWS_TABLE_NAME: !Ref newsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+
+  getAthleticsNewsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: get_athletics_news_data.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO News page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions/get_athletics_news_data
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          ATHLETICS_NEWS_TABLE_NAME: !Ref athleticsNewsTable
           DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
   getBlogData:
@@ -295,10 +564,6 @@ Resources:
       Role: !GetAtt esHasherLambdaIAMRole.Arn
       Environment:
         Variables:
-          EVENTS_TABLE_NAME: !Ref eventsTable
-          BLOGS_TABLE_NAME: !Ref blogsTable
-          NEWS_TABLE_NAME: !Ref newsTable
-          CLUBS_TABLE_NAME: !Ref clubsTable
           ES_HASH_TABLE_NAME: !Ref esHashTable
           ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 
@@ -329,6 +594,13 @@ Resources:
       Name: "NewsQueryTime"
       Type: String
       Value: "2021-05-01 06:07:08"
+
+  athleticsNewsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "AthleticsNewsQueryTime"
+      Type: String
+      Value: "2020-01-01 06:07:08"
 
   blogsQueryTime:
     Type: AWS::SSM::Parameter
@@ -364,6 +636,29 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Ref newsTable
+      AttributeDefinitions:
+        - AttributeName: "newsId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "newsId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits:
+          5
+        WriteCapacityUnits:
+          5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: True
+      SSESpecification:
+        SSEEnabled: True
+      TimeToLiveSpecification:
+        AttributeName: "expiresOn"
+        Enabled: True
+
+  athleticsNewsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Ref athleticsNewsTable
       AttributeDefinitions:
         - AttributeName: "newsId"
           AttributeType: "S"
@@ -598,18 +893,6 @@ Resources:
     Properties:
       Domain: !Sub 'kibana-${AWS::StackName}-${AWS::Region}-${AWS::AccountId}'
       UserPoolId: !Ref CognitoUserPool
-
-  #  CognitoUserPoolUser:
-  #    Type: "AWS::Cognito::UserPoolUser"
-  #    Properties:
-  #      Username: !Ref KibanaUserEmail
-  #      UserPoolId: !Ref CognitoUserPool
-  #      MessageAction: "SUPPRESS"
-  #      UserAttributes:
-  #        - Name: "email_verified"
-  #          Value: "true"
-  #        - Name: "email"
-  #          Value: !Ref KibanaUserEmail
 
   ESCognito:
     Type: Custom::ESName

@@ -4,6 +4,7 @@ import boto3
 import pytz
 import requests
 import json
+from requests import RequestException
 from common_lib import detailed_exception, get_adjusted_unix_time
 from datetime import datetime
 
@@ -16,11 +17,12 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-# REGION = boto3.session.Session().region_name
 BLOGS_TABLE = os.environ["BLOGS_TABLE_NAME"]
 EXPIRY_DAYS_OFFSET = int(os.environ["DOCUMENT_EXPIRY_DAYS"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
+S3_CLIENT = boto3.client("s3")
+S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 # Dictionary that maps the category id numbers to their label text for cleaner parsing
 CATEGORY_MAP = {
@@ -34,29 +36,33 @@ CATEGORY_MAP = {
 }
 
 
-def get_blog_thumbnail(media_url):
+def get_blog_thumbnail(media_url: str):
     """
     Performs a second REST API call to fetch the cover image urls for a blog post
 
     :param media_url: Media REST API url for blog images
     :return: Dictionary containing image links to two blog cover image sizes, 'fullImage' and 'mediumImage'
     """
-    media_response = requests.get(media_url).json()
-    image_links = {
-        "fullImage": media_response.get("guid", "Null").get("rendered", "Null"),
-        "mediumImage": media_response.get("media_details", "Null")
-                                     .get("sizes", "Null")
-                                     .get("medium", "Null")
-                                     .get("source_url", "Null")
-    }
+    try:
+        media_response = requests.get(media_url).json()
+        image_links = {
+            "fullImage": media_response.get("guid", "Null").get("rendered", "Null"),
+            "mediumImage": media_response.get("media_details", "Null")
+                                         .get("sizes", "Null")
+                                         .get("medium", "Null")
+                                         .get("source_url", "Null")
+        }
+    except RequestException as e:
+        detailed_exception(LOGGER)
+        image_links = {"fullImage": "Null", "mediumImage": "Null"}
     return image_links
 
 
-def blog_parser(blog_json):
+def blog_parser(blog_json: dict):
     """
     Parses blog items from the unaltered API response
 
-    :param blog_json: Unaltered JSON item from UBCO news API Response
+    :param blog_json: Unaltered dict item from UBCO Student Life Blog API Response
     :return: JSON formatted dictionary item for DynamoDB storage
     """
     try:
@@ -76,55 +82,74 @@ def blog_parser(blog_json):
     return parsed_blog
 
 
-def get_all_blogs(url):
+def get_blog_items_from_web(blogs_link: str):
     """
-    Calls the blogs REST API, parses the resulting response and returns a list of parsed blog_items to be stored in
-    DynamoDB
-
-    :param url: Url for the REST API for UBCO Student Life Blogs
-    :return: Parsed blog items in a JSON formatted list
+    Performs a GET request on the student life blog REST API and returns a list of raw blog items
+    Logs a network error if any an returns an empty list in that case
+    :param blogs_link: REST API url for student life blog
+    :return: List of raw blog items
     """
     blogs = []
-    json_response = requests.get(url).json()
-    for blog_item in json_response:
-        blogs.append(blog_parser(blog_item))
+    try:
+        blogs = requests.get(blogs_link).json()
+    except RequestException as e:
+        LOGGER.error("Error in network request to API")
+        detailed_exception(LOGGER)
     return blogs
 
 
 def lambda_handler(event, context):
     """
+    Lambda entry-point
     """
+    blogs_link = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=desc"
+    blogs_items = []
+    filtered_blogs_items = []
 
-    blogs_url = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=desc"
-    blogs = []
-    newly_updated_blogs = []
+    response_items = get_blog_items_from_web(blogs_link)
+    if len(response_items) == 0:
+        return {"status": "No items in API"}
 
+    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # error to S3
+    for item in response_items:
+        try:
+            blogs_item = blog_parser(item)
+            blogs_items.append(blogs_item)
+        except Exception as e:
+            S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
+                                 Key=f'ErrorLog/Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+            LOGGER.error(f"Error in parsing a blog item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Blogs")
+            detailed_exception(LOGGER)
+
+    # Filter the parsed items based on last query time to get only new items
     try:
         last_query_time = SSM_CLIENT.get_parameter(Name="BlogsQueryTime")["Parameter"]["Value"]
-        blogs = get_all_blogs(blogs_url)
-
-        # Filter the news to keep the ones since the last query
-        for blog_item in blogs:
+        for blogs_item in blogs_items:
             if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
-                    < datetime.strptime(blog_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
-                newly_updated_blogs.append(blog_item)
-
+                    < datetime.strptime(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
+                filtered_blogs_items.append(blogs_item)
         SSM_CLIENT.put_parameter(Name="BlogsQueryTime",
-                                 Value=f"{str(datetime.now(tz=pytz.timezone('America/Vancouver')))[:-13]}",
+                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
                                  Overwrite=True)
-
-    except Exception as error:
+    except SSM_CLIENT.exceptions.InternalServerError as e:
+        LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
 
-    LOGGER.debug(f"Original Blogs: {json.dumps(blogs, indent=4)}")
-    LOGGER.info(f"Time filtered Blogs: {json.dumps(newly_updated_blogs, indent=4)}")
+    LOGGER.debug(json.dumps(blogs_items, indent=4))
+    LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
 
+    # Save new items to central data lake S3
+    if len(filtered_blogs_items) != 0:
+        S3_CLIENT.put_object(Body=json.dumps(filtered_blogs_items, indent=4), Bucket=S3_BUCKET_NAME,
+                             Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+
+    # Insert items into DynamoDB table with appropriate TTL
     table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
-    # Create one month TTL for each item and insert into DynamoDB
-    for blog_item in newly_updated_blogs:
-        blog_item["expiresOn"] = get_adjusted_unix_time(blog_item["dateModified"], "%Y-%m-%d %H:%M:%S",
-                                                        EXPIRY_DAYS_OFFSET * 24)
-        response = table.put_item(Item=blog_item)
-        LOGGER.info(response)
+    for blogs_item in filtered_blogs_items:
+        blogs_item["expiresOn"] = get_adjusted_unix_time(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S",
+                                                         EXPIRY_DAYS_OFFSET * 24)
+        table.put_item(Item=blogs_item)
 
-    return {'status': "completed"}
+    return {"status": "completed"}
+

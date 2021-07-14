@@ -4,16 +4,24 @@
 ## Data Aggregation
 
 Here is a diagram representing the processing flow for data aggregation from websites with desired content:
+NOTE: Step Functions are shown in the diagram as numbered boxes on the Lambdas for simplicity, and to easily demonstrate
+scalability
 
 ![Data Aggregation Workflow](./DataAggregationWorkflow.png)
 
 The workflow is as follows:
 
-* A Lambda function (marked by the blue `1`) is designed to gather desired data from a source, and persist it 
-  into a DynamoDB Table. Let's refer to the list of data items obtained from the website as documents henceforth
+* A Cloudwatch Time-based event is used to trigger the Step Functions workflow which starts 
+  with the Data Parsing Lambda first. It passes a dataType parameter for the document type to update, 
+  e.g `events`, `news`, `blogs` etc, and Step Functions will choose the appropriate Data Parsing Lambda function
+  to trigger.
+  
+* The Data Parsing Lambda function (marked by the blue `1`) is designed to gather desired data from a source, 
+  and persist it into its own DynamoDB Table. Let's refer to the list of data items obtained from the website as 
+  documents henceforth.
   The Lambda performs the following tasks:
   - Parses raw, unstructured documents into a semi-structured document format, while making sure it has a 
-    unique identifier. The schema for the semi-structure data is detailed below in
+    unique identifier. The schema for the semi-structured data is detailed below in
     the [**Database Schemas**](#database-schemas) section
     
   - Sets up a Time-To-Live for the document if necessary
@@ -23,15 +31,20 @@ The workflow is as follows:
     already existing data in DynamoDB
     
   - Adds the new, parsed data to the website's specific DynamoDB table. If the document only has one or more modified
-    values, the corresponding document is updated based on the unique document ID which (by an assumption or fact) 
-    does not change. This ensures the documents are upto-date, reflecting any changes made by the web content
+    values, the corresponding document is updated based on the unique document ID which does not change(it has been 
+    assumed the ID's provided by the websites are unique, if not guaranteed to be). This ensures the documents 
+    are upto-date, reflecting any changes made by the web content
     
-* For every data source, a subsequent data parser Lambda can be added along with a DynamoDB table to store the intermediate results
-  before it is used for recommendation and analytics
+  - Adds the new, parsed data to an S3 bucket that acts like a central data lake. The items in this bucket will not expire,
+    hence creating a data lake to build other application features on top of it (such as analytics)
+    
+  - The lambda also saves error logs to S3 if there is any issue in parsing a raw, unstructured document, so it can 
+    be investigated later to fix the parsing
+    
   
 * The data is then ingested into Amazon Elasticsearch service by the help of:
-  - A DynamoDB table that contains a list of hashes and data source name for all documents in Elasticsearch.
-    The document hash represents the id of a item in Elasticsearch, e.g: 
+  - A DynamoDB table (Document Hash Table) that contains a list of hashes and data source name for all documents in Elasticsearch.
+    The document hash represents the id of an item in Elasticsearch, e.g: 
     ```json
     {
       "documentHash": "0106aafb1262b33ef02e37f090cde0f3",
@@ -41,13 +54,15 @@ The workflow is as follows:
     
   - A Lambda function that updates data in the Document Hash DynamoDB Table and Elasticsearch
   
-* The Lambda function (marked by the orange `2`) is designed to iterate through the ***N*** Website Data DynamoDB tables 
-  and add them to Elasticsearch for recommendation purposes. It does so by doing the following:
-  - Creates a hash out of the entire document string for all document items in the Website Data DynamoDB tables,
+* The Document Hasher Lambda function (marked by the orange `2`, and triggered by Step Functions after the 
+  Lambda marked by blue `2`) is designed to update the document items present in Elasticsearch with the aid
+  of the Document Hash Table. The document data type to update is passed through from Step Functions:
+  - Creates a hash out of the entire document string for all document items in the Website Data DynamoDB table (as 
+    specified in the `dataType` parameter in Step Functions),
     thereby creating a list of hashes (L1). This list represents items present in the website.
     
-  - Get a list of all document hashes (L2) from the Document Hash DynamoDB Table for the particular document type.
-    This list represents items present in Elasticsearch
+  - Get a list of all document hashes (L2) from the Document Hash DynamoDB Table for the particular document type 
+    i.e `events`, `news`, `blogs` etc. This list represents items present in Elasticsearch.
     
   - Compare the list L1 and L2.
     - If a hash is in L2 but not in L1, that means a document is outdated since it does not match what is present in the 
@@ -56,8 +71,20 @@ The workflow is as follows:
     to the DynamoDB table and the document itself with the hash as id to Elasticsearch
       
   This makes sure any small change to a document on the website is accurately reflected into Elasticsearch, and hence
-  the recommendation feeds as well
+  the recommendation feeds as well that Elasticsearch feeds into
 
+* Hence to add a new data source, the following are simply added
+    - A new Cloudwatch Time-Based Event based on the frequency with which the data should be grabbed, and the `dataType`
+      to add. Name should be in PascalCase.
+    - A new Parameter Store parameter to save the last query date for this particular data source
+    - A Data Parser Lambda to parse the categorised data from a website or API. It is connected to the central S3 for
+      long-term data archival and error logging, and uses the Parameter Store parameter for filtering
+    - A DynamoDB Table to store the intermediate results before it is compared with the upto date data in the ESHashTable
+      and Elasticsearch. The name should match the `dataType` value as specified in the Cloudwatch event
+    - Update the Website Grabber and Document Hasher Lambda IAM roles to have access to the new DynamoDB Tables
+    - The Document Hasher Lambda script is decoupled from a code stand-point. By ensuring the Cloudwatch event `dataType`
+      and DynamoDB table have the same value in PascalCase, it will work automatically as the value is passed in for both
+      via Step Functions
 
 ## Database Schemas
 <hr>
@@ -65,6 +92,10 @@ The workflow is as follows:
 Here are the schema outlines for the different DynamoDB Tables.
 They are not final yet and can be modified as needed to simplify keys or remove information that is not necessary.
 All attribute names are in camelCase standard.
+NOTE: All datetimes mentioned in the items are in "America/Vancouver" timezone. This is on the assumption that the
+datetime mentioned in all the websites are "America/Vancouver" timezone unless explicitly stated otherwise. As such, if 
+a datetime is mentioned as `2021-05-23 13:00:00`, the document parsers assume it as timezone and do not perform any extra
+conversion (aside from Time-To-Live calculations in Unix time)
 
 ### Events Schema
 <hr>
@@ -223,6 +254,39 @@ For Example,
   }
 ```
 
+### Athletics News Schema
+<hr>
+
+```
+  {
+    "newsId": MD5 hash of the news link, since that is the unique identifier,
+    "title": Title of the article,
+    "link": Link to the article",
+    "summary": Text summary of the article,
+    "mediaThumbnail": Link to the thumbnail of the article,
+    "categories": String list of all categories of the athletics news
+    "dateModified": Datetime in YYYY-MM-DD HH:MM:SS format, e.g 2021-06-24 20:42:53
+  }
+```
+
+For Example,
+
+```json
+  {
+    "newsId": "5f859c64a56d5458e3ba14919a447a9b",
+    "title": "Steve Manuel - 2020 Community Sport Hero",
+    "link": "http://goheat.prestosports.com/sports/wvball/2020-21/releases/20210303_PacSport_Manuel",
+    "summary": "The UBCO Heat women's volleyball coach receives a Community Sport Hero award for his achievements in 2020.",
+    "mediaThumbnail": "http://goheat.prestosports.com/sports/wvball/2020-21/photos/0001/WVB-Screenshot_2021-03-03_Steve_Manuel_PacificSport_Okanagan.jpg?max_width=640&max_height=480",
+    "categories": [
+      "Female",
+      "Volleyball",
+      "Sports"
+    ],
+    "dateModified": "2021-06-24 20:42:53"
+  }
+```
+
 ### Clubs and Course Union Schema
 <hr>
 
@@ -255,7 +319,26 @@ For Example,
   }
 ```
 
-## Elasticsearch Schema
+### ESHash Table Schema
+<hr>
+
+```
+    {
+      "documentHash": MD5 hash created from the text of the entire document, for document version fingerprinting
+      "documentType": String representing the type of the document being stored, e.g events, news, blogs etc
+    }
+```
+
+For Example,
+
+```json
+    {
+      "documentHash": "00947523a73348e73ee5bc5e5f5ef6fd",
+      "documentType": "Events"
+    }
+```
+
+### Elasticsearch Schema
 <hr>
 
 The documents in Elasticsearch have the same schema as the individual Website Data DynamoDB tables, with the addition
@@ -309,3 +392,10 @@ For Example,
   }
 }
 ```
+
+## Post Proof-of-Concept tasks for Backend development
+
+* TODO Security check for all IAM policies to make them strict
+* TODO Modify get_clubs_data.py to include automation and account for new SUO website
+* TODO Modify get_news_data.py to account for new wordpress UBCO News Website
+* TODO Use DynamoDB query instead of scan by integrating documentType as a sort key for ESHashTable

@@ -1,0 +1,885 @@
+[
+  {
+    "title": "Aerospace Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/logo_black_and_red_thumb.png?itok=czE5gJSv",
+    "description": "UBCO Aerospace is a UBCO club dedicated to providing students with the opportunity to take flight in their passion for aerospace engineering.",
+    "facebook": "https://www.facebook.com/ubcoaero",
+    "categories": ["Engineering", "Physics", "Science"],
+    "email": "ubcoaeroclub@gmail.com",
+    "website": "http://ubcoaeroclub.wixsite.com/home"
+  },
+  {
+    "title": "African Caribbean Student Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/acsc_logo.jpg?itok=A3Yl9nRK",
+    "description": "The ACSC is a club that creates a space for members of the African and Carribean cultures to build a home together and create community. It is also a space where individuals who are not part of this community can come and learn more about it. We work to create a space where everyone, regardless of their race, ethnicity or background can come together and celebrate our African and Carribean cultures.",
+    "categories": ["Culture"],
+    "email": "ubcoacsc@gmail.com"
+  },
+  {
+    "title": "Age Link",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/agelink_logo.jpg?itok=KzoTrYz5",
+    "description": " At Age-Link UBCO, we aim to bridge the cultural and age gap that exists between the youth and the elderly community in Kelowna by organizing events that allow you to connect with the seniors - such as galas, chat & chill events, and elderly home visits.",
+    "categories": ["Culture", "Activism"],
+    "email": "agelinkubco@gmail.com"
+  },
+  {
+    "title": "Amnesty International UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "The Amnesty International UBCO club aims to start critical conversations around local and global human rights issues while inspiring the vibrant youth population at UBCO to take action. Our club believes in the power of solidarity and thus aims to unite passionate members of our community in order to create a sustainable impact.",
+    "categories": ["Activism"],
+    "email": "amnestyinternationalUBCO@gmail.com"
+  },
+  {
+    "title": "Asian Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/asa_logo_new.png?itok=QRX6ZOSL",
+    "description": "The Asian Student Association (ASA) at UBC Okanagan is a non-profit student organization. ASA strives to promote and share Asian culture in celebration of the diversity that exists within the local community and our student body. We are proud to be one of the first clubs founded at UBCO in 2007, starting with only ten members, with now over 350 active members. Monthly events are held for our members, fellow students and faculty in the spirit of entertainment, friendship and cultural education.",
+    "facebook": "https://www.facebook.com/UBCOASA/",
+    "categories": ["Culture"],
+    "email": "ubcoasa@gmail.com"
+  },
+  {
+    "title": "Astronomy Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/astroclubresized.png?itok=qhwWfy-W",
+    "description": "The Astronomy Club at UBCO was created to provide a space where students can share their interests in astronomy and astrophysics, as there aren't many courses offered at UBC Okanagan. The club may provide networking opportunities for students who share a passion for the subject and ignite the wonders of astronomy in students who don't already have the passion. We will provide an opportunity to view the night sky weekly using our telescopes and will try our best to answer any of your questions about the universe. In addition, we are planning to host workshops on campus with guest speakers that are experts in the subject. We believe that astronomy is a beautiful discipline that should be shared with everyone!",
+    "facebook": "https://www.facebook.com/ubcoastronomyclub",
+    "categories": ["Science", "Physics"],
+    "twitter": "@ubcoastronomy",
+    "email": "ubcoastronomyclub@gmail.com"
+  },
+  {
+    "title": "Backcountry Hunters & Anglers",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Recreation"],
+    "description": "None",
+    "email": "ubcokanagan@backcountryhunters.org"
+  },
+  {
+    "title": "Badminton Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubco_badminton_club_poster.png?itok=noLvFWl5",
+    "description": "UBCO Badminton Club aims to provide a safe, comfortable, happy, and easy-going place to enjoy badminton on campus. Do not worry if you are just starting to learn badminton. We have nice and skilled players who are keen to introduce badminton to beginners. Also, if you are a pro that is eager to find competitive players, we look forward to seeing you here too. UBCO Badminton Club not only provides a place for students to release their stress from their school work, but also a place to make new friends! We are always happy to meet new friends to enjoy badminton with us. All level of players are welcome to join our badminton family!",
+    "facebook": "https://www.facebook.com/groups/442087692600461/",
+    "categories": ["Sports", "Recreation"],
+    "email": "ubco.bc15@gmail.com"
+  },
+  {
+    "title": "Ballroom Dance Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ballroom_logo_small.png?itok=dyt0sjrZ",
+    "description": "The Ballroom Dance Club is a community of people passionate about dance. The aim of this club is to foster a community of dance lovers and teach people some moves! Some of the dances we learn are waltz, rumba, cha cha, latin hustle, disco waltz, and tango.",
+    "categories": ["Recreation"],
+    "email": "danceubco@gmail.com"
+  },
+  {
+    "title": "Bangladeshi Students (ABS)",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Culture"],
+    "email": "absubc2013@gmail.com"
+  },
+  {
+    "title": "BC Young Liberals",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/jarred_bcyl_campus_logos.png?itok=BS41lKXs",
+    "description": "UBCO BC Young Liberals is a club for students who want to know more about the BC Liberals, and get to know other like-minded students. Follow us on Facebook and Twitter to stay in the loop with all of the amazing, fun, and informative events that the UBCO BC Young Liberals host every semester.",
+    "categories": ["Activism"],
+    "facebook": "https://www.facebook.com/UBCOBCYoungLibs/",
+    "twitter": "https://twitter.com/ubcoBCYoungLibs",
+    "email": "bcyl.ubco@gmail.com"
+  },
+  {
+    "title": "Beats",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/beats_medium.png?itok=qQXAGAFZ",
+    "description": "Looking for your very own Pitch Perfect Experience? The UBCO Beats are the premier a cappella group of the University of British Columbia Okanagan. From competing in international competitions to performing at local theatres, the UBCO Beats foster musical creativity, curb performance anxiety, and incubate talent for students of all ethnocultural backgrounds who are passionate about singing.",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/beatsacappella/",
+    "email": "ubcobeats@gmail.com"
+  },
+  {
+    "title": "Bhangra Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "https://youtu.be/q2fBtvbbtts",
+    "categories": ["Recreation"],
+    "email": "ubcobhangraclub@gmail.com"
+  },
+  {
+    "title": "Bible Discussion Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Religion"],
+    "description": "None",
+    "email": "ubcbiblestudy19@gmail.com"
+  },
+  {
+    "title": "Billiards Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "The UBC Okanagan Billiards Club is open to any and all students who wish to play, promote, and encourage the sport of billiards on campus in a fun and nonexclusive environment.",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/groups/689923297774424/",
+    "email": "ubcobilliardspresident@gmail.com"
+  },
+  {
+    "title": "Blood Club of UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "Join UBCO's Canadian Blood Services Club today for various volunteer opportunities! To learn more about donating please visit blood.ca",
+    "categories": ["Activism"],
+    "email": "blood.ubco@gmail.com",
+    "website": "http://blood.ca/"
+  },
+  {
+    "title": "Canadian Students for Sensible Drug Policy (CSSDP)",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/cssdp_1.png?itok=jZJo6A7F",
+    "description": "Canadian Students for Sensible Drug Policy (CSSDP) is a grassroots network comprised of youth and students who are concerned about the negative impact our drug policies have on individuals and communities. We consider problematic drug use in society primarily a health issue rather than a criminal justice issue, and we advocate for appropriate responses to reduce and prevent harm from drug use.",
+    "categories": ["Activism"],
+    "email": "okanagan@cssdp.org",
+    "website": "http://www.cssdp.org/"
+  },
+  {
+    "title": "Chinese Students and Scholars Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/cssa_logo_2018-19-sm.jpg?itok=zUodg7bL",
+    "description": "None",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/ubco.csu",
+    "email": "ubco.cssa2018@gmail.com"
+  },
+  {
+    "title": "Christina Noble Foundation UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Uncategorized"],
+    "description": "None",
+    "email": "cncfubco@gmail.com"
+  },
+  {
+    "title": "Concrete Toboggan Club (GNCTR)",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Recreation"],
+    "description": "None",
+    "email": "gnctr.ubco@gmail.com"
+  },
+  {
+    "title": "Cricket Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/cricketclublogo.jpg?itok=s-4K9uyZ",
+    "description": "None",
+    "categories": ["Recreation", "Sports"],
+    "facebook": "https://www.facebook.com/ubcocricket/?__tn__=%2Cd%2CP-R&eid=ARAuRgMFCjW5_tPvunL_qfnWnpqr8BZIMLqgu7HW_SdHF6AQSPaTol9NIMJ6mrn5Uy5qQDT_-gcQnKs4",
+    "email": "ubcocricket@gmail.com"
+  },
+  {
+    "title": "Debate Society",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Academics", "Recreation"],
+    "description": "None",
+    "email": "ubcodebatesociety@gmail.com"
+  },
+  {
+    "title": "Design Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/design_club_img_small.png?itok=i5HnfyC7",
+    "description": "We host critique sessions, community projects, design workshops, as well as a bunch of introductory sessions to bring more people in the wonderful world of design! And, as you might have correctly assumed, a lot of designer-friendly chill vibes.",
+    "facebook": "https://www.facebook.com/groups/723303068216828",
+    "categories": ["Engineering"],
+    "email": "ubcodesign@gmail.com",
+    "website": "https://ubcodesign.carrd.co/"
+  },
+  {
+    "title": "Enactus UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/enactus-logo-clipart-2_1.png?itok=qDOLxGOz",
+    "description": "Enactus is a combination of 3 words that help tell the story of the organization. 'En' stands for 'entrepreneurial' because we use the entrepreneurial spirit to see opportunity in problems and create\nsolutions. 'Act' stands for 'action.' This is because Enactus students don't just talk about what they\nwish we could do; we take action to improve the world around us. The end of the word, 'us' represents\nthe organization as a group of students, educators business leaders who all work together to change the\nworld. Enactus has an important focus on the development of its student members. As members we are\nable to network with business leaders and learn up-to-date business and leadership skills at training\nconferences that are held throughout the year by the Enactus organization. Our projects allow us to step\noutside the comfort of the classroom to apply our knowledge to real solutions that affect real people.\nThis hands-on learning approach is key as we seek opportunities, brainstorm solutions and carry them\nout. When you join Enactus, you are not just in another student organization. You are applying the skills\nyou have learned in class to positively impact the world. In organizing and carrying out projects, we\nbrainstorm ideas, work as a team and can develop leadership skills. At competitions, we get practice in\npublic speaking and networking.",
+    "categories": ["Business", "Activism"],
+    "facebook": "https://www.facebook.com/enactusubco/",
+    "email": "enactus.ubcok@gmail.com",
+    "website": "http://www.enactusubco.ca/"
+  },
+  {
+    "title": "Esports Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "The UBCO Esports Association is a Kelowna-based, student-run, non-profit gaming club at the University of British Columbia - Okanagan. We are a community of UBCO students who enjoy all sorts of games by encouraging various interactions within the gaming community. Events will be held mostly online for the coming 2020W year, although they are not restricted to students and are open for everyone. We host a variety of events such as tournaments, viewing parties, charity streams, game nights, and many more! Our goal is to create an inclusive community where like-minded individuals can enjoy their favourite aspects of video gaming together.",
+    "categories": ["Sports", "Recreation"],
+    "facebook": "https://www.facebook.com/ubcoesports",
+    "email": "ubcoesports@gmail.com"
+  },
+  {
+    "title": "Filipino Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/fsa_club_logo.png?itok=OCHkMugN",
+    "description": "UBC Okanagan's Filipino Student Association plans to bring more diversity to the campus community by uniting those who share the passion for Filipino culture. Through our social events, FSA welcomes all those who would like to meet new friends, learn more about Filipino culture, and try Filipino delicacies.",
+    "categories": ["Culture"],
+    "email": "fsaubco@gmail.com"
+  },
+  {
+    "title": "Formula 1 Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "Our club looks to attract people who are fans of Formula 1 or motorsports in general. We watch races, movies, host sim racing nights, and carry out discussions based on the race or the history of the sport in general. Since F1 is not a much spoken about topic compared to Basketball or Soccer, this club provides a hub for those who are passionate for the sport.",
+    "categories": ["Sports", "Recreation"],
+    "email": "ubcoformula1@gmail.com"
+  },
+  {
+    "title": "French Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/groups/731608010256700/",
+    "email": "ubcofrenchclub@gmail.com"
+  },
+  {
+    "title": "Games Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/games_club_logo.png?itok=qHQXqzrx",
+    "description": "UBCO Games Club is a group of people with a shared interest in tabletop gaming. In the typical year we would hold two weekly meetings, one for board games and the other for tabletop RPGs, in addition to monthly events. This year we're doing our best to keep that going online. If you'd like to get to know some people and have some fun, check us out, we'd love to have you!",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/groups/UBCOGames/",
+    "email": "ubcogames@gmail.com"
+  },
+  {
+    "title": "Girls in Tech",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/git.jpg?itok=NOv5s3fW",
+    "description": "The Girls in Tech club is an ACM-W Student Chapter that aims to create opportunities for the women of our campus breaking into the tech field in various ways. We offer both professional and academic events as well as a safe space for everyone that wants to join! ",
+    "categories": ["Science", "Engineering", "Activism"],
+    "facebook": "https://www.facebook.com/ubcogit",
+    "email": "ubcogirlsintech@gmail.com"
+  },
+  {
+    "title": "Global Brigades Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Activism"],
+    "description": "None",
+    "email": "ubcoglobalbrigades@gmail.com"
+  },
+  {
+    "title": "Golden Key International Honour Society",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Uncategorized"],
+    "description": "None",
+    "email": "ubcogkpresident@gmail.com"
+  },
+  {
+    "title": "Golf Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Sports", "Recreation"],
+    "description": "None",
+    "email": "ubcogolfclub@outlook.com"
+  },
+  {
+    "title": "Grow n Glow Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/grownglow_logo_138x108px.png?itok=otuYVgpw",
+    "description": "The Grow N Glow Club at UBC Okanagan is an organization that encourages students to indulge in self-care activities. Find new interests and participate in activities like brain-boosting exercises with dance tutorials and HIIT workouts, group journaling activities, artistic activities like drawing, colouring and more.",
+    "categories": ["Activism", "Sports", "Recreation"],
+    "email": "ggc.ubco@gmail.com"
+  },
+  {
+    "title": "Heatwave Radio",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/heatwave_logo.png?itok=LKCtZLar",
+    "description": "Heatwave Radio is UBCO's student radio station.  It's a home for students to create programs and content that reflect their interests and passions, while also learning the process of producing, hosting and writing a show.  Heatwave Radio supports students with the creative ambition to create campus content by providing the space, equipment, and training needed for them.",
+    "categories": ["Recreation"],
+    "email": "heatwave.ubco@gmail.com",
+    "website": "http://heatwaveradio.ca/"
+  },
+  {
+    "title": "Hong Kong Student Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/hksc1_front-_logo_square.jpg?itok=Pj8Hanfb",
+    "description": "This club is for the students in UBCO.\nOur goal is to create a community for hong kong students to get used to living in Kelowna, and to introduce hong kong culture to UBCO.",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/UBCOHKSC",
+    "email": "ubcohksc@gmail.com"
+  },
+  {
+    "title": "Hope Club UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": " ",
+    "categories": ["Activism"],
+    "email": "ubcohopeclub@gmail.com"
+  },
+  {
+    "title": "Horror Movie Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/horrorlogo.jpg?itok=dkzjNg-t",
+    "description": "Do you like scary movies? We are the UBCO Horror Movie Club, a group of horror-loving movie enthusiasts. As a club, we get together bi-weekly and watch spooky movies! We conduct double features every other Friday and Halloween is our favourite holiday. We have fun competitions and events for Halloween and exciting collaborations with other clubs as well. Our goal is to facilitate connections between like-minded individuals and make friends as we dodge one jump scare after another.",
+    "categories": ["Recreation"],
+    "email": "ubcohorror@gmail.com"
+  },
+  {
+    "title": "Ice Cream Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ice_cream_club_logo_0.jpg?itok=e3BQq-uv",
+    "description": " ",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/groups/693826520823694/about",
+    "twitter": "https://twitter.com/UBCOICC",
+    "email": "icecreamclububco@gmail.com"
+  },
+  {
+    "title": "iGEM UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/igem_2.jpeg?itok=PRwtBvcm",
+    "description": "The UBCO iGEM club aims to build a multidisciplinary, curious, egalitarian and creative community around biotechnology, bioengineering and synthetic biology. We do this by providing social and academic opportunities where everyone can share and communicate their ideas.",
+    "categories": ["Biology", "Engineering", "Science"],
+    "email": "ubco.igem@gmail.com",
+    "website": "https://sites.google.com/view/ubcoigem"
+  },
+  {
+    "title": "Inclusive Men's Health Partnership",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Activism"],
+    "description": "None",
+    "email": "imhp.ubco@gmail.com"
+  },
+  {
+    "title": "Indian Culture and Dance Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/icdc_logo.png?itok=CINQ2cG1",
+    "description": " The club aims to expand the knowledge about Indian culture and diversify the cultural basis of UBC Okanagan, while providing international students away from home a place of comfort and belonging as they surround themselves with festivals, music and food from the Indian subcontinent. ",
+    "categories": ["Recreation", "Culture"],
+    "email": "ubcindianculturedance@gmail.com"
+  },
+  {
+    "title": "Innovate, Design, Sustain Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Engineering", "Science"],
+    "description": "None",
+    "email": "idsubco@gmail.com"
+  },
+  {
+    "title": "International Relations Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Academics"],
+    "email": "ubcokanagan.irsa@gmail.com"
+  },
+  {
+    "title": "iSoto (Indonesian Students of the Okanagan)",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/isoto-01.png?itok=PUorISzv",
+    "description": "iSoto is your one stop shop for all things Indonesian at UBCO. Experience Indonesian culture in the beautiful Okanagan, our main goal is to promote and share Indonesia's beauty with our community. So whether you're eager to get a taste of Indonesia or you have questions about possibly visiting, we're here for you!",
+    "categories": ["Culture"],
+    "email": "isotoubcopres@gmail.com"
+  },
+  {
+    "title": "It's Lit! Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Uncategorized"],
+    "email": "club.its.lit@gmail.com"
+  },
+  {
+    "title": "Jack.org UBCO Chapter",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/jack_dot_org.png?itok=SYXYfzAL",
+    "description": "Jack.org is the only national network of young leaders transforming the way we think about mental health. Our goal is to end silence, target stigma, and support young people on the subject of mental health. We encourage and enable young people to better care for themselves and support their peers. ",
+    "categories": ["Activism"],
+    "email": "ubcojack.org@gmail.com"
+  },
+  {
+    "title": "Japanese Culture Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/jcc_logo_1.png?itok=ZYB8xOSM",
+    "description": "Our purpose is to spread and share Japanese culture both on and off-campus, enhancing diversity and cultural richness of the community. We welcome everyone from all countries and cultures!",
+    "categories": ["Culture"],
+    "email": "ubco.jcc@gmail.com",
+    "website": "https://ubcojcc.wordpress.com/"
+  },
+  {
+    "title": "JDC West",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "https://youtu.be/Wf9SM6P6Vow",
+    "categories": ["Activism"],
+    "email": "captains@ubcojdcwest.com"
+  },
+  {
+    "title": "Kelowna Ismaili Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Religion"],
+    "email": "ubcokisa@gmail.com"
+  },
+  {
+    "title": "Latin American Student Organization",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/lasa.jpg?itok=w0xWmwMt",
+    "description": "At LASO we provide a space where the Latin culture can be celebrated and shared in different ways. If you want a space to call home, or just learn about our culture, come have fun at our events hosted by Latin American students.",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/LatinAmericanStudentOrg/",
+    "email": "laso.ubco@gmail.com"
+  },
+  {
+    "title": "Medieval Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/medieval_club_logo.png?itok=IgeZVZPH",
+    "description": "None",
+    "categories": ["Uncategorized"],
+    "email": "ubcomedievalclub@hotmail.com"
+  },
+  {
+    "title": "Mental Health Awareness and Advocacy Club (MHAAC)",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "The Mental Health Awareness and Advocacy Club (MHAAC) aims to increase awareness about mental health issues and provide resources to students. Club events include workshops or guest speakers on various mental health topics.",
+    "categories": ["Activism"],
+    "twitter": "@MHAAC_UBCO",
+    "email": "mhaacubco@gmail.com"
+  },
+  {
+    "title": "Model United Nations Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubco_model_united_nations_logo.png?itok=FeISF5S3",
+    "description": "The UBC Okanagan Model United Nations' vision is to develop strong and competitive delegations while educating participants through hands on learning about current affairs, international relations and diplomacy, and United Nations processes.",
+    "categories": ["Activism", "Recreation"],
+    "facebook": "https://www.facebook.com/ubcomun/",
+    "email": "mun.ubco@gmail.com",
+    "website": "http://ubcomun.ca/"
+  },
+  {
+    "title": "Motorsports Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/motorsports_logo_suo.png?itok=jlKOugHj",
+    "description": "Instagram: ubcomotorsports ",
+    "categories": ["Sports", "Recreation"],
+    "facebook": "https://www.facebook.com/ubcomotorsports/",
+    "email": "ubcomotorsports@gmail.com",
+    "website": "http://www.ubcomotorsports.ca/"
+  },
+  {
+    "title": "Mountain Riders Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/mtn_rider_logo.jpg?itok=1vxPZH5V",
+    "description": "UBCO Mountain riders is an inclusive club for students who share a passion for the outdoors. We create a community for students who want to experience the best parts of British Columbia. Our club mainly focuses on Skiing, Snowboarding, Surfing, Skateboarding, and Mountain Biking. We often host events such as movie premiers, mob days (at Big White), skate sessions, annual trips, along with much more. On top of these activities we typically partner up with local businesses & companies to provide discounts, contests, and services to members. We look forward to meeting you and creating many rad memories! ",
+    "categories": ["Sports", "Recreation"],
+    "facebook": "https://www.facebook.com/Okanaganmountainriders",
+    "email": "ubcomountainriders@gmail.com"
+  },
+  {
+    "title": "Muslim Students Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/muslimsa-ubc.jpg?itok=l9Hy0zTO",
+    "description": "Muslim Student Association (MSA)-UBCO is an active student club. The mission of MSA-UBCO is to provide an environment to Muslim students at UBCO, where their confidence, faith in themselves, and in Islam is strengthened, and where they are able to grow as individuals. MSA-UBCO correspondingly targets to; (1) bridge a gap between Muslims and Non-Muslims; (2) disseminate Islamic knowledge among Muslims for the purpose of solidification their understanding towards Islam; (3) develop greater understanding and unity among the various language and cultural groups; and (4) organize various social, cultural, faith-based, and educational activities on campus within the boundaries of Islamic rules.",
+    "categories": ["Religion"],
+    "facebook": "https://www.facebook.com/msaubcokanagan",
+    "email": "msa.ubcokanagan@gmail.com"
+  },
+  {
+    "title": "MySmallHelp UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Uncategorized"],
+    "description": "None",
+    "email": "ubcomysmallhelp@gmail.com"
+  },
+  {
+    "title": "NDP Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Activism"],
+    "description": "None",
+    "email": "ubco.ndp@gmail.com"
+  },
+  {
+    "title": "Nepalese Scholars' Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Culture"],
+    "description": "None",
+    "email": "nepsa.ubco@gmail.com"
+  },
+  {
+    "title": "Nourishing Futures",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/nourishing_futures_logo_0.png?itok=upjE1IoT",
+    "description": "Building a community of a global citizenship. Nourishing Futures UBC Okanagan is a student run non-profit that works with local businesses and the student body to fundraise for causes around the world. Through fundraisers and initiatives, we seek to fulfill our mission of tackling poverty, promoting education and supporting youth and children in areas of poverty and lack of resources.   ",
+    "categories": ["Activism"],
+    "facebook": "https://www.facebook.com/nfubco/",
+    "email": "nfubco@gmail.com"
+  },
+  {
+    "title": "Pakistan Students Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/pakistan_logo.jpeg?itok=bX8DHi2c",
+    "description": "Pakistan Students' Association (PSA) aims to represent the increasingly vibrant\nPakistani community on campus and promoting Pakistani culture/traditions. Our goal\nis to provide a platform where Pakistani and non-Pakistani individuals can learn from\neach other, in a comfortable and cordial atmosphere.",
+    "categories": ["Culture"],
+    "email": "ubcopakistan@gmail.com"
+  },
+  {
+    "title": "Persian Students' Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Culture"],
+    "email": "persianclub.ubco@gmail.com"
+  },
+  {
+    "title": "Photography Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/photo_logo.png?itok=JjrVH-Yj",
+    "description": "The UBCO Photography Association is a club that brings together photographers of all skill levels to learn and grow together. It is a community for people to connect, network and get opportunities to better their photography skills. Expect to challenge yourself and be ready to learn. Club events include tutorials, photoshoots, contests and showcases. ",
+    "categories": ["Recreation"],
+    "email": "ubcophotoassoc@gmail.com"
+  },
+  {
+    "title": "Pink Backpack Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/tpbp_logo.png?itok=rJ0cckPZ",
+    "description": "The Pink Backpack Project (PBP) is a student-led social intervention program that aims to encourage students to use their talents to support marginalized members of the Kelowna community. Inspired by the 10th United Nations Sustainable Development Goal, the PBP is dedicated to reducing inequality among houseless women by creating care packages with everyday essentials and raise awareness around period poverty. We also engage in ongoing research and we always welcome new volunteers for event planning and care package production!",
+    "categories": ["Activism"],
+    "facebook": "https://www.facebook.com/pinkbackpackproject",
+    "email": "pinkbackpackproject@gmail.com"
+  },
+  {
+    "title": "Power to Change",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/resized_p2c_logo_1.png?itok=HSqEsSN0",
+    "description": "Power to Change is a welcoming community that encourages students to discuss faith-related topics and Christianity. We want to help students know Jesus and experience His power to change. We have weekly online meetings, sharing, and prayer sessions. We also host fun gatherings and socials. Get connected with us and join online groups with our social media.",
+    "categories": ["Religion"],
+    "facebook": "https://www.facebook.com/p2cubco",
+    "email": "powertochangeubco@gmail.com",
+    "website": "https://p2c.com/students/"
+  },
+  {
+    "title": "Pre-Dental Society",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubco_pre-dental_society_logo_club_directory_.jpg?itok=58K8UPK-",
+    "description": "The UBCO Pre-Dental Society aims to provide valuable knowledge and experience to prepare the future generation of dentists. This student association provides members with resources in preparation for the DAT exam, as well as dental school applications. In addition, members of this student association are highly involved in volunteering at a local dental clinic in Kelowna. Join in on all the fun hosted by the UBCO Pre-Dental Society!  ",
+    "categories": ["Science","Biology", "Academics"],
+    "email": "ubcopredental.president@gmail.com"
+  },
+  {
+    "title": "Pre-Law Society",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/prelaw_logo.jpg?itok=Y9YwwgSb",
+    "description": "The Pre-Law Society at UBCO is an excellent hub for students who are and may be interested in pursuing a career in law. This year we plan on adapting around the new rules put in place because of COVID by holding virtual calls with practicing lawyers, virtual LSAT study sessions and even just simple Q&A sessions for students that may just want more information.",
+    "categories": ["Activism", "Academics"],
+    "email": "prelawubco@gmail.com"
+  },
+  {
+    "title": "Pre-Med Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/pre-med_logo.1_1.png?itok=-Ocy_Dq5",
+    "description": "The UBCO Pre-Med Club is dedicated to providing students with information and resources through events and our online platforms, that can aid them in pursuing medicine. Make sure to follow our social media pages to keep up to date with our online events and to find resources that will be made available.",
+    "categories": ["Science","Biology", "Psychology", "Academics"],
+    "email": "ubco.premedclub@gmail.com"
+  },
+  {
+    "title": "Punjabi Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubc-psa-final.png?itok=LGBYCprG",
+    "description": "Providing individuals with the ability to discover, experience, and celebrate the Punjabi culture at UBC's Okanagan Campus, alongside providing individuals with the ability to contribute to the community through volunteering.",
+    "categories": ["Culture"],
+    "email": "psaubcokanagan@gmail.com"
+  },
+  {
+    "title": "Relay for Life Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/relay_for_life_logo_1.jpg?itok=zrph0xda",
+    "description": "What is Relay for Life? \nOn our committee, we work throughout the year to host an 8-hour walkathon in March to raise funds and promote cancer awareness. In addition, we host many fundraisers throughout the year. All proceeds go to the Canadian Cancer Society (CCS). This year, as we are unsure if on-campus events will be permitted, we plan to work together in order to find fun and effective ways to fundraise online and in venues where social distancing is possible. Relay for Life is a phenomenal way to get involved on campus, learn priceless teamwork and event planning skills, and, most importantly, raise money for life-saving cancer research. Please email us if you are interested in joining our committee or have any questions.\nInstagram: relayforlife.ubco\n",
+    "categories": ["Activism"],
+    "email": "ubcokanagan.relayforlife@gmail.com",
+    "website": "www.relayforlife.ca/ubco"
+  },
+  {
+    "title": "Rock N Roll Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "https://youtu.be/7UlKE3c_iYA",
+    "categories": ["Recreation"],
+    "email": "ubcorocknrollclub@gmail.com"
+  },
+  {
+    "title": "Sex Positivity Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubcospc_logo.png?itok=NA-MwCnf",
+    "description": "What is the Sex Positivity Club (UBCOSPC)?\nThe UBCOSPC is a student association run by\na team of passionate students who want to open up a positive, inclusive dialogue about sex with\ntheir peers on campus. Our primary goals are to: (1) destigmatize sex, sexuality, and sexual\nhealth on campus by providing a safe, inclusive, non-judgmental space where students can\ndiscuss important topics, (2) educate students about the resources available to them on and off\ncampus, so they can make active and informed decisions about their own sexual health, and (3)\ncollaborate with other student associations, campus initiatives, and local organizations to\npromote safer sex practices within our campus community.\n\nHow does the UBCOSPC operate?\nThe UBCOSPC acts as a club and meets periodically\nthroughout the year via discussion groups and workshops. One of our most successful events we\nran this past year was a workshop called BDSM 101, which was designed to debunk common\nmyths about BDSM and educate students on how to practice kink safely and responsibly, with a\nheavy emphasis on consent and communication.\n\nWhat benefits will I get for joining the UBCOSPC?\nThe biggest benefit is you get to speak with likeminded students and build community with those who also care about sexual health! Throughout the year we run multiple giveaways, some including sex toys and some including experiences with local organizations. When you come to our meetings, you get extra entries into these giveaways, which you are definitely going to want! When we are back in-person, we will also have free condoms, lube, resources, and refreshments available for students at each and every one of our meetings and events.\nInstagram: @ubcospc\nhttps://youtu.be/1DLS_MqTw6I\n",
+    "categories": ["Activism"],
+    "email": "ubcosexpositivityclub@gmail.com"
+  },
+  {
+    "title": "Sisu UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/sisu_logo.png?itok=cZma2s1A",
+    "description": "\"Sisu\" is a Finnish term for bravery, determination and resilience - we are an outdoor club that aims to make outdoor sport and adventure accessible to everyone, specifically girls at UBCO. Our mission is to build a community that demonstrates \"Sisu\" in all aspects of life!",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/sisugirlsubco",
+    "email": "sisugirls.ubco@gmail.com"
+  },
+  {
+    "title": "South Asian Students Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/sasa_logo.png?itok=aFHIb-YS",
+    "description": "SASA (South Asian Student Association) represents the South Asian student community on campus and creates a more inclusive society whilst helping the community connect back to its roots. We also help our students feel more at home in a new city by providing them with support. ",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/UBCO.SASA",
+    "email": "ubcosasa@gmail.com"
+  },
+  {
+    "title": "South East Asian Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/seac_logo.png?itok=_cgGaQbR",
+    "description": "The Southeast Asian Club (SEAC) was established in 2011. We create a space for students to build connections with their fellow Southeast Asian friends and to create a sense of home for students at UBCO. This club is also open for any individuals, regardless of their origins, background or race to learn more about Southeast Asian cultures and promote the existing diversity at UBC Okanagan campus.",
+    "categories": ["Culture"],
+    "facebook": "https://www.facebook.com/seacubco",
+    "email": "ubco.seac@gmail.com"
+  },
+  {
+    "title": "Sport Programming Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/spc_logo.png?itok=kEPBHMHa",
+    "description": "SPC is the student-run programming club for the UBC Okanagan Campus! We participate in programming competitions at the national and international level such as Google Code Jam, Facebook Hacker Cup, and ACM ICPC. If you are interested in competing in those or just want to improve your programming skills, this is the club for you!",
+    "categories": ["Academics", "Recreation", "Software Development"],
+    "facebook": "https://www.facebook.com/spcubco",
+    "email": "spc.ubco@gmail.com",
+    "website": "https://spcubco.github.io/"
+  },
+  {
+    "title": "StockX Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/stockx_logo.png?itok=vRYNMcUS",
+    "description": "Hey everyone. We're Stockxubco, UBCOs first-ever stock market simulation/education club. Our goal is to educate students on the stock market and other financial tools in an effort to reach financial freedom at a younger age. Check out our Instagram where we post important information, hold contests for prizes, and much more!",
+    "categories": ["Business", "Academics"],
+    "email": "ubcostockx@gmail.com"
+  },
+  {
+    "title": "Student Independent Research Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Academics"],
+    "email": "sirc.ubco@gmail.com"
+  },
+  {
+    "title": "Students for Healthy Alternatives and Risk Prevention (SHARP)",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Uncategorized"],
+    "email": "sharpubco@gmail.com"
+  },
+  {
+    "title": "Thai Erawan Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Culture"],
+    "email": "thaierawanclub@gmail.com"
+  },
+  {
+    "title": "UNICEF",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubco_unicef_club_logo_1.png?itok=E8AYWh3_",
+    "description": "UBCO UNICEF Club is Kelowna's chapter of the global charity, and like our parent organization, our mission is to fundraise, educate and advocate for the rights of children. We host fundraising events both on and off campus for local and global events and are excited to introduce virtual events as well.",
+    "categories": ["Activism"],
+    "facebook": "https://www.facebook.com/pg/UBCO-Unicef-Club-105168811025262/",
+    "email": "ubcounicef@gmail.com"
+  },
+  {
+    "title": "University Christian Ministries",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ucm-logo-black-solid.png?itok=5f6ZOpHP",
+    "description": "University Christian Ministries (UCM) is an inclusive community seeking a life centered in Jesus while being actively present at university. Join us online Thursday nights at 7PM when we have worship, sharing, learning and prayer on Zoom. Throughout the week, we also have online hangouts, prayer, and small groups you can join in on. Check out our website and sign up for our weekly newsletter to stay updated on all our events. We look forward to connecting with you!  ",
+    "categories": ["Religion"],
+    "facebook": "https://www.facebook.com/ucmokanagan/",
+    "email": "ucm.ubco@gmail.com",
+    "website": "http://ucmokanagan.com/ "
+  },
+  {
+    "title": "Urban Dance Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/udc_logo.png?itok=USs2Fpbo",
+    "description": "We are a student-run organization that hosts weekly drop-in classes, providing UBCO students with an opportunity to express their love for dance. Our classes are inclusive of all levels of experience across many genres, including but not limited to Hip-Hop, Contemporary, Jazz, Ballet, and Tap. During second semester we work towards an annual year-end recital which takes place on campus in mid-March. Our club caters to the interests of its members' health and wellness, as it provides an outlet for expression, physical fitness, and social growth. ",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/UBCOurbandanceclub/",
+    "email": "ubcodanceclub@gmail.com"
+  },
+  {
+    "title": "Varsity Outdoor Club Okanagan",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "The Varsity Outdoor Club Okanagan (VOCO) is a student outdoor club of the Alpine Club of Canada. The club provides a focal point for students interested in outdoor recreation, provides opportunities in outdoor education, encourages respect for the environment, and provides social networking amongst members. The club runs a variety of events such as introductory events for Climbing and Backcountry Skiing, safety courses like Avalanche Safety Training and Wilderness First Aid, and also provides members access to resources including club gear.",
+    "categories": ["Recreation"],
+    "facebook": "https://www.facebook.com/groups/295704977123509/",
+    "email": "president@ubco-voco.com",
+    "website": "http://www.ubco-voco.com/"
+  },
+  {
+    "title": "Vegan Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Activism"],
+    "email": "ubcoveganclub@gmail.com"
+  },
+  {
+    "title": "Video Game Development Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/vgdc_logo.png?itok=PBgtegJ2",
+    "description": "The Video Game Development Club aims to create a community on campus of game designers, programmers, artists, musicians and everything in-between. Joining is free and doesn't require any experience in video game development or programming - just a positive attitude and a passion for game design! Although the club does not have any mandatory meetings, we do encourage members to participate in our Discord channel, where we post game design challenges, brainstorm ideas and just talk about video game development. Please send us an email if you're interested.",
+    "categories": ["Recreation", "Software Development"],
+    "facebook": "https://www.facebook.com/groups/326580037906961/",
+    "email": "ubcovgdc@gmail.com"
+  },
+  {
+    "title": "Web Development Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Academics", "Recreation", "Software Development"],
+    "email": "ubcowebdev@gmail.com"
+  },
+  {
+    "title": "Weightlifting Club UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/wlc.png?itok=ikFw4sgv",
+    "description": "The Weightlift Club UBCO is a club to inform anyone interested in the fundamentals of weightlifting and bodybuilding. By teaching the fundamentals to develop a dream physique by both the gym aspect and the nutritional. Alongside illuminating the mental health benefits of performing extraneous exercises. ",
+    "categories": ["Sports" ,"Recreation"],
+    "email": "weightliftingclububco@gmail.com"
+  },
+  {
+    "title": "Wildlife Society UBCO Student Chapter",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/tws_logo_0.jpg?itok=lv0CduVd",
+    "description": "Instagram",
+    "categories": ["Recreation", "Science"],
+    "facebook": "https://www.facebook.com/UBCOwild/",
+    "twitter": "https://twitter.com/UBCOWild",
+    "email": "tws.ubco@gmail.com",
+    "website": "https://ubcowild.wixsite.com/twsubco"
+  },
+  {
+    "title": "Women in Engineering",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/wie_logo_-_blue_background.png?itok=IADRpGaV",
+    "description": "The Women in Engineering Club aims to empower women and femme-aligned students to reach their full potential by supporting them throughout their university career, connect them with the resources they need to succeed, and prepare them for their career. We host a variety of events catered to social, professional, and academic development.",
+    "categories": ["Engineering", "Activism"],
+    "facebook": "https://www.facebook.com/UBCOWiE",
+    "email": "wie.ubco@gmail.com"
+  },
+  {
+    "title": "Yoga Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/yoga_logo_1.png?itok=Cm6gU4pL",
+    "description": "UBCO yoga club aims to bring yoga enthusiasts together on the UBCO campus through free classes, workshops, social events, and meditation groups. We hope to make yoga accessible for every body on campus as we realize yoga's enormous potential to heal, alleviate stress, and bring about peace and joy within. We appreciate all forms of yoga and encourage UBCO community members of all levels (including absolute beginners) to participate! Namaste.",
+    "categories": ["Recreation"],
+    "email": "ubcyoga@gmail.com"
+  },
+  {
+    "title": "Young Greens of UBCO",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "None",
+    "categories": ["Activism"],
+    "email": "ubcogreens@gmail.com"
+  },
+  {
+    "title": "Biochemistry Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/bccu_logo_black.png?itok=tSS6yWxq",
+    "description": "We are the Biochemistry Course Union and we are an organization that provides to our peers in biology, biochemistry and chemistry related undergraduate programs at the University of British Columbia Okanagan. We are a student-led organization and our goal is to foster a collegial and supportive community within our own undergraduate programs and inspire the next generation of leaders in UBCO’s student body. By offering educational resources, networking opportunities, and personal mentorship to our members, we help our peers strive for excellence in their academic, professional and personal lives. We also give information on potential future career opportunities and professional programs related to the biochemistry field.\n\nWe hope you will join us!\n\nInstagram: bccu.ubco\n\nDiscord Server: https://discord.com/invite/Aj2kUZ\n\nhttps://youtu.be/J_K2ArzfGyM",
+    "categories": ["Science","Biology", "Chemistry", "Academics"],
+    "facebook": "https://www.facebook.com/UBCOBCCU",
+    "email": "bccu.ubc@gmail.com"
+  },
+  {
+    "title": "Chemistry Course Union (CCU)",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/chemistrycourseunion_logo_0.png?itok=ZvfDy5qj",
+    "description": "At the Chemistry Course Union, we strive to bridge the gap between new undergraduate chemistry students, upper-level undergraduates, graduate students, and faculty that will ultimately be involved in their day-to-day lives at UBC Okanagan. We are an organization run by chemistry students for chemistry students, and provide a lengthy list of services that help its members acquire chemistry-related skills, build friendships, and socialize with their TAs and professors on a level outside the lecture hall.",
+    "categories": ["Science","Chemistry", "Academics"],
+    "facebook": "https://www.facebook.com/UBCO-Chemistry-Course-Union-CCU-262205370581599",
+    "twitter": "https://twitter.com/UBCO_CCU",
+    "email": "ccu.ubco@gmail.com",
+    "website": "http://chemcourseunionubco.org"
+  },
+  {
+    "title": "Computer Science Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/cscu_logo.png?itok=HaZYJrq5",
+    "description": "The Computer Science Course Union is for computer science students, by computer science students. Our goal is to enrich your university experience as a computer science student and improve your career prospects. We do this by organizing professional workshops and career events to improve your soft skills, and your technical skills with UBCO's own 24-hour hackathon, BCHacks!\n\nInstagram: https://www.instagram.com/bchacks/\n\nhttps://youtu.be/7AA4ePGHsUs\n\nhttps://discord.gg/zKqFqSG",
+    "categories": ["Science", "Academics", "Software Development"],
+    "facebook": "https://www.facebook.com/UBCO.CSCU/",
+    "email": "cscu.ubco@gmail.com",
+    "website": "https://cscu.io/"
+  },
+  {
+    "title": "Earth and Environmental Sciences Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/eesc_logo.png?itok=oGSmn1E4",
+    "description": "The Earth and Environmental Sciences Course Union at UBC's Okanagan campus is a student run group that brings together students enrolled or interested in aspects of Earth Sciences.  The course union regularly holds fundraisers to assist with the cost of events such as the geology conference \"Round Up\" held annually in Vancouver.  Other social events are also held throughout the year, including: EESc Bowling night, EESc Photo Competition and the Nakusp Geothermal camping trip which takes place annually in November at Half Way Hot-springs.   \n\nThe Academic Resource Centre also offers EESc and Geography tutoring by members of the course union in room Fipke 134.  The hours for tutoring can be found posted outside Fipke 134.  Also located outside of Fipke 134 is the EESc Course Union Poster Board which provides information for upcoming and current events.\n\nVisit our LinkedIn page. http://ca.linkedin.com/pub/eesc-course-union/22/509/5b1/",
+    "categories": ["Academics", "Biology", "Physics", "Chemistry", "Science"],
+    "facebook": "https://www.facebook.com/UBCO-EESC-219394874780549/timeline/",
+    "email": "eesc.cu@gmail.com",
+    "website": "http://www.eesc-ubco.com"
+  },
+  {
+    "title": "Engineering Society at UBC",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/engineeringsociety_logo.png?itok=k3_FznGD",
+    "description": "The purpose of the Engineering Society is to provide social, professional, and academic services as well as representation to all UBC Okanagan engineering students. The Engineering Society is made up of a council of representatives from all student years and disciplines. The Engineering Society advocates for engineering student needs and brings academic issues to faculty, ensuring the needs of students are met during their time at UBCO.\n\nEvents organized by the Society include social opportunities such as E-Week, EngFrosh, games nights, and BBQ’s, and services such as the Energy-to-Go station during finals. The Engineering Society also hosts professional events including Professionalism Week, Resume Roast, and the Iron Pin ceremony. The Engineering Society represents our student body at a regional and national level, and works to keep students connected to external engineering organizations including APEGBC, WESST, and CFES. Through these connections, students can attend conferences and competitions such as the Western Engineering Competition, the Canadian Engineering Leadership Conference, the Conference on Diversity in Engineering, and many more. Instagram: https://www.instagram.com/engsocubco",
+    "categories": ["Engineering", "Academics"],
+    "facebook": "https://www.facebook.com/EngSocUBCO",
+    "email": "president@ubcoengineers.com",
+    "website": "https://www.engsoc-ubco.com/"
+  },
+  {
+    "title": "Environmental Chemistry Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/eccu_logo_colour_patch_thick.png?itok=aaLGkxL6",
+    "description": "The ECCU aims to provide students pursuing an Environmental Chemistry major with access to a supportive peer group, homework help, and career opportunities.",
+    "categories": ["Chemistry", "Academics", "Science"],
+    "facebook": "https://www.facebook.com/ECCUUBC/",
+    "email": "eccu.ubc@gmail.com",
+    "website": "https://www.ubcoeccu.com/"
+  },
+  {
+    "title": "Geography Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/geog_course_union_logo_1.png?itok=QQuiuar4",
+    "description": "The Geography Course Union is open to Geography Majors, Minors, or geography enthusiasts! Join us for hikes, online trivia and game nights, online study groups and materials, networking events, job opportunity info, talks, the WDCAG conference, and of course, meeting other geography nerds!\n\nhttps://youtu.be/eyDM91LweOk",
+    "categories": ["Academics", "Science"],
+    "facebook": "https://www.facebook.com/UBCO-Geography-Course-Union-250405088705034/",
+    "email": "geog.ubco@gmail.com"
+  },
+  {
+    "title": "Human Kinetics Student Association",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "description": "Instagram: https://www.instagram.com/ubcohksa/",
+    "categories": ["Academics", "Biology"],
+    "email": "ubc.okanagan.hksu@gmail.com"
+  },
+  {
+    "title": "Management Student Association (MSA)",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa_logo_0.png?itok=dOj4CWGg",
+    "description": "The MSA seeks to create experiences that inspire. We are trying to provide various opportunities for our fellow students in the faculty of Management to network with business professionals. As well, be able to create a community for Management students to network with one another and create meaningful connections throughout their university life. \n\nEmail: hiring@msaubco.ca \n\nInstagram: https://www.instagram.com/msaubco/",
+    "categories": ["Business", "Academics"],
+    "facebook": "https://www.facebook.com/msaubco/",
+    "email": "president@msaubco.ca",
+    "website": "https://www.msaubco.ca/"
+  },
+  {
+    "title": "Management Student Association - Accounting Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa-accounting.jpg?itok=pOJodORg",
+    "description": "The accounting club provides students valuable connections and information about careers in accounting, helping to develop a passion in students and make accounting accessible to a wider range of students.",
+    "categories": ["Business", "Academics"],
+    "facebook": "https://www.facebook.com/UBCOAccountingClub/",
+    "email": "accountingclub@msaubco.ca"
+  },
+  {
+    "title": "Management Student Association - Consulting Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa-consulting.jpg?itok=-DFmgYdk",
+    "description": "The Consulting club provides students opportunity to learn case breakdown using applicable analytical tools. For upper year students, provide workshops and guidance from professionals in the field. Consulting club aims to motivate, help and guide everyone to learn something new about consulting. This is another opportunity for students to put classroom experience into action, to apply tools they are given to use.",
+    "categories": ["Academics", "Business"],
+    "facebook": "https://www.facebook.com/groups/1546562512234218/about/",
+    "email": "consultingclub@msaubco.ca"
+  },
+  {
+    "title": "Management Student Association - Entrepreneur Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa-entrepreneur.jpg?itok=pjNZCm8Y",
+    "description": "The entrepreneur club’s goal is to connect those who have entrepreneurial spirit and inspire one another to take educated risks in the business world. The entre club helps to expand your professional networking and provide valuable connection with successful entrepreneurs. We want to find students who have the passion and drive to become a successful entrepreneur.",
+    "categories": ["Academics", "Business"],
+    "facebook": "https://www.facebook.com/groups/ubcoEntrepreneurClub/",
+    "email": "entreclub@msaubco.ca"
+  },
+  {
+    "title": "Management Student Association - Human Resources Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa-hr.jpg?itok=uwwFNf0x",
+    "description": "Human resources (HR) clubs provide professional development through trade of thoughts, and experiences with peers and access to the most recent research. HR club builds up your networking skills and gain a system of professional connections, as HR Club is a center point of gaining a relationship with HR experts and other related professionals. HR club also gives students an outlet for assistance and information in various school and career related topics.",
+    "categories": ["Academics", "Business"],
+    "facebook": "https://www.facebook.com/UBCOHRCLUB/",
+    "email": "hrclub@msaubco.ca"
+  },
+  {
+    "title": "Management Student Association - Marketing Club",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/msa-marketing.jpg?itok=k8UKy8l-",
+    "description": "The Marketing Club aims to educate, support and facilitate management students’ interaction and exploration surrounding everything marketing. Students will gain practical marketing skill and have opportunity to apply various marketing tools. Through our events workshop, we create an encouraging setting to connect students from the classroom to the marketing industry and community.",
+    "categories": ["Academics", "Business"],
+    "facebook": "https://www.facebook.com/UBCOmarketingclub/",
+    "email": "marketingclub@msaubco.ca"
+  },
+  {
+    "title": "Microbiology Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/ubc_microbiology_course_union_logo.png?itok=FcKaUcQJ",
+    "description": "The Microbiology course Union aims to provide an enriching academic and social environment to anyone who is interested in Microbiology, or Biology in general. The MCU is led by enthusiastic Microbiology majors who are dedicated to providing an exciting and welcoming experience. We provide midterm review sessions for several Biology courses, and hold open office hours to provide extended support to students in Biology.\n\nWe also run fun and engaging events such as laser tag and bowling, and we're planning to participate in the Canadian Cancer Society Relay for life.\n\nInstagram: https://www.instagram.com/microbioubco/",
+    "categories": ["Academics", "Science", "Biology"],
+    "facebook": "https://www.facebook.com/UBCMCU",
+    "email": "mcu.ubc@gmail.com",
+    "website": "http://blogs.ubc.ca/mcuubc/"
+  },
+  {
+    "title": "Nursing Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/nursingcourseunion_logo.png?itok=TbwT4-Ke",
+    "description": "A student run organization that inspires to create a nursing community at the University of British Columbia Okanagan through:\n\nIntegrating all four years of nursing students in both social and academic settings.\nCreating a visible nursing presence on campus through health awareness events, educational opportunties, and faculty involvement.\nFundraising and organizing nursing grad celebrations.",
+    "categories": ["Academics", "Biology"],
+    "facebook": "https://www.facebook.com/UbcONursingCourseUnion",
+    "email": "ubco.nursingcourseunion@gmail.com"
+  },
+  {
+    "title": "Philosophy, Politics, and Economics (PPE) Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/all/themes/ubcsuo/gfx/img_club.jpg",
+    "categories": ["Academics"],
+    "email": "ppe.courseunion@gmail.com"
+  },
+  {
+    "title": "Psychology Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/psych_cu_logo_0.png?itok=wXVJWYPJ",
+    "description": "The Psychology Course Union is a resource run by students for students! Join us to expand your research opportunities, to network with students and professors in the psychology department, to discover guest speakers, and to socialize!",
+    "categories": ["Academics", "Psychology"],
+    "facebook": "https://www.facebook.com/ubcopsychology",
+    "twitter": "https://twitter.com/ubcopcu",
+    "email": "ubcopsyc@gmail.com"
+  },
+  {
+    "title": "Quantitative Sciences Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/qscu_directory_logo.png?itok=ShPO2LfX",
+    "description": "The QSCU represents the students in mathematics, statistics, data science, physics, and computer science. We organize fun and educational events for the purpose of academic growth and to encourage social networking between students, professors, and professionals!\n\nInstagram: ubcoqscu https://www.instagram.com/ubcoqscu/\n\nhttps://youtu.be/WhdAVmus-WA",
+    "categories": ["Academics", "Science", "Computer Science", "Physics"],
+    "facebook": "https://www.facebook.com/ubcoqscu/",
+    "twitter": "https://twitter.com/ubcoqscu",
+    "email": "qscu.ubco@gmail.com",
+    "website": "http://qscu.org/"
+  },
+  {
+    "title": "Social Work Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/swcu_logo.png?itok=KPieV5Rq",
+    "description": "The Social Work Course Union (SWCU) is for Social Work graduate students enrolled in the MSW programs in the School of Social Work, Faculty of Health and Social Development, at UBC's Okanagan campus.\n\nThe SWCU aims to improve the social work students’ experience by providing:\n\nA safe space to voice their opinion\nA community in which academic discourse can occur in a productive/respectful manner\nOpportunities for professional growth (events, tutorials, workshops, etc.,)\nAdvocacy on behalf of students\nThe ability to develop professional relationships (between student-student, staff-students and students-community)\nOrganizing social events that foster a graduate community of social workers at UBCO \n… and more! \n\nInstagram: @ubco_sw\n\nTelegram: UBC Okanagan Social Work Course Union (contact us for link) \n\nGet involved! ",
+    "categories": ["Academics", "Activism"],
+    "facebook": "https://www.facebook.com/UBCOSWCU/",
+    "email": "ubcosocialworkcourseunion@gmail.com"
+  },
+  {
+    "title": "Visual Arts Course Union",
+    "imageLink": "https://www.ubcsuo.ca/sites/default/files/styles/club_image/public/clubs/vacu.png?itok=F-qYvQ8t",
+    "description": "None",
+    "categories": ["Academics"],
+    "email": "support@ubcovacu.org"
+  }
+]
