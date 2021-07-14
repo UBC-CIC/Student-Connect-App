@@ -1,6 +1,7 @@
 import {API, graphqlOperation} from "aws-amplify";
 import {getUserData, getUserPreference} from "../graphql/queries";
 import {createUserData, createUserPreference, updateUserPreference} from "../graphql/mutations";
+import { useHistory } from "react-router-dom";
 
 export const getUserDataAction = (id) => {
     return (dispatch) => {
@@ -17,7 +18,6 @@ export const getUserDataSuccess = (payload) => {
     }
 }
 export const getUserPreferenceAction = (id) => {
-    console.log(id)
     return (dispatch) => {
         API.graphql(graphqlOperation(getUserPreference, {id: id})).then((response) => {
             let res = response.data
@@ -26,6 +26,7 @@ export const getUserPreferenceAction = (id) => {
         })
     }
 }
+
 export const getUserPreferenceSuccess = (payload) => {
     return {
         type: "GET_USER_PREFERENCE_SUCCESS",
@@ -47,10 +48,11 @@ export const createUserDataSuccess = (payload) => {
 }
 
 export const createUserPreferenceAction = (payload) => {
+
     console.log(payload)
     API.graphql(graphqlOperation(createUserPreference, {input: payload})).then((response) => {
         console.log(response)
-
+        window.location.reload()
     }).catch((err) => {
         console.log("Error: ", err);
     })

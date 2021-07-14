@@ -8,21 +8,24 @@ import Clubs from './views/Clubs'
 import Events from "./views/Events";
 import Settings from "./views/Settings";
 import News from './views/News'
-import {Container} from "@material-ui/core";
+import {Container, IconButton} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
 import Explore from "./views/Explore";
 import AWS from 'aws-sdk';
-import React, {useEffect} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "./actions/newsActions";
 import {connect} from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
-import {Amplify, Auth} from 'aws-amplify';
+import {Amplify, API, Auth, graphqlOperation} from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
 import {getUserPreferenceAction} from "./actions/userAction";
 import SignIn from "./views/SignIn";
 import awsConfig from '../src/aws-exports'
+import { useHistory } from "react-router-dom";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import {getUserPreference} from "./graphql/queries";
 
 const useStyles = makeStyles((theme) => ({
   container:{
@@ -58,19 +61,34 @@ main().catch(error => console.error(error));
 function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,user}= props
-  console.log(user)
+    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
+    userPreference}= props
   const signInUrl = process.env.REACT_APP_SignInUrl
+  let history = useHistory();
+  const [UID,setUID] =  useState(null)
+  const [firstTime,setFirstTime] = useState(null)
 
-  useEffect(() => {
+  // async function checkUserLogInFirstTime(Id){
+  //   await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
+  //     if (response.data.getUserPreference !== null) {
+  //       setFirstTime(false)
+  //     } else {
+  //       setFirstTime(true)
+  //     }
+  //   })
+  // }
+
+  useEffect( () => {
     Amplify.configure(awsConfig);
-    Auth.currentAuthenticatedUser().then((response)=>{
-      console.log(response)
-    }).catch((err) => {
-      console.log(err);
-    })
-
+    console.log(currentUser)
+    if(currentUser){
+      setUID(currentUser.attributes['custom:SP-PUID'])
+        // checkUserLogInFirstTime(UID)
+      if(UID) getUserPreferenceAction(UID)
+    }
     main()
+
+
     fetchNews()
     fetchEvents()
     fetchBlogs()
@@ -81,25 +99,41 @@ function App(props) {
     fetchAllBlogs()
     fetchSportsNews()
     fetchAllSportsNews()
-    // getUserPreferenceAction('cyedward')
+
 
   }, []);
 
   return (
     <div className={classes.app}>
-        <Navbar/>
-        <Container className={classes.container} >
-          <Route path ='/' exact component={Home}/>
-          <Route path ='/explore' exact component={Explore}/>
-          <Route path ='/clubs' exact component={Clubs}/>
-          <Route path ='/events' exact component={Events}/>
-          <Route path ='/settings' exact component={Settings}/>
-          <Route path ='/news' exact component={News}/>
-          <Route path = '/survey' exact component={Survey}/>
-        </Container>
-        <Footer/>
-        <AmplifySignOut/>
+      {firstTime && (
+      <div>
+            <Redirect to={'/survey'}/>
+            <Route
+                path='/survey'
+                render={(props) => (
+                    <Survey {...props} UID={UID} />
+                )}
+            />
+          </div>
+          )}
+      {!firstTime&&(
+          <div>
+            <Redirect to={'/'}/>
+            <Navbar/>
+            <Container className={classes.container} >
+              <Route path ='/' exact component={Home}/>
+              <Route path ='/explore' exact component={Explore}/>
+              <Route path ='/clubs' exact component={Clubs}/>
+              <Route path ='/events' exact component={Events}/>
+              <Route path ='/settings' exact component={Settings}/>
+              <Route path ='/news' exact component={News}/>
+            </Container>
+            <Footer/>
+          </div>
+      )}
 
+
+      }
 
 
 
@@ -109,7 +143,8 @@ function App(props) {
 
 const mapStateToProps = (state) => {
   return {
-    // isLoading: state.applicationStatus.startupLoading,
+    userPreference: state.userPreference,
+    currentUser:state.currentUser
   };
 };
 

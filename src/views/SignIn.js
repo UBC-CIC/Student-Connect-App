@@ -34,7 +34,7 @@
 //
 //     )
 // }
-import {Button, Grid} from '@material-ui/core';
+import {Button, Grid, IconButton} from '@material-ui/core';
 // import Login from "./Components/Authentication/Login";
 import Login from "../components/Authentication/Login_material";
 import {Auth, Hub} from "aws-amplify";
@@ -44,20 +44,22 @@ import {updateLoginState} from "../actions/loginActions";
 import App from "../App";
 import { Cache } from 'aws-amplify';
 import {func} from "prop-types";
+import FacebookIcon from "@material-ui/icons/Facebook";
 
 
 
 function SignIn(props) {
     const {loginState, updateLoginState} = props;
+    const [currentUser,setCurrentUser]= useState(null)
 
     const [currentLoginState, updateCurrentLoginState] = useState(loginState);
 
 
 
-    useEffect(() => {
-        console.log(Auth.currentAuthenticatedUser())
+
+
+    useEffect(async () => {
         updateCurrentLoginState(loginState);
-        console.log(loginState)
     }, [loginState]);
 
     const [user, setUser] = useState(null);
@@ -68,9 +70,9 @@ function SignIn(props) {
     }
 
 
-    useEffect(() => {
-        Hub.listen('auth', ({ payload: { event, data } }) => {
-            console.log(event)
+    useEffect( () => {
+
+        Hub.listen('auth', ({payload: {event, data}}) => {
             switch (event) {
                 case 'signIn':
                 case 'cognitoHostedUI':
@@ -84,7 +86,8 @@ function SignIn(props) {
                     console.log('Sign in failure', data);
                     break;
             }
-        })});
+        })
+    });
 
 
     return (
@@ -93,7 +96,6 @@ function SignIn(props) {
                 {
                     currentLoginState !== "signedIn" && (
                         <div>
-                            <Button onClick={() => Auth.federatedSignIn()}>Open Hosted UI</Button>
                             <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
                                    title={"CIC React Login Template"} darkMode={true}
                                    disableSignUp={false}
@@ -104,12 +106,8 @@ function SignIn(props) {
                     )
                 }
                 {
-                    currentLoginState === "signedIn" && (
-                        <div>
-                            <App user={user}/>
-
-
-                        </div>
+                    (currentLoginState === "signedIn") && (
+                        <App/>
                     )
                 }
             </Grid>

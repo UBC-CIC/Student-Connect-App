@@ -48,7 +48,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Settings(props){
     const classes = useStyles();
-    const{userPreference}=props
+    const{userPreference,allNews} = props
+    console.log(userPreference)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {
@@ -100,6 +101,7 @@ function Settings(props){
 const mapStateToProps = (state) => {
     return {
         userPreference: state.userPreference,
+        allNews:state.allNews
     };
 };
 

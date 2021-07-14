@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
@@ -9,6 +9,11 @@ import * as PropTypes from "prop-types";
 import {connect} from "react-redux";
 import EventsCarousel from "../components/Carousel/EventsCarousel";
 import ClubsCarousel from "../components/Carousel/ClubsCarousel";
+import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../actions/newsActions";
+import {fetchAllEvents, fetchEvents} from "../actions/eventsAction";
+import {fetchAllBlogs, fetchBlogs} from "../actions/blogsAction";
+import {fetchAllClubs, fetchClubs} from "../actions/clubAction";
+import {getUserPreferenceAction} from "../actions/userAction";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -60,7 +65,12 @@ function StarBorderIcon(props) {
 StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
-    const {news,blogs} = props
+    const {news,blogs,userPreference,getUserPreferenceAction,currentUser} = props
+    const [user, setUser] = useState(null)
+    useEffect( () => {
+        getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
+        setUser(currentUser)
+    }, [user])
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -155,7 +165,13 @@ const mapStateToProps = (state) => {
     return {
         news: state.news,
         blogs:state.blogs,
+        userPreference: state.userPreference,
+        currentUser:state.currentUser
     };
 };
 
-export default connect(mapStateToProps)(Home);
+const mapDispatchToProps = {
+    getUserPreferenceAction
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

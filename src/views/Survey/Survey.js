@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -201,7 +201,7 @@ function getSteps() {
 }
 
 const userPreference ={
-    id: 'cyedward',
+    id: '',
     academicPreference: {
         arts: false,
         biology: false,
@@ -275,6 +275,7 @@ const userPreference ={
 }
 
  function Survey(props) {
+    const {UID} = props
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -320,8 +321,11 @@ const userPreference ={
     const handleSave = () => {
 
         createUserPreferenceAction(userPreference)
-        props.history.push('/home')
     };
+    useEffect(()=>{
+        userPreference.id = UID
+        console.log(userPreference)
+    })
 
 
     return (

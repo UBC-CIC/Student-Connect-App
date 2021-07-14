@@ -29,9 +29,10 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Auth} from "aws-amplify";
 import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
-import {updateLoginState} from "../../actions/loginActions";
+import {updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import TextFieldStartAdornment from "./TextFieldStartAdornment";
 import "./Login.css";
+import {getUserPreferenceAction} from "../../actions/userAction";
 
 
 const initialFormState = {
@@ -90,7 +91,8 @@ const useStyles = makeStyles((theme) => ({
 
 
 function Login(props) {
-    const {loginState, updateLoginState, animateTitle, type, title, darkMode, logo, themeColor, disableSignUp} = props;
+    const {loginState, updateLoginState, animateTitle, type, title, darkMode, logo, themeColor,
+        disableSignUp,updateCurrentUser} = props;
 
 
 
@@ -100,7 +102,7 @@ function Login(props) {
         async function retrieveUser() {
             try {
                 Auth.currentAuthenticatedUser().then(user => {
-                    console.log(user)
+                    updateCurrentUser(user)
                     updateLoginState("signedIn");
                 }).catch(err => {
                     updateLoginState("signIn");
@@ -183,6 +185,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     updateLoginState,
+    updateCurrentUser,
+    getUserPreferenceAction
 };
 
 
