@@ -26,7 +26,6 @@ import awsConfig from '../src/aws-exports'
 import { useHistory } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import {getUserPreference} from "./graphql/queries";
-
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -44,19 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const main = async () => {
-  AWS.config.update({
-    accessKeyId: process.env.REACT_APP_accessKeyId,
-    secretAccessKey: process.env.REACT_APP_secretAccessKey,
-    sessionToken:process.env.REACT_APP_sessionToken,
-    region: 'ca-central-1',
-  });
 
-
-
-};
-
-main().catch(error => console.error(error));
 
 function App(props) {
   const classes = useStyles();
@@ -67,41 +54,45 @@ function App(props) {
   let history = useHistory();
   const [UID,setUID] =  useState(null)
   const [firstTime,setFirstTime] = useState(null)
+  const [user, setUser] = useState(null)
+  const [preference,setPreference]=useState(null)
 
-  // async function checkUserLogInFirstTime(Id){
-  //   await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
-  //     if (response.data.getUserPreference !== null) {
-  //       setFirstTime(false)
-  //     } else {
-  //       setFirstTime(true)
-  //     }
-  //   })
-  // }
+  async function checkUserLogInFirstTime(Id){
+    await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
+      if (response.data.getUserPreference !== null) {
+        setFirstTime(false)
+      } else {
+        setFirstTime(true)
+      }
+    })
+  }
 
-  useEffect( () => {
+  useEffect( async () => {
     Amplify.configure(awsConfig);
-    console.log(currentUser)
-    if(currentUser){
+    if (currentUser) {
+      let credentials = await Auth.currentCredentials()
+      AWS.config.update({
+        credentials,
+        region: 'ca-central-1',
+      });
       setUID(currentUser.attributes['custom:SP-PUID'])
-        // checkUserLogInFirstTime(UID)
-      if(UID) getUserPreferenceAction(UID)
+      if (UID) checkUserLogInFirstTime(UID)
+      fetchNews()
+      fetchEvents()
+      fetchBlogs()
+      fetchClubs()
+      fetchSportsNews()
     }
-    main()
-
-
-    fetchNews()
-    fetchEvents()
-    fetchBlogs()
-    fetchClubs()
+    getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
+    setUser(currentUser)
     fetchAllClubs()
     fetchAllEvents()
     fetchAllNews()
     fetchAllBlogs()
-    fetchSportsNews()
     fetchAllSportsNews()
 
 
-  }, []);
+  }, [UID,user,preference]);
 
   return (
     <div className={classes.app}>

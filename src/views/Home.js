@@ -65,12 +65,16 @@ function StarBorderIcon(props) {
 StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
-    const {news,blogs,userPreference,getUserPreferenceAction,currentUser} = props
-    const [user, setUser] = useState(null)
+    const {news,blogs,userPreference,currentUser} = props
+    const [preference,setPreference]=useState(null)
+
     useEffect( () => {
-        getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
-        setUser(currentUser)
-    }, [user])
+        if(userPreference){
+            setPreference(userPreference)
+            console.log(userPreference)
+
+        }
+    }, [preference])
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
