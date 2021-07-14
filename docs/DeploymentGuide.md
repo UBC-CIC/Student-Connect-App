@@ -20,7 +20,7 @@ Some system installation requirements before starting deployment:
   
 
 1) Open the terminal at the root folder of the repository, and then run the deployment script using the following command using
-   your own parameter values inside the angle brackets.
+   your own parameter values inside the angle brackets. The order of arguments must be the same as shown.
 
    For Mac, Linux and Windows Subsystem for Linux users:
 
