@@ -77,14 +77,21 @@ function App(props) {
       });
       setUID(currentUser.attributes['custom:SP-PUID'])
       if (UID) checkUserLogInFirstTime(UID)
-      fetchNews()
+    }
+    getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
+    setUser(currentUser)
+    setPreference(userPreference)
+
+    if(preference){
+      console.log(preference)
+      fetchNews("Health Psychology Research Recreation Careers")
       fetchEvents()
       fetchBlogs()
       fetchClubs()
       fetchSportsNews()
+
     }
-    getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
-    setUser(currentUser)
+
     fetchAllClubs()
     fetchAllEvents()
     fetchAllNews()
@@ -112,7 +119,9 @@ function App(props) {
             <Redirect to={'/'}/>
             <Navbar/>
             <Container className={classes.container} >
-              <Route path ='/' exact component={Home}/>
+              <Route path ='/' exact component={Home} render={
+                (props) => <Home {...props}  />
+              }  />
               <Route path ='/explore' exact component={Explore}/>
               <Route path ='/clubs' exact component={Clubs}/>
               <Route path ='/events' exact component={Events}/>
@@ -144,6 +153,7 @@ const mapDispatchToProps = {
   fetchEvents,
   fetchBlogs,
   fetchClubs,
+
   fetchAllClubs,
   fetchAllEvents,
   fetchAllNews,

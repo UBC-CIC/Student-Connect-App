@@ -66,15 +66,12 @@ StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
     const {news,blogs,userPreference,currentUser} = props
-    const [preference,setPreference]=useState(null)
-
-    useEffect( () => {
-        if(userPreference){
-            setPreference(userPreference)
-            console.log(userPreference)
-
-        }
-    }, [preference])
+    // const [preference,setPreference]=useState(userPreference)
+    // const [homeNews,setHomeNews]=useState(news)
+    // const [homeBlogs,setHomeBlogs]=useState(blogs)
+    // const [currUser,setCurrUser]=useState(currentUser)
+    // const [currUser,setCurrUser]=useState(currentUser)
+    // const [currUser,setCurrUser]=useState(currentUser)
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -143,16 +140,7 @@ function Home(props) {
 
                     {blogsList}
                 </Grid>
-                {/*<BlogsCarousel/>*/}
             </Container>
-
-            {/*<Container maxWidth={"xl"}>*/}
-            {/*    <Divider className={classes.divider}/>*/}
-            {/*    <Typography align={'left'} variant="h4" className={classes.forYouTitle}>*/}
-            {/*        Event's that you liked*/}
-            {/*    </Typography>*/}
-            {/*    <EventGridList/>*/}
-            {/*</Container>*/}
             <Divider className={classes.divider}/>
             <Container maxWidth={"xl"}>
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
@@ -175,7 +163,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    getUserPreferenceAction
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

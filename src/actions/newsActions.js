@@ -4,14 +4,14 @@ import {API, graphqlOperation} from "aws-amplify";
 import {listAthleticsNewsTables, listNewsTables} from "../graphql/queries";
 import {bracketRemover} from "../helpers/HtmlTagCleaner";
 
-export const fetchNews = () => {
+export const fetchNews = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "news",
-                'categories': "Health Psychology Research Recreation Careers",
+                'categories': categories,
             }),
         };
         lambda.invoke(params, function(err, data) {
