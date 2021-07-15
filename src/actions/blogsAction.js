@@ -36,18 +36,27 @@ export const fetchBlogsSuccess = (payload) => {
 }
 export const fetchAllBlogs = () => {
     return (dispatch) => {
-        API.graphql(graphqlOperation(listBlogsTables, {limit: 200})).then((response) => {
-            let allBlogs = response.data.listBlogsTables.items
-            allBlogs.sort((a, b) => a.title.localeCompare(b.title))
-            allBlogs.map((item)=>{
-                item.excerpt=htmlTagCleaner(item.excerpt)
-            })
+        var params = {
+            TableName: "BlogsTable"
+        };
+        var dynamodb = new AWS.DynamoDB.DocumentClient()
+            dynamodb.scan(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                    let allBlogs = data.Items
+                    console.log(allBlogs)
+                    allBlogs.sort((a, b) => a.title.localeCompare(b.title))
+                    allBlogs.map((item)=>{
+                        item.excerpt=htmlTagCleaner(item.excerpt)
+                    })
 
-                dispatch(fetchAllBlogsSuccess(response.data.listBlogsTables.items))
-        }).catch((err) => {
-            console.log("Error fetching news: ", err);
-        })
+                    dispatch(fetchAllBlogsSuccess(allBlogs))
+                }
+
+            }
+        )
     }
+
 }
 export const fetchAllBlogsSuccess = (payload) => {
     return {

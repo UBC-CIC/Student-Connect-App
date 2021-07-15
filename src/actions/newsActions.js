@@ -3,6 +3,7 @@ import AWS from "aws-sdk";
 import {API, graphqlOperation} from "aws-amplify";
 import {listAthleticsNewsTables, listNewsTables} from "../graphql/queries";
 import {bracketRemover} from "../helpers/HtmlTagCleaner";
+import {fetchAllClubsSuccess} from "./clubAction";
 
 export const fetchNews = (categories) => {
     console.log(categories)
@@ -94,20 +95,30 @@ export const fetchSportsNewsSuccess = (payload) => {
     }
 }
 export const fetchAllSportsNews = () => {
+    var params = {
+        TableName: "AthleticsNewsTable"
+    };
+
     return (dispatch) => {
-        API.graphql(graphqlOperation(listAthleticsNewsTables, {limit: 200})).then((response) => {
-            let res = response.data.listAthleticsNewsTables.items
-            res.sort(function(a, b) {
-                return new Date(new Date(b.dateModified)-new Date(a.dateModified))
-            });
-            res.map((item)=>{
-                // item.categories=(bracketRemover(item.categories).split(","))
-                item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
+        var dynamodb = new AWS.DynamoDB.DocumentClient()
+        dynamodb.scan(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                    let allSportsNews = data.Items
+                    console.log(allSportsNews)
+                    allSportsNews.sort(function(a, b) {
+                        return new Date(new Date(b.dateModified)-new Date(a.dateModified))
+                    });
+                    allSportsNews.map((item)=>{
+                        // item.categories=(bracketRemover(item.categories).split(","))
+                        item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
 
-            })
+                    })
 
-            dispatch(fetchAllSportsNewsSuccess(res))
-        })
+                    dispatch(fetchAllSportsNewsSuccess(allSportsNews))
+                }
+            }
+        )
     }
 }
 export const fetchAllSportsNewsSuccess = (payload) => {

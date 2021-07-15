@@ -128,12 +128,12 @@ export default function NewsBlogsTab(props) {
     const sportsNewsList=allSportsNews.map((item)=>{
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
-                <HomePageNewsCard title={item._source.title}
-                                  categories={item._source.categories}
-                                  link={item._source.link}
-                                  description={item._source.summary}
-                                  photo={item._source.mediaThumbnail}
-                                  date={item._source.dateModified}
+                <HomePageNewsCard title={item.title}
+                                  categories={item.categories}
+                                  link={item.link}
+                                  description={item.summary}
+                                  photo={item.mediaThumbnail}
+                                  date={item.dateModified}
                 />
             </Grid>
 

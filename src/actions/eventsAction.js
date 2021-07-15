@@ -2,6 +2,7 @@ import AWS from "aws-sdk";
 import {bracketRemover, eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
 import {listEventsTables} from "../graphql/queries";
+import {fetchAllClubsSuccess} from "./clubAction";
 
 export const fetchEvents = (categories) => {
     return (dispatch) => {
@@ -43,33 +44,33 @@ export const fetchEventsSuccess = (payload) => {
 }
 
 export const fetchAllEvents = () => {
+    var params = {
+        TableName: "EventsTable"
+    };
     return (dispatch) => {
-        API.graphql(graphqlOperation(listEventsTables, {limit: 200})).then((response) => {
-            let allEvents = response.data.listEventsTables.items
-            allEvents.map((item)=>{
-                item.excerpt=htmlTagCleaner(item.excerpt)
-                item.thumbnailImage = bracketRemover(item.thumbnailImage)
+        var dynamodb = new AWS.DynamoDB.DocumentClient()
+        dynamodb.scan(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                    let allEvents = data.Items
+                    console.log(allEvents)
+                    allEvents.map((item)=>{
+                        item.excerpt=htmlTagCleaner(item.excerpt)
 
-                if(item.startDate) item.startDate = eventDateCleaner(item.startDate)
-                if(item.endDate) item.endDate = eventDateCleaner(item.endDate)
-                if(item.endDate) item.endDate = eventEndDateCleaner(item.startDate,item.endDate)
-                item.fullImage=bracketRemover(item.fullImage)
+                        if(item.startDate) item.startDate = eventDateCleaner(item.startDate)
+                        if(item.endDate) item.endDate = eventDateCleaner(item.endDate)
+                        if(item.endDate) item.endDate = eventEndDateCleaner(item.startDate,item.endDate)
 
-                if(item.cost===""){
-                    item.cost='Free'
+                        if(item.cost===""){
+                            item.cost='Free'
+                        }
+                    dispatch(fetchAllEventsSuccess(allEvents))
+
+                    })
+
                 }
-
-            })
-
-            allEvents.sort(function(a, b) {
-                return new Date(a.startDate)-new Date(b.startDate)
-            });
-
-            dispatch(fetchAllEventsSuccess(allEvents))
-
-        }).catch((err) => {
-            console.log("Error fetching events: ", err);
-        })
+            }
+        )
     }
 }
 export const fetchAllEventsSuccess = (payload) => {

@@ -59,7 +59,7 @@ const mapStateToProps = (state) => {
     return {
         allNews: state.allNews,
         allBlogs:state.allBlogs,
-        allSportsNews:state.sportsNews
+        allSportsNews:state.allSportsNews
     };
 };
 

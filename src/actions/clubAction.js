@@ -1,6 +1,8 @@
 import AWS from "aws-sdk";
 import {API, graphqlOperation} from 'aws-amplify';
 import {listClubsTables} from "../graphql/queries";
+import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
+import {fetchAllBlogsSuccess} from "./blogsAction";
 
 export const fetchClubs = (categories) => {
     return (dispatch) => {
@@ -24,12 +26,19 @@ export const fetchClubs = (categories) => {
     }
 }
 export const fetchAllClubs = () => {
+    var params = {
+        TableName: "ClubsTable"
+    };
     return (dispatch) => {
-        API.graphql(graphqlOperation(listClubsTables, {limit: 200})).then((response) => {
-            dispatch(fetchAllClubsSuccess(response.data.listClubsTables.items))
-        }).catch((err) => {
-            console.log("Error fetching clubs: ", err);
-        })
+        var dynamodb = new AWS.DynamoDB.DocumentClient()
+        dynamodb.scan(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+                    let allClubs = data.Items
+                    dispatch(fetchAllClubsSuccess(allClubs))
+                }
+            }
+        )
     }
 }
 export const fetchClubsSuccess = (payload) => {

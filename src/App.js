@@ -85,7 +85,6 @@ function App(props) {
       console.log(currentUser)
       if (UID) checkUserLogInFirstTime(UID)
     }
-
     getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
     setUser(currentUser)
 
