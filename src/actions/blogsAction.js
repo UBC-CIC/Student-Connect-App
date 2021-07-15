@@ -3,14 +3,14 @@ import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 import {API, graphqlOperation} from "aws-amplify";
 import {listBlogsTables} from "../graphql/queries";
 
-export const fetchBlogs = () => {
+export const fetchBlogs = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "blogs",
-                'categories': "Health Psychology Research Recreation Careers",
+                'categories': categories,
             }),
         };
         lambda.invoke(params, function(err, data) {

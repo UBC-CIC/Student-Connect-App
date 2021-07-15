@@ -3,14 +3,14 @@ import {bracketRemover, eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} f
 import {API, graphqlOperation} from "aws-amplify";
 import {listEventsTables} from "../graphql/queries";
 
-export const fetchEvents = () => {
+export const fetchEvents = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "events",
-                'categories': "Health Psychology Research Recreation Careers Centre for Teaching and Learning",
+                'categories': categories,
             }),
         };
         lambda.invoke(params, function(err, data) {

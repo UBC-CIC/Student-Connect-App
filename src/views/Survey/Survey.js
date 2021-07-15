@@ -19,8 +19,12 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
 import {ButtonGroup} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import {createUserPreferenceAction} from "../../actions/userAction";
+import {createUserDataAction, createUserPreferenceAction, getUserPreferenceAction} from "../../actions/userAction";
 import {connect} from "react-redux";
+import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../../actions/newsActions";
+import {fetchAllEvents, fetchEvents} from "../../actions/eventsAction";
+import {fetchAllBlogs, fetchBlogs} from "../../actions/blogsAction";
+import {fetchAllClubs, fetchClubs} from "../../actions/clubAction";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -275,7 +279,7 @@ const userPreference ={
 }
 
  function Survey(props) {
-    const {UID} = props
+    const {UID,user,createUserPreferenceAction,createUserDataAction} = props
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -319,12 +323,28 @@ const userPreference ={
     };
 
     const handleSave = () => {
-
+        createUserData(user)
         createUserPreferenceAction(userPreference)
     };
-    useEffect(()=>{
+     function createUserData(user){
+         let userData ={
+             id: user.attributes['custom:SP-PUID'],
+             SPUID: user.attributes['custom:SP-PUID'],
+             displayName: user.attributes['custom:preferredGivenName'],
+             yearLevel: user.attributes['custom:studentYearLevel'],
+             email:user.attributes['custom:studentLearnerEmail'],
+             primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+             campus: user.attributes['custom:locale'],
+             faculty:user.attributes['custom:adwardingFaculty']
+         }
+
+         createUserDataAction(userData)
+
+     }
+
+     useEffect(()=>{
         userPreference.id = UID
-        console.log(userPreference)
+        console.log(props.user)
     })
 
 
@@ -346,10 +366,10 @@ const userPreference ={
                         <Typography variant={"h6"} className={classes.title}>
                             Thanks for filling in your preferences. If you would like to make changes, please go to settings page to modify
                         </Typography>
-                        <Button component={Link} to="/home" className={classes.goToHomeButton}>
-                            Bring me to Home Page!
+                        {/*<Button component={Link} to="/" className={classes.goToHomeButton}>*/}
+                        {/*    Bring me to Home Page!*/}
 
-                        </Button>
+                        {/*</Button>*/}
                     </div>
                 ) : (
                     <div>
@@ -379,4 +399,5 @@ const userPreference ={
         </Container>
     );
 }
-export default connect(null, {createUserPreferenceAction})(Survey);
+
+export default connect(null, {createUserPreferenceAction,createUserDataAction})(Survey);

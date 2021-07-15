@@ -27,6 +27,7 @@ import { useHistory } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import {getUserPreference} from "./graphql/queries";
 import {listToString} from "./helpers/PreferenceListToString";
+import LoadingScreen from "./views/LoadingScreen";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -57,10 +58,13 @@ function App(props) {
   const [firstTime,setFirstTime] = useState(null)
   const [user, setUser] = useState(null)
   const [preference,setPreference]=useState(null)
+  let pref
 
   async function checkUserLogInFirstTime(Id){
     await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
       if (response.data.getUserPreference !== null) {
+        pref=response.data.getUserPreference
+
         setFirstTime(false)
       } else {
         setFirstTime(true)
@@ -68,20 +72,6 @@ function App(props) {
     })
   }
 
-  function createUserData(user){
-    let userData ={
-      id: user.attributes['custom:SP-PUID'],
-      SPUID: user.attributes['custom:SP-PUID'],
-      displayName: user.attributes['custom:preferredGivenName'],
-      yearLevel: user.attributes['custom:studentYearLevel'],
-      email:user.attributes['custom:studentLearnerEmail'],
-      primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-      campus: user.attributes['custom:locale'],
-    }
-
-    createUserDataAction(userData)
-
-  }
 
   useEffect( async () => {
     Amplify.configure(awsConfig);
@@ -94,29 +84,14 @@ function App(props) {
       setUID(currentUser.attributes['custom:SP-PUID'])
       console.log(currentUser)
       if (UID) checkUserLogInFirstTime(UID)
-      createUserData(currentUser)
     }
 
     getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
     setUser(currentUser)
+
     setPreference(userPreference)
 
 
-    if(preference){
-      console.log(preference)
-      listToString(preference.academicPreference)
-      fetchNews("Health Psychology Research Recreation Careers")
-      fetchEvents()
-      fetchBlogs()
-      fetchClubs()
-      fetchSportsNews()
-
-    }
-    fetchNews("Health Psychology Research Recreation Careers")
-    fetchEvents()
-    fetchBlogs()
-    fetchClubs()
-    fetchSportsNews()
 
     fetchAllClubs()
     fetchAllEvents()
@@ -135,19 +110,23 @@ function App(props) {
             <Route
                 path='/survey'
                 render={(props) => (
-                    <Survey {...props} UID={UID} />
+                    <Survey {...props} UID={UID} user={user} />
                 )}
             />
           </div>
           )}
-      {!firstTime&&(
+      {(!firstTime)&&(
           <div>
             <Redirect to={'/'}/>
             <Navbar/>
             <Container className={classes.container} >
-              <Route path ='/' exact component={Home} render={
-                (props) => <Home {...props}  />
-              }  />
+              <Route
+                  path='/'
+                  render={(props) => (
+                      <LoadingScreen {...props} preference={userPreference} user={user} />
+                  )} exact component={LoadingScreen}
+              />
+
               <Route path ='/explore' exact component={Explore}/>
               <Route path ='/clubs' exact component={Clubs}/>
               <Route path ='/events' exact component={Events}/>

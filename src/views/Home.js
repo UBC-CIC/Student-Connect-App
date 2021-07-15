@@ -14,6 +14,7 @@ import {fetchAllEvents, fetchEvents} from "../actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "../actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "../actions/clubAction";
 import {getUserPreferenceAction} from "../actions/userAction";
+import {listToString} from "../helpers/PreferenceListToString";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -65,13 +66,11 @@ function StarBorderIcon(props) {
 StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
-    const {news,blogs,userPreference,currentUser} = props
-    // const [preference,setPreference]=useState(userPreference)
-    // const [homeNews,setHomeNews]=useState(news)
-    // const [homeBlogs,setHomeBlogs]=useState(blogs)
-    // const [currUser,setCurrUser]=useState(currentUser)
-    // const [currUser,setCurrUser]=useState(currentUser)
-    // const [currUser,setCurrUser]=useState(currentUser)
+    const {news,blogs,sportsNews} = props
+    useEffect(  () => {
+
+
+    })
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -84,6 +83,20 @@ function Home(props) {
             </Grid>
         )
     });
+    const sportsNewsList = sportsNews.map((item) => {
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+                <HomePageNewsCard title={item._source.title}
+                                  categories={item._source.categories}
+                                  link={item._source.link}
+                                  description={item._source.summary}
+                                  photo={item._source.mediaThumbnail}
+                                  date={item._source.dateModified}
+                />
+            </Grid>
+        )
+    });
+
     const blogsList=blogs.map((item)=>{
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -116,13 +129,8 @@ function Home(props) {
 
                 <Grid container spacing={3}>
                     {newsList}
+                    {sportsNewsList}
                 </Grid>
-                <Divider className={classes.divider}/>
-
-                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Sports News
-                </Typography>
-
                 <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
@@ -158,12 +166,10 @@ const mapStateToProps = (state) => {
         news: state.news,
         blogs:state.blogs,
         userPreference: state.userPreference,
-        currentUser:state.currentUser
+        currentUser:state.currentUser,
+        sportsNews:state.sportsNews
     };
 };
 
-const mapDispatchToProps = {
 
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, null)(Home);

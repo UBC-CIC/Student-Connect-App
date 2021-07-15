@@ -2,14 +2,14 @@ import AWS from "aws-sdk";
 import {API, graphqlOperation} from 'aws-amplify';
 import {listClubsTables} from "../graphql/queries";
 
-export const fetchClubs = () => {
+export const fetchClubs = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "clubs",
-                'categories': "Health Psychology Research Recreation Careers",
+                'categories': categories,
             }),
         };
 

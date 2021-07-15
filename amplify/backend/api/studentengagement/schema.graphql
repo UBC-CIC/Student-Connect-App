@@ -1,13 +1,20 @@
 type userPreference @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
-  SPUID: String!
+  id: ID!
   newsBlogsClubsPreference: newsBlogsClubsList!
+  sportsPreference:sportsPreference!
   academicPreference:academicList!
   eventsPreference: eventsList!
   emailNotification: Boolean!
 }
+type sportsPreference{
+  mensSportsList:mensSportsList,
+  womensSportsList:womensSportsList
+}
+
 
 type userData  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
-  SPUID: String!,
+  id: ID!,
+  SPUID: ID!,
   displayName: String!,
   yearLevel: Int!,
   email: String!

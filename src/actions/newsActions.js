@@ -5,6 +5,7 @@ import {listAthleticsNewsTables, listNewsTables} from "../graphql/queries";
 import {bracketRemover} from "../helpers/HtmlTagCleaner";
 
 export const fetchNews = (categories) => {
+    console.log(categories)
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
@@ -20,6 +21,7 @@ export const fetchNews = (categories) => {
                 let results = (JSON.parse(data.Payload));
                 results = JSON.parse(results)
                 dispatch(fetchNewsSuccess(results.hits.hits))
+                console.log(results)
             }
         });
     }
@@ -53,14 +55,15 @@ export const fetchAllNewsSuccess = (payload) => {
         payload: payload
     }
 }
-export const fetchSportsNews = () => {
+export const fetchSportsNews = (categories) => {
+    console.log(categories)
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
             FunctionName: process.env.REACT_APP_FunctionName,
             Payload:JSON.stringify({
                 'index': "athleticsnews",
-                'categories':'[sports]'
+                'categories':categories
             }),
         };
         lambda.invoke(params, function(err, data) {
