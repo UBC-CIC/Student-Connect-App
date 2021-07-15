@@ -1,47 +1,21 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateUserData = /* GraphQL */ `
-  subscription OnCreateUserData {
-    onCreateUserData {
-      campus
-      createdAt
-      displayName
-      email
-      id
-      owner
-      primarySpecialization
-      updatedAt
-      yearLevel
-    }
-  }
-`;
 export const onCreateUserPreference = /* GraphQL */ `
   subscription OnCreateUserPreference {
     onCreateUserPreference {
-      academicPreference {
-        arts
-        biology
-        business
-        chemistry
-        computerScience
-        economics
-        engineering
-        history
-        mathematics
-        philosophy
-        physics
-        psychology
-        science
-        statistics
-      }
-      createdAt
-      emailNotification
-      eventsPreference {
-        faculties
-        studentServices
-        subjectDepartments
-        universityServices
+      id
+      newsBlogsClubsPreference {
+        academics
+        activism
+        culture
+        careerDevelopment
+        gradSchool
+        healthAndWellbeing
+        research
+        recreation
+        religion
+        sports
       }
       sportsPreference {
         mensSportsList {
@@ -79,159 +53,50 @@ export const onCreateUserPreference = /* GraphQL */ `
           volleyball
         }
       }
-      id
-      newsBlogsClubsPreference {
-        academics
-        activism
-        careerDevelopment
-        culture
-        gradSchool
-        healthAndWellbeing
-        recreation
-        religion
-        research
-      }
-      owner
-      updatedAt
-    }
-  }
-`;
-export const onDeleteUserData = /* GraphQL */ `
-  subscription OnDeleteUserData {
-    onDeleteUserData {
-      campus
-      createdAt
-      displayName
-      email
-      id
-      owner
-      primarySpecialization
-      updatedAt
-      yearLevel
-    }
-  }
-`;
-export const onDeleteUserPreference = /* GraphQL */ `
-  subscription OnDeleteUserPreference {
-    onDeleteUserPreference {
       academicPreference {
         arts
-        biology
         business
-        chemistry
         computerScience
-        economics
         engineering
-        history
-        mathematics
-        philosophy
+        biology
+        chemistry
         physics
         psychology
+        economics
         science
         statistics
+        mathematics
+        philosophy
+        history
       }
-      createdAt
-      emailNotification
       eventsPreference {
-        faculties
-        studentServices
         subjectDepartments
+        studentServices
+        faculties
         universityServices
       }
-      sportsPreference {
-        mensSportsList {
-          baseball
-          basketball
-          crew
-          crossCountry
-          football
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          squash
-          swimmingAndDriving
-          tennis
-          trackAndField
-          wrestling
-        }
-        womensSportsList {
-          basketball
-          crew
-          crossCountry
-          fieldHockey
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          softball
-          squash
-          swimmingAndDriving
-          tennis
-          trackAndField
-          volleyball
-        }
-      }
-      id
-      newsBlogsClubsPreference {
-        academics
-        activism
-        careerDevelopment
-        culture
-        gradSchool
-        healthAndWellbeing
-        recreation
-        religion
-        research
-      }
-      owner
-      updatedAt
-    }
-  }
-`;
-export const onUpdateUserData = /* GraphQL */ `
-  subscription OnUpdateUserData {
-    onUpdateUserData {
-      campus
+      emailNotification
       createdAt
-      displayName
-      email
-      id
-      owner
-      primarySpecialization
       updatedAt
-      yearLevel
+      owner
     }
   }
 `;
 export const onUpdateUserPreference = /* GraphQL */ `
   subscription OnUpdateUserPreference {
     onUpdateUserPreference {
-      academicPreference {
-        arts
-        biology
-        business
-        chemistry
-        computerScience
-        economics
-        engineering
-        history
-        mathematics
-        philosophy
-        physics
-        psychology
-        science
-        statistics
-      }
-      createdAt
-      emailNotification
-      eventsPreference {
-        faculties
-        studentServices
-        subjectDepartments
-        universityServices
+      id
+      newsBlogsClubsPreference {
+        academics
+        activism
+        culture
+        careerDevelopment
+        gradSchool
+        healthAndWellbeing
+        research
+        recreation
+        religion
+        sports
       }
       sportsPreference {
         mensSportsList {
@@ -269,20 +134,209 @@ export const onUpdateUserPreference = /* GraphQL */ `
           volleyball
         }
       }
+      academicPreference {
+        arts
+        business
+        computerScience
+        engineering
+        biology
+        chemistry
+        physics
+        psychology
+        economics
+        science
+        statistics
+        mathematics
+        philosophy
+        history
+      }
+      eventsPreference {
+        subjectDepartments
+        studentServices
+        faculties
+        universityServices
+      }
+      emailNotification
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserPreference = /* GraphQL */ `
+  subscription OnDeleteUserPreference {
+    onDeleteUserPreference {
       id
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
         culture
+        careerDevelopment
         gradSchool
         healthAndWellbeing
+        research
         recreation
         religion
-        research
+        sports
       }
-      owner
+      sportsPreference {
+        mensSportsList {
+          baseball
+          basketball
+          crew
+          crossCountry
+          football
+          golf
+          iceHockey
+          lacrosse
+          skiing
+          soccer
+          squash
+          swimmingAndDriving
+          tennis
+          trackAndField
+          wrestling
+        }
+        womensSportsList {
+          basketball
+          crew
+          crossCountry
+          fieldHockey
+          golf
+          iceHockey
+          lacrosse
+          skiing
+          soccer
+          softball
+          squash
+          swimmingAndDriving
+          tennis
+          trackAndField
+          volleyball
+        }
+      }
+      academicPreference {
+        arts
+        business
+        computerScience
+        engineering
+        biology
+        chemistry
+        physics
+        psychology
+        economics
+        science
+        statistics
+        mathematics
+        philosophy
+        history
+      }
+      eventsPreference {
+        subjectDepartments
+        studentServices
+        faculties
+        universityServices
+      }
+      emailNotification
+      createdAt
       updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateUserData = /* GraphQL */ `
+  subscription OnCreateUserData {
+    onCreateUserData {
+      id
+      SPUID
+      displayName
+      yearLevel
+      email
+      primarySpecialization
+      campus
+      faculty
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onUpdateUserData = /* GraphQL */ `
+  subscription OnUpdateUserData {
+    onUpdateUserData {
+      id
+      SPUID
+      displayName
+      yearLevel
+      email
+      primarySpecialization
+      campus
+      faculty
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onDeleteUserData = /* GraphQL */ `
+  subscription OnDeleteUserData {
+    onDeleteUserData {
+      id
+      SPUID
+      displayName
+      yearLevel
+      email
+      primarySpecialization
+      campus
+      faculty
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const onCreateClubsTable = /* GraphQL */ `
+  subscription OnCreateClubsTable($clubId: String) {
+    onCreateClubsTable(clubId: $clubId) {
+      categories
+      clubId
+      description
+      email
+      facebook
+      imageLink
+      title
+      twitter
+      website
+    }
+  }
+`;
+export const onUpdateClubsTable = /* GraphQL */ `
+  subscription OnUpdateClubsTable($clubId: String) {
+    onUpdateClubsTable(clubId: $clubId) {
+      categories
+      clubId
+      description
+      email
+      facebook
+      imageLink
+      title
+      twitter
+      website
+    }
+  }
+`;
+export const onDeleteClubsTable = /* GraphQL */ `
+  subscription OnDeleteClubsTable($clubId: String) {
+    onDeleteClubsTable(clubId: $clubId) {
+      categories
+      clubId
+      description
+      email
+      facebook
+      imageLink
+      title
+      twitter
+      website
     }
   }
 `;
@@ -331,102 +385,6 @@ export const onDeleteBlogsTable = /* GraphQL */ `
         mediumImage
       }
       title
-    }
-  }
-`;
-export const onCreateNewsTable = /* GraphQL */ `
-  subscription OnCreateNewsTable($newsId: String) {
-    onCreateNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onUpdateNewsTable = /* GraphQL */ `
-  subscription OnUpdateNewsTable($newsId: String) {
-    onUpdateNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onDeleteNewsTable = /* GraphQL */ `
-  subscription OnDeleteNewsTable($newsId: String) {
-    onDeleteNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onCreateClubsTable = /* GraphQL */ `
-  subscription OnCreateClubsTable($clubId: String) {
-    onCreateClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const onUpdateClubsTable = /* GraphQL */ `
-  subscription OnUpdateClubsTable($clubId: String) {
-    onUpdateClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const onDeleteClubsTable = /* GraphQL */ `
-  subscription OnDeleteClubsTable($clubId: String) {
-    onDeleteClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
     }
   }
 `;
@@ -510,6 +468,57 @@ export const onDeleteEventsTable = /* GraphQL */ `
       startDate
       status
       thumbnailImage
+      title
+    }
+  }
+`;
+export const onCreateNewsTable = /* GraphQL */ `
+  subscription OnCreateNewsTable($newsId: String) {
+    onCreateNewsTable(newsId: $newsId) {
+      categories
+      dateModified
+      link
+      mediaThumbnail {
+        height
+        url
+        width
+      }
+      newsId
+      summary
+      title
+    }
+  }
+`;
+export const onUpdateNewsTable = /* GraphQL */ `
+  subscription OnUpdateNewsTable($newsId: String) {
+    onUpdateNewsTable(newsId: $newsId) {
+      categories
+      dateModified
+      link
+      mediaThumbnail {
+        height
+        url
+        width
+      }
+      newsId
+      summary
+      title
+    }
+  }
+`;
+export const onDeleteNewsTable = /* GraphQL */ `
+  subscription OnDeleteNewsTable($newsId: String) {
+    onDeleteNewsTable(newsId: $newsId) {
+      categories
+      dateModified
+      link
+      mediaThumbnail {
+        height
+        url
+        width
+      }
+      newsId
+      summary
       title
     }
   }

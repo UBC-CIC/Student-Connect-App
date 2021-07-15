@@ -98,7 +98,7 @@ export const fetchAllSportsNews = () => {
                 return new Date(new Date(b.dateModified)-new Date(a.dateModified))
             });
             res.map((item)=>{
-                item.categories=(bracketRemover(item.categories).split(","))
+                // item.categories=(bracketRemover(item.categories).split(","))
                 item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
 
             })

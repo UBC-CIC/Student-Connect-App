@@ -1,47 +1,21 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getUserData = /* GraphQL */ `
-  query GetUserData($id: ID!) {
-    getUserData(id: $id) {
-      campus
-      createdAt
-      displayName
-      email
-      id
-      owner
-      primarySpecialization
-      updatedAt
-      yearLevel
-    }
-  }
-`;
 export const getUserPreference = /* GraphQL */ `
   query GetUserPreference($id: ID!) {
     getUserPreference(id: $id) {
-      academicPreference {
-        arts
-        biology
-        business
-        chemistry
-        computerScience
-        economics
-        engineering
-        history
-        mathematics
-        philosophy
-        physics
-        psychology
-        science
-        statistics
-      }
-      createdAt
-      emailNotification
-      eventsPreference {
-        faculties
-        studentServices
-        subjectDepartments
-        universityServices
+      id
+      newsBlogsClubsPreference {
+        academics
+        activism
+        culture
+        careerDevelopment
+        gradSchool
+        healthAndWellbeing
+        research
+        recreation
+        religion
+        sports
       }
       sportsPreference {
         mensSportsList {
@@ -79,42 +53,32 @@ export const getUserPreference = /* GraphQL */ `
           volleyball
         }
       }
-      id
-      newsBlogsClubsPreference {
-        academics
-        activism
-        careerDevelopment
-        culture
-        gradSchool
-        healthAndWellbeing
-        recreation
-        religion
-        research
+      academicPreference {
+        arts
+        business
+        computerScience
+        engineering
+        biology
+        chemistry
+        physics
+        psychology
+        economics
+        science
+        statistics
+        mathematics
+        philosophy
+        history
       }
-      owner
+      eventsPreference {
+        subjectDepartments
+        studentServices
+        faculties
+        universityServices
+      }
+      emailNotification
+      createdAt
       updatedAt
-    }
-  }
-`;
-export const listUserDatas = /* GraphQL */ `
-  query ListUserDatas(
-    $filter: ModeluserDataFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUserDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        campus
-        createdAt
-        displayName
-        email
-        id
-        owner
-        primarySpecialization
-        updatedAt
-        yearLevel
-      }
-      nextToken
+      owner
     }
   }
 `;
@@ -126,44 +90,123 @@ export const listUserPreferences = /* GraphQL */ `
   ) {
     listUserPreferences(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        academicPreference {
-          arts
-          biology
-          business
-          chemistry
-          computerScience
-          economics
-          engineering
-          history
-          mathematics
-          philosophy
-          physics
-          psychology
-          science
-          statistics
-        }
-        createdAt
-        emailNotification
-        eventsPreference {
-          faculties
-          studentServices
-          subjectDepartments
-          universityServices
-        }
         id
         newsBlogsClubsPreference {
           academics
           activism
-          careerDevelopment
           culture
+          careerDevelopment
           gradSchool
           healthAndWellbeing
+          research
           recreation
           religion
-          research
+          sports
         }
-        owner
+        academicPreference {
+          arts
+          business
+          computerScience
+          engineering
+          biology
+          chemistry
+          physics
+          psychology
+          economics
+          science
+          statistics
+          mathematics
+          philosophy
+          history
+        }
+        eventsPreference {
+          subjectDepartments
+          studentServices
+          faculties
+          universityServices
+        }
+        emailNotification
+        createdAt
         updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getUserData = /* GraphQL */ `
+  query GetUserData($id: ID!) {
+    getUserData(id: $id) {
+      id
+      SPUID
+      displayName
+      yearLevel
+      email
+      primarySpecialization
+      campus
+      faculty
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listUserDatas = /* GraphQL */ `
+  query ListUserDatas(
+    $filter: ModeluserDataFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUserDatas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        SPUID
+        displayName
+        yearLevel
+        email
+        primarySpecialization
+        campus
+        faculty
+        createdAt
+        updatedAt
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getClubsTable = /* GraphQL */ `
+  query GetClubsTable($clubId: String!) {
+    getClubsTable(clubId: $clubId) {
+      categories
+      clubId
+      description
+      email
+      facebook
+      imageLink
+      title
+      twitter
+      website
+    }
+  }
+`;
+export const listClubsTables = /* GraphQL */ `
+  query ListClubsTables(
+    $filter: TableClubsTableFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listClubsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        categories
+        clubId
+        description
+        email
+        facebook
+        imageLink
+        title
+        twitter
+        website
       }
       nextToken
     }
@@ -203,84 +246,6 @@ export const listBlogsTables = /* GraphQL */ `
           mediumImage
         }
         title
-      }
-      nextToken
-    }
-  }
-`;
-export const getNewsTable = /* GraphQL */ `
-  query GetNewsTable($newsId: String!) {
-    getNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const listNewsTables = /* GraphQL */ `
-  query ListNewsTables(
-    $filter: TableNewsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listNewsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        categories
-        dateModified
-        link
-        mediaThumbnail {
-          height
-          url
-          width
-        }
-        newsId
-        summary
-        title
-      }
-      nextToken
-    }
-  }
-`;
-export const getClubsTable = /* GraphQL */ `
-  query GetClubsTable($clubId: String!) {
-    getClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const listClubsTables = /* GraphQL */ `
-  query ListClubsTables(
-    $filter: TableClubsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClubsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        categories
-        clubId
-        description
-        email
-        facebook
-        imageLink
-        title
-        twitter
-        website
       }
       nextToken
     }
@@ -343,6 +308,47 @@ export const listEventsTables = /* GraphQL */ `
         startDate
         status
         thumbnailImage
+        title
+      }
+      nextToken
+    }
+  }
+`;
+export const getNewsTable = /* GraphQL */ `
+  query GetNewsTable($newsId: String!) {
+    getNewsTable(newsId: $newsId) {
+      categories
+      dateModified
+      link
+      mediaThumbnail {
+        height
+        url
+        width
+      }
+      newsId
+      summary
+      title
+    }
+  }
+`;
+export const listNewsTables = /* GraphQL */ `
+  query ListNewsTables(
+    $filter: TableNewsTableFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listNewsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        categories
+        dateModified
+        link
+        mediaThumbnail {
+          height
+          url
+          width
+        }
+        newsId
+        summary
         title
       }
       nextToken

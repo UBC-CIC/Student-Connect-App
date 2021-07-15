@@ -13,7 +13,6 @@
     "aws-amplify": "^4.1.1",
     "aws-sdk": "^2.929.0",
     "gulp": "^3.9.1",
-    "jwt-decode": "^3.1.2",
     "material-ui-image": "^3.3.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

@@ -37,6 +37,8 @@ export const createUserDataAction = (payload) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(createUserData, {input: payload})).then((response) => {
             dispatch(createUserDataSuccess(response))
+        }).catch((err) => {
+            console.log("");
         })
     }
 }

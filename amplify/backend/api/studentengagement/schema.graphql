@@ -18,7 +18,7 @@ type userData  @model @auth(rules: [{ allow: owner, operations: [create, update,
 
 type newsBlogsClubsList{
   academics: Boolean,
-  actvism: Boolean,
+  activism: Boolean,
   culture: Boolean,
   careerDevelopment: Boolean,
   gradSchool: Boolean,

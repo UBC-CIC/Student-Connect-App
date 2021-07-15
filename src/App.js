@@ -20,12 +20,13 @@ import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
 import {Amplify, API, Auth, graphqlOperation} from 'aws-amplify';
 import {AmplifySignOut} from "@aws-amplify/ui-react";
-import {getUserPreferenceAction} from "./actions/userAction";
+import {createUserDataAction, getUserPreferenceAction} from "./actions/userAction";
 import SignIn from "./views/SignIn";
 import awsConfig from '../src/aws-exports'
 import { useHistory } from "react-router-dom";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import {getUserPreference} from "./graphql/queries";
+import {listToString} from "./helpers/PreferenceListToString";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -49,7 +50,7 @@ function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
     fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-    userPreference}= props
+    userPreference,createUserDataAction}= props
   const signInUrl = process.env.REACT_APP_SignInUrl
   let history = useHistory();
   const [UID,setUID] =  useState(null)
@@ -67,6 +68,21 @@ function App(props) {
     })
   }
 
+  function createUserData(user){
+    let userData ={
+      id: user.attributes['custom:SP-PUID'],
+      SPUID: user.attributes['custom:SP-PUID'],
+      displayName: user.attributes['custom:preferredGivenName'],
+      yearLevel: user.attributes['custom:studentYearLevel'],
+      email:user.attributes['custom:studentLearnerEmail'],
+      primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+      campus: user.attributes['custom:locale'],
+    }
+
+    createUserDataAction(userData)
+
+  }
+
   useEffect( async () => {
     Amplify.configure(awsConfig);
     if (currentUser) {
@@ -76,14 +92,19 @@ function App(props) {
         region: 'ca-central-1',
       });
       setUID(currentUser.attributes['custom:SP-PUID'])
+      console.log(currentUser)
       if (UID) checkUserLogInFirstTime(UID)
+      createUserData(currentUser)
     }
+
     getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
     setUser(currentUser)
     setPreference(userPreference)
 
+
     if(preference){
       console.log(preference)
+      listToString(preference.academicPreference)
       fetchNews("Health Psychology Research Recreation Careers")
       fetchEvents()
       fetchBlogs()
@@ -91,6 +112,11 @@ function App(props) {
       fetchSportsNews()
 
     }
+    fetchNews("Health Psychology Research Recreation Careers")
+    fetchEvents()
+    fetchBlogs()
+    fetchClubs()
+    fetchSportsNews()
 
     fetchAllClubs()
     fetchAllEvents()
@@ -160,7 +186,8 @@ const mapDispatchToProps = {
   fetchAllBlogs,
   fetchSportsNews,
   fetchAllSportsNews,
-  getUserPreferenceAction
+  getUserPreferenceAction,
+  createUserDataAction
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));
