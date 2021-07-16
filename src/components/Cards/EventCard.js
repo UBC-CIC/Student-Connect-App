@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import {Tag} from '../Tags/Tag'
 import {EventCardAccordion} from "../Accordion/Accordions";
-import {CardFooterButtons} from "../Button/Button";
+import CardFooterButtons from "../Button/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {

@@ -167,7 +167,8 @@ const mapStateToProps = (state) => {
         blogs:state.blogs,
         userPreference: state.userPreference,
         currentUser:state.currentUser,
-        sportsNews:state.sportsNews
+        sportsNews:state.sportsNews,
+
     };
 };
 

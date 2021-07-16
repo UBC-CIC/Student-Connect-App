@@ -1,16 +1,20 @@
 import {API, graphqlOperation} from "aws-amplify";
 import {createSavedItemsTable, updateSavedItemsTable,} from "../graphql/mutations";
+import {getSavedItemsTable} from "../graphql/queries";
 
 
 
-export const createSavedItems = (id) => {
-}
 
 export const getSavedItems = (id) => {
     return (dispatch) => {
-        API.graphql(graphqlOperation(getSavedItems, {input: id})).then((response) => {
-            let res = response.data
-            dispatch(getSavedItemsSuccess(res))
+        API.graphql(graphqlOperation(getSavedItemsTable, {id: id})).then((response) => {
+            let res = response.data.getSavedItemsTable
+            if(res.createdAt) delete res.createdAt
+            if(res.updatedAt) delete res.updatedAt
+            if(res.owner) delete res.owner
+            console.log(res)
+
+            dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
         })
     }
 }
@@ -22,12 +26,20 @@ export const getSavedItemsSuccess = (payload) => {
 }
 
 export const updateSavedItems = (payload) => {
-    if(payload.createdAt)delete payload.createdAt
-    if(payload.owner) delete payload.owner
-    if(payload.updatedAt) delete payload.updatedAt
-    API.graphql(graphqlOperation(updateSavedItemsTable, {input: payload})).then((response) => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(updateSavedItemsTable, {input: payload})).then((response) => {
         console.log(response)
-    }).catch((err) => {
+            dispatch(updateItemSuccess(response))
+
+        }).catch((err) => {
         console.log("Error updating user saved items: ", err);
     })
+    }
+
+}
+export const updateItemSuccess = (payload) => {
+    return {
+        type: "UPDATE_SAVED_ITEMS_SUCCESS",
+        payload: payload
+    }
 }

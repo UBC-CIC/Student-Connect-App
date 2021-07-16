@@ -29,6 +29,7 @@ import {getUserPreference} from "./graphql/queries";
 import {listToString} from "./helpers/PreferenceListToString";
 import LoadingScreen from "./views/LoadingScreen";
 import SavedItems from "./views/SavedItems";
+import {getSavedItems} from "./actions/savedItemsAction";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -52,7 +53,7 @@ function App(props) {
   const classes = useStyles();
   const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
     fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-    userPreference,createUserDataAction}= props
+    userPreference,createUserDataAction,getSavedItems}= props
   const signInUrl = process.env.REACT_APP_SignInUrl
   let history = useHistory();
   const [UID,setUID] =  useState(null)
@@ -86,6 +87,7 @@ function App(props) {
       if (UID) checkUserLogInFirstTime(UID)
     }
     getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
+    getSavedItems(currentUser.attributes['custom:SP-PUID'])
     setUser(currentUser)
 
     setPreference(userPreference)
@@ -165,7 +167,8 @@ const mapDispatchToProps = {
   fetchSportsNews,
   fetchAllSportsNews,
   getUserPreferenceAction,
-  createUserDataAction
+  createUserDataAction,
+  getSavedItems
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));

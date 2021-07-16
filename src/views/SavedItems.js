@@ -5,6 +5,9 @@ import {Divider} from "@material-ui/core";
 import React from "react";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
+import Grid from "@material-ui/core/Grid";
+import {HomePageNewsCard} from "../components/Cards/NewsCard";
+import {SavedItemCard} from "../components/Cards/SavedItemCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,12 +32,28 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 600,
         color:"#0055B7"
 
+    },
+    grid:{
+        display: 'flex'
     }
+
 
 }));
 
 function SavedItems(props){
     const classes = useStyles()
+    const {savedItems}=props
+    const savedItemsList = savedItems.savedItems.map((item) => {
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+                <SavedItemCard title={item.title}
+                                  photo={item.image}
+                                  link={item.link}
+                />
+            </Grid>
+        )
+    });
+
     return(
         <div>
             <Container maxWidth={'xl'} >
@@ -44,6 +63,9 @@ function SavedItems(props){
                 <Divider className={classes.divider}/>
             </Container>
             <Container maxWidth={'xl'} >
+                <Grid container spacing={3}>
+                    {savedItemsList}
+                </Grid>
 
             </Container>
 
@@ -54,6 +76,7 @@ function SavedItems(props){
 
 const mapStateToProps = (state) => {
     return {
+        savedItems:state.savedItems
     };
 };
 

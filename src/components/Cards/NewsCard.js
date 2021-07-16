@@ -8,7 +8,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {NewsCardAccordion} from "../Accordion/Accordions";
-import {CardFooterButtons} from "../Button/Button";
+import CardFooterButtons from "../Button/Button";
 
 export function BigNewsCard(props){
     const classes = useStyles();

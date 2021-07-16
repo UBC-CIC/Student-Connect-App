@@ -4,6 +4,9 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
+import {connect} from "react-redux";
+import {updateLoginState} from "../../actions/loginActions";
+import {updateSavedItems} from "../../actions/savedItemsAction";
 
 const useStyles = makeStyles((theme) => ({
     learnMoreButton:{
@@ -18,17 +21,40 @@ const useStyles = makeStyles((theme) => ({
 
 
 }));
-
-export function CardFooterButtons(props){
+ function CardFooterButtons(props){
     const classes = useStyles();
+     const {savedItems}=props
 
-    const {link,title,photo} = props
-    return (
+    const {link,title,photo,updateSavedItems} = props
+
+     function duplicatesExist(){
+         for(let i =0;i<savedItems.savedItems.length;i++){
+             if(savedItems.savedItems[i].link===link){
+                 return true
+             }
+         }
+         return false
+
+     }
+     function addItemIntoSaved(){
+         if(!duplicatesExist()){
+             savedItems.savedItems.push({
+                 title:title,
+                 image:photo,
+                 link:link,
+             })
+             updateSavedItems(savedItems)
+             console.log(savedItems)
+
+         }
+     }
+
+     return (
         <div>
             <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
                 Read more
             </Button>
-            <Button className={classes.learnMoreButton} endIcon={<BookmarkIcon/>}>
+            <Button className={classes.learnMoreButton} endIcon={<BookmarkIcon/>} onClick={addItemIntoSaved}>
                 Save
             </Button>
         </div>
@@ -36,3 +62,13 @@ export function CardFooterButtons(props){
 
 )
 }
+const mapStateToProps = (state) => {
+    return {
+        savedItems:state.savedItems
+    };
+};
+const mapDispatchToProps = {
+    updateSavedItems,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(CardFooterButtons);
