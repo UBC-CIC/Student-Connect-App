@@ -344,7 +344,6 @@ const userPreference ={
 
      useEffect(()=>{
         userPreference.id = UID
-        console.log(props.user)
     })
 
 

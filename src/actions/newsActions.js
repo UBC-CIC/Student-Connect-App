@@ -6,7 +6,6 @@ import {bracketRemover} from "../helpers/HtmlTagCleaner";
 import {fetchAllClubsSuccess} from "./clubAction";
 
 export const fetchNews = (categories) => {
-    console.log(categories)
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
@@ -22,7 +21,6 @@ export const fetchNews = (categories) => {
                 let results = (JSON.parse(data.Payload));
                 results = JSON.parse(results)
                 dispatch(fetchNewsSuccess(results.hits.hits))
-                console.log(results)
             }
         });
     }
@@ -57,7 +55,6 @@ export const fetchAllNewsSuccess = (payload) => {
     }
 }
 export const fetchSportsNews = (categories) => {
-    console.log(categories)
     return (dispatch) => {
         let lambda = new AWS.Lambda()
         const params = {
@@ -105,7 +102,6 @@ export const fetchAllSportsNews = () => {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
                     let allSportsNews = data.Items
-                    console.log(allSportsNews)
                     allSportsNews.sort(function(a, b) {
                         return new Date(new Date(b.dateModified)-new Date(a.dateModified))
                     });

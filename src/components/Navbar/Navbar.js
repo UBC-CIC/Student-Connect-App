@@ -23,9 +23,8 @@ import {Link} from "react-router-dom";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import ExploreIcon from '@material-ui/icons/Explore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HelpIcon from '@material-ui/icons/Help';
 import {Auth} from "aws-amplify";
-
+import BookmarkIcon from '@material-ui/icons/Bookmark';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -200,10 +199,6 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
                         <ListItemText primary={"For you"} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/explore">
-                        <ListItemIcon>{<ExploreIcon />}</ListItemIcon>
-                        <ListItemText primary={"Explore"} />
-                    </MenuItem>
 
                     <MenuItem component={Link} to="/clubs">
                         <ListItemIcon>{<GroupIcon />}</ListItemIcon>
@@ -218,9 +213,9 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/survey">
-                        <ListItemIcon>{<HelpIcon />}</ListItemIcon>
-                        <ListItemText primary={"Survey"} />
+                    <MenuItem component={Link} to="/saved">
+                        <ListItemIcon>{<BookmarkIcon />}</ListItemIcon>
+                        <ListItemText primary={"Saved Items"} />
                     </MenuItem>
 
                 </List>

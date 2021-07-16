@@ -16,8 +16,6 @@ import {listToString} from "../helpers/PreferenceListToString";
         fetchSportsNews}=props
     useEffect(  () => {
         if(userPreference){
-            console.log(userPreference)
-
             let academicCategory=listToString(userPreference.academicPreference)
             let newsBlogClubsCategory=listToString(userPreference.newsBlogsClubsPreference)
             let mensSportsCategory=listToString(userPreference.sportsPreference.mensSportsList)

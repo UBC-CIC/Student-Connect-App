@@ -21,7 +21,6 @@ export const getUserPreferenceAction = (id) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(getUserPreference, {id: id})).then((response) => {
             let res = response.data
-            console.log(res)
             dispatch(getUserPreferenceSuccess(res.getUserPreference))
         })
     }
@@ -34,7 +33,6 @@ export const getUserPreferenceSuccess = (payload) => {
     }
 }
 export const createUserDataAction = (payload) => {
-    console.log(payload)
     return (dispatch) => {
         API.graphql(graphqlOperation(createUserData, {input: payload})).then((response) => {
             dispatch(createUserDataSuccess(response))
@@ -51,10 +49,7 @@ export const createUserDataSuccess = (payload) => {
 }
 
 export const createUserPreferenceAction = (payload) => {
-
-    console.log(payload)
     API.graphql(graphqlOperation(createUserPreference, {input: payload})).then((response) => {
-        console.log(response)
         window.location.reload()
     }).catch((err) => {
         console.log("Error: ", err);
@@ -72,7 +67,6 @@ export const updateUserPreferenceAction = (payload) => {
     if(payload.createdAt)delete payload.createdAt
     if(payload.owner) delete payload.owner
     if(payload.updatedAt) delete payload.updatedAt
-    console.log(payload)
     API.graphql(graphqlOperation(updateUserPreference, {input: payload})).then((response) => {
             console.log(response)
     }).catch((err) => {

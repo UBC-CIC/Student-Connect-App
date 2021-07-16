@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 function Settings(props){
     const classes = useStyles();
     const{userPreference,allNews} = props
-    console.log(userPreference)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => {

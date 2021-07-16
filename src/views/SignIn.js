@@ -1,39 +1,3 @@
-// // import {Button, IconButton} from "@material-ui/core";
-// // import {Auth} from "aws-amplify";
-// // import Amplify, {Hub } from 'aws-amplify';
-// // import awsconfig from '../aws-exports';
-// // import React, {useState} from "react";
-// // import jwt_decode from "jwt-decode";
-// // import FacebookIcon from "@material-ui/icons/Facebook";
-// // import App from "../App";
-// //
-// //
-// //
-// // export default function SignIn() {
-// //     const [responseUrl, setresponseUrl] = useState(null)
-// //     const [loggedIn,setLoggedIn] = useState(false)
-// //     var url = window.location.href
-// //
-// //     let code = url.match(/(?<=id_token=).*(?=&state=)/)
-// //     if(code){
-// //         var token = code[0];
-// //         var decoded = jwt_decode(token);
-// //         console.log(decoded)
-// //         // setLoggedIn(true)
-// //     }
-// //
-// //     return(
-// //         loggedIn ? <App/>
-// //                 :
-// //         <div>
-// //             <Button href={process.env.REACT_APP_SignInUrl}> Sign in </Button>}
-// //         </div>
-// //
-// //
-// //
-// //
-// //     )
-// // }
 import {Button, Grid, IconButton} from '@material-ui/core';
 // import Login from "./Components/Authentication/Login";
 import Login from "../components/Authentication/Login_material";

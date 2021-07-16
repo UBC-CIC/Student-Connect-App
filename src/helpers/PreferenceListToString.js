@@ -6,7 +6,9 @@ export function listToString(list){
                 if(key==='careerDevelopment'){
                     res= res +"careers" +" "
                 }else if(key==='gradSchool'){
-                    res = res + "Graduate Studies"+" "
+                    res = res + "Graduate Studies "
+                }else if (key==='recreation'){
+                    res = res + 'recreation ' + 'UBCO life '
                 }
                 else{
                     res = res + key +" "

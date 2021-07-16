@@ -82,7 +82,6 @@ function App(props) {
         region: 'ca-central-1',
       });
       setUID(currentUser.attributes['custom:SP-PUID'])
-      console.log(currentUser)
       if (UID) checkUserLogInFirstTime(UID)
     }
     getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])

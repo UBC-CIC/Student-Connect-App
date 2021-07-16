@@ -3,6 +3,7 @@ import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 const useStyles = makeStyles((theme) => ({
     learnMoreButton:{
@@ -27,10 +28,11 @@ export function CardFooterButtons(props){
             <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
                 Read more
             </Button>
-            <Button className={classes.learnMoreButton} endIcon={<FavoriteBorderIcon/>}>
-                Favourite
+            <Button className={classes.learnMoreButton} endIcon={<BookmarkIcon/>}>
+                Save
             </Button>
         </div>
+
 
 )
 }

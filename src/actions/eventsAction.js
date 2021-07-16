@@ -53,7 +53,6 @@ export const fetchAllEvents = () => {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
                     let allEvents = data.Items
-                    console.log(allEvents)
                     allEvents.map((item)=>{
                         item.excerpt=htmlTagCleaner(item.excerpt)
 
