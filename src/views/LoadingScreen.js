@@ -21,7 +21,6 @@ import {listToString} from "../helpers/PreferenceListToString";
             let mensSportsCategory=listToString(userPreference.sportsPreference.mensSportsList)
             let womensSportsCategory=listToString(userPreference.sportsPreference.womensSportsList)
             fetchNews(academicCategory+newsBlogClubsCategory)
-
             fetchEvents(academicCategory+newsBlogClubsCategory)
             fetchBlogs(academicCategory+newsBlogClubsCategory)
             fetchClubs(academicCategory+newsBlogClubsCategory)

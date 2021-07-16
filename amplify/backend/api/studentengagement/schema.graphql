@@ -51,7 +51,7 @@ type mensSportsList {
 type newsBlogsClubsList {
   academics: Boolean
   activism: Boolean
-  careerDevelopment: Boolean
+  careers: Boolean
   culture: Boolean
   gradSchool: Boolean
   healthAndWellbeing: Boolean
@@ -93,9 +93,14 @@ type userData  @model @auth(rules: [{ allow: owner, operations: [create, update,
   faculty: String!
 
 }
-type savedItems  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+type savedItem{
+  id:ID
+  title:String
+  image:String
+  link:String
+
+}
+type savedItemsTable  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id:ID!
-  title:String!
-  image:String!
-  link:String!
+  savedItems:[savedItem]
 }

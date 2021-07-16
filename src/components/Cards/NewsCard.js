@@ -115,7 +115,7 @@ export function HomePageNewsCard(props){
 
                                 </Grid>
                                 <Grid item>
-                                    <CardFooterButtons link={link}/>
+                                    <CardFooterButtons link={link} title={title} photo={photo}/>
                                 </Grid>
 
                             </Grid>

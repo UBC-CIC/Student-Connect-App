@@ -91,15 +91,7 @@ export function EventCard (props){
                     <Grid container spacing={1}>
                     <Grid item>
                         <EventCardAccordion title={title} description={description}/>
-                        {/*<Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>*/}
-                        {/*    {title}*/}
-                        {/*</Typography>*/}
                     </Grid>
-                        {/*<Grid item xs={12}>*/}
-                        {/*    <Typography variant="caption"  align={'left'} >*/}
-                        {/*        {description}*/}
-                        {/*    </Typography>*/}
-                        {/*</Grid>*/}
 
                         <Grid item xs={12}>
                         <Typography variant="caption"  align={'left'} color={'error'}>
@@ -115,7 +107,7 @@ export function EventCard (props){
                             <Tag categories={categories}/>
                         </Grid>
                         <Grid item xs={12}>
-                            <CardFooterButtons link = {link}/>
+                            <CardFooterButtons link = {link} title={title} photo={photo}/>
                         </Grid>
                     </Grid>
                 </CardContent>
@@ -161,7 +153,7 @@ export function HomeEventCard (props){
 
                             </Grid>
                             <Grid item>
-                                <CardFooterButtons link = {link}/>
+                                <CardFooterButtons link = {link} title={title} photo={photo}/>
 
                             </Grid>
 

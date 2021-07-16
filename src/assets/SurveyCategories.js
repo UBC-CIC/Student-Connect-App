@@ -1,8 +1,8 @@
 const newsBlogsClubsOptions =
     [
         {name: 'Academics', backendName:'academics'},
-        {name: 'Activism', backendName:'academics'},
-        {name: 'Career Development', backendName:'careerDevelopment'},
+        {name: 'Activism', backendName:'activism'},
+        {name: 'Careers', backendName:'careers'},
         {name: 'Culture', backendName:'culture'},
         {name: 'Graduate School', backendName:'gradSchool'},
         {name: 'Health and Wellbeing', backendName:'healthAndWellbeing'},

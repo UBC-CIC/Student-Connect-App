@@ -25,6 +25,9 @@ import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../.
 import {fetchAllEvents, fetchEvents} from "../../actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "../../actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "../../actions/clubAction";
+import {createSavedItems} from "../../actions/savedItemsAction";
+import {API, graphqlOperation} from "aws-amplify";
+import {createSavedItemsTable} from "../../graphql/mutations";
 
 const QontoConnector = withStyles({
     alternativeLabel: {
@@ -268,7 +271,7 @@ const userPreference ={
     newsBlogsClubsPreference: {
         academics: false,
         activism: false,
-        careerDevelopment: false,
+        careers: false,
         culture: false,
         gradSchool: false,
         healthAndWellbeing: false,
@@ -325,6 +328,7 @@ const userPreference ={
     const handleSave = () => {
         createUserData(user)
         createUserPreferenceAction(userPreference)
+
     };
      function createUserData(user){
          let userData ={
@@ -339,6 +343,11 @@ const userPreference ={
          }
 
          createUserDataAction(userData)
+         console.log(UID)
+         API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {
+             let res = response.data
+             console.log(res)
+         })
 
      }
 

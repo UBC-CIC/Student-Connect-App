@@ -11,7 +11,7 @@ export const createUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -95,7 +95,7 @@ export const updateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -179,7 +179,7 @@ export const deleteUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -313,48 +313,57 @@ export const deleteUserData = /* GraphQL */ `
     }
   }
 `;
-export const createSavedItems = /* GraphQL */ `
-  mutation CreateSavedItems(
-    $input: CreateSavedItemsInput!
-    $condition: ModelsavedItemsConditionInput
+export const createSavedItemsTable = /* GraphQL */ `
+  mutation CreateSavedItemsTable(
+    $input: CreateSavedItemsTableInput!
+    $condition: ModelsavedItemsTableConditionInput
   ) {
-    createSavedItems(input: $input, condition: $condition) {
+    createSavedItemsTable(input: $input, condition: $condition) {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const updateSavedItems = /* GraphQL */ `
-  mutation UpdateSavedItems(
-    $input: UpdateSavedItemsInput!
-    $condition: ModelsavedItemsConditionInput
+export const updateSavedItemsTable = /* GraphQL */ `
+  mutation UpdateSavedItemsTable(
+    $input: UpdateSavedItemsTableInput!
+    $condition: ModelsavedItemsTableConditionInput
   ) {
-    updateSavedItems(input: $input, condition: $condition) {
+    updateSavedItemsTable(input: $input, condition: $condition) {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const deleteSavedItems = /* GraphQL */ `
-  mutation DeleteSavedItems(
-    $input: DeleteSavedItemsInput!
-    $condition: ModelsavedItemsConditionInput
+export const deleteSavedItemsTable = /* GraphQL */ `
+  mutation DeleteSavedItemsTable(
+    $input: DeleteSavedItemsTableInput!
+    $condition: ModelsavedItemsTableConditionInput
   ) {
-    deleteSavedItems(input: $input, condition: $condition) {
+    deleteSavedItemsTable(input: $input, condition: $condition) {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner

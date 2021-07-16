@@ -8,7 +8,7 @@ export const onCreateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -89,7 +89,7 @@ export const onUpdateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -170,7 +170,7 @@ export const onDeleteUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -295,39 +295,48 @@ export const onDeleteUserData = /* GraphQL */ `
     }
   }
 `;
-export const onCreateSavedItems = /* GraphQL */ `
-  subscription OnCreateSavedItems {
-    onCreateSavedItems {
+export const onCreateSavedItemsTable = /* GraphQL */ `
+  subscription OnCreateSavedItemsTable {
+    onCreateSavedItemsTable {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const onUpdateSavedItems = /* GraphQL */ `
-  subscription OnUpdateSavedItems {
-    onUpdateSavedItems {
+export const onUpdateSavedItemsTable = /* GraphQL */ `
+  subscription OnUpdateSavedItemsTable {
+    onUpdateSavedItemsTable {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const onDeleteSavedItems = /* GraphQL */ `
-  subscription OnDeleteSavedItems {
-    onDeleteSavedItems {
+export const onDeleteSavedItemsTable = /* GraphQL */ `
+  subscription OnDeleteSavedItemsTable {
+    onDeleteSavedItemsTable {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner

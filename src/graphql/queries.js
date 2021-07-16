@@ -8,7 +8,7 @@ export const getUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        careerDevelopment
+        careers
         culture
         gradSchool
         healthAndWellbeing
@@ -94,7 +94,7 @@ export const listUserPreferences = /* GraphQL */ `
         newsBlogsClubsPreference {
           academics
           activism
-          careerDevelopment
+          careers
           culture
           gradSchool
           healthAndWellbeing
@@ -175,31 +175,41 @@ export const listUserDatas = /* GraphQL */ `
     }
   }
 `;
-export const getSavedItems = /* GraphQL */ `
-  query GetSavedItems($id: ID!) {
-    getSavedItems(id: $id) {
+export const getSavedItemsTable = /* GraphQL */ `
+  query GetSavedItemsTable($id: ID!) {
+    getSavedItemsTable(id: $id) {
       id
-      title
-      image
-      link
+      savedItems {
+        id
+        title
+        image
+        link
+      }
       createdAt
       updatedAt
       owner
     }
   }
 `;
-export const listSavedItemss = /* GraphQL */ `
-  query ListSavedItemss(
-    $filter: ModelsavedItemsFilterInput
+export const listSavedItemsTables = /* GraphQL */ `
+  query ListSavedItemsTables(
+    $filter: ModelsavedItemsTableFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listSavedItemss(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSavedItemsTables(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
       items {
         id
-        title
-        image
-        link
+        savedItems {
+          id
+          title
+          image
+          link
+        }
         createdAt
         updatedAt
         owner

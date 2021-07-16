@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export function CardFooterButtons(props){
     const classes = useStyles();
 
-    const {link} = props
+    const {link,title,photo} = props
     return (
         <div>
             <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
