@@ -1,7 +1,6 @@
 import {API, graphqlOperation} from "aws-amplify";
 import {getUserData, getUserPreference} from "../graphql/queries";
 import {createUserData, createUserPreference, updateUserPreference} from "../graphql/mutations";
-import { useHistory } from "react-router-dom";
 
 export const getUserDataAction = (id) => {
     return (dispatch) => {

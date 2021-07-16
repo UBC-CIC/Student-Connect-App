@@ -1,10 +1,7 @@
 // ===================================---FETCH NEWS---=============================================
 import AWS from "aws-sdk";
 import {API, graphqlOperation} from "aws-amplify";
-import {listAthleticsNewsTables, listNewsTables} from "../graphql/queries";
-import {bracketRemover} from "../helpers/HtmlTagCleaner";
 import {fetchAllClubsSuccess} from "./clubAction";
-
 export const fetchNews = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()
@@ -32,20 +29,29 @@ export const fetchNewsSuccess = (payload) => {
     }
 }
 export const fetchAllNews = () => {
-    return (dispatch) => {
-        API.graphql(graphqlOperation(listNewsTables, {limit: 200})).then((response) => {
-            let res = response.data.listNewsTables.items
-            res.sort(function(a, b) {
-                return new Date(new Date(b.dateModified)-new Date(a.dateModified))
-            });
-            res.map((item)=>{
-                item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
-            })
+    var params = {
+        TableName: "NewsTable"
+    };
 
-            dispatch(fetchAllNewsSuccess(res))
-        }).catch((err) => {
-            console.log("Error fetching news: ", err);
-        })
+    return (dispatch) => {
+        var dynamodb = new AWS.DynamoDB.DocumentClient()
+        dynamodb.scan(params, function(err, data) {
+                if (err) console.log(err, err.stack); // an error occurred
+                else {
+
+                    let allNews = data.Items
+                    allNews.sort(function(a, b) {
+                        return new Date(new Date(b.dateModified)-new Date(a.dateModified))
+                    });
+                    allNews.map((item)=>{
+                        item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
+                    })
+
+                    dispatch(fetchAllNewsSuccess(allNews))
+                }
+            }
+        )
+
     }
 }
 export const fetchAllNewsSuccess = (payload) => {

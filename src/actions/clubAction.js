@@ -1,8 +1,4 @@
 import AWS from "aws-sdk";
-import {API, graphqlOperation} from 'aws-amplify';
-import {listClubsTables} from "../graphql/queries";
-import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
-import {fetchAllBlogsSuccess} from "./blogsAction";
 
 export const fetchClubs = (categories) => {
     return (dispatch) => {

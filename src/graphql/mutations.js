@@ -11,13 +11,13 @@ export const createUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -58,24 +58,24 @@ export const createUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -95,13 +95,13 @@ export const updateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -142,24 +142,24 @@ export const updateUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -179,13 +179,13 @@ export const deleteUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -226,24 +226,24 @@ export const deleteUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -313,270 +313,51 @@ export const deleteUserData = /* GraphQL */ `
     }
   }
 `;
-export const createClubsTable = /* GraphQL */ `
-  mutation CreateClubsTable($input: CreateClubsTableInput!) {
-    createClubsTable(input: $input) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
+export const createSavedItems = /* GraphQL */ `
+  mutation CreateSavedItems(
+    $input: CreateSavedItemsInput!
+    $condition: ModelsavedItemsConditionInput
+  ) {
+    createSavedItems(input: $input, condition: $condition) {
+      id
       title
-      twitter
-      website
-    }
-  }
-`;
-export const updateClubsTable = /* GraphQL */ `
-  mutation UpdateClubsTable($input: UpdateClubsTableInput!) {
-    updateClubsTable(input: $input) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const deleteClubsTable = /* GraphQL */ `
-  mutation DeleteClubsTable($input: DeleteClubsTableInput!) {
-    deleteClubsTable(input: $input) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const createBlogsTable = /* GraphQL */ `
-  mutation CreateBlogsTable($input: CreateBlogsTableInput!) {
-    createBlogsTable(input: $input) {
-      blogId
-      categories
-      date
-      excerpt
+      image
       link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
-      title
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
-export const updateBlogsTable = /* GraphQL */ `
-  mutation UpdateBlogsTable($input: UpdateBlogsTableInput!) {
-    updateBlogsTable(input: $input) {
-      blogId
-      categories
-      date
-      excerpt
-      link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
+export const updateSavedItems = /* GraphQL */ `
+  mutation UpdateSavedItems(
+    $input: UpdateSavedItemsInput!
+    $condition: ModelsavedItemsConditionInput
+  ) {
+    updateSavedItems(input: $input, condition: $condition) {
+      id
       title
+      image
+      link
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
-export const deleteBlogsTable = /* GraphQL */ `
-  mutation DeleteBlogsTable($input: DeleteBlogsTableInput!) {
-    deleteBlogsTable(input: $input) {
-      blogId
-      categories
-      date
-      excerpt
-      link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
+export const deleteSavedItems = /* GraphQL */ `
+  mutation DeleteSavedItems(
+    $input: DeleteSavedItemsInput!
+    $condition: ModelsavedItemsConditionInput
+  ) {
+    deleteSavedItems(input: $input, condition: $condition) {
+      id
       title
-    }
-  }
-`;
-export const createEventsTable = /* GraphQL */ `
-  mutation CreateEventsTable($input: CreateEventsTableInput!) {
-    createEventsTable(input: $input) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
+      image
       link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const updateEventsTable = /* GraphQL */ `
-  mutation UpdateEventsTable($input: UpdateEventsTableInput!) {
-    updateEventsTable(input: $input) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
-      link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const deleteEventsTable = /* GraphQL */ `
-  mutation DeleteEventsTable($input: DeleteEventsTableInput!) {
-    deleteEventsTable(input: $input) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
-      link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const createNewsTable = /* GraphQL */ `
-  mutation CreateNewsTable($input: CreateNewsTableInput!) {
-    createNewsTable(input: $input) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const updateNewsTable = /* GraphQL */ `
-  mutation UpdateNewsTable($input: UpdateNewsTableInput!) {
-    updateNewsTable(input: $input) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const deleteNewsTable = /* GraphQL */ `
-  mutation DeleteNewsTable($input: DeleteNewsTableInput!) {
-    deleteNewsTable(input: $input) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const createAthleticsNewsTable = /* GraphQL */ `
-  mutation CreateAthleticsNewsTable($input: CreateAthleticsNewsTableInput!) {
-    createAthleticsNewsTable(input: $input) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
-    }
-  }
-`;
-export const updateAthleticsNewsTable = /* GraphQL */ `
-  mutation UpdateAthleticsNewsTable($input: UpdateAthleticsNewsTableInput!) {
-    updateAthleticsNewsTable(input: $input) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
-    }
-  }
-`;
-export const deleteAthleticsNewsTable = /* GraphQL */ `
-  mutation DeleteAthleticsNewsTable($input: DeleteAthleticsNewsTableInput!) {
-    deleteAthleticsNewsTable(input: $input) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

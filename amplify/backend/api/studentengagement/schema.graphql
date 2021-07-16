@@ -6,54 +6,96 @@ type userPreference @model @auth(rules: [{ allow: owner, operations: [create, up
   eventsPreference: eventsList!
   emailNotification: Boolean!
 }
-type sportsPreference{
-  mensSportsList:mensSportsList,
-  womensSportsList:womensSportsList
+type sportsPreference {
+  mensSportsList: mensSportsList
+  womensSportsList: womensSportsList
+}
+type womensSportsList {
+  basketball: Boolean
+  crew: Boolean
+  crossCountry: Boolean
+  fieldHockey: Boolean
+  golf: Boolean
+  iceHockey: Boolean
+  lacrosse: Boolean
+  skiing: Boolean
+  soccer: Boolean
+  softball: Boolean
+  squash: Boolean
+  swimmingAndDriving: Boolean
+  tennis: Boolean
+  trackAndField: Boolean
+  volleyball: Boolean
+}
+type mensSportsList {
+  baseball: Boolean
+  basketball: Boolean
+  crew: Boolean
+  crossCountry: Boolean
+  football: Boolean
+  golf: Boolean
+  iceHockey: Boolean
+  lacrosse: Boolean
+  skiing: Boolean
+  soccer: Boolean
+  squash: Boolean
+  swimmingAndDriving: Boolean
+  tennis: Boolean
+  trackAndField: Boolean
+  wrestling: Boolean
 }
 
 
+
+
+type newsBlogsClubsList {
+  academics: Boolean
+  activism: Boolean
+  careerDevelopment: Boolean
+  culture: Boolean
+  gradSchool: Boolean
+  healthAndWellbeing: Boolean
+  recreation: Boolean
+  religion: Boolean
+  research: Boolean
+  sports: Boolean
+}
+type academicList {
+  arts: Boolean
+  biology: Boolean
+  business: Boolean
+  chemistry: Boolean
+  computerScience: Boolean
+  economics: Boolean
+  engineering: Boolean
+  history: Boolean
+  mathematics: Boolean
+  philosophy: Boolean
+  physics: Boolean
+  psychology: Boolean
+  science: Boolean
+  statistics: Boolean
+}
+type eventsList {
+  faculties: Boolean
+  studentServices: Boolean
+  subjectDepartments: Boolean
+  universityServices: Boolean
+}
 type userData  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
-  id: ID!,
-  SPUID: ID!,
-  displayName: String!,
-  yearLevel: Int!,
+  id: ID!
+  SPUID: ID!
+  displayName: String!
+  yearLevel: Int!
   email: String!
-  primarySpecialization:String!,
+  primarySpecialization:String!
   campus:String!
+  faculty: String!
 
 }
-
-type newsBlogsClubsList{
-  academics: Boolean,
-  activism: Boolean,
-  culture: Boolean,
-  careerDevelopment: Boolean,
-  gradSchool: Boolean,
-  healthAndWellbeing: Boolean,
-  research: Boolean,
-  recreation: Boolean,
-  religion: Boolean,
-  sports: Boolean,
-}
-type academicList{
-  arts: Boolean,
-  business: Boolean,
-  computerScience: Boolean,
-  engineering: Boolean,
-  biology: Boolean,
-  chemistry: Boolean,
-  physics: Boolean,
-  psychology: Boolean,
-  economics: Boolean,
-  science: Boolean,
-  statistics: Boolean,
-  mathematics: Boolean,
-  philosophy: Boolean,
-  history: Boolean,
-}
-type eventsList{
-  subjectDepartments: Boolean,
-  studentServices: Boolean,
-  faculties: Boolean,
-  universityServices: Boolean,
+type savedItems  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+  id:ID!
+  title:String!
+  image:String!
+  link:String!
 }

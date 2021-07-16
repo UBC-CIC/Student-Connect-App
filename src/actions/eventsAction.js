@@ -1,8 +1,5 @@
 import AWS from "aws-sdk";
-import {bracketRemover, eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
-import {API, graphqlOperation} from "aws-amplify";
-import {listEventsTables} from "../graphql/queries";
-import {fetchAllClubsSuccess} from "./clubAction";
+import { eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 
 export const fetchEvents = (categories) => {
     return (dispatch) => {

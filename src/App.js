@@ -10,7 +10,7 @@ import Settings from "./views/Settings";
 import News from './views/News'
 import {Container, IconButton} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Explore from "./views/Explore";
+import Explore from "./views/SavedItems";
 import AWS from 'aws-sdk';
 import React, {useEffect, useRef, useState} from "react";
 import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "./actions/newsActions";
@@ -28,6 +28,7 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import {getUserPreference} from "./graphql/queries";
 import {listToString} from "./helpers/PreferenceListToString";
 import LoadingScreen from "./views/LoadingScreen";
+import SavedItems from "./views/SavedItems";
 const useStyles = makeStyles((theme) => ({
   container:{
     [theme.breakpoints.down('sm')]: {
@@ -125,7 +126,7 @@ function App(props) {
                   )} exact component={LoadingScreen}
               />
 
-              <Route path ='/explore' exact component={Explore}/>
+              <Route path ='/savedItems' exact component={SavedItems}/>
               <Route path ='/clubs' exact component={Clubs}/>
               <Route path ='/events' exact component={Events}/>
               <Route path ='/settings' exact component={Settings}/>

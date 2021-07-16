@@ -1,7 +1,5 @@
 import AWS from "aws-sdk";
 import {htmlTagCleaner} from "../helpers/HtmlTagCleaner";
-import {API, graphqlOperation} from "aws-amplify";
-import {listBlogsTables} from "../graphql/queries";
 
 export const fetchBlogs = (categories) => {
     return (dispatch) => {
@@ -16,8 +14,6 @@ export const fetchBlogs = (categories) => {
         lambda.invoke(params, function(err, data) {
             if (err) console.log(err, err.stack); // an error occurred
             else{
-                console.log((JSON.parse(data.Payload)))
-
                 let results = (JSON.parse(data.Payload));
                 results = JSON.parse(results)
                 results=results.hits.hits

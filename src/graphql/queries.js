@@ -8,13 +8,13 @@ export const getUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -55,24 +55,24 @@ export const getUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -94,35 +94,35 @@ export const listUserPreferences = /* GraphQL */ `
         newsBlogsClubsPreference {
           academics
           activism
-          culture
           careerDevelopment
+          culture
           gradSchool
           healthAndWellbeing
-          research
           recreation
           religion
+          research
           sports
         }
         academicPreference {
           arts
-          business
-          computerScience
-          engineering
           biology
+          business
           chemistry
-          physics
-          psychology
+          computerScience
           economics
-          science
-          statistics
+          engineering
+          history
           mathematics
           philosophy
-          history
+          physics
+          psychology
+          science
+          statistics
         }
         eventsPreference {
-          subjectDepartments
-          studentServices
           faculties
+          studentServices
+          subjectDepartments
           universityServices
         }
         emailNotification
@@ -175,218 +175,34 @@ export const listUserDatas = /* GraphQL */ `
     }
   }
 `;
-export const getClubsTable = /* GraphQL */ `
-  query GetClubsTable($clubId: String!) {
-    getClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
+export const getSavedItems = /* GraphQL */ `
+  query GetSavedItems($id: ID!) {
+    getSavedItems(id: $id) {
+      id
       title
-      twitter
-      website
-    }
-  }
-`;
-export const listClubsTables = /* GraphQL */ `
-  query ListClubsTables(
-    $filter: TableClubsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listClubsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        categories
-        clubId
-        description
-        email
-        facebook
-        imageLink
-        title
-        twitter
-        website
-      }
-      nextToken
-    }
-  }
-`;
-export const getBlogsTable = /* GraphQL */ `
-  query GetBlogsTable($blogId: String!) {
-    getBlogsTable(blogId: $blogId) {
-      blogId
-      categories
-      date
-      excerpt
+      image
       link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
-      title
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
-export const listBlogsTables = /* GraphQL */ `
-  query ListBlogsTables(
-    $filter: TableBlogsTableFilterInput
+export const listSavedItemss = /* GraphQL */ `
+  query ListSavedItemss(
+    $filter: ModelsavedItemsFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listBlogsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listSavedItemss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        blogId
-        categories
-        date
-        excerpt
-        link
-        mediaImages {
-          fullImage
-          mediumImage
-        }
+        id
         title
-      }
-      nextToken
-    }
-  }
-`;
-export const getEventsTable = /* GraphQL */ `
-  query GetEventsTable($eventId: String!) {
-    getEventsTable(eventId: $eventId) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
-      link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const listEventsTables = /* GraphQL */ `
-  query ListEventsTables(
-    $filter: TableEventsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listEventsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        allDay
-        categories
-        cost
-        dateModified
-        description
-        endDate
-        eventId
-        eventLocation {
-          address
-          city
-          country
-          province
-          venue
-          zip
-        }
-        excerpt
-        fullImage
+        image
         link
-        startDate
-        status
-        thumbnailImage
-        title
-      }
-      nextToken
-    }
-  }
-`;
-export const getNewsTable = /* GraphQL */ `
-  query GetNewsTable($newsId: String!) {
-    getNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const listNewsTables = /* GraphQL */ `
-  query ListNewsTables(
-    $filter: TableNewsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listNewsTables(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        categories
-        dateModified
-        link
-        mediaThumbnail {
-          height
-          url
-          width
-        }
-        newsId
-        summary
-        title
-      }
-      nextToken
-    }
-  }
-`;
-export const getAthleticsNewsTable = /* GraphQL */ `
-  query GetAthleticsNewsTable($newsId: String!) {
-    getAthleticsNewsTable(newsId: $newsId) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
-    }
-  }
-`;
-export const listAthleticsNewsTables = /* GraphQL */ `
-  query ListAthleticsNewsTables(
-    $filter: TableAthleticsNewsTableFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listAthleticsNewsTables(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-    ) {
-      items {
-        newsId
-        title
-        link
-        summary
-        mediaThumbnail
-        categories
-        dateModified
+        createdAt
+        updatedAt
+        owner
       }
       nextToken
     }

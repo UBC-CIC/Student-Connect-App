@@ -8,13 +8,13 @@ export const onCreateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -55,24 +55,24 @@ export const onCreateUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -89,13 +89,13 @@ export const onUpdateUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -136,24 +136,24 @@ export const onUpdateUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -170,13 +170,13 @@ export const onDeleteUserPreference = /* GraphQL */ `
       newsBlogsClubsPreference {
         academics
         activism
-        culture
         careerDevelopment
+        culture
         gradSchool
         healthAndWellbeing
-        research
         recreation
         religion
+        research
         sports
       }
       sportsPreference {
@@ -217,24 +217,24 @@ export const onDeleteUserPreference = /* GraphQL */ `
       }
       academicPreference {
         arts
-        business
-        computerScience
-        engineering
         biology
+        business
         chemistry
-        physics
-        psychology
+        computerScience
         economics
-        science
-        statistics
+        engineering
+        history
         mathematics
         philosophy
-        history
+        physics
+        psychology
+        science
+        statistics
       }
       eventsPreference {
-        subjectDepartments
-        studentServices
         faculties
+        studentServices
+        subjectDepartments
         universityServices
       }
       emailNotification
@@ -295,270 +295,42 @@ export const onDeleteUserData = /* GraphQL */ `
     }
   }
 `;
-export const onCreateClubsTable = /* GraphQL */ `
-  subscription OnCreateClubsTable($clubId: String) {
-    onCreateClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
+export const onCreateSavedItems = /* GraphQL */ `
+  subscription OnCreateSavedItems {
+    onCreateSavedItems {
+      id
       title
-      twitter
-      website
-    }
-  }
-`;
-export const onUpdateClubsTable = /* GraphQL */ `
-  subscription OnUpdateClubsTable($clubId: String) {
-    onUpdateClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const onDeleteClubsTable = /* GraphQL */ `
-  subscription OnDeleteClubsTable($clubId: String) {
-    onDeleteClubsTable(clubId: $clubId) {
-      categories
-      clubId
-      description
-      email
-      facebook
-      imageLink
-      title
-      twitter
-      website
-    }
-  }
-`;
-export const onCreateBlogsTable = /* GraphQL */ `
-  subscription OnCreateBlogsTable($blogId: String) {
-    onCreateBlogsTable(blogId: $blogId) {
-      blogId
-      categories
-      date
-      excerpt
+      image
       link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
-      title
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
-export const onUpdateBlogsTable = /* GraphQL */ `
-  subscription OnUpdateBlogsTable($blogId: String) {
-    onUpdateBlogsTable(blogId: $blogId) {
-      blogId
-      categories
-      date
-      excerpt
-      link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
+export const onUpdateSavedItems = /* GraphQL */ `
+  subscription OnUpdateSavedItems {
+    onUpdateSavedItems {
+      id
       title
+      image
+      link
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;
-export const onDeleteBlogsTable = /* GraphQL */ `
-  subscription OnDeleteBlogsTable($blogId: String) {
-    onDeleteBlogsTable(blogId: $blogId) {
-      blogId
-      categories
-      date
-      excerpt
-      link
-      mediaImages {
-        fullImage
-        mediumImage
-      }
+export const onDeleteSavedItems = /* GraphQL */ `
+  subscription OnDeleteSavedItems {
+    onDeleteSavedItems {
+      id
       title
-    }
-  }
-`;
-export const onCreateEventsTable = /* GraphQL */ `
-  subscription OnCreateEventsTable($eventId: String) {
-    onCreateEventsTable(eventId: $eventId) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
+      image
       link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const onUpdateEventsTable = /* GraphQL */ `
-  subscription OnUpdateEventsTable($eventId: String) {
-    onUpdateEventsTable(eventId: $eventId) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
-      link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const onDeleteEventsTable = /* GraphQL */ `
-  subscription OnDeleteEventsTable($eventId: String) {
-    onDeleteEventsTable(eventId: $eventId) {
-      allDay
-      categories
-      cost
-      dateModified
-      description
-      endDate
-      eventId
-      eventLocation {
-        address
-        city
-        country
-        province
-        venue
-        zip
-      }
-      excerpt
-      fullImage
-      link
-      startDate
-      status
-      thumbnailImage
-      title
-    }
-  }
-`;
-export const onCreateNewsTable = /* GraphQL */ `
-  subscription OnCreateNewsTable($newsId: String) {
-    onCreateNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onUpdateNewsTable = /* GraphQL */ `
-  subscription OnUpdateNewsTable($newsId: String) {
-    onUpdateNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onDeleteNewsTable = /* GraphQL */ `
-  subscription OnDeleteNewsTable($newsId: String) {
-    onDeleteNewsTable(newsId: $newsId) {
-      categories
-      dateModified
-      link
-      mediaThumbnail {
-        height
-        url
-        width
-      }
-      newsId
-      summary
-      title
-    }
-  }
-`;
-export const onCreateAthleticsNewsTable = /* GraphQL */ `
-  subscription OnCreateAthleticsNewsTable($newsId: String) {
-    onCreateAthleticsNewsTable(newsId: $newsId) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
-    }
-  }
-`;
-export const onUpdateAthleticsNewsTable = /* GraphQL */ `
-  subscription OnUpdateAthleticsNewsTable($newsId: String) {
-    onUpdateAthleticsNewsTable(newsId: $newsId) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
-    }
-  }
-`;
-export const onDeleteAthleticsNewsTable = /* GraphQL */ `
-  subscription OnDeleteAthleticsNewsTable($newsId: String) {
-    onDeleteAthleticsNewsTable(newsId: $newsId) {
-      newsId
-      title
-      link
-      summary
-      mediaThumbnail
-      categories
-      dateModified
+      createdAt
+      updatedAt
+      owner
     }
   }
 `;

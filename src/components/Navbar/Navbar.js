@@ -213,7 +213,7 @@ export default function MiniDrawer() {
                         <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/saved">
+                    <MenuItem component={Link} to="/savedItems">
                         <ListItemIcon>{<BookmarkIcon />}</ListItemIcon>
                         <ListItemText primary={"Saved Items"} />
                     </MenuItem>
