@@ -6,8 +6,11 @@ import {Tag} from "../Tags/Tag";
 import CardFooterButtons from "../Button/Button";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import DeleteIcon from '@material-ui/icons/Delete';
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import {connect} from "react-redux";
+import {updateSavedItems} from "../../actions/savedItemsAction";
 const useStyles = makeStyles((theme) => ({
     root: {
 
@@ -46,10 +49,20 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export function SavedItemCard(props){
+function SavedItemCard(props){
 
     const classes = useStyles();
-    const {title, photo, link} = props
+    const {title, photo, link,savedItems,updateSavedItems} = props
+    function deleteItem(){
+        for(let i=0;i<savedItems.savedItems.length;i++){
+            if(savedItems.savedItems[i].link===link){
+                savedItems.savedItems.splice(i, 1)
+            }
+        }
+        updateSavedItems(savedItems)
+
+
+    }
     return(
         <Card className={classes.bigCard}>
             <div className={classes.root} >
@@ -70,6 +83,10 @@ export function SavedItemCard(props){
                                 <Button className={classes.learnMoreButton} endIcon={<ChevronRightIcon/>} href={link} target = "_blank">
                                     Read more
                                 </Button>
+                                <Button className={classes.learnMoreButton} endIcon={<DeleteIcon/>} onClick={deleteItem} target = "_blank">
+                                    Remove
+                                </Button>
+
                             </Grid>
 
                         </Grid>
@@ -80,3 +97,13 @@ export function SavedItemCard(props){
     )
 
 }
+const mapStateToProps = (state) => {
+    return {
+        savedItems:state.savedItems
+    };
+};
+const mapDispatchToProps = {
+    updateSavedItems,
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(SavedItemCard);

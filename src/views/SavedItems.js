@@ -7,7 +7,7 @@ import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
-import {SavedItemCard} from "../components/Cards/SavedItemCard";
+import SavedItemCard from "../components/Cards/SavedItemCard";
 
 const useStyles = makeStyles((theme) => ({
     root: {
