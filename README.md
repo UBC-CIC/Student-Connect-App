@@ -1,4 +1,4 @@
-# Student Engagement App
+# Student Engagement Application
 
 ## Project Overview
 This prototype provides a centralised data aggregation and recommendation platform of relevant events, clubs 
@@ -6,8 +6,8 @@ and articles for students according to their interests. Hence, it allows student
 their university by finding activities that are relevant to them.
 
 Users sign up using a secured login through [Amazon Cognito](https://aws.amazon.com/cognito/) into a [ReactJS](https://reactjs.org/) 
-based web application hosted via [AWS Amplify](https://aws.amazon.com/amplify/) and answer a one-time survey to 
-identify their interests as category tags.
+Progressive Web Application hosted via [AWS Amplify](https://aws.amazon.com/amplify/) (through desktop or mobile) and 
+answer a one-time survey to identify their interests as category tags.
 
 The backend uses [AWS Lambda](https://aws.amazon.com/lambda/) functions to get data from various categorised data 
 sources, and persist them into: 
@@ -33,15 +33,15 @@ from using the interests students marked as their subscribed category tags.
 ## Application Screenshots
 
 ![TODO insert login page](./docs/LoginPage.jpg)
-<h6 align="center">*Application Login Page*</h6>
+<h6 align="center">Application Login Page</h6>
 
 
 ![TODO insert survey page](./docs/SurveyPage.jpg)
-<h6 align="center">*First time users complete a survey to identify their interests*</h6>
+<h6 align="center">First time users complete a survey to identify their interests</h6>
 
 
 ![TODO For you home page](./docs/HomePage.jpg)
-<h6 align="center">*Different types of content recommended to them based on interests*</h6>
+<h6 align="center">Different types of content recommended to them based on interests</h6>
 
 ## Stack Details
 * [Authentication](./docs/AuthenticationArchitecture.md)

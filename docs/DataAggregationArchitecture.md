@@ -393,8 +393,15 @@ For Example,
 }
 ```
 
-## Post Proof-of-Concept tasks for Backend development
+## Further Backend Refinement
 
-* TODO Modify get_clubs_data.py to include automation and account for new SUO website
-* TODO Modify get_news_data.py to account for new wordpress UBCO News Website
-* TODO Use DynamoDB query instead of scan by integrating documentType as a sort key for ESHashTable
+* In `es_hasher.py`, the Lambda performs a [Scan operation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Scan.html) 
+  on the ESHash DynamoDB table and then filters the result using a FilterExpression to filter by `documentType` field. 
+  Ideally, the ESHash table should use the `documentType` field as a sort key to partition the data, so that 
+  a [Query operation](https://docs.aws.amazon.com/amazondynamodb/latest/APIReference/API_Query.html)
+  can be performed instead, which reduces data traffic from DynamoDB.
+* The Clubs DynamoDB table has data added to it manually, and its Cloudwatch Time-Based Event Rule is disabled. This is
+  because at the time of development of the prototype, the Clubs data on its website was not categorised, but it would be
+  very useful for its data to be so. Hence it was categorised manually, and a .json file was manually overloaded into 
+  the `get_clubs_data.py` Lambda to persist into DynamoDB. Ideally, the data for this source should be categorised and 
+  hence the data aggregation should be automated, similar to the automated processing workflow for the other data sources.
