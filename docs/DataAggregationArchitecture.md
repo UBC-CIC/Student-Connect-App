@@ -395,7 +395,6 @@ For Example,
 
 ## Post Proof-of-Concept tasks for Backend development
 
-* TODO Security check for all IAM policies to make them strict
 * TODO Modify get_clubs_data.py to include automation and account for new SUO website
 * TODO Modify get_news_data.py to account for new wordpress UBCO News Website
 * TODO Use DynamoDB query instead of scan by integrating documentType as a sort key for ESHashTable

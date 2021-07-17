@@ -59,6 +59,7 @@ Some system installation requirements before starting deployment:
     which will need either `y` or `Y` to confirm the deployment.
    Here are what all the deployment prompts look like for a proper deployment:
    ![Deployment Prompts](./DeploymentPrompts.png)
+   
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
    
