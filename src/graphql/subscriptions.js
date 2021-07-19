@@ -300,7 +300,6 @@ export const onCreateSavedItemsTable = /* GraphQL */ `
     onCreateSavedItemsTable {
       id
       savedItems {
-        id
         title
         image
         link
@@ -316,7 +315,6 @@ export const onUpdateSavedItemsTable = /* GraphQL */ `
     onUpdateSavedItemsTable {
       id
       savedItems {
-        id
         title
         image
         link
@@ -332,7 +330,6 @@ export const onDeleteSavedItemsTable = /* GraphQL */ `
     onDeleteSavedItemsTable {
       id
       savedItems {
-        id
         title
         image
         link

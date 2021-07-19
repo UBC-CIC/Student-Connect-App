@@ -180,7 +180,6 @@ export const getSavedItemsTable = /* GraphQL */ `
     getSavedItemsTable(id: $id) {
       id
       savedItems {
-        id
         title
         image
         link
@@ -205,7 +204,6 @@ export const listSavedItemsTables = /* GraphQL */ `
       items {
         id
         savedItems {
-          id
           title
           image
           link

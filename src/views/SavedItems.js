@@ -2,12 +2,14 @@ import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
-import React from "react";
+import React, {useEffect} from "react";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import SavedItemCard from "../components/Cards/SavedItemCard";
+import {Redirect, Route} from "react-router-dom";
+import Survey from "./Survey/Survey";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,16 +45,22 @@ const useStyles = makeStyles((theme) => ({
 function SavedItems(props){
     const classes = useStyles()
     const {savedItems}=props
-    const savedItemsList = savedItems.savedItems.map((item) => {
-        return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
-                <SavedItemCard title={item.title}
-                                  photo={item.image}
-                                  link={item.link}
-                />
-            </Grid>
-        )
-    });
+
+    let savedItemsList
+    if(savedItems!==null){
+        savedItemsList = savedItems.savedItems.map((item) => {
+            return(
+                <Grid item xs={12} sm={6} className={classes.grid}>
+                    <SavedItemCard title={item.title}
+                                   photo={item.image}
+                                   link={item.link}
+                    />
+                </Grid>
+            )
+        });
+
+    }else{
+    }
 
     return(
         <div>
@@ -62,12 +70,19 @@ function SavedItems(props){
                 </Typography>
                 <Divider className={classes.divider}/>
             </Container>
-            <Container maxWidth={'xl'} >
-                <Grid container spacing={3}>
-                    {savedItemsList}
-                </Grid>
+            {savedItemsList!==null && (
+                <Container maxWidth={'xl'} >
+                    <Grid container spacing={3}>
+                        {savedItemsList}
+                    </Grid>
 
-            </Container>
+                </Container>
+            )}
+            {savedItemsList===null && (
+                <Redirect to={'/'}/>
+
+            )}
+
 
         </div>
     )

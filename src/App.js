@@ -51,9 +51,9 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
   const classes = useStyles();
-  const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-    userPreference,createUserDataAction,getSavedItems}= props
+  const{fetchAllClubs,fetchAllEvents,
+    fetchAllNews,fetchAllBlogs, fetchAllSportsNews,getUserPreferenceAction,currentUser,
+    userPreference,getSavedItems}= props
   const signInUrl = process.env.REACT_APP_SignInUrl
   let history = useHistory();
   const [UID,setUID] =  useState(null)
@@ -68,6 +68,7 @@ function App(props) {
         pref=response.data.getUserPreference
 
         setFirstTime(false)
+        getSavedItems(currentUser.attributes['email'])
       } else {
         setFirstTime(true)
       }
@@ -83,14 +84,14 @@ function App(props) {
         credentials,
         region: 'ca-central-1',
       });
-      setUID(currentUser.attributes['custom:SP-PUID'])
+      setUID(currentUser.attributes['email'])
       if (UID) checkUserLogInFirstTime(UID)
-    }
-    getUserPreferenceAction(currentUser.attributes['custom:SP-PUID'])
-    getSavedItems(currentUser.attributes['custom:SP-PUID'])
-    setUser(currentUser)
+      getUserPreferenceAction(currentUser.attributes['email'])
+      setUser(currentUser)
 
-    setPreference(userPreference)
+      setPreference(userPreference)
+
+    }
 
 
 
@@ -128,11 +129,12 @@ function App(props) {
                   )} exact component={LoadingScreen}
               />
 
-              <Route path ='/savedItems' exact component={SavedItems}/>
               <Route path ='/clubs' exact component={Clubs}/>
               <Route path ='/events' exact component={Events}/>
               <Route path ='/settings' exact component={Settings}/>
               <Route path ='/news' exact component={News}/>
+              <Route path ='/savedItems' exact component={SavedItems}/>
+
             </Container>
             <Footer/>
           </div>

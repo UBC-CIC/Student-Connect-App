@@ -26,7 +26,7 @@ function EventItem(props)
                   categories={props.item._source.categories}
                        link={props.item._source.link}
                        location={props.item._source.eventLocation.venue}
-                       photo={props.item._source.thumbnailImage}
+                       photo={props.item._source.fullImage[0]}
                        description={props.item._source.excerpt}
                        startDate={props.item._source.startDate}
                        endDate={props.item._source.endDate}

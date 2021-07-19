@@ -52,13 +52,22 @@ const useStyles = makeStyles((theme) => ({
 function SavedItemCard(props){
 
     const classes = useStyles();
-    const {title, photo, link,savedItems,updateSavedItems} = props
+    const {title, photo, link,savedItems,updateSavedItems,propSavedItems} = props
     function deleteItem(){
         for(let i=0;i<savedItems.savedItems.length;i++){
             if(savedItems.savedItems[i].link===link){
                 savedItems.savedItems.splice(i, 1)
+
             }
         }
+        for(let i=0;i<propSavedItems.length;i++){
+            if(propSavedItems[i].link===link){
+                propSavedItems.splice(i, 1)
+                console.log(propSavedItems)
+
+            }
+        }
+
         updateSavedItems(savedItems)
 
 

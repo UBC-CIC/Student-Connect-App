@@ -107,7 +107,7 @@ function Events(props){
                            endDate={item.endDate}
                            title={item.title}
                            description={item.excerpt}
-                           photo={item.fullImage}
+                           photo={item.fullImage[0]}
                            link={item.link}
                            location={item.eventLocation.venue}
                            cost={item.cost}
@@ -128,23 +128,6 @@ function Events(props){
                 <Divider className={classes.divider}/>
 
     <Grid container spacing={1}>
-                    {/*<Grid item md={8}>*/}
-                    {/*    <Input*/}
-                    {/*        id="input-with-icon-adornment"*/}
-                    {/*        startAdornment={*/}
-                    {/*            <InputAdornment position="start">*/}
-                    {/*                <SearchIcon />*/}
-                    {/*            </InputAdornment>*/}
-                    {/*        }*/}
-                    {/*        placeholder={"Search"}*/}
-                    {/*        fullWidth*/}
-                    {/*    />*/}
-                    {/*</Grid>*/}
-                    {/*<Grid item md={2}>*/}
-                    {/*    <Button className={classes.button}>*/}
-                    {/*        Search*/}
-                    {/*    </Button>*/}
-                    {/*</Grid>*/}
                     <Grid item >
                         <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                             Sort By

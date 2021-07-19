@@ -321,7 +321,6 @@ export const createSavedItemsTable = /* GraphQL */ `
     createSavedItemsTable(input: $input, condition: $condition) {
       id
       savedItems {
-        id
         title
         image
         link
@@ -340,7 +339,6 @@ export const updateSavedItemsTable = /* GraphQL */ `
     updateSavedItemsTable(input: $input, condition: $condition) {
       id
       savedItems {
-        id
         title
         image
         link
@@ -359,7 +357,6 @@ export const deleteSavedItemsTable = /* GraphQL */ `
     deleteSavedItemsTable(input: $input, condition: $condition) {
       id
       savedItems {
-        id
         title
         image
         link

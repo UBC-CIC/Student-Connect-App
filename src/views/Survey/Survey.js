@@ -342,8 +342,7 @@ const userPreference ={
              faculty:user.attributes['custom:adwardingFaculty']
          }
 
-         createUserDataAction(userData)
-         console.log(UID)
+         // createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {
              let res = response.data
              console.log(res)
