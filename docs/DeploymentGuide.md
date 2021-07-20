@@ -20,7 +20,7 @@ Some system installation requirements before starting deployment:
   
 
 1) Open the terminal at the root folder of the repository, and then run the deployment script using the following command using
-   your own parameter values inside the angle brackets.
+   your own parameter values inside the angle brackets. The order of arguments must be the same as shown.
 
    For Mac, Linux and Windows Subsystem for Linux users:
 
@@ -59,6 +59,7 @@ Some system installation requirements before starting deployment:
     which will need either `y` or `Y` to confirm the deployment.
    Here are what all the deployment prompts look like for a proper deployment:
    ![Deployment Prompts](./DeploymentPrompts.png)
+   
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
    

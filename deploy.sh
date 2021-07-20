@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # ./deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
 
+awsProfile=${2}
+awsRegion=${4}
+stackName=${6}
+
 cd functions
 
 \cp common_lib.py es_hasher
@@ -15,4 +19,4 @@ cd ..
 
 sam build
 
-sam deploy --profile ${aws-profile} --region ${aws-region} --stack-name ${stack-name} --guided
+sam deploy --profile ${awsProfile} --region ${awsRegion} --stack-name ${stackName} --guided
