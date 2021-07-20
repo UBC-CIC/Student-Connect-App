@@ -63,7 +63,7 @@ function SignIn(props) {
         <Grid container>
             <Grid item xs={12}>
                 {
-                    currentLoginState === "signIn" && (
+                    currentLoginState !== "signedIn" && (
                         <div>
                             <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
                                    title={"Student App"} darkMode={true}

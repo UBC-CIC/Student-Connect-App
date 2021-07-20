@@ -9,12 +9,15 @@ export const getSavedItems = (id) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(getSavedItemsTable, {id: id})).then((response) => {
             let res = response.data.getSavedItemsTable
-            if(res.createdAt) delete res.createdAt
-            if(res.updatedAt) delete res.updatedAt
-            if(res.owner) delete res.owner
-            console.log(res)
+            if(res){
+                if(res.createdAt) delete res.createdAt
+                if(res.updatedAt) delete res.updatedAt
+                if(res.owner) delete res.owner
+                console.log(res)
 
-            dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
+                dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
+
+            }
         })
     }
 }

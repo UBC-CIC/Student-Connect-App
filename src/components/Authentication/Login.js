@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import {updateCredentials, updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import "./Login.css";
 import AWS from "aws-sdk";
-
+import CICLogo from '../../assets/img/logo_inverse.png'
 
 const initialFormState = {
     email: "", password: "", authCode: "", resetCode: ""
@@ -88,7 +88,8 @@ function Login(props) {
             const {email, authCode} = formState;
             setLoading(true);
             await Auth.confirmSignUp(email, authCode);
-            updateLoginState("signedIn");
+            updateLoginState("signIn");
+            window.location.reload()
         } catch (e) {
             setVerificationError(true);
             setLoading(false);
@@ -166,7 +167,7 @@ function Login(props) {
         }
     }
 
-    let logoType = (darkMode)? "/Assets/Images/logo_inverse.png" : "/Assets/Images/logo.png";
+    let logoType = CICLogo
 
     return (
         <Grid style={{width: "100vw", height: "100vh"}} stackable>
@@ -175,7 +176,7 @@ function Login(props) {
                 <Grid.Column width={9} style={
                     (type === "image")? (themeColor === "standard")? { backgroundColor: "#012144", backgroundImage: "url(./Assets/Images/background.jpg)", backgroundSize: "cover", backgroundRepeat: "no", width: "100%", height: "100vh"} :
                         { backgroundColor: themeColor, backgroundImage: "url(./Assets/Images/background.jpg)", backgroundSize: "cover", backgroundRepeat: "no", width: "100%", height: "100vh"} :
-                    (themeColor === "standard")? { backgroundColor: "#012144", width: "100%", height: "100vh"} : { backgroundColor: themeColor, width: "100%", height: "100vh"}
+                        (themeColor === "standard")? { backgroundColor: "#012144", width: "100%", height: "100vh"} : { backgroundColor: themeColor, width: "100%", height: "100vh"}
                 }>
                     {/* Please use a royalty free video or a video that you or the CIC owns */}
                     {(type === "video")?
@@ -232,7 +233,7 @@ function Login(props) {
                                                             <Grid.Row style={{paddingBottom: "0px"}}>
                                                                 <Grid.Column verticalAlign={"middle"} textAlign={"center"} style={{paddingLeft: "30px", paddingRight: "30px"}}>
                                                                     <Input iconPosition={"left"} name={"email"} type={"email"} onChange={onChange} placeholder={"Email"} style={{maxWidth: "100%"}}
-                                                                          error={(accountLoginError)} fluid>
+                                                                           error={(accountLoginError)} fluid>
                                                                         <Icon name={"at"} />
                                                                         <input />
                                                                     </Input>
@@ -250,7 +251,7 @@ function Login(props) {
                                                             <Grid.Row style={{padding: "0px"}}>
                                                                 <Grid.Column verticalAlign={"middle"} textAlign={"right"}>
                                                                     <Button style={{backgroundColor: "transparent"}} size={"mini"}
-                                                                    onClick={() => updateLoginState("forgotPassword")}
+                                                                            onClick={() => updateLoginState("forgotPassword")}
                                                                     >Forgot your password?</Button>
                                                                 </Grid.Column>
                                                             </Grid.Row>
@@ -462,7 +463,7 @@ function Login(props) {
                                                                     {(verificationError)? <span style={{color: "red"}}><strong>Invalid verification code provided, please try again.</strong></span> : null}
                                                                     {(newVerification)? <span style={{color: "green"}}><strong>New verification code sent successfully.</strong></span> : null}
                                                                     <Input name={"authCode"} onChange={onChange} placeholder={"Enter your confirmation code."} style={{maxWidth: "100%"}}
-                                                                          error={(verificationError)} fluid />
+                                                                           error={(verificationError)} fluid />
                                                                 </Grid.Column>
                                                             </Grid.Row>
                                                             <Grid.Row style={{paddingBottom: "0px"}}>
