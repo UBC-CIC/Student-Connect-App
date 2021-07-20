@@ -558,7 +558,7 @@ Resources:
       Handler: es_hasher.lambda_handler
       Description: >
         This function creates hashes for documents in the events, news and blogs table to update the ES indices with new data
-      MemorySize: 1024
+      MemorySize: 512
       Timeout: 600
       CodeUri: ./functions/es_hasher
       Role: !GetAtt esHasherLambdaIAMRole.Arn

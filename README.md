@@ -28,7 +28,8 @@ from using the interests students marked as their subscribed category tags.
 
 
 ## High Level Architecture
-![alt text](docs/architectureDiagram.jpg)
+![alt text](docs/ArchitectureDiagram.png)
+<h6 align="center">Architecture Diagram</h6>
 
 ## Application Screenshots
 
