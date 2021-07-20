@@ -12,7 +12,7 @@ Using AWS Amplify, this project has the following configured backend resources:
 <hr>
 
 ## GraphQL Schema
-###User preference table
+### User preference table
 ```
 type userPreference @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
