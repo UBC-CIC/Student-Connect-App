@@ -30,6 +30,7 @@ import {listToString} from "./helpers/PreferenceListToString";
 import LoadingScreen from "./views/LoadingScreen";
 import SavedItems from "./views/SavedItems";
 import {getSavedItems} from "./actions/savedItemsAction";
+import {currentCredsReducer} from "./reducers/loginReducer";
 const useStyles = makeStyles((theme) => ({
     container:{
         [theme.breakpoints.down('sm')]: {
@@ -53,7 +54,7 @@ function App(props) {
     const classes = useStyles();
     const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
         fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-        userPreference,createUserDataAction,getSavedItems,currentCredentials}= props
+        userPreference,createUserDataAction,getSavedItems,currentCredentials,propUser}= props
 
     const signInUrl = process.env.REACT_APP_SignInUrl
     let history = useHistory();
@@ -77,10 +78,13 @@ function App(props) {
     }
 
 
+
+
     useEffect(  () => {
+        setUser(propUser)
 
         Amplify.configure(awsConfig);
-        if (currentUser &&currentCredentials) {
+        if (propUser &&currentCredentials) {
             AWS.config.update({
                 accessKeyId: currentCredentials.accessKeyId,
                 identityId: currentCredentials.identityId,
@@ -90,11 +94,10 @@ function App(props) {
             });
             console.log(currentCredentials)
 
-            setUID(currentUser.attributes['email'])
+            setUID(propUser.attributes['email'])
             if (UID) checkUserLogInFirstTime(UID)
-            getUserPreferenceAction(currentUser.attributes['email'])
-            getSavedItems(currentUser.attributes['email'])
-            setUser(currentUser)
+            getUserPreferenceAction(propUser.attributes['email'])
+            getSavedItems(propUser.attributes['email'])
 
             setPreference(userPreference)
             fetchAllClubs()
@@ -107,9 +110,7 @@ function App(props) {
 
 
 
-
-
-    }, [UID,user,currentCredentials]);
+    }, [UID,currentCredentials]);
 
     return (
         <div className={classes.app}>

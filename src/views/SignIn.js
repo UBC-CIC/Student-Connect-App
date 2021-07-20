@@ -16,6 +16,8 @@ function SignIn(props) {
     const {loginState, updateLoginState,currentUser,currentCredentials} = props;
 
     const [currentLoginState, updateCurrentLoginState] = useState(loginState);
+    const [user, setUser] = useState(null);
+    const [cred, setCred] = useState(null);
 
 
     useEffect(() => {
@@ -24,8 +26,24 @@ function SignIn(props) {
 
     useEffect(() => {
 
+        async function retrieveUser() {
+            try {
+                Auth.currentAuthenticatedUser().then(user => {
+                    setUser(user)
+                }).catch(err => {
+                    console.log(err)
+                })
+
+            } catch (e) {
+
+            }
+        }
+        retrieveUser()
         updateCurrentLoginState(loginState);
-    }, [loginState]);
+        setCred(currentCredentials)
+        setUser(currentUser)
+        console.log(cred,user)
+    }, [loginState,currentCredentials,currentUser]);
 
 
     async function setAuthListener() {
@@ -57,8 +75,8 @@ function SignIn(props) {
                     )
                 }
                 {
-                    (currentLoginState === "signedIn" &&currentUser!==null &&currentCredentials!==null) && (
-                        <App/>
+                    (currentLoginState === "signedIn"&&user&&cred) && (
+                        <App propUser={user}/>
                     )
                 }
             </Grid>
@@ -67,7 +85,6 @@ function SignIn(props) {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state)
     return {
         loginState: state.loginState.currentState,
         currentUser:state.currentUser,
