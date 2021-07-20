@@ -29,7 +29,7 @@ import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Auth} from "aws-amplify";
 import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
-import {updateCurrentUser, updateLoginState} from "../../actions/loginActions";
+import {updateCredentials, updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import TextFieldStartAdornment from "./TextFieldStartAdornment";
 import "./Login.css";
 
@@ -145,21 +145,12 @@ function Login(props) {
     const classes = useStyles();
 
     useEffect(() => {
-        async function retrieveUser() {
-            try {
-                Auth.currentAuthenticatedUser().then(user => {
-                    updateCurrentUser(user)
-                    console.log(user)
+        Auth.currentAuthenticatedUser().then(user => {
+            updateCurrentUser(user)
                     updateLoginState("signedIn");
                 }).catch(err => {
                     updateLoginState("signIn");
                 })
-
-            } catch (e) {
-
-            }
-        }
-        retrieveUser();
     }, []);
 
 
@@ -876,6 +867,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
     updateLoginState,
     updateCurrentUser,
+    updateCredentials
 };
 
 

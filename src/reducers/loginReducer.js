@@ -30,3 +30,16 @@ export const currentUserReducer = (currentUser = initialUser, action) => {
             return newUser
     }
 }
+const initialCreds = null
+
+export const currentCredsReducer = (currentCreds = initialCreds, action) => {
+    let newUser = currentCreds;
+    switch(action.type) {
+        case "GOT_CURRENT_CREDENTIALS": {
+            return action.payload
+
+        }
+        default:
+            return newUser
+    }
+}

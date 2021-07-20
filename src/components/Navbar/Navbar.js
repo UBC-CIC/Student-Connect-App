@@ -25,6 +25,8 @@ import ExploreIcon from '@material-ui/icons/Explore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {Auth} from "aws-amplify";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
+import {updateLoginState} from "../../actions/loginActions";
+import {connect} from "react-redux";
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -113,7 +115,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-export default function MiniDrawer() {
+function Navbar() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -125,8 +127,9 @@ export default function MiniDrawer() {
     const handleDrawerClose = () => {
         setOpen(false);
     };
-    function signOut(){
-        Auth.signOut()
+    async function signOut() {
+        updateLoginState("signIn");
+        await Auth.signOut();
     }
 
     return (
@@ -157,7 +160,7 @@ export default function MiniDrawer() {
 
                     <Container>
                         <Button className={classes.signOutButton} variant={'contained'} startIcon={<ExitToAppIcon/>}
-                        href={process.env.REACT_APP_logOutAction} onClick={signOut}>
+                                onClick={signOut}>
                             Sign out
                         </Button>
                     </Container>
@@ -226,3 +229,7 @@ export default function MiniDrawer() {
         </div>
     );
 }
+const mapDispatchToProps = {
+    updateLoginState,
+};
+export default connect( null,mapDispatchToProps)(Navbar);

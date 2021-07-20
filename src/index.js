@@ -15,37 +15,13 @@ import {Route} from "react-router-dom";
 import Survey from "./views/Survey/Survey";
 import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 import awsConfig from "./aws-exports";
+import 'semantic-ui-css/semantic.min.css';
 
 const store = createStore(
     reducers, applyMiddleware(thunk)
 );
-// Amplify.configure(awsConfig);
+Amplify.configure(awsConfig);
 
-Amplify.configure({
-    Auth: {
-        region: awsconfig.aws_project_region,
-        userPoolId: awsconfig.aws_user_pools_id,
-        userPoolWebClientId: awsconfig.aws_user_pools_web_client_id,
-        oauth: {
-            domain: process.env.react_app_domain,
-            scope: ["email", "openid", "aws.cognito.signin.user.admin", "profile"],
-            redirectSignIn: process.env.REACT_APP_SignInUrl,
-            redirectSignOut: process.env.REACT_APP_SignOutUrl,
-            responseType: "token"
-        }
-    }
-})
-// Auth.configure({
-//     auth0: {
-//         domain: process.env.react_app_domain,
-//         clientID: process.env.REACT_APP_clientId,
-//         redirectUri: process.env.REACT_APP_logOutAction,
-//         audience: process.env.react_app_domain+ '/userinfo',
-//         responseType: 'token id_token', // for now we only support implicit grant flow
-//         scope: 'openid profile email', // the scope used by your app
-//         returnTo: 'your sign out url'
-//     }
-// });
 
 ReactDOM.render(
     // <AmplifyAuthenticator >

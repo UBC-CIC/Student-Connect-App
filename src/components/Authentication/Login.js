@@ -2,8 +2,9 @@ import {Grid, Button, Input, Image, Divider, Icon} from "semantic-ui-react";
 import {Auth} from "aws-amplify";
 import React, {useState, useEffect} from "react";
 import { connect } from "react-redux";
-import {updateLoginState} from "../../Actions/loginActions";
+import {updateCredentials, updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import "./Login.css";
+import AWS from "aws-sdk";
 
 
 const initialFormState = {
@@ -11,7 +12,8 @@ const initialFormState = {
 }
 
 function Login(props) {
-    const {loginState, updateLoginState, animateTitle, type, title, darkMode, logo, themeColor, disableSignUp} = props;
+    const {updateCurrentUser,loginState, updateLoginState, animateTitle, type, title, darkMode, logo, themeColor, disableSignUp
+    ,updateCredentials} = props;
     const [formState, updateFormState] = useState(initialFormState);
     const [accountCreationError, setAccountCreationError] = useState(false);
     const [accountLoginError, setAccountLoginError] = useState(false);
@@ -28,6 +30,7 @@ function Login(props) {
         async function retrieveUser() {
             try {
                 Auth.currentAuthenticatedUser().then(user => {
+                    updateCurrentUser(user)
                     updateLoginState("signedIn");
                 }).catch(err => {
                     updateLoginState("signIn");
@@ -37,6 +40,21 @@ function Login(props) {
 
             }
         }
+        async function retrieveCreds() {
+            try {
+                Auth.currentCredentials().then(creds => {
+                    updateCredentials(creds)
+
+                }).catch(err => {
+                    console.log(err);
+                })
+
+            } catch (e) {
+
+            }
+        }
+
+        retrieveCreds()
         retrieveUser();
     }, []);
 
@@ -496,6 +514,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     updateLoginState,
+    updateCurrentUser,
+    updateCredentials
 };
 
 

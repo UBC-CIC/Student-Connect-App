@@ -4,7 +4,7 @@ import {allEventsReducer, eventsReducer} from "./eventsReducer";
 import {allBlogsReducer, blogsReducer} from "./blogsReducer";
 import {allClubsReducer, clubsReducer} from "./clubsReducer";
 import {preferenceReducer} from "./userReducer";
-import {loginReducer, currentUserReducer} from "./loginReducer";
+import {loginReducer, currentUserReducer, currentCredsReducer} from "./loginReducer";
 import {savedItemReducer} from "./savedItemReducer";
 
 export default combineReducers({
@@ -21,6 +21,7 @@ export default combineReducers({
     userPreference: preferenceReducer,
     loginState: loginReducer,
     currentUser:currentUserReducer,
-    savedItems:savedItemReducer
+    savedItems:savedItemReducer,
+    currentCredentials:currentCredsReducer
 
 });

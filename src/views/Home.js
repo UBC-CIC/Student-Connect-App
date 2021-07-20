@@ -15,6 +15,8 @@ import {fetchAllBlogs, fetchBlogs} from "../actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "../actions/clubAction";
 import {getUserPreferenceAction} from "../actions/userAction";
 import {listToString} from "../helpers/PreferenceListToString";
+import {Auth} from "aws-amplify";
+import AWS from "aws-sdk";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,10 +69,6 @@ StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
     const {news,blogs,sportsNews} = props
-    useEffect(  () => {
-
-
-    })
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>

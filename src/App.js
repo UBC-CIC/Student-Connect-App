@@ -31,146 +31,153 @@ import LoadingScreen from "./views/LoadingScreen";
 import SavedItems from "./views/SavedItems";
 import {getSavedItems} from "./actions/savedItemsAction";
 const useStyles = makeStyles((theme) => ({
-  container:{
-    [theme.breakpoints.down('sm')]: {
-      paddingLeft: theme.spacing(1),
-      paddingRight: theme.spacing(1),
+    container:{
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: theme.spacing(1),
+            paddingRight: theme.spacing(1),
+        },
+
+        paddingLeft: theme.spacing(10),
+        paddingRight: theme.spacing(1),
+
     },
-
-    paddingLeft: theme.spacing(10),
-    paddingRight: theme.spacing(1),
-
-  },
-  app:{
-    backgroundColor:"#fafafa"
-  }
+    app:{
+        backgroundColor:"#fafafa"
+    }
 
 }));
 
 
 
 function App(props) {
-  const classes = useStyles();
-  const{fetchAllClubs,fetchAllEvents,
-    fetchAllNews,fetchAllBlogs, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-    userPreference,getSavedItems}= props
-  const signInUrl = process.env.REACT_APP_SignInUrl
-  let history = useHistory();
-  const [UID,setUID] =  useState(null)
-  const [firstTime,setFirstTime] = useState(null)
-  const [user, setUser] = useState(null)
-  const [preference,setPreference]=useState(null)
-  let pref
+    const classes = useStyles();
+    const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
+        fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
+        userPreference,createUserDataAction,getSavedItems,currentCredentials}= props
 
-  async function checkUserLogInFirstTime(Id){
-    await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
-      if (response.data.getUserPreference !== null) {
-        pref=response.data.getUserPreference
+    const signInUrl = process.env.REACT_APP_SignInUrl
+    let history = useHistory();
+    console.log(currentCredentials)
+    const [UID,setUID] =  useState(null)
+    const [firstTime,setFirstTime] = useState(null)
+    const [user, setUser] = useState(null)
+    const [preference,setPreference]=useState(null)
+    let pref
 
-        setFirstTime(false)
-        getSavedItems(currentUser.attributes['email'])
-      } else {
-        setFirstTime(true)
-      }
-    })
-  }
+    async function checkUserLogInFirstTime(Id){
+        await API.graphql(graphqlOperation(getUserPreference, {id: UID})).then((response) => {
+            if (response.data.getUserPreference !== null) {
+                pref=response.data.getUserPreference
 
-
-  useEffect( async () => {
-    Amplify.configure(awsConfig);
-    if (currentUser) {
-      let credentials = await Auth.currentCredentials()
-      AWS.config.update({
-        credentials,
-        region: 'ca-central-1',
-      });
-      setUID(currentUser.attributes['email'])
-      if (UID) checkUserLogInFirstTime(UID)
-      getUserPreferenceAction(currentUser.attributes['email'])
-      setUser(currentUser)
-
-      setPreference(userPreference)
-
+                setFirstTime(false)
+            } else {
+                setFirstTime(true)
+            }
+        })
     }
 
 
+    useEffect(  () => {
 
-    fetchAllClubs()
-    fetchAllEvents()
-    fetchAllNews()
-    fetchAllBlogs()
-    fetchAllSportsNews()
+        Amplify.configure(awsConfig);
+        if (currentUser &&currentCredentials) {
+            AWS.config.update({
+                accessKeyId: currentCredentials.accessKeyId,
+                identityId: currentCredentials.identityId,
+                secretAccessKey: currentCredentials.secretAccessKey,
+                sessionToken: currentCredentials.sessionToken,
+                region: 'ca-central-1',
+            });
+            console.log(currentCredentials)
 
+            setUID(currentUser.attributes['email'])
+            if (UID) checkUserLogInFirstTime(UID)
+            getUserPreferenceAction(currentUser.attributes['email'])
+            getSavedItems(currentUser.attributes['email'])
+            setUser(currentUser)
 
-  }, [UID,user,preference]);
+            setPreference(userPreference)
+            fetchAllClubs()
+            fetchAllEvents()
+            fetchAllNews()
+            fetchAllBlogs()
+            fetchAllSportsNews()
 
-  return (
-    <div className={classes.app}>
-      {firstTime && (
-      <div>
-            <Redirect to={'/survey'}/>
-            <Route
-                path='/survey'
-                render={(props) => (
-                    <Survey {...props} UID={UID} user={user} />
-                )}
-            />
-          </div>
-          )}
-      {(!firstTime)&&(
-          <div>
-            <Redirect to={'/'}/>
-            <Navbar/>
-            <Container className={classes.container} >
-              <Route
-                  path='/'
-                  render={(props) => (
-                      <LoadingScreen {...props} preference={userPreference} user={user} />
-                  )} exact component={LoadingScreen}
-              />
-
-              <Route path ='/clubs' exact component={Clubs}/>
-              <Route path ='/events' exact component={Events}/>
-              <Route path ='/settings' exact component={Settings}/>
-              <Route path ='/news' exact component={News}/>
-              <Route path ='/savedItems' exact component={SavedItems}/>
-
-            </Container>
-            <Footer/>
-          </div>
-      )}
-
-
-      }
+        }
 
 
 
-    </div>
-  );
+
+
+    }, [UID,user,currentCredentials]);
+
+    return (
+        <div className={classes.app}>
+            {firstTime && (
+                <div>
+                    <Redirect to={'/survey'}/>
+                    <Route
+                        path='/survey'
+                        render={(props) => (
+                            <Survey {...props} UID={UID} user={user} />
+                        )}
+                    />
+                </div>
+            )}
+            {(!firstTime)&&(
+                <div>
+                    <Redirect to={'/'}/>
+                    <Navbar/>
+                    <Container className={classes.container} >
+                        <Route
+                            path='/'
+                            render={(props) => (
+                                <LoadingScreen {...props} preference={userPreference} user={user} />
+                            )} exact component={LoadingScreen}
+                        />
+
+                        <Route path ='/savedItems' exact component={SavedItems}/>
+                        <Route path ='/clubs' exact component={Clubs}/>
+                        <Route path ='/events' exact component={Events}/>
+                        <Route path ='/settings' exact component={Settings}/>
+                        <Route path ='/news' exact component={News}/>
+                    </Container>
+                    <Footer/>
+                </div>
+            )}
+
+
+            }
+
+
+
+        </div>
+    );
 }
 
 const mapStateToProps = (state) => {
-  return {
-    userPreference: state.userPreference,
-    currentUser:state.currentUser
-  };
+    return {
+        userPreference: state.userPreference,
+        currentUser:state.currentUser,
+        currentCredentials: state.currentCredentials
+    };
 };
 
 const mapDispatchToProps = {
-  fetchNews,
-  fetchEvents,
-  fetchBlogs,
-  fetchClubs,
+    fetchNews,
+    fetchEvents,
+    fetchBlogs,
+    fetchClubs,
 
-  fetchAllClubs,
-  fetchAllEvents,
-  fetchAllNews,
-  fetchAllBlogs,
-  fetchSportsNews,
-  fetchAllSportsNews,
-  getUserPreferenceAction,
-  createUserDataAction,
-  getSavedItems
+    fetchAllClubs,
+    fetchAllEvents,
+    fetchAllNews,
+    fetchAllBlogs,
+    fetchSportsNews,
+    fetchAllSportsNews,
+    getUserPreferenceAction,
+    createUserDataAction,
+    getSavedItems
 };
 
 export default (connect(mapStateToProps, mapDispatchToProps)(App));
