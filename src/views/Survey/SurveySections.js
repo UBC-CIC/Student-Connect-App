@@ -2,7 +2,7 @@ import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider, Switch} from "@material-ui/core";
+import {Checkbox, Divider, FormControlLabel, Switch} from "@material-ui/core";
 import {
     academicOptions,
     eventsOptions,
@@ -31,8 +31,40 @@ const useStyles = makeStyles((theme) => ({
         marginTop:'5px',
         marginBottom:'5px',
     },
+    introduction:{
+        marginBottom:'20px',
+    }
 
 }));
+
+export function SurveyWelcomePage(props){
+    const classes = useStyles();
+    const {checked} = props
+
+
+    return(
+        <div>
+            <Typography align={'left'} variant="h6" className={classes.title}>
+                Welcome to the Student App
+            </Typography>
+            <Divider className={classes.divider}/>
+            <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
+                This app centralized information specifically to the university's events, life blog, athletic news, clubs and news page.
+            </Typography>
+            <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
+
+            Please kindly fill out the following survey as it will help the app to recommend contents to you!
+            </Typography>
+            <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
+                I agree to provide personal data to allow this application to customize options for [University Name] events and activities according to my preferences.
+                By click 'I Agree' you agree to give personal data for the application to provide recommendations tailored to your prefrences.
+                This data will only be used by [University Name] application and will not be disclosed to third parties without your explicit consent.
+            </Typography>
+        </div>
+
+    )
+
+}
 
 export function NewsBlogsClubs(props){
     const classes = useStyles();

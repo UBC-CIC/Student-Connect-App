@@ -13,7 +13,7 @@ import StepConnector from '@material-ui/core/StepConnector';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import {Link} from "react-router-dom";
-import {Academic, Email, Events, NewsBlogsClubs, Sports} from "./SurveySections";
+import {Academic, Email, Events, NewsBlogsClubs, Sports, SurveyWelcomePage} from "./SurveySections";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DoneIcon from '@material-ui/icons/Done';
@@ -204,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email'];
+    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email'];
 }
 
 const userPreference ={
@@ -282,7 +282,7 @@ const userPreference ={
 }
 
  function Survey(props) {
-    const {UID,user,createUserPreferenceAction,createUserDataAction} = props
+    const {UID,user,createUserPreferenceAction} = props
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -302,14 +302,16 @@ const userPreference ={
     function getStepContent(step) {
         switch (step) {
             case 0:
-                return <NewsBlogsClubs handleChange={handleChange} userPreference={userPreference}/>;
+                return <SurveyWelcomePage/>
             case 1:
-                return <Academic handleChange={handleChange} userPreference={userPreference}/>;
+                return <NewsBlogsClubs handleChange={handleChange} userPreference={userPreference}/>;
             case 2:
-                return <Events handleChange={handleChange} userPreference={userPreference}/>;
+                return <Academic handleChange={handleChange} userPreference={userPreference}/>;
             case 3:
-                return <Sports handleChange={handleChange} userPreference={userPreference}/>
+                return <Events handleChange={handleChange} userPreference={userPreference}/>;
             case 4:
+                return <Sports handleChange={handleChange} userPreference={userPreference}/>
+            case 5:
                 return <Email handleSwitchChange={handleSwitchChange} userPreference={userPreference}/>
 
             default:
@@ -356,7 +358,7 @@ const userPreference ={
 
 
     return (
-        <Container maxWidth={'xl'} >
+        <Container maxWidth={'md'} >
 
         <div className={classes.root}>
 
@@ -385,17 +387,26 @@ const userPreference ={
                             <ButtonGroup>
                                 <Button disabled={activeStep === 0} onClick={handleBack} className={classes.prevButton} startIcon={<ArrowBackIcon/>}>
                                 </Button>
-                                {activeStep === steps.length - 1 ?
+                                {activeStep === steps.length - 1 &&(
                                     <Button startIcon={<DoneIcon/>} onClick={handleSave} />
-                                    :
+                                )}
+                                {activeStep === 0&&(
+                                    <Button
+                                        onClick={handleNext}
+                                        className={classes.nextButton}>
+                                        I agree
+                                    </Button>
+
+                                        )}
+
+                                        {activeStep !== 0&&(
                                     <Button
                                     onClick={handleNext}
                                     className={classes.nextButton}
                                     startIcon={<ArrowForwardIcon/>}
+                                    />
 
-                                >
-                                </Button>
-                                }
+                                    )}
 
                             </ButtonGroup>
                         </div>
