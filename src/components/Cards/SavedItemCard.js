@@ -4,13 +4,18 @@ import {NewsCardAccordion} from "../Accordion/Accordions";
 import Typography from "@material-ui/core/Typography";
 import {Tag} from "../Tags/Tag";
 import CardFooterButtons from "../Button/Button";
-import React from "react";
+import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {connect} from "react-redux";
-import {updateSavedItems} from "../../actions/savedItemsAction";
+import {removeSavedItems, updateSavedItems} from "../../actions/savedItemsAction";
+import Alert from '@material-ui/lab/Alert';
+import AlertTitle from '@material-ui/lab/AlertTitle';
+
+
+
 const useStyles = makeStyles((theme) => ({
     root: {
 
@@ -52,7 +57,18 @@ const useStyles = makeStyles((theme) => ({
 function SavedItemCard(props){
 
     const classes = useStyles();
-    const {title, photo, link,savedItems,updateSavedItems,propSavedItems} = props
+    const {title, photo, link,savedItems,removeSavedItems} = props
+    const [showSuccess,setShowSuccess]=useState(false)
+    const [showError,setShowError]=useState(false)
+    const showResult = (status) => {
+        if(status==="success"){
+            setShowSuccess(true)
+        }else if(status==='error'){
+            setShowError(true)
+        }
+
+    }
+
     function deleteItem(){
         for(let i=0;i<savedItems.savedItems.length;i++){
             if(savedItems.savedItems[i].link===link){
@@ -60,19 +76,29 @@ function SavedItemCard(props){
 
             }
         }
-        for(let i=0;i<propSavedItems.length;i++){
-            if(propSavedItems[i].link===link){
-                propSavedItems.splice(i, 1)
 
-            }
-        }
+        removeSavedItems(savedItems,showResult)
 
-        updateSavedItems(savedItems)
 
 
     }
     return(
         <Card className={classes.bigCard}>
+            {showSuccess&&(
+                <Alert severity="success">
+                    <AlertTitle>Success</AlertTitle>
+                    {title} — <strong>removed</strong>
+                </Alert>
+
+            )}
+            {showError&&(
+                <Alert severity="error">
+                    <AlertTitle>Error</AlertTitle>
+                    {title} — <strong>cannot be removed, please try again</strong>
+                </Alert>
+
+            )}
+
             <div className={classes.root} >
                 <Grid container spacing={2}>
                     <Grid item>
@@ -111,7 +137,7 @@ const mapStateToProps = (state) => {
     };
 };
 const mapDispatchToProps = {
-    updateSavedItems,
+    removeSavedItems,
 };
 
 export default connect(mapStateToProps,mapDispatchToProps)(SavedItemCard);

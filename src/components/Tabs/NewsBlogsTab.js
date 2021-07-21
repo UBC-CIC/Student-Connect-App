@@ -152,7 +152,7 @@ export default function NewsBlogsTab(props) {
                 break
             case 1:
                 allSportsNews.sort(function(a, b) {
-                    return new Date(a._source.dateModified)-new Date(b._source.dateModified)
+                    return new Date(a.dateModified)-new Date(b.dateModified)
                 })
                 break
             default:
@@ -170,7 +170,7 @@ export default function NewsBlogsTab(props) {
                 break
             case 1:
                 allSportsNews.sort(function(a, b) {
-                    return new Date(b._source.dateModified)-new Date(a._source.dateModified)
+                    return new Date(b.dateModified)-new Date(a.dateModified)
                 })
                 break
             default:

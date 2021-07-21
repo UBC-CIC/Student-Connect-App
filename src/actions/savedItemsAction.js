@@ -13,6 +13,7 @@ export const getSavedItems = (id) => {
                 if(res.createdAt) delete res.createdAt
                 if(res.updatedAt) delete res.updatedAt
                 if(res.owner) delete res.owner
+                console.log(response)
 
                 dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
 
@@ -27,17 +28,30 @@ export const getSavedItemsSuccess = (payload) => {
     }
 }
 
-export const updateSavedItems = (payload) => {
+export const removeSavedItems = (payload,showResult) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(updateSavedItemsTable, {input: payload})).then((response) => {
-            dispatch(updateItemSuccess(response))
+            dispatch(updateItemSuccess(payload))
+            showResult("success")
 
         }).catch((err) => {
         console.log("Error updating user saved items: ", err);
+            showResult("error")
     })
     }
 
 }
+export const updateSavedItems = (payload) => {
+    return (dispatch) => {
+        API.graphql(graphqlOperation(updateSavedItemsTable, {input: payload})).then((response) => {
+            dispatch(updateItemSuccess(payload))
+        }).catch((err) => {
+            console.log("Error updating user saved items: ", err);
+        })
+    }
+
+}
+
 export const updateItemSuccess = (payload) => {
     return {
         type: "UPDATE_SAVED_ITEMS_SUCCESS",

@@ -5,6 +5,9 @@ export const savedItemReducer = ( input= initialSavedItem, action) => {
         case "GET_SAVED_ITEMS_SUCCESS": {
             return (action.payload);
         }
+        case "UPDATE_SAVED_ITEMS_SUCCESS":{
+            return (action.payload)
+        }
         default:
             return input;
     }

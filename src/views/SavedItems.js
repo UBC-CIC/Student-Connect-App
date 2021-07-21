@@ -2,7 +2,7 @@ import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
@@ -59,9 +59,7 @@ function SavedItems(props){
             )
         });
 
-    }else{
     }
-
     return(
         <div>
             <Container maxWidth={'xl'} >
