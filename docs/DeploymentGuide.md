@@ -102,7 +102,7 @@ Some system installation requirements before starting deployment:
     ```
    Once the Step Function execution is complete and successful, the clubs data should be present in Elasticsearch.
    Ideally this step should not be manual and should be automated, the details of achieving this are mentioned
-   in the [Post Proof-of-Concept tasks](https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/main/docs/DataAggregationArchitecture.md#post-proof-of-concept-tasks-for-backend-development)
+   in the [further backend refinement section](https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/main/docs/DataAggregationArchitecture.md#further-backend-refinement)
        
    
 
