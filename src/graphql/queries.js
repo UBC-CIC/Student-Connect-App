@@ -145,6 +145,8 @@ export const getUserData = /* GraphQL */ `
       primarySpecialization
       campus
       faculty
+      gender
+      cisOrTrans
       createdAt
       updatedAt
       owner
@@ -167,6 +169,8 @@ export const listUserDatas = /* GraphQL */ `
         primarySpecialization
         campus
         faculty
+        gender
+        cisOrTrans
         createdAt
         updatedAt
         owner

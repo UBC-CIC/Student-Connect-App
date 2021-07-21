@@ -6,14 +6,12 @@ import awsConfig from "../aws-exports";
 import {Auth} from "aws-amplify";
 
 export const updateLoginState = (payload) => {
-    console.log(payload)
     return (dispatch) => {
         dispatch({ type: "SET_LOGIN_STATE", payload: payload });
     }
 }
 
 export const updateCurrentUser =  (cognitoUser) => {
-    console.log(cognitoUser)
 
     return (dispatch) => {
         dispatch({type: "GOT_CURRENT_USER", payload: cognitoUser})

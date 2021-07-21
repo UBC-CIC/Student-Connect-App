@@ -255,6 +255,8 @@ export const onCreateUserData = /* GraphQL */ `
       primarySpecialization
       campus
       faculty
+      gender
+      cisOrTrans
       createdAt
       updatedAt
       owner
@@ -272,6 +274,8 @@ export const onUpdateUserData = /* GraphQL */ `
       primarySpecialization
       campus
       faculty
+      gender
+      cisOrTrans
       createdAt
       updatedAt
       owner
@@ -289,6 +293,8 @@ export const onDeleteUserData = /* GraphQL */ `
       primarySpecialization
       campus
       faculty
+      gender
+      cisOrTrans
       createdAt
       updatedAt
       owner

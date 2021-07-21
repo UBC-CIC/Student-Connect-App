@@ -63,7 +63,6 @@ function SavedItemCard(props){
         for(let i=0;i<propSavedItems.length;i++){
             if(propSavedItems[i].link===link){
                 propSavedItems.splice(i, 1)
-                console.log(propSavedItems)
 
             }
         }

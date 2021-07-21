@@ -71,7 +71,7 @@ export const updateUserPreferenceAction = (payload) => {
     if(payload.owner) delete payload.owner
     if(payload.updatedAt) delete payload.updatedAt
     API.graphql(graphqlOperation(updateUserPreference, {input: payload})).then((response) => {
-            console.log(response)
+            console.log("preference updated")
     }).catch((err) => {
             console.log("Error updating user preference: ", err);
     })

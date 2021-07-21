@@ -13,7 +13,6 @@ export const getSavedItems = (id) => {
                 if(res.createdAt) delete res.createdAt
                 if(res.updatedAt) delete res.updatedAt
                 if(res.owner) delete res.owner
-                console.log(res)
 
                 dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
 
@@ -31,7 +30,6 @@ export const getSavedItemsSuccess = (payload) => {
 export const updateSavedItems = (payload) => {
     return (dispatch) => {
         API.graphql(graphqlOperation(updateSavedItemsTable, {input: payload})).then((response) => {
-        console.log(response)
             dispatch(updateItemSuccess(response))
 
         }).catch((err) => {

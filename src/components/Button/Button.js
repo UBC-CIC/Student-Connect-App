@@ -44,7 +44,6 @@ const useStyles = makeStyles((theme) => ({
                  link:link,
              })
              updateSavedItems(savedItems)
-             console.log(savedItems)
 
          }
      }

@@ -42,7 +42,6 @@ function SignIn(props) {
         updateCurrentLoginState(loginState);
         setCred(currentCredentials)
         setUser(currentUser)
-        console.log(cred,user)
     }, [loginState,currentCredentials,currentUser]);
 
 

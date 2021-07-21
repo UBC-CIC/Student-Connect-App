@@ -57,8 +57,6 @@ function App(props) {
         userPreference,createUserDataAction,getSavedItems,currentCredentials,propUser}= props
 
     const signInUrl = process.env.REACT_APP_SignInUrl
-    let history = useHistory();
-    console.log(currentCredentials)
     const [UID,setUID] =  useState(null)
     const [firstTime,setFirstTime] = useState(null)
     const [user, setUser] = useState(null)
@@ -92,7 +90,6 @@ function App(props) {
                 sessionToken: currentCredentials.sessionToken,
                 region: 'ca-central-1',
             });
-            console.log(currentCredentials)
 
             setUID(propUser.attributes['email'])
             if (UID) checkUserLogInFirstTime(UID)

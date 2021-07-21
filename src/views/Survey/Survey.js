@@ -204,7 +204,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email'];
+    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email/Gender'];
 }
 
 const userPreference ={
@@ -282,11 +282,13 @@ const userPreference ={
 }
 
  function Survey(props) {
-    const {UID,user,createUserPreferenceAction} = props
+    const {UID,user,createUserPreferenceAction,createUserDataAction} = props
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
-    const handleChange=(param)=> {
+    const [gender, setGender] = React.useState('');
+     const [cisOrTrans, setCisOrTrans] = React.useState('');
+     const handleChange=(param)=> {
         if(param.category==="mensSportsList" || param.category==="womensSportsList"){
             userPreference.sportsPreference[param.category][param.backendName]=param.checked
         }else{
@@ -298,6 +300,12 @@ const userPreference ={
         userPreference.emailNotification=param
     }
 
+     const handleGenderChange=(param)=>{
+         setGender(param)
+     }
+     const handleCisOrTransChange=(param)=>{
+         setCisOrTrans(param)
+     }
 
     function getStepContent(step) {
         switch (step) {
@@ -312,7 +320,8 @@ const userPreference ={
             case 4:
                 return <Sports handleChange={handleChange} userPreference={userPreference}/>
             case 5:
-                return <Email handleSwitchChange={handleSwitchChange} userPreference={userPreference}/>
+                return <Email handleSwitchChange={handleSwitchChange} userPreference={userPreference}
+                              handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}/>
 
             default:
                 return <div>error</div>
@@ -332,19 +341,26 @@ const userPreference ={
         createUserPreferenceAction(userPreference)
 
     };
+
+
      function createUserData(user){
          let userData ={
-             id: user.attributes['custom:SP-PUID'],
-             SPUID: user.attributes['custom:SP-PUID'],
-             displayName: user.attributes['custom:preferredGivenName'],
-             yearLevel: user.attributes['custom:studentYearLevel'],
-             email:user.attributes['custom:studentLearnerEmail'],
-             primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-             campus: user.attributes['custom:locale'],
-             faculty:user.attributes['custom:adwardingFaculty']
-         }
+             id: user.attributes.email,
+             // id: user.attributes['custom:SP-PUID'],
+             // SPUID: user.attributes['custom:SP-PUID'],
+             // displayName: user.attributes['custom:preferredGivenName'],
+             // yearLevel: user.attributes['custom:studentYearLevel'],
+             // email:user.attributes['custom:studentLearnerEmail'],
+             // primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+             // campus: user.attributes['custom:locale'],
+             // faculty:user.attributes['custom:adwardingFaculty'],
+             gender: gender,
+             cisOrTrans:cisOrTrans
 
-         // createUserDataAction(userData)
+         }
+         console.log(userData)
+
+         createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {
              let res = response.data
              console.log(res)

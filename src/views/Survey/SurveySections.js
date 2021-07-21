@@ -2,7 +2,16 @@ import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Checkbox, Divider, FormControlLabel, Switch} from "@material-ui/core";
+import {
+    Checkbox,
+    Divider,
+    FormControl,
+    FormControlLabel,
+    InputLabel,
+    MenuItem,
+    Select,
+    Switch
+} from "@material-ui/core";
 import {
     academicOptions,
     eventsOptions,
@@ -33,7 +42,15 @@ const useStyles = makeStyles((theme) => ({
     },
     introduction:{
         marginBottom:'20px',
-    }
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+    },
+    selectEmpty: {
+        marginTop: theme.spacing(2),
+    },
+
 
 }));
 
@@ -160,12 +177,23 @@ export function Email(props){
     const [state, setState] = React.useState({
         checkedA: userPreference.emailNotification
     });
+    const [gender, setGender] = React.useState('');
+    const [transOrCis, setTransOrCis] = React.useState('');
+
     const handleChange = (event) => {
         setState({ ...state, [event.target.name]: event.target.checked });
         props.handleSwitchChange(event.target.checked)
     };
+    const handleGenderChange=(event)=>{
+        setGender(event.target.value)
+        props.handleGenderChange(event.target.value)
+    }
+    const handleTransOrCisChange=(event)=> {
+        setTransOrCis(event.target.value)
+        props.handleCisOrTransChange(event.target.value)
+    }
 
-    return(
+        return(
         <div>
             <Grid spacing={5}>
                 <Grid item xs={12}>
@@ -181,6 +209,44 @@ export function Email(props){
                         color="primary"
                     />
                 </Grid>
+                <Typography align={'left'} variant="h6" className={classes.title}>
+                    Please indicate your gender
+                </Typography>
+
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={gender}
+                        onChange={handleGenderChange}
+                    >
+                        <MenuItem value={"female"}>Female Gender</MenuItem>
+                        <MenuItem value={"male"}>Male Gender</MenuItem>
+                        <MenuItem value={"non_binary"}>Non-Binary Gender</MenuItem>
+                        <MenuItem value={""}>Prefer not to Answer</MenuItem>
+
+                    </Select>
+                </FormControl>
+                <Typography align={'left'} variant="h6" className={classes.title}>
+                    Are you/Would you say you are:
+                </Typography>
+
+                <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Trans/Cis</InputLabel>
+
+                    <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        value={transOrCis}
+                        onChange={handleTransOrCisChange}
+                    >
+                        <MenuItem value={"cisgender"}>Cisgender</MenuItem>
+                        <MenuItem value={"transgender"}>Transgender</MenuItem>
+                        <MenuItem value={""}>Prefer not to Answer</MenuItem>
+
+                    </Select>
+                </FormControl>
 
             </Grid>
         </div>
