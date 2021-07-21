@@ -16,6 +16,7 @@ import Survey from "./views/Survey/Survey";
 import {BrowserRouter as Router, Redirect} from 'react-router-dom';
 import awsConfig from "./aws-exports";
 import 'semantic-ui-css/semantic.min.css';
+import { HashRouter } from 'react-router-dom'
 
 const store = createStore(
     reducers, applyMiddleware(thunk)
@@ -26,10 +27,10 @@ Amplify.configure(awsConfig);
 ReactDOM.render(
     // <AmplifyAuthenticator >
     <Provider store={store}>
-        <Router>
+        <HashRouter>
         <Route path = '/logOut' exact component={SignIn}/>
             <SignIn/>
-        </Router>
+        </HashRouter>
     </Provider>,
     // </AmplifyAuthenticator>,
 

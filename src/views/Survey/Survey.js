@@ -399,7 +399,7 @@ const userPreference ={
 
                                         )}
 
-                                        {activeStep !== 0&&(
+                                        {activeStep !== 0&&activeStep !== steps.length - 1&&(
                                     <Button
                                     onClick={handleNext}
                                     className={classes.nextButton}

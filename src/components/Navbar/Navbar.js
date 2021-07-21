@@ -130,6 +130,7 @@ function Navbar() {
     async function signOut() {
         updateLoginState("signIn");
         await Auth.signOut();
+        window.location.reload()
     }
 
     return (
