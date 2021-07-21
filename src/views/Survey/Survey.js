@@ -391,10 +391,6 @@ const userPreference ={
                         <Typography variant={"h6"} className={classes.title}>
                             Thanks for filling in your preferences. If you would like to make changes, please go to settings page to modify
                         </Typography>
-                        {/*<Button component={Link} to="/" className={classes.goToHomeButton}>*/}
-                        {/*    Bring me to Home Page!*/}
-
-                        {/*</Button>*/}
                     </div>
                 ) : (
                     <div>

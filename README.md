@@ -33,15 +33,15 @@ from using the interests students marked as their subscribed category tags.
 
 ## Application Screenshots
 
-![TODO insert login page](./docs/LoginPage.jpg)
+![login page](./docs/LoginPage.png)
 <h6 align="center">Application Login Page</h6>
 
 
-![TODO insert survey page](./docs/SurveyPage.jpg)
+![survey page](./docs/SurveyPage.png)
 <h6 align="center">First time users complete a survey to identify their interests</h6>
 
 
-![TODO For you home page](./docs/HomePage.jpg)
+![home page](./docs/HomePage.png)
 <h6 align="center">Different types of content recommended to them based on interests</h6>
 
 ## Stack Details
