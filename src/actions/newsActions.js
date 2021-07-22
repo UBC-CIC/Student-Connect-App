@@ -40,12 +40,12 @@ export const fetchAllNews = () => {
                 else {
 
                     let allNews = data.Items
+                    allNews.map((item)=>{
+                        item.dateModified =  new Date(item.dateModified.replace(/-/g, "/")).toLocaleDateString('en-CA')
+                    })
                     allNews.sort(function(a, b) {
                         return new Date(new Date(b.dateModified)-new Date(a.dateModified))
                     });
-                    allNews.map((item)=>{
-                        item.dateModified = new Date(item.dateModified).toLocaleDateString('en-CA');
-                    })
 
                     dispatch(fetchAllNewsSuccess(allNews))
                 }
@@ -85,7 +85,6 @@ export const fetchSportsNews = (categories) => {
                     if (female>-1) item._source.categories[female]='Women\'s'
 
                 })
-                console.log(results)
                 dispatch(fetchSportsNewsSuccess(results))
 
             }
@@ -109,15 +108,14 @@ export const fetchAllSportsNews = () => {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
                     let allSportsNews = data.Items
-                    allSportsNews.sort(function(a, b) {
-                        return new Date(new Date(b.dateModified)-new Date(a.dateModified))
-                    });
                     allSportsNews.map((item)=>{
                         // item.categories=(bracketRemover(item.categories).split(","))
                         item.dateModified = new Date(item.dateModified.replace(/-/g, "/")).toLocaleDateString('en-CA');
-                        console.log(item.dateModified)
 
                     })
+                    allSportsNews.sort(function(a, b) {
+                        return new Date(new Date(b.dateModified)-new Date(a.dateModified))
+                    });
 
                     dispatch(fetchAllSportsNewsSuccess(allSportsNews))
                 }
