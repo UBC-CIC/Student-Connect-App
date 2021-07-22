@@ -69,13 +69,15 @@ export function SurveyWelcomePage(props){
                 This app centralized information specifically to the university's events, life blog, athletic news, clubs and news page.
             </Typography>
             <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
-
-            Please kindly fill out the following survey as it will help the app to recommend contents to you!
+                This app amalgamates information about events, blogs, news and clubs in order to provide information you may be interested in. In order to show you information relevant to your interests, we need some information about you. Completing the form is entirely voluntary; if you choose not to provide further information, the recommendations will simply be less personalized.
             </Typography>
+
             <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
-                I agree to provide personal data to allow this application to customize options for [University Name] events and activities according to my preferences.
-                By click 'I Agree' you agree to give personal data for the application to provide recommendations tailored to your prefrences.
-                This data will only be used by [University Name] application and will not be disclosed to third parties without your explicit consent.
+
+                We are committed to protecting your privacy.  Any information you choose to provide will be used solely for the purpose of this app. It will not be shared with third parties, and it will be stored securely in an environment controlled by UBC.
+                </Typography>
+            <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
+            You can alter your entries at any time, and can delete them entirely, should you wish to do so.
             </Typography>
         </div>
 
@@ -233,7 +235,6 @@ export function Email(props){
                 </Typography>
 
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Trans/Cis</InputLabel>
 
                     <Select
                         labelId="demo-simple-select-label"
