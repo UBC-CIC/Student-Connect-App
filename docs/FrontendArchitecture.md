@@ -99,14 +99,15 @@ type eventsList {
 ```
 type userData  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
-  SPUID: ID!
-  displayName: String!
-  yearLevel: Int!
-  email: String!
-  primarySpecialization:String!
-  campus:String!
-  faculty: String!
-
+  SPUID: ID
+  displayName: String
+  yearLevel: Int
+  email: String
+  primarySpecialization:String
+  campus:String
+  faculty: String
+  gender: String
+  cisOrTrans:String
 }
 
 ```

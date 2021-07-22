@@ -60,7 +60,12 @@ export const fetchAllEvents = () => {
                         if(item.cost===""){
                             item.cost='Free'
                         }
-                    dispatch(fetchAllEventsSuccess(allEvents))
+
+                        allEvents.sort(function(a, b) {
+                            return new Date(a.startDate) - new Date(b.startDate)
+                        });
+
+                        dispatch(fetchAllEventsSuccess(allEvents))
 
                     })
 
