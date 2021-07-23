@@ -13,7 +13,7 @@ import {
     Switch
 } from "@material-ui/core";
 import {
-    academicOptions,
+    academicOptions, cultureOptions,
     eventsOptions,
     mensSportsOptions,
     newsBlogsClubsOptions,
@@ -61,7 +61,7 @@ export function SurveyWelcomePage(props){
 
     return(
         <div>
-            <Typography align={'left'} variant="h6" className={classes.title}>
+            <Typography align={'left'} variant="h5" className={classes.title}>
                 Welcome to the Student App
             </Typography>
             <Divider className={classes.divider}/>
@@ -86,7 +86,7 @@ export function NewsBlogsClubs(props){
     const classes = useStyles();
     return(
         <div>
-            <Typography align={'left'} variant="h6" className={classes.title}>
+            <Typography align={'left'} variant="h5" className={classes.title}>
                 Which of the following topics interest you? (for news, blogs and clubs)
             </Typography>
             <Divider className={classes.divider}/>
@@ -106,8 +106,8 @@ export function Events(props){
 
     return(
         <div>
-            <Typography align={'left'} variant="h6" className={classes.title}>
-                You would be interested in attending events organised in which of the following areas?
+            <Typography align={'left'} variant="h5" className={classes.title}>
+                Which of the following event host would you like to get the event recommendation from ?
             </Typography>
             <Divider className={classes.divider}/>
             {eventsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
@@ -124,7 +124,7 @@ export function Academic(props){
     return(
         <div>
             <div>
-                <Typography align={'left'} variant="h6" className={classes.title}>
+                <Typography align={'left'} variant="h5" className={classes.title}>
                     Which of the following academic fields are you interested in? (for news, blogs and clubs)
                 </Typography>
                 <Divider className={classes.divider}/>
@@ -143,11 +143,11 @@ export function Sports(props){
     return(
         <div>
             <div>
-                <Typography align={'left'} variant="h6" className={classes.title}>
+                <Typography align={'left'} variant="h5" className={classes.title}>
                     Which of the following sports are you interested in? (for athletic news)
                 </Typography>
                 <Divider className={classes.divider}/>
-                <Typography align={'left'} variant="subtitle1" className={classes.title}>
+                <Typography align={'left'} variant="h6" className={classes.title}>
                     Men's Sports
                 </Typography>
 
@@ -156,7 +156,7 @@ export function Sports(props){
                                                                  handleChange={props.handleChange} category={"mensSportsList"}
                                                                  userPreference={props.userPreference}/>)}
                 <Divider className={classes.divider}/>
-                <Typography align={'left'} variant="subtitle1" className={classes.title}>
+                <Typography align={'left'} variant="h6" className={classes.title}>
                     Women's Sports
                 </Typography>
 
@@ -254,6 +254,12 @@ export function Email(props){
 
                     </Select>
                 </FormControl>
+                <Typography align={'left'} variant="h5" className={classes.title}>
+                    Which of the following cultures are you interested in?
+                </Typography>
+                {cultureOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
+                                                                   handleChange={props.handleChange} category={"culturePreference"}
+                                                                   userPreference={props.userPreference}/>)}
 
             </Grid>
         </div>

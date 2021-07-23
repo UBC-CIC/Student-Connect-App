@@ -8,12 +8,13 @@ const StyledButton = withStyles({
         border: 0,
         color: 'white',
         height: 20,
-        padding: '0 15px',
-        marginRight:'5px'
+        padding: '15px',
+        marginRight:'5px',
+        marginTop:'10px',
     },
     label: {
         textTransform: 'capitalize',
-        fontSize:'9px'
+        fontSize:'11px'
     },
 })(Button);
 

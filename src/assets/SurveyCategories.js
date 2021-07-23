@@ -29,6 +29,15 @@ const academicOptions =
         {name: 'Statistics', backendName:'statistics'},
 
     ]
+const cultureOptions =
+    [
+            {name: 'North American', backendName:'northAmerican'},
+            {name: 'South American', backendName:'southAmerican'},
+            {name: 'European', backendName:'european'},
+            {name: 'African', backendName:'african'},
+            {name: 'Australian', backendName:'australian'},
+            {name: 'Asian', backendName:'asian'}
+    ]
 
 
 const eventsOptions=
@@ -78,4 +87,4 @@ const womensSportsOptions=
 
     ]
 
-export {newsBlogsClubsOptions,academicOptions,eventsOptions,mensSportsOptions,womensSportsOptions}
+export {cultureOptions,newsBlogsClubsOptions,academicOptions,eventsOptions,mensSportsOptions,womensSportsOptions}

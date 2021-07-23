@@ -9,7 +9,7 @@ import List from "@material-ui/core/List";
 import CloseIcon from '@material-ui/icons/Close';
 import {EmailItem, PreferenceListItem} from "../ListItem/ListItem";
 import {
-    academicOptions,
+    academicOptions, cultureOptions,
     eventsOptions,
     mensSportsOptions,
     newsBlogsClubsOptions,
@@ -94,6 +94,9 @@ export default function UserPreferenceModal(props){
                                             backendName: item.backendName, checked:userPreference["newsBlogsClubsPreference"][item.backendName], userPreference:userPreference,category:"newsBlogsClubsPreference" }))} icon={<RssFeedIcon/>}/>
                     <PreferenceListItem label={"Events"}
                                         nestedItem={eventsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["eventsPreference"][item.backendName], userPreference:userPreference,category:"eventsPreference" }) )} icon={<EventIcon/>}/>
+                    <PreferenceListItem label={"Academic"}
+                                        nestedItem={cultureOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["culturePreference"][item.backendName], userPreference:userPreference,category:"culturePreference" }) )} icon={<BookIcon/>}/>
+
                     <PreferenceListItem label={"Academic"}
                                         nestedItem={academicOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["academicPreference"][item.backendName], userPreference:userPreference,category:"academicPreference" }) )} icon={<BookIcon/>}/>
                     <PreferenceListItem label={"Men's Sports"}

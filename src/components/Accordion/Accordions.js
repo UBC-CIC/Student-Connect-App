@@ -46,14 +46,14 @@ export function NewsCardAccordion(props) {
                 </AccordionSummary>
                 <div>
                     {date ?
-                        <Typography variant="caption" className={classes.date} align={'left'} >
+                        <Typography variant="subtitle2" className={classes.date} align={'left'} >
                             Date: {date}
                         </Typography>
                         : null}
 
                 </div>
 
-                <Typography variant="caption"  align={'left'} >
+                <Typography variant="subtitle2"  align={'left'} >
                         {content}
                 </Typography>
 
@@ -78,7 +78,7 @@ export function ClubCardAccordion(props) {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="caption"  >
+                    <Typography variant="subtitle2"  >
                         {content}
                     </Typography>
 
@@ -103,7 +103,7 @@ export function EventCardAccordion(props) {
                     </Typography>
                 </AccordionSummary>
                     <Grid item xs={12}>
-                        <Typography variant="caption"  align={'left'} >
+                        <Typography variant="subtitle2"  align={'left'} >
                             {description}
                         </Typography>
                     </Grid>

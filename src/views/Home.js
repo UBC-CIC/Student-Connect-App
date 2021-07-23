@@ -145,6 +145,9 @@ function Home(props) {
                 <Grid container spacing={3}>
 
                     {blogsList}
+                    {blogsList.length===0&&(
+                        <h1>hi</h1>
+                    )}
                 </Grid>
             </Container>
             <Divider className={classes.divider}/>

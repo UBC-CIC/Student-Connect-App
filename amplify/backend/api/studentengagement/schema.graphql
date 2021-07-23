@@ -4,7 +4,16 @@ type userPreference @model @auth(rules: [{ allow: owner, operations: [create, up
   sportsPreference:sportsPreference!
   academicPreference:academicList!
   eventsPreference: eventsList!
+  culturePreference: cultureList!
   emailNotification: Boolean!
+}
+type cultureList{
+  northAmerican:Boolean
+  southAmerican:Boolean
+  european:Boolean
+  african:Boolean
+  australian:Boolean
+  asian:Boolean
 }
 type sportsPreference {
   mensSportsList: mensSportsList

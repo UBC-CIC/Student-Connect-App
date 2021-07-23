@@ -278,6 +278,14 @@ const userPreference ={
         recreation: false,
         religion: false,
         research: false,
+    },
+    culturePreference:{
+        northAmerican:false,
+        southAmerican:false,
+        european:false,
+        african:false,
+        australian:false,
+        asian:false,
     }
 }
 
@@ -320,7 +328,7 @@ const userPreference ={
             case 4:
                 return <Sports handleChange={handleChange} userPreference={userPreference}/>
             case 5:
-                return <Email handleSwitchChange={handleSwitchChange} userPreference={userPreference}
+                return <Email handleChange={handleChange} handleSwitchChange={handleSwitchChange} userPreference={userPreference}
                               handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}/>
 
             default:

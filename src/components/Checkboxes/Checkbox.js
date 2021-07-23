@@ -49,7 +49,7 @@ export function SurveyCheckbox(props) {
             <FormControlLabel
                 control={<BlueCheckbox checked={state.checked} label={backendName} onChange={handleChange} name="checked"
                 />}
-                label={<Typography variant={"caption"}>{label}</Typography>}
+                label={<Typography variant={"subtitle1"}>{label}</Typography>}
             />
         </FormGroup>
     );

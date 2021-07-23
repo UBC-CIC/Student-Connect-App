@@ -94,12 +94,12 @@ export function EventCard (props){
                     </Grid>
 
                         <Grid item xs={12}>
-                        <Typography variant="caption"  align={'left'} color={'error'}>
+                        <Typography variant="subtitle2"  align={'left'} color={'error'}>
                             {startDate} - {endDate}
                         </Typography>
                     </Grid>
                         <Grid item xs={12}>
-                            <Typography variant="caption"  align={'left'} >
+                            <Typography variant="subtitle2"  align={'left'} >
                                 {location} • {cost}
                             </Typography>
                         </Grid>
