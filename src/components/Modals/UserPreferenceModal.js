@@ -23,7 +23,7 @@ import EventIcon from '@material-ui/icons/Event';
 import {Sports} from "@material-ui/icons";
 import {updateUserPreferenceAction} from "../../actions/userAction";
 import EmailIcon from "@material-ui/icons/Email";
-
+import PublicIcon from '@material-ui/icons/Public';
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
@@ -94,11 +94,12 @@ export default function UserPreferenceModal(props){
                                             backendName: item.backendName, checked:userPreference["newsBlogsClubsPreference"][item.backendName], userPreference:userPreference,category:"newsBlogsClubsPreference" }))} icon={<RssFeedIcon/>}/>
                     <PreferenceListItem label={"Events"}
                                         nestedItem={eventsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["eventsPreference"][item.backendName], userPreference:userPreference,category:"eventsPreference" }) )} icon={<EventIcon/>}/>
-                    <PreferenceListItem label={"Academic"}
-                                        nestedItem={cultureOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["culturePreference"][item.backendName], userPreference:userPreference,category:"culturePreference" }) )} icon={<BookIcon/>}/>
 
                     <PreferenceListItem label={"Academic"}
                                         nestedItem={academicOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["academicPreference"][item.backendName], userPreference:userPreference,category:"academicPreference" }) )} icon={<BookIcon/>}/>
+
+                    <PreferenceListItem label={"Culture"}
+                                        nestedItem={cultureOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["culturePreference"][item.backendName], userPreference:userPreference,category:"culturePreference" }) )} icon={<PublicIcon/>}/>
                     <PreferenceListItem label={"Men's Sports"}
                                         nestedItem={mensSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["mensSportsList"][item.backendName], userPreference:userPreference,category:"mensSportsList" }) )} icon={<Sports/>}/>
                     <PreferenceListItem label={"Women's Sports"}

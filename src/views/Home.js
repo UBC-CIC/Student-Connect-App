@@ -17,6 +17,8 @@ import {getUserPreferenceAction} from "../actions/userAction";
 import {listToString} from "../helpers/PreferenceListToString";
 import {Auth} from "aws-amplify";
 import AWS from "aws-sdk";
+import {EventCard, HomeEventCard} from "../components/Cards/EventCard";
+import defaultImg from "../assets/img/event_img.png";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -68,7 +70,7 @@ function StarBorderIcon(props) {
 StarBorderIcon.propTypes = {className: PropTypes.any};
 function Home(props) {
     const classes = useStyles();
-    const {news,blogs,sportsNews} = props
+    const {news,blogs,sportsNews,events} = props
     const newsList = news.map((item) => {
         return(
             <Grid item xs={12} sm={6} className={classes.grid}>
@@ -108,6 +110,28 @@ function Home(props) {
 
         )
     })
+    const eventList=events.map((item)=>{
+        if(item._source.cost===''){
+            item._source.cost = "Free"
+        }
+
+        return(
+            <Grid item xs={12} sm={6} className={classes.grid}>
+
+            <EventCard title={item._source.title}
+                           categories={item._source.categories}
+                           link={item._source.link}
+                           location={item._source.eventLocation.venue}
+                           photo={item._source.fullImage[0]}
+                           description={item._source.excerpt}
+                           startDate={item._source.startDate}
+                           endDate={item._source.endDate}
+                           cost={item._source.cost}
+            />
+            </Grid>
+
+        )
+    })
 
     return (
         <React.Fragment>
@@ -134,7 +158,10 @@ function Home(props) {
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Events
                 </Typography>
-                <EventsCarousel/>
+                <Grid container spacing={4} >
+
+                {eventList}
+                </Grid>
                 </Container>
             <Container maxWidth={'xl'}>
                 <Divider className={classes.divider}/>
@@ -145,9 +172,6 @@ function Home(props) {
                 <Grid container spacing={3}>
 
                     {blogsList}
-                    {blogsList.length===0&&(
-                        <h1>hi</h1>
-                    )}
                 </Grid>
             </Container>
             <Divider className={classes.divider}/>
@@ -169,6 +193,7 @@ const mapStateToProps = (state) => {
         userPreference: state.userPreference,
         currentUser:state.currentUser,
         sportsNews:state.sportsNews,
+        events: state.events,
 
     };
 };

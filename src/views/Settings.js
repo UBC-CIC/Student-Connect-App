@@ -3,6 +3,7 @@ import {makeStyles} from "@material-ui/core/styles";
 import React from "react";
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
 import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {

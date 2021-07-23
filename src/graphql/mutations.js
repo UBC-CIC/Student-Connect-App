@@ -78,6 +78,14 @@ export const createUserPreference = /* GraphQL */ `
         subjectDepartments
         universityServices
       }
+      culturePreference {
+        northAmerican
+        southAmerican
+        european
+        african
+        australian
+        asian
+      }
       emailNotification
       createdAt
       updatedAt
@@ -162,6 +170,14 @@ export const updateUserPreference = /* GraphQL */ `
         subjectDepartments
         universityServices
       }
+      culturePreference {
+        northAmerican
+        southAmerican
+        european
+        african
+        australian
+        asian
+      }
       emailNotification
       createdAt
       updatedAt
@@ -245,6 +261,14 @@ export const deleteUserPreference = /* GraphQL */ `
         studentServices
         subjectDepartments
         universityServices
+      }
+      culturePreference {
+        northAmerican
+        southAmerican
+        european
+        african
+        australian
+        asian
       }
       emailNotification
       createdAt
