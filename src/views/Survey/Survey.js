@@ -302,9 +302,12 @@ const userPreference ={
 
      const handleGenderChange=(param)=>{
          setGender(param)
+         console.log(param)
      }
      const handleCisOrTransChange=(param)=>{
          setCisOrTrans(param)
+         console.log(param)
+
      }
 
     function getStepContent(step) {
@@ -358,7 +361,6 @@ const userPreference ={
              cisOrTrans:cisOrTrans
 
          }
-         console.log(userData)
 
          createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {

@@ -66,9 +66,6 @@ export function SurveyWelcomePage(props){
             </Typography>
             <Divider className={classes.divider}/>
             <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
-                This app centralized information specifically to the university's events, life blog, athletic news, clubs and news page.
-            </Typography>
-            <Typography align={'left'} variant="subtitle1" className={classes.introduction}>
                 This app amalgamates information about events, blogs, news and clubs in order to provide information you may be interested in. In order to show you information relevant to your interests, we need some information about you. Completing the form is entirely voluntary; if you choose not to provide further information, the recommendations will simply be less personalized.
             </Typography>
 
@@ -188,11 +185,19 @@ export function Email(props){
     };
     const handleGenderChange=(event)=>{
         setGender(event.target.value)
-        props.handleGenderChange(event.target.value)
+        if(event.target.value==="Prefer not to answer"){
+            props.handleGenderChange("")
+        }else{
+            props.handleGenderChange(event.target.value)
+        }
     }
     const handleTransOrCisChange=(event)=> {
         setTransOrCis(event.target.value)
-        props.handleCisOrTransChange(event.target.value)
+        if(event.target.value==="Prefer not to answer"){
+            props.handleCisOrTransChange("")
+        }else{
+            props.handleCisOrTransChange(event.target.value)
+        }
     }
 
         return(
@@ -216,7 +221,7 @@ export function Email(props){
                 </Typography>
 
                 <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                    <InputLabel id="demo-simple-select-label">Select an option</InputLabel>
                     <Select
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
@@ -226,7 +231,7 @@ export function Email(props){
                         <MenuItem value={"female"}>Female Gender</MenuItem>
                         <MenuItem value={"male"}>Male Gender</MenuItem>
                         <MenuItem value={"non_binary"}>Non-Binary Gender</MenuItem>
-                        <MenuItem value={""}>Prefer not to Answer</MenuItem>
+                        <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
 
                     </Select>
                 </FormControl>
@@ -235,6 +240,7 @@ export function Email(props){
                 </Typography>
 
                 <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-simple-select-label">Select an option</InputLabel>
 
                     <Select
                         labelId="demo-simple-select-label"
@@ -244,7 +250,7 @@ export function Email(props){
                     >
                         <MenuItem value={"cisgender"}>Cisgender</MenuItem>
                         <MenuItem value={"transgender"}>Transgender</MenuItem>
-                        <MenuItem value={""}>Prefer not to Answer</MenuItem>
+                        <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
 
                     </Select>
                 </FormControl>
