@@ -302,12 +302,9 @@ const userPreference ={
 
      const handleGenderChange=(param)=>{
          setGender(param)
-         console.log(param)
      }
      const handleCisOrTransChange=(param)=>{
          setCisOrTrans(param)
-         console.log(param)
-
      }
 
     function getStepContent(step) {
