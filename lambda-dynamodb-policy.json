@@ -2,7 +2,7 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Sid": "lambda-dynamodb-policy",
+      "Sid": "policy",
       "Effect": "Allow",
       "Action": [
         "lambda:InvokeFunction",
