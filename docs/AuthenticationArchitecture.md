@@ -169,6 +169,15 @@ timeout: 100
 ```
 
 
+5.To sign out, please have a button that redirects to the sign out URL (this url can be found in the step 3 of section 'App Client Settings' of this document).
+
+The sign in url might look as follows:
+
+SIGNOUT_URL=`https://localhost:3000/logOut`
+
+The button can be written like this:
+
+`<Button href="SIGNOUT_URL">Sign Out </Button>`
 
 
 
