@@ -50,7 +50,7 @@ export const createUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball
@@ -142,7 +142,7 @@ export const updateUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball
@@ -234,7 +234,7 @@ export const deleteUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball

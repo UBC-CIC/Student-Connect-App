@@ -47,7 +47,7 @@ export const onCreateUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball
@@ -136,7 +136,7 @@ export const onUpdateUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball
@@ -225,7 +225,7 @@ export const onDeleteUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball

@@ -47,7 +47,7 @@ export const getUserPreference = /* GraphQL */ `
           soccer
           softball
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           volleyball
