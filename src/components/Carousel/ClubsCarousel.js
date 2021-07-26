@@ -1,17 +1,27 @@
 import ClubCard from "../Cards/ClubCard";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import Carousel from "react-material-ui-carousel";
 import {connect} from "react-redux";
+import Typography from "@material-ui/core/Typography";
 
 function ClubsCarousel(props){
     const {clubs}=props
+    const [clubLength,setClubLength]= useState(clubs.length)
+    useEffect(()=>{
+        setClubLength(clubs.length)
+    })
     return (
+        <div>
+            <Carousel animation={'slide'} autoPlay={false} >
+                {clubs.map( (item, i) =><ClubsItem key={i} item={item}/>)}
+            </Carousel>
+            {clubLength===0&&
+            <Typography variant={"h6"}>
+                Sorry, there are currently no clubs that match your preference
+            </Typography>}
 
-        <Carousel animation={'slide'} autoPlay={false} >
-            {
-                clubs.map( (item, i) => <ClubsItem key={i} item={item} /> )
-            }
-        </Carousel>
+        </div>
+
     )
 
 

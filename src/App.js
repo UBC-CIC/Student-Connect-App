@@ -1,7 +1,7 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Home from "./views/Home";
+import Home from "./views/Home/Home";
 import Survey from "./views/Survey/Survey";
 import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
 import Clubs from './views/Clubs'

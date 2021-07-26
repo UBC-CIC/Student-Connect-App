@@ -86,7 +86,7 @@ export function SettingsPageCheckbox(props) {
             <FormControlLabel
                 control={<BlueCheckbox checked={state.checked} label={name} onChange={handleChange} name="checked"
                 />}
-                label={<Typography variant={"caption"}>{name}</Typography>}
+                label={<Typography variant={"subtitle1"}>{name}</Typography>}
             />
         </FormGroup>
     );

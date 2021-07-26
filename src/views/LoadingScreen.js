@@ -1,4 +1,4 @@
-import Home from "./Home";
+import Home from "./Home/Home";
 import {useEffect, useState} from "react";
 import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../actions/newsActions";
 import {fetchAllEvents, fetchEvents} from "../actions/eventsAction";
