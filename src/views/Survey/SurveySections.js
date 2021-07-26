@@ -33,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(1),
     },
     title:{
-        color:"#0055B7"
-
+        color:"#0055B7",
+        marginTop: theme.spacing(1)
     },
     divider:{
         marginTop:'5px',
@@ -254,7 +254,15 @@ export function Email(props){
 
                     </Select>
                 </FormControl>
-                <Typography align={'left'} variant="h5" className={classes.title}>
+                <Typography align={'left'} variant="subtitle1" >
+                    Cisgender describes a person whose gender identity matches their assigned sex at birth.
+                </Typography>
+                <Typography align={'left'} variant="subtitle1" >
+                    Transgender describes a person whose gender identity does not match their assigned sex at birth.
+                </Typography>
+
+
+                <Typography align={'left'} variant="h6" className={classes.title}>
                     Which of the following cultures are you interested in?
                 </Typography>
                 {cultureOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
