@@ -245,7 +245,7 @@ const userPreference ={
             skiing: false,
             soccer: false,
             squash: false,
-            swimmingAndDriving: false,
+            swimming: false,
             tennis: false,
             trackAndField: false,
             wrestling: false,

@@ -30,7 +30,7 @@ export const getUserPreference = /* GraphQL */ `
           skiing
           soccer
           squash
-          swimmingAndDriving
+          swimming
           tennis
           trackAndField
           wrestling
