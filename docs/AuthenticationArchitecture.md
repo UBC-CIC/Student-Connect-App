@@ -14,13 +14,13 @@ Since the setup for each external IDP is different, this document will just focu
 Once the deployment of the backend and frontend of this app is finished, please head to
 [**Cognito**](https://console.aws.amazon.com/cognito/home)
 
-###Access User Pools
+### Access User Pools
 1. Click on 'Manage User Pools'
    ![userPoolHome](AuthImgs/userPoolHome.png)
 2. Select the User Pool which the student app is using
    ![selectUserPool](AuthImgs/selectUserPool.png)
 
-###SAML Provider Setup
+### SAML Provider Setup
 1. Click on 'Identity Providers' on the panel from the left side
    ![selectUserPool](AuthImgs/samlPanel.png)
 
@@ -32,7 +32,7 @@ Once the deployment of the backend and frontend of this app is finished, please 
    
 4. Once everything filled, click onto 'Create Provider'
 
-###Attributes Creation
+### Attributes Creation
 
 1. Now, we need to create the attributes that you are going to capture from your external idp in Cognito.
    Click on 'Attributes' on the panel from the left side
@@ -41,7 +41,7 @@ Once the deployment of the backend and frontend of this app is finished, please 
 click on 'save changes'.
    ![mapping](AuthImgs/attributesCreation.png)
 
-###Attributes Mapping
+### Attributes Mapping
 1. Click onto 'Attributes Mapping'
 2. In the dropdown menu, make sure to select the SAML provider that you have just created
    In our case, the SAML provider name called 'MySamlProvider'
@@ -51,7 +51,7 @@ click on 'save changes'.
    ![mapping](AuthImgs/attributeMapping2.png)
 4. Once you are done, save you changes
 
-###App Client Setup
+### App Client Setup
 
 1. Click on 'App Clients' on the panel from the left side
    ![client](AuthImgs/appClientPanel.png)
@@ -69,7 +69,7 @@ click on 'save changes'.
 7. Now, you should see your new app client and there is an App client id associated to it. Take a note of the id.
 
 
-###App Client Settings
+### App Client Settings
 
 1. Go to App Client Settings
    ![client](AuthImgs/appClientSettings.png)
@@ -81,7 +81,7 @@ click on 'save changes'.
 ![client](AuthImgs/appClientSettings2.png)
 
 
-###Hosted UI setup
+### Hosted UI setup
 We need to configure a hosted UI (provided by Cognito) for the user to sign-in/out 
 
 First, let's create a domain name for the hosted UI
