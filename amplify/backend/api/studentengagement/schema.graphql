@@ -31,7 +31,7 @@ type womensSportsList {
   soccer: Boolean
   softball: Boolean
   squash: Boolean
-  swimmingAndDriving: Boolean
+  swimming: Boolean
   tennis: Boolean
   trackAndField: Boolean
   volleyball: Boolean

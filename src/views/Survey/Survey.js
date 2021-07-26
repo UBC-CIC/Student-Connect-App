@@ -262,7 +262,7 @@ const userPreference ={
             soccer: false,
             softball: false,
             squash: false,
-            swimmingAndDriving: false,
+            swimming: false,
             tennis: false,
             trackAndField: false,
             volleyball: false,
