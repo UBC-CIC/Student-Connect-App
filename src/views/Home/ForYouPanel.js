@@ -143,7 +143,7 @@ export default function ForYouPanel(props){
     return(
         <Grid container spacing={3} alignItems="stretch">
             <Container>
-            <Typography align={'left'} variant="h6">
+            <Typography align={'left'} variant="h6" className={classes.divider}>
                 Recommendations based on your personalized content tags
             </Typography>
                 <Divider className={classes.divider}/>

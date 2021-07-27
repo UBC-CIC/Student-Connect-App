@@ -101,11 +101,13 @@ const useStyles = makeStyles((theme) => ({
         float: 'right',
         backgroundColor:"#0055B7",
         color:"white",
-        textTransform:'none'
+        textTransform:'none',
+        fontSize:"15px"
 
     },
     appName:{
-        minWidth:"50%"
+        minWidth:"50%",
+        fontWeight:"400"
     },
     drawerPaperClose: {
     },
@@ -155,7 +157,7 @@ function Navbar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography className={classes.appName} variant="h6">
+                        <Typography className={classes.appName} variant="h5">
                             Student App
                         </Typography>
 
