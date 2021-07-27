@@ -6,7 +6,6 @@ import React from "react";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
 
-const category = ['lduh','aldo','dddd']
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: '2px 4px',

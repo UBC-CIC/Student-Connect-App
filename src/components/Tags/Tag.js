@@ -18,11 +18,6 @@ const StyledButton = withStyles({
     },
 })(Button);
 
-// function createTags(categories){
-//     for(var i =0;i<categories.length;i++){
-//
-//     }
-// }
 export function Tag(props){
     const {categories} = props
     return(
@@ -33,21 +28,9 @@ export function Tag(props){
                     </div>
                 : null
 
-        // <StyledButton>{categories[0]}</StyledButton>
     )
 
 
 }
 
 
-export function Lduh(props){
-    const {categories} = props
-
-    return(
-        <div>
-        {categories.map(category => <StyledButton  >
-            {category}</StyledButton>)}
-        </div>
-    )
-
-}

@@ -109,15 +109,12 @@ export  function EmailItem(props){
             <Collapse in={openListItem} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                     <ListItem className={classes.nested}>
-                    <Typography>
-
-                    </Typography>
                         <FormGroup row>
                             <FormControlLabel
                                 control={<BlueCheckbox checked={state.checked}
                                                        onChange={handleSwitchChange} name="checked"
                                 />}
-                                label={<Typography variant={"caption"}>{"Email me news, events and blogs that I might be interested"}</Typography>}
+                                label={<Typography variant={"subtitle1"}>{"Email me news, events and blogs that I might be interested"}</Typography>}
                             />
                         </FormGroup>
 
