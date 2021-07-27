@@ -62,17 +62,6 @@ def lambda_handler(event, context):
                                        ExclusiveStartKey=response["LastEvaluatedKey"])
             es_hash_items_response.extend(response["Items"])
 
-        # es_hash_list_map = {
-        #     "Events": [],
-        #     "News": [],
-        #     "Blogs": [],
-        #     "AthleticsNews": [],
-        #     "Clubs": []
-        # }
-        # # Separate the hashes in the ESHashTable by document type into individual lists
-        # for es_item_hash_string in es_hash_items_response:
-        #     es_hash_list_map.get(es_item_hash_string["documentType"]).append(es_item_hash_string["documentHash"])
-
         es_hash_items = []
         for response_item in es_hash_items_response:
             es_hash_items.append(response_item["documentHash"])
