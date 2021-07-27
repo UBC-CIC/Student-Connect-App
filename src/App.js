@@ -81,7 +81,7 @@ function App(props) {
                 identityId: currentCredentials.identityId,
                 secretAccessKey: currentCredentials.secretAccessKey,
                 sessionToken: currentCredentials.sessionToken,
-                region: 'ca-central-1',
+                region: awsConfig.aws_project_region,
             });
 
             setUID(propUser.attributes['email'])

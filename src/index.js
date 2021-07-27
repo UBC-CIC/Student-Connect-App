@@ -4,7 +4,6 @@ import './index.css';
 import {Provider} from "react-redux";
 import {applyMiddleware, createStore} from "redux";
 import thunk from "redux-thunk";
-// import * as serviceWorker from '../public/serviceWorker';
 import reducers from "./reducers";
 import {Amplify} from "aws-amplify";
 import awsConfig from './aws-exports';
@@ -19,14 +18,12 @@ Amplify.configure(awsConfig);
 
 
 ReactDOM.render(
-    // <AmplifyAuthenticator >
     <Provider store={store}>
         <HashRouter>
         <Route path = '/logOut' exact component={SignIn}/>
             <SignIn/>
         </HashRouter>
     </Provider>,
-    // </AmplifyAuthenticator>,
 
 document.getElementById('root')
 );
