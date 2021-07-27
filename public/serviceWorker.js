@@ -38,9 +38,9 @@ self.addEventListener('install', function(event) {
         caches.open('AppCahe').then(function(cache) {
             return cache.addAll(
                 [
-                    'src/App.css',
-                    'src/App.js',
-                    'src/views/Home.js'
+                    'src/views/Events.js',
+                    'src/views/Clubs.js',
+                    'src/views/News.js',
                 ]
             );
         })
