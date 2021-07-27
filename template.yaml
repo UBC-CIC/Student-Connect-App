@@ -581,6 +581,63 @@ Resources:
         Variables:
           ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 
+  backendStackName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "BackendStackName"
+      Type: String
+      Value: !Sub "${AWS::StackName}"
+
+  getESDocumentsLambdaName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "GetESDocumentsLambdaName"
+      Type: String
+      Value: !Ref getESDocuments
+
+  getESDocumentsLambdaArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "GetESDocumentsLambdaArn"
+      Type: String
+      Value: !GetAtt getESDocuments.Arn
+
+  eventsDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "EventsTableArn"
+      Type: String
+      Value: !GetAtt eventsDDBTable.Arn
+
+  blogsDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "BlogsTableArn"
+      Type: String
+      Value: !GetAtt blogsDDBTable.Arn
+
+  newsDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "NewsTableArn"
+      Type: String
+      Value: !GetAtt newsDDBTable.Arn
+
+  athleticsNewsDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "AthleticsNewsTableArn"
+      Type: String
+      Value: !GetAtt athleticsNewsDDBTable.Arn
+
+  clubsDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "ClubsTableArn"
+      Type: String
+      Value: !GetAtt clubsDDBTable.Arn
+
+
   eventsQueryTime:
     Type: AWS::SSM::Parameter
     Properties:
