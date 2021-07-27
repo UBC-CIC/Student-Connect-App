@@ -114,7 +114,7 @@ export default function HomeTab(props) {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
 
-    const {news,blogs,sportsNews,events,allNews,allEvents,allBlogs,allClubs} = props
+    const {news,blogs,sportsNews,events,allNews,allEvents,allBlogs} = props
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };

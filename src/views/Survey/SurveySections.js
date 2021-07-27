@@ -49,7 +49,6 @@ const useStyles = makeStyles((theme) => ({
 
 export function SurveyWelcomePage(props){
     const classes = useStyles();
-    const {checked} = props
 
 
     return(

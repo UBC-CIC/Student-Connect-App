@@ -8,7 +8,6 @@ import {connect} from "react-redux";
 import {listToString} from "../helpers/PreferenceListToString";
 
 function LoadingScreen(props) {
-    const [loading,setloading] = useState(true)
     const {userPreference,fetchNews,
         fetchEvents,
         fetchBlogs,

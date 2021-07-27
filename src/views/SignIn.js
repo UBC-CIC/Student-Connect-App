@@ -17,7 +17,7 @@ function SignIn(props) {
 
     useEffect(() => {
         setAuthListener();
-    }, []);
+    });
 
     useEffect(() => {
 

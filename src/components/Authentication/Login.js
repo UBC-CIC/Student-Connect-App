@@ -55,7 +55,7 @@ function Login(props) {
 
         retrieveCreds()
         retrieveUser();
-    }, []);
+    });
 
     function onChange(e) {
         e.persist();

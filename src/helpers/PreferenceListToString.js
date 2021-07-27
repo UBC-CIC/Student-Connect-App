@@ -4,11 +4,11 @@ export function listToString(list){
         if (list.hasOwnProperty(key)) {
             if(list[key]){
                 if(key==='careerDevelopment'){
-                    res= res +"careers" +" "
+                    res= res +"careers "
                 }else if(key==='gradSchool'){
                     res = res + "Graduate Studies "
                 }else if (key==='recreation'){
-                    res = res + 'recreation ' + 'UBCO life '
+                    res = res + 'recreation UBCO life '
                 }
                 else{
                     res = res + key +" "

@@ -32,7 +32,6 @@ export function SurveyCheckbox(props) {
         return userPreference[category][backendName]
 
     }
-    const classes = useStyles()
     const [state, setState] = React.useState({
         checked: checkSport(),
     });
@@ -55,8 +54,7 @@ export function SurveyCheckbox(props) {
     );
 }
 export function SettingsPageCheckbox(props) {
-    const classes = useStyles()
-    const {name, category, backendName,checked,userPreference} = props
+    const {name, category, backendName,userPreference} = props
     function checkSport() {
         if(category==="mensSportsList" || category==="womensSportsList"){
             return userPreference.sportsPreference[category][backendName]

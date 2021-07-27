@@ -1,4 +1,3 @@
-import React from "react";
 
 export const clubCategories=[
     "Academics","Activism","Biology","Business","Chemistry","Computer Science",

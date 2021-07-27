@@ -45,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
 
 function App(props) {
     const classes = useStyles();
-    const{fetchNews, fetchEvents,fetchBlogs,fetchClubs,fetchAllClubs,fetchAllEvents,
-        fetchAllNews,fetchAllBlogs,fetchSportsNews, fetchAllSportsNews,getUserPreferenceAction,currentUser,
-        userPreference,createUserDataAction,getSavedItems,currentCredentials,propUser}= props
+    const{fetchAllClubs,fetchAllEvents,
+        fetchAllNews,fetchAllBlogs, fetchAllSportsNews,getUserPreferenceAction,
+        userPreference,getSavedItems,currentCredentials,propUser}= props
 
     const signInUrl = process.env.REACT_APP_SignInUrl
     const [UID,setUID] =  useState(null)

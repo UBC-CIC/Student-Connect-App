@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         paddingRight: theme.spacing(10),
         alignItems:"left",
         alignContent:"left"
-        
+
     },
     card:{
         marginTop: theme.spacing(8),
@@ -49,16 +49,8 @@ const useStyles = makeStyles((theme) => ({
 
 function Settings(props){
     const classes = useStyles();
-    const{userPreference,allNews} = props
+    const{userPreference} = props
 
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
 
     return(

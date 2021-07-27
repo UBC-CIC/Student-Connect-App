@@ -169,7 +169,7 @@ export function HomeEventCard (props){
 }
 
 export function GridListEventCard (props){
-    const {category,title,location,date,photo, link} = props
+    const {title,location,date,photo, link} = props
     const classes = useStyles();
 
     return (

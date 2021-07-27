@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme) => ({
 
 function ClubsTabs(props) {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
     const {allClubs} = props
     const [currentCategory,setCurrentCategory] = React.useState("Academics");
     const currentClubs = allClubs.filter((item => item.categories.includes(currentCategory)))
@@ -75,9 +74,6 @@ function ClubsTabs(props) {
         )
     })
 
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
     const getCategories = (index) =>{
         setCurrentCategory(index)
     }
