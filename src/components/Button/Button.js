@@ -1,11 +1,9 @@
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import {connect} from "react-redux";
-import {updateLoginState} from "../../actions/loginActions";
 import {updateSavedItems} from "../../actions/savedItemsAction";
 
 const useStyles = makeStyles((theme) => ({

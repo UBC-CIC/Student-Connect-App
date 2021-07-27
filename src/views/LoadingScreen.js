@@ -1,13 +1,13 @@
 import Home from "./Home/Home";
 import {useEffect, useState} from "react";
-import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../actions/newsActions";
-import {fetchAllEvents, fetchEvents} from "../actions/eventsAction";
-import {fetchAllBlogs, fetchBlogs} from "../actions/blogsAction";
-import {fetchAllClubs, fetchClubs} from "../actions/clubAction";
-import {createUserDataAction, getUserPreferenceAction} from "../actions/userAction";
+import {fetchNews, fetchSportsNews} from "../actions/newsActions";
+import {fetchEvents} from "../actions/eventsAction";
+import {fetchBlogs} from "../actions/blogsAction";
+import {fetchClubs} from "../actions/clubAction";
 import {connect} from "react-redux";
 import {listToString} from "../helpers/PreferenceListToString";
- function LoadingScreen(props) {
+
+function LoadingScreen(props) {
     const [loading,setloading] = useState(true)
     const {userPreference,fetchNews,
         fetchEvents,

@@ -1,24 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import Grid from '@material-ui/core/Grid';
+import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Divider} from "@material-ui/core";
-import {HomePageNewsCard} from "../../components/Cards/NewsCard";
 import * as PropTypes from "prop-types";
 import {connect} from "react-redux";
-import EventsCarousel from "../../components/Carousel/EventsCarousel";
-import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
-import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "../../actions/newsActions";
-import {fetchAllEvents, fetchEvents} from "../../actions/eventsAction";
-import {fetchAllBlogs, fetchBlogs} from "../../actions/blogsAction";
-import {fetchAllClubs, fetchClubs} from "../../actions/clubAction";
-import {getUserPreferenceAction} from "../../actions/userAction";
-import {listToString} from "../../helpers/PreferenceListToString";
-import {Auth} from "aws-amplify";
-import AWS from "aws-sdk";
-import {EventCard, HomeEventCard} from "../../components/Cards/EventCard";
-import defaultImg from "../../assets/img/event_img.png";
 import HomeTab from "./HomeTab";
 
 const useStyles = makeStyles((theme) => ({

@@ -1,17 +1,6 @@
 // import {Image} from "semantic-ui-react";
-import {
-    Button,
-    ButtonBase,
-    CircularProgress,
-    Divider,
-    Grid,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText
-} from '@material-ui/core';
+import {Button, CircularProgress, Divider, Grid, List, ListItem, ListItemIcon, ListItemText} from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
-import Image from 'material-ui-image'
 
 // icons
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
@@ -20,15 +9,14 @@ import LockIcon from '@material-ui/icons/Lock';
 import DialpadIcon from '@material-ui/icons/Dialpad';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
 import CancelRoundedIcon from '@material-ui/icons/CancelRounded';
-import CWLButton from '../../assets/img/CWL-button.jpg'
 // colors
-import { green, red } from '@material-ui/core/colors';
+import {green, red} from '@material-ui/core/colors';
 
 
 import {makeStyles, withStyles} from '@material-ui/core/styles';
 import {Auth} from "aws-amplify";
-import React, {useState, useEffect} from "react";
-import { connect } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
 import {updateCredentials, updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import TextFieldStartAdornment from "./TextFieldStartAdornment";
 import "./Login.css";

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { InputAdornment, TextField, makeStyles } from '@material-ui/core';
+import React from 'react';
+import {makeStyles, TextField} from '@material-ui/core';
 
 
 const useStyles = makeStyles((theme) => ({

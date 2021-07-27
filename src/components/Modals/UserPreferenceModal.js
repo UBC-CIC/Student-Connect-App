@@ -9,7 +9,8 @@ import List from "@material-ui/core/List";
 import CloseIcon from '@material-ui/icons/Close';
 import {EmailItem, PreferenceListItem} from "../ListItem/ListItem";
 import {
-    academicOptions, cultureOptions,
+    academicOptions,
+    cultureOptions,
     eventsOptions,
     mensSportsOptions,
     newsBlogsClubsOptions,
@@ -24,7 +25,7 @@ import {Sports} from "@material-ui/icons";
 import {updateUserPreferenceAction} from "../../actions/userAction";
 import EmailIcon from "@material-ui/icons/Email";
 import PublicIcon from '@material-ui/icons/Public';
-import MailOutlineIcon from "@material-ui/icons/MailOutline";
+
 const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),

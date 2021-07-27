@@ -1,7 +1,6 @@
 // ===================================---FETCH NEWS---=============================================
 import AWS from "aws-sdk";
-import {API, graphqlOperation} from "aws-amplify";
-import {fetchAllClubsSuccess} from "./clubAction";
+
 export const fetchNews = (categories) => {
     return (dispatch) => {
         let lambda = new AWS.Lambda()

@@ -1,15 +1,10 @@
-import {Button, Grid, IconButton} from '@material-ui/core';
+import {Grid} from '@material-ui/core';
 import Login from "../components/Authentication/Login";
 import {Auth, Hub} from "aws-amplify";
-import React, {useState, useEffect} from "react";
-import { connect } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
 import {updateCurrentUser, updateLoginState} from "../actions/loginActions";
 import App from "../App";
-import { Cache } from 'aws-amplify';
-import {func} from "prop-types";
-import FacebookIcon from "@material-ui/icons/Facebook";
-import AWS from "aws-sdk";
-
 
 
 function SignIn(props) {

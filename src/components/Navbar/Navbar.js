@@ -21,12 +21,12 @@ import EventIcon from '@material-ui/icons/Event';
 import GroupIcon from '@material-ui/icons/Group';
 import {Link} from "react-router-dom";
 import RssFeedIcon from '@material-ui/icons/RssFeed';
-import ExploreIcon from '@material-ui/icons/Explore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import {Auth} from "aws-amplify";
 import BookmarkIcon from '@material-ui/icons/Bookmark';
 import {updateLoginState} from "../../actions/loginActions";
 import {connect} from "react-redux";
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({

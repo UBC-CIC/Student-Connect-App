@@ -1,8 +1,6 @@
 import {API, graphqlOperation} from "aws-amplify";
-import {createSavedItemsTable, updateSavedItemsTable,} from "../graphql/mutations";
+import {updateSavedItemsTable,} from "../graphql/mutations";
 import {getSavedItemsTable} from "../graphql/queries";
-
-
 
 
 export const getSavedItems = (id) => {

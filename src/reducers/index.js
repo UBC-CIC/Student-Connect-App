@@ -4,7 +4,7 @@ import {allEventsReducer, eventsReducer} from "./eventsReducer";
 import {allBlogsReducer, blogsReducer} from "./blogsReducer";
 import {allClubsReducer, clubsReducer} from "./clubsReducer";
 import {preferenceReducer} from "./userReducer";
-import {loginReducer, currentUserReducer, currentCredsReducer} from "./loginReducer";
+import {currentCredsReducer, currentUserReducer, loginReducer} from "./loginReducer";
 import {savedItemReducer} from "./savedItemReducer";
 
 export default combineReducers({

@@ -1,9 +1,5 @@
-
 // ===================================---CHANGE LOGIN STATE---=======================================
 // Updates the login state of the application
-import AWS from "aws-sdk";
-import awsConfig from "../aws-exports";
-import {Auth} from "aws-amplify";
 
 export const updateLoginState = (payload) => {
     return (dispatch) => {

@@ -3,21 +3,15 @@ import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import RssFeedIcon from "@material-ui/icons/RssFeed";
-import BookIcon from "@material-ui/icons/Book";
-import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {makeStyles} from "@material-ui/core/styles";
-import SportsBasketballIcon from '@material-ui/icons/SportsBasketball';
-import {Button, Divider, Menu, MenuItem} from "@material-ui/core";
-import SortIcon from "@material-ui/icons/Sort";
 import Container from "@material-ui/core/Container";
-import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
-import {EventCard} from "../../components/Cards/EventCard";
 import ForYouPanel from "./ForYouPanel";
 import RecentPanel from "./RecentPanel";
 import HomeIcon from '@material-ui/icons/Home';
+
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
 

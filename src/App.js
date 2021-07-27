@@ -1,36 +1,29 @@
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import Home from "./views/Home/Home";
 import Survey from "./views/Survey/Survey";
-import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom';
+import {Redirect, Route} from 'react-router-dom';
 import Clubs from './views/Clubs'
 import Events from "./views/Events";
 import Settings from "./views/Settings";
 import News from './views/News'
-import {Container, IconButton} from "@material-ui/core";
+import {Container} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import Explore from "./views/SavedItems";
+import SavedItems from "./views/SavedItems";
 import AWS from 'aws-sdk';
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {fetchAllNews, fetchAllSportsNews, fetchNews, fetchSportsNews} from "./actions/newsActions";
 import {connect} from "react-redux";
 import {fetchAllEvents, fetchEvents} from "./actions/eventsAction";
 import {fetchAllBlogs, fetchBlogs} from "./actions/blogsAction";
 import {fetchAllClubs, fetchClubs} from "./actions/clubAction";
-import {Amplify, API, Auth, graphqlOperation} from 'aws-amplify';
-import {AmplifySignOut} from "@aws-amplify/ui-react";
+import {Amplify, API, graphqlOperation} from 'aws-amplify';
 import {createUserDataAction, getUserPreferenceAction} from "./actions/userAction";
-import SignIn from "./views/SignIn";
 import awsConfig from '../src/aws-exports'
-import { useHistory } from "react-router-dom";
-import FacebookIcon from "@material-ui/icons/Facebook";
 import {getUserPreference} from "./graphql/queries";
-import {listToString} from "./helpers/PreferenceListToString";
 import LoadingScreen from "./views/LoadingScreen";
-import SavedItems from "./views/SavedItems";
 import {getSavedItems} from "./actions/savedItemsAction";
-import {currentCredsReducer} from "./reducers/loginReducer";
+
 const useStyles = makeStyles((theme) => ({
     container:{
         [theme.breakpoints.down('sm')]: {

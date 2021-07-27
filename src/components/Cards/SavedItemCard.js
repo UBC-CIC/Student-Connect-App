@@ -1,19 +1,15 @@
 import {Card} from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
-import {NewsCardAccordion} from "../Accordion/Accordions";
 import Typography from "@material-ui/core/Typography";
-import {Tag} from "../Tags/Tag";
-import CardFooterButtons from "../Button/Button";
 import React, {useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import DeleteIcon from '@material-ui/icons/Delete';
 import Button from "@material-ui/core/Button";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import {connect} from "react-redux";
-import {removeSavedItems, updateSavedItems} from "../../actions/savedItemsAction";
+import {removeSavedItems} from "../../actions/savedItemsAction";
 import Alert from '@material-ui/lab/Alert';
 import AlertTitle from '@material-ui/lab/AlertTitle';
-
 
 
 const useStyles = makeStyles((theme) => ({

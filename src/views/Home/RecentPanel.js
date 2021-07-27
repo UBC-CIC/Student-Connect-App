@@ -2,11 +2,11 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
-import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
 import React from "react";
 import {EventCard} from "../../components/Cards/EventCard";
 import {makeStyles} from "@material-ui/core/styles";
 import {HomePageNewsCard} from "../../components/Cards/NewsCard";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

@@ -2,14 +2,11 @@ import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {Divider} from "@material-ui/core";
-import React, {useEffect, useState} from "react";
-import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
+import React from "react";
 import {connect} from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import {HomePageNewsCard} from "../components/Cards/NewsCard";
 import SavedItemCard from "../components/Cards/SavedItemCard";
-import {Redirect, Route} from "react-router-dom";
-import Survey from "./Survey/Survey";
+import {Redirect} from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     root: {

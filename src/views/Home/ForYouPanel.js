@@ -7,6 +7,7 @@ import React from "react";
 import {EventCard} from "../../components/Cards/EventCard";
 import {makeStyles} from "@material-ui/core/styles";
 import {HomePageNewsCard} from "../../components/Cards/NewsCard";
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,

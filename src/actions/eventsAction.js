@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
+import {eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
 
 export const fetchEvents = (categories) => {
     return (dispatch) => {

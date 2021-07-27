@@ -2,18 +2,10 @@ import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
+import {Divider, FormControl, InputLabel, MenuItem, Select, Switch} from "@material-ui/core";
 import {
-    Checkbox,
-    Divider,
-    FormControl,
-    FormControlLabel,
-    InputLabel,
-    MenuItem,
-    Select,
-    Switch
-} from "@material-ui/core";
-import {
-    academicOptions, cultureOptions,
+    academicOptions,
+    cultureOptions,
     eventsOptions,
     mensSportsOptions,
     newsBlogsClubsOptions,

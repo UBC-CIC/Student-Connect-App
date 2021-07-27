@@ -1,10 +1,9 @@
-import {Grid, Button, Input, Image, Divider, Icon} from "semantic-ui-react";
+import {Button, Divider, Grid, Icon, Image, Input} from "semantic-ui-react";
 import {Auth} from "aws-amplify";
-import React, {useState, useEffect} from "react";
-import { connect } from "react-redux";
+import React, {useEffect, useState} from "react";
+import {connect} from "react-redux";
 import {updateCredentials, updateCurrentUser, updateLoginState} from "../../actions/loginActions";
 import "./Login.css";
-import AWS from "aws-sdk";
 import CICLogo from '../../assets/img/logo_inverse.png'
 
 const initialFormState = {
