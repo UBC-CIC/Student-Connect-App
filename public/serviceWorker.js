@@ -33,7 +33,7 @@ self.addEventListener('install', function(event) {
 });
 self.addEventListener('install', function(event) {
     event.waitUntil(
-        caches.open('AppCahe').then(function(cache) {
+        caches.open('AppCache').then(function(cache) {
             return cache.addAll(
                 [
                     'src/views/Events.js',
