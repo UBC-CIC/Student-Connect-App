@@ -41,6 +41,7 @@ self.addEventListener('install', function(event) {
                     'src/views/Events.js',
                     'src/views/Clubs.js',
                     'src/views/News.js',
+                    'src/views/Home/Home.js',
                 ]
             );
         })

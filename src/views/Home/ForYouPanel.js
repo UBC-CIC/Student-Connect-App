@@ -161,7 +161,7 @@ export default function ForYouPanel(props){
                 {sportsNewsList}
             </Grid>
 
-            {news.length===0&&(
+            {(news.length===0&&sportsNewsList.length===0)&&(
                 <Typography variant={"h6"} className={classes.divider}>
                     Sorry, there are currently no news that match your preference
                 </Typography>
