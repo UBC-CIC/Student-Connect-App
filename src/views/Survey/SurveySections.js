@@ -20,6 +20,7 @@ import {
     womensSportsOptions
 } from '../../assets/SurveyCategories'
 import Grid from "@material-ui/core/Grid";
+import PopOverButton from "../../components/Button/PopOverButton";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -254,12 +255,10 @@ export function Email(props){
 
                     </Select>
                 </FormControl>
-                <Typography align={'left'} variant="subtitle1" >
-                    Cisgender describes a person whose gender identity matches their assigned sex at birth.
-                </Typography>
-                <Typography align={'left'} variant="subtitle1" >
-                    Transgender describes a person whose gender identity does not match their assigned sex at birth.
-                </Typography>
+                <PopOverButton title={"Definitions"}
+                               content={'Cisgender describes a person whose gender identity matches their assigned sex at birth.'}
+                               content2={"Transgender describes a person whose gender identity does not match their assigned sex at birth."}
+                               />
 
 
                 <Typography align={'left'} variant="h6" className={classes.title}>
