@@ -109,6 +109,7 @@ Some system installation requirements before starting deployment:
 
 ## Frontend Deployment
 <hr/>
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) .
 
 ## Installation
