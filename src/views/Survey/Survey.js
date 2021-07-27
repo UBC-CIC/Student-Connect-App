@@ -364,7 +364,6 @@ const userPreference ={
          createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {
              let res = response.data
-             console.log(res)
          })
 
      }

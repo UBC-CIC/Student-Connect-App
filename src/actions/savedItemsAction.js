@@ -11,7 +11,6 @@ export const getSavedItems = (id) => {
                 if(res.createdAt) delete res.createdAt
                 if(res.updatedAt) delete res.updatedAt
                 if(res.owner) delete res.owner
-                console.log(response)
 
                 dispatch(getSavedItemsSuccess(response.data.getSavedItemsTable))
 
