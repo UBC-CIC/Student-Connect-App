@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
     title:{
         fontWeight: 600,
-        color:"#0055B7"
+        color:"#0055B7",
 
     },
     switch:{
@@ -77,13 +77,13 @@ function Settings(props){
                                 General
                             </Typography>
                     </Grid>
-                    <Grid item xs={10}>
+                    <Grid item xs={8}>
                         <Typography align={'left'} variant={"h5"} className={classes.content}>
                             Modify my preference settings to get the best out of the recommendation
                         </Typography>
 
                     </Grid>
-                    <Grid item xs={2}>
+                    <Grid item xs={4}>
                         <UserPreferenceModal userPreference={userPreference}/>
                     </Grid>
 

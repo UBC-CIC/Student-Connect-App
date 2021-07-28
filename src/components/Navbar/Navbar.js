@@ -116,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
     },
     label:{
         fontSize:"16px"
+    },
+    menuItem:{
+        marginTop:theme.spacing(2)
     }
 
 }));
@@ -201,36 +204,36 @@ function Navbar() {
                 </div>
                 <Divider />
                 <List>
-                    <MenuItem component={Link} to="/settings">
-                        <ListItemIcon>{<PersonIcon />}</ListItemIcon>
+                    <MenuItem component={Link} to="/settings" className={classes.menuItem}>
+                        <ListItemIcon>{<PersonIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Profile"} classes={{primary:classes.label}}/>
                     </MenuItem>
 
 
                 </List>
-                <Divider />
+                <Divider className={classes.menuItem} />
                 <List>
-                    <MenuItem component={Link} to="/" >
+                    <MenuItem component={Link} to="/" className={classes.menuItem} >
 
-                        <ListItemIcon>{<HomeIcon />}</ListItemIcon>
+                        <ListItemIcon>{<HomeIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"For you"} classes={{primary:classes.label}} />
                     </MenuItem>
 
-                    <MenuItem component={Link} to="/clubs">
-                        <ListItemIcon>{<GroupIcon />}</ListItemIcon>
+                    <MenuItem component={Link} to="/clubs" className={classes.menuItem}>
+                        <ListItemIcon>{<GroupIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Clubs"} classes={{primary:classes.label}} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/events">
-                        <ListItemIcon>{<EventIcon />}</ListItemIcon>
+                    <MenuItem component={Link} to="/events" className={classes.menuItem}>
+                        <ListItemIcon>{<EventIcon  fontSize={"large"}/>}</ListItemIcon>
                         <ListItemText primary={"Events"} classes={{primary:classes.label}} />
                     </MenuItem>
 
-                    <MenuItem component={Link} to="/news">
-                        <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
+                    <MenuItem component={Link} to="/news" className={classes.menuItem}>
+                        <ListItemIcon>{<RssFeedIcon fontSize={"large"}/>}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} classes={{primary:classes.label}} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/savedItems">
-                        <ListItemIcon>{<BookmarkIcon />}</ListItemIcon>
+                    <MenuItem component={Link} to="/savedItems" className={classes.menuItem}>
+                        <ListItemIcon>{<BookmarkIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Saved Items"} classes={{primary:classes.label}} />
                     </MenuItem>
 
