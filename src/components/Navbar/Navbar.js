@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Button, Container, MenuItem} from "@material-ui/core";
+import {Button, ClickAwayListener, Container, MenuItem} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import EventIcon from '@material-ui/icons/Event';
@@ -137,6 +137,9 @@ function Navbar() {
         await Auth.signOut();
         window.location.reload()
     }
+    const handleClickAway = () => {
+        setOpen(false);
+    };
 
     return (
         <div className={classes.root}>
@@ -149,7 +152,9 @@ function Navbar() {
             >
 
                 <Toolbar>
-                        <IconButton
+                    <ClickAwayListener onClickAway={handleClickAway}>
+
+                    <IconButton
                             color="inherit"
                             aria-label="open drawer"
                             onClick={handleDrawerOpen}
@@ -160,6 +165,7 @@ function Navbar() {
                         >
                             <MenuIcon />
                         </IconButton>
+                    </ClickAwayListener>
                         <Typography className={classes.appName} variant="h5">
                             Student App
                         </Typography>
@@ -174,6 +180,7 @@ function Navbar() {
 
                 </Toolbar>
             </AppBar>
+
             <Drawer
                 variant="permanent"
                 className={clsx(classes.drawer, {
@@ -229,9 +236,11 @@ function Navbar() {
 
                 </List>
             </Drawer>
+
             <main className={classes.content}>
                 <div className={classes.toolbar} />
             </main>
+
         </div>
     );
 }
