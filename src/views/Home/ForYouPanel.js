@@ -97,7 +97,6 @@ export default function ForYouPanel(props){
                                   link={item._source.link}
                                   description={item._source.summary}
                                   photo={item._source.mediaThumbnail}
-                                  date={item._source.dateModified}
                 />
             </Grid>
         )
