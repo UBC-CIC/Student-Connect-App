@@ -28,21 +28,21 @@
 
   </head>
   <body>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function() {
-        navigator.serviceWorker.register('service-worker.js').then(function(reg) {
-          console.log('SW registration successful: ', reg.scope);
-        },function(err) {
-          console.log('SW registration failed: ', err);
-        }).catch(function(err) {
-          console.log(err)
-        });
-      });
-    } else {
-      console.log('No support for SW');
-    }
-  </script>
+<!--  <script>-->
+<!--    if ('serviceWorker' in navigator) {-->
+<!--      window.addEventListener('load', function() {-->
+<!--        navigator.serviceWorker.register('service-worker.js').then(function(reg) {-->
+<!--          console.log('SW registration successful: ', reg.scope);-->
+<!--        },function(err) {-->
+<!--          console.log('SW registration failed: ', err);-->
+<!--        }).catch(function(err) {-->
+<!--          console.log(err)-->
+<!--        });-->
+<!--      });-->
+<!--    } else {-->
+<!--      console.log('No support for SW');-->
+<!--    }-->
+<!--  </script>-->
 
   <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>

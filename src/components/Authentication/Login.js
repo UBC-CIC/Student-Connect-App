@@ -32,7 +32,7 @@ function Login(props) {
                     updateCurrentUser(user)
                     updateLoginState("signedIn");
                 }).catch(err => {
-                    updateLoginState("signIn");
+                    console.log(err)
                 })
 
             } catch (e) {
