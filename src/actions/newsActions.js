@@ -73,17 +73,18 @@ export const fetchSportsNews = (categories) => {
             if (err) console.log(err, err.stack); // an error occurred
             else{
                 let results = (JSON.parse(JSON.parse(data.Payload))).hits.hits;
-                results.sort(function(a, b) {
-                    return (new Date(b._source.dateModified)-new Date(a._source.dateModified))
-                });
                 results.map((item)=>{
-                    item._source.dateModified = new Date(item._source.dateModified).toLocaleDateString('en-CA');
+                    item._source.dateModified =  new Date(item._source.dateModified.replace(/-/g, "/")).toLocaleDateString('en-CA')
                     let male = item._source.categories.indexOf('Male')
                     let female = item._source.categories.indexOf('Female')
                     if(male>-1) item._source.categories[male]='Men\'s'
                     if (female>-1) item._source.categories[female]='Women\'s'
 
                 })
+                results.sort(function(a, b) {
+                    return (new Date(b._source.dateModified)-new Date(a._source.dateModified))
+                });
+
                 dispatch(fetchSportsNewsSuccess(results))
 
             }
