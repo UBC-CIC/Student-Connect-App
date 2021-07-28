@@ -14,7 +14,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import {Button, ClickAwayListener, Container, MenuItem} from "@material-ui/core";
+import {Button, Container, MenuItem} from "@material-ui/core";
 import PersonIcon from '@material-ui/icons/Person';
 import HomeIcon from '@material-ui/icons/Home';
 import EventIcon from '@material-ui/icons/Event';
@@ -155,8 +155,6 @@ function Navbar() {
             >
 
                 <Toolbar>
-                    <ClickAwayListener onClickAway={handleClickAway}>
-
                     <IconButton
                             color="inherit"
                             aria-label="open drawer"
@@ -168,7 +166,6 @@ function Navbar() {
                         >
                             <MenuIcon />
                         </IconButton>
-                    </ClickAwayListener>
                         <Typography className={classes.appName} variant="h5">
                             Student App
                         </Typography>
@@ -204,7 +201,7 @@ function Navbar() {
                 </div>
                 <Divider />
                 <List>
-                    <MenuItem component={Link} to="/settings" className={classes.menuItem}>
+                    <MenuItem onClick={handleClickAway} component={Link} to="/settings" className={classes.menuItem}>
                         <ListItemIcon>{<PersonIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Profile"} classes={{primary:classes.label}}/>
                     </MenuItem>
@@ -213,26 +210,26 @@ function Navbar() {
                 </List>
                 <Divider className={classes.menuItem} />
                 <List>
-                    <MenuItem component={Link} to="/" className={classes.menuItem} >
+                    <MenuItem onClick={handleClickAway} component={Link} to="/" className={classes.menuItem} >
 
                         <ListItemIcon>{<HomeIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"For you"} classes={{primary:classes.label}} />
                     </MenuItem>
 
-                    <MenuItem component={Link} to="/clubs" className={classes.menuItem}>
+                    <MenuItem onClick={handleClickAway} component={Link} to="/clubs" className={classes.menuItem}>
                         <ListItemIcon>{<GroupIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Clubs"} classes={{primary:classes.label}} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/events" className={classes.menuItem}>
+                    <MenuItem onClick={handleClickAway} component={Link} to="/events" className={classes.menuItem}>
                         <ListItemIcon>{<EventIcon  fontSize={"large"}/>}</ListItemIcon>
                         <ListItemText primary={"Events"} classes={{primary:classes.label}} />
                     </MenuItem>
 
-                    <MenuItem component={Link} to="/news" className={classes.menuItem}>
+                    <MenuItem onClick={handleClickAway} component={Link} to="/news" className={classes.menuItem}>
                         <ListItemIcon>{<RssFeedIcon fontSize={"large"}/>}</ListItemIcon>
                         <ListItemText primary={"News and blogs"} classes={{primary:classes.label}} />
                     </MenuItem>
-                    <MenuItem component={Link} to="/savedItems" className={classes.menuItem}>
+                    <MenuItem onClick={handleClickAway} component={Link} to="/savedItems" className={classes.menuItem}>
                         <ListItemIcon>{<BookmarkIcon fontSize={"large"} />}</ListItemIcon>
                         <ListItemText primary={"Saved Items"} classes={{primary:classes.label}} />
                     </MenuItem>

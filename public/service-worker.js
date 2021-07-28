@@ -19,11 +19,7 @@ self.addEventListener('install', function(event) {
         caches.open(cacheName).then(function(cache) {
             return cache.addAll(
                 [
-                    './logo192.png',
-                    './logo512.png',
-                    "./favicon.ico",
-                    '../src/assets/img/logo.png',
-                    '../src/assets/img/logo_inverse.png',
+                    //Insert which files should be cached here
 
                 ]
             );
