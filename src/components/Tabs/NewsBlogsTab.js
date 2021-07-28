@@ -70,7 +70,9 @@ const useStyles = makeStyles((theme) => ({
         float:'left',
         paddingLeft:"20px",
         paddingRight:"20px",
-        marginTop: '20px'
+        marginTop: '20px',
+        fontSize:"14px"
+
 
     },
     sortDropDown:{

@@ -40,7 +40,7 @@ function Clubs(props){
                 <Typography align={'left'} variant="h4" className={classes.title}>
                     Clubs
                 </Typography>
-                <Typography align={'left'} variant="h6">
+                <Typography align={'left'} variant="h5">
                     Explore all the clubs here
                 </Typography>
                 <Divider className={classes.divider}/>

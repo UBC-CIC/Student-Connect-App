@@ -30,10 +30,14 @@ const useStyles = makeStyles((theme) => ({
     title: {
         marginLeft: theme.spacing(2),
         flex: 1,
-    },    modifyButton:{
+    },
+    modifyButton:{
         backgroundColor:"#0055B7",
         color:"white",
-        textTransform:'none'
+        textTransform:'none',
+        fontSize:"14px",
+        paddingLeft:"15px",
+        paddingRight:"15px"
 
     },
     appBar: {
@@ -43,6 +47,10 @@ const useStyles = makeStyles((theme) => ({
     nested: {
         paddingLeft: theme.spacing(4),
     },
+    listTitle:{
+        fontSize:"16px",
+
+    }
 
 
 
@@ -82,10 +90,10 @@ export default function UserPreferenceModal(props){
                         <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                             <CloseIcon />
                         </IconButton>
-                        <Typography variant="h6" className={classes.title}>
+                        <Typography variant="h5" className={classes.title}>
                             Change preferences
                         </Typography>
-                        <Button autoFocus color="inherit" onClick={handleSave} startIcon={<SaveAltIcon/>}>
+                        <Button className={classes.listTitle} autoFocus color="inherit" onClick={handleSave} startIcon={<SaveAltIcon/>}>
                             Save
                         </Button>
                     </Toolbar>

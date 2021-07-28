@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
     switch:{
         float:"right"
 
+    },
+    label:{
+        fontSize:"17px"
     }
 
 
@@ -59,7 +62,7 @@ export  function PreferenceListItem(props){
                 <ListItemIcon style={{ color:"#0055B7"  }} >
                     {icon}
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText  primary={label} classes={{primary:classes.label}} />
                 {openListItem ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
         <Collapse in={openListItem} timeout="auto" unmountOnExit>
@@ -103,7 +106,7 @@ export  function EmailItem(props){
                 <ListItemIcon style={{ color:"#0055B7"  }} >
                     {icon}
                 </ListItemIcon>
-                <ListItemText primary={label} />
+                <ListItemText primary={label} classes={{primary:classes.label}} />
                 {openListItem ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse in={openListItem} timeout="auto" unmountOnExit>

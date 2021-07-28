@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme) => ({
         float:'left',
         paddingLeft:"20px",
         paddingRight:"20px",
+        fontSize:"13px",
         marginRight: theme.spacing(1),
         marginTop: theme.spacing(1)
 
@@ -87,7 +88,7 @@ function ClubsTabs(props) {
                     id="panel1a-header"
                 >
                     <CategoryIcon style={{marginRight:"20px", color:"#00A7E1"}}/>
-                    <Typography className={classes.title} gutterBottom variant="subtitle1" align={'left'}>
+                    <Typography className={classes.title} gutterBottom variant="h6" align={'left'}>
                         Categories
                     </Typography>
                 </AccordionSummary>

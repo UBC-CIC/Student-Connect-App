@@ -69,6 +69,10 @@ function Home(props) {
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Home
                 </Typography>
+                    <Typography align={'left'} variant="h5">
+                        Explore personalized and most recent items here
+                    </Typography>
+
                 </Container>
                 <HomeTab news={news} blogs={blogs} sportsNews={sportsNews}
                 events={events} allClubs={allClubs} allNews={allNews} allEvents={allEvents}

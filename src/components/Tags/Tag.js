@@ -3,7 +3,7 @@ import React from "react";
 
 const StyledButton = withStyles({
     root: {
-        background: '#40B4E5',
+        background: '#02a7de',
         borderRadius: 3,
         border: 0,
         color: 'white',
@@ -14,7 +14,8 @@ const StyledButton = withStyles({
     },
     label: {
         textTransform: 'capitalize',
-        fontSize:'11px'
+        fontSize:'11px',
+        fontWeight:"500"
     },
 })(Button);
 

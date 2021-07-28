@@ -45,8 +45,15 @@ const useStyles = makeStyles((theme) => ({
     },
     title:{
         fontWeight:"500",
-        float:'left'
+        float:'left',
+        fontSize:"16px"
+
     },
+    alert:{
+        fontSize:"14px"
+
+
+    }
 
 }));
 
@@ -81,7 +88,7 @@ function SavedItemCard(props){
     return(
         <Card className={classes.bigCard}>
             {showSuccess&&(
-                <Alert severity="success">
+                <Alert severity="success" className={classes.alert}>
                     <AlertTitle>Success</AlertTitle>
                     {title} — <strong>removed</strong>
                 </Alert>

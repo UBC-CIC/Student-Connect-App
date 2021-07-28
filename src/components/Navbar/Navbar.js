@@ -114,6 +114,9 @@ const useStyles = makeStyles((theme) => ({
     nested: {
         paddingLeft: theme.spacing.unit * 4,
     },
+    label:{
+        fontSize:"16px"
+    }
 
 }));
 
@@ -193,7 +196,7 @@ function Navbar() {
                 <List>
                     <MenuItem component={Link} to="/settings">
                         <ListItemIcon>{<PersonIcon />}</ListItemIcon>
-                        <ListItemText primary={"Profile"} />
+                        <ListItemText primary={"Profile"} classes={{primary:classes.label}}/>
                     </MenuItem>
 
 
@@ -203,25 +206,25 @@ function Navbar() {
                     <MenuItem component={Link} to="/" >
 
                         <ListItemIcon>{<HomeIcon />}</ListItemIcon>
-                        <ListItemText primary={"For you"} />
+                        <ListItemText primary={"For you"} classes={{primary:classes.label}} />
                     </MenuItem>
 
                     <MenuItem component={Link} to="/clubs">
                         <ListItemIcon>{<GroupIcon />}</ListItemIcon>
-                        <ListItemText primary={"Clubs"} />
+                        <ListItemText primary={"Clubs"} classes={{primary:classes.label}} />
                     </MenuItem>
                     <MenuItem component={Link} to="/events">
                         <ListItemIcon>{<EventIcon />}</ListItemIcon>
-                        <ListItemText primary={"Events"} />
+                        <ListItemText primary={"Events"} classes={{primary:classes.label}} />
                     </MenuItem>
 
                     <MenuItem component={Link} to="/news">
                         <ListItemIcon>{<RssFeedIcon />}</ListItemIcon>
-                        <ListItemText primary={"News and blogs"} />
+                        <ListItemText primary={"News and blogs"} classes={{primary:classes.label}} />
                     </MenuItem>
                     <MenuItem component={Link} to="/savedItems">
                         <ListItemIcon>{<BookmarkIcon />}</ListItemIcon>
-                        <ListItemText primary={"Saved Items"} />
+                        <ListItemText primary={"Saved Items"} classes={{primary:classes.label}} />
                     </MenuItem>
 
                 </List>

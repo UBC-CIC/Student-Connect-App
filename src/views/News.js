@@ -42,6 +42,10 @@ function News(props){
                 <Typography align={'left'} variant="h4" className={classes.title}>
                     News and Blogs
                 </Typography>
+                <Typography align={'left'} variant="h5">
+                    Explore all the news, sports news and blogs here
+                </Typography>
+
                 <Divider className={classes.divider}/>
             </Container>
             <Container maxWidth={'xl'} >

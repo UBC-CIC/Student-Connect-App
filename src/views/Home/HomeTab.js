@@ -11,6 +11,7 @@ import Container from "@material-ui/core/Container";
 import ForYouPanel from "./ForYouPanel";
 import RecentPanel from "./RecentPanel";
 import HomeIcon from '@material-ui/icons/Home';
+import {Divider} from "@material-ui/core";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -123,6 +124,7 @@ export default function HomeTab(props) {
     return (
         <div className={classes.root}>
             <Container>
+                <Divider className={classes.divider}/>
 
                 <AppBar position="static" className={classes.tabBar}>
                     <Tabs

@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         textTransform:"none",
         backgroundColor:"#0055B7",
         color:"white",
-        fontSize:'11px',
+        fontSize:'13px',
         borderRadius:"3",
         marginRight:theme.spacing(1)
 

@@ -128,14 +128,6 @@ export default function RecentPanel(props){
             <Grid container spacing={3} alignItems="stretch">
                 <Container maxWidth={'xl'}>
 
-                <Typography align={'left'} variant="h6"className={classes.divider} >
-                    Most recent items
-                </Typography>
-                    <Divider className={classes.divider}/>
-
-                </Container>
-                <Container maxWidth={'xl'}>
-
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     News
                 </Typography>

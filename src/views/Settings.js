@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    content:{
+        fontSize:"16px"
+    }
 
 
 }));
@@ -60,18 +63,22 @@ function Settings(props){
                 <Typography align={'left'} variant="h4" className={classes.title}>
                     Settings
                 </Typography>
+                <Typography align={'left'} variant="h5" >
+                    Change your preferences here
+                </Typography>
+
                 <Divider className={classes.divider}/>
             </Container>
             <Container>
             <Card className={classes.card}>
                 <Grid container spacing={3} className={classes.root} >
                     <Grid item xs={12}>
-                            <Typography align={'left'}>
+                            <Typography align={'left'} variant={"h5"}>
                                 General
                             </Typography>
                     </Grid>
                     <Grid item xs={10}>
-                        <Typography align={'left'} >
+                        <Typography align={'left'} variant={"h5"} className={classes.content}>
                             Modify my preference settings to get the best out of the recommendation
                         </Typography>
 

@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
         textTransform:'none',
         float:'right',
         paddingLeft:"20px",
-        paddingRight:"20px"
+        paddingRight:"20px",
+        fontSize:"14px"
 
     },
     sortDropDown:{
@@ -122,8 +123,8 @@ function Events(props){
                 <Typography align={'left'} variant="h4" className={classes.title}>
                     Events
                 </Typography>
-                <Typography align={'left'} variant="h6">
-                    Check out all the events here
+                <Typography align={'left'} variant="h5">
+                    Explore all the events here
                 </Typography>
                 <Divider className={classes.divider}/>
 

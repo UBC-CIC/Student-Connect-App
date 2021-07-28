@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
     },
     title:{
         fontWeight:"500",
-        float:'left'
+        float:'left',
+        fontSize:"16px"
     },
     date:{
         fontWeight:theme.typography.fontWeightBold
@@ -46,14 +47,14 @@ export function NewsCardAccordion(props) {
                 </AccordionSummary>
                 <div>
                     {date ?
-                        <Typography variant="subtitle2" className={classes.date} align={'left'} >
+                        <Typography variant="subtitle1" className={classes.date} align={'left'} >
                             Date: {date}
                         </Typography>
                         : null}
 
                 </div>
 
-                <Typography variant="subtitle2"  align={'left'} >
+                <Typography variant="subtitle1"  align={'left'} >
                         {content}
                 </Typography>
 
@@ -78,7 +79,7 @@ export function ClubCardAccordion(props) {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography variant="subtitle2"  >
+                    <Typography variant="subtitle1"  >
                         {content}
                     </Typography>
 
@@ -103,7 +104,7 @@ export function EventCardAccordion(props) {
                     </Typography>
                 </AccordionSummary>
                     <Grid item xs={12}>
-                        <Typography variant="subtitle2"  align={'left'} >
+                        <Typography variant="subtitle1"  align={'left'} >
                             {description}
                         </Typography>
                     </Grid>
