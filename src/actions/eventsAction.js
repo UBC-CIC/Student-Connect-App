@@ -56,18 +56,21 @@ export const fetchAllEvents = () => {
                         if(item.startDate) item.startDate = eventDateCleaner(item.startDate)
                         if(item.endDate) item.endDate = eventDateCleaner(item.endDate)
                         if(item.endDate) item.endDate = eventEndDateCleaner(item.startDate,item.endDate)
+                        item.startDate =  new Date(item.startDate.replace(/-/g, "/")).toLocaleDateString('en-CA')
+
 
                         if(item.cost===""){
                             item.cost='Free'
                         }
 
-                        allEvents.sort(function(a, b) {
-                            return new Date(a.startDate) - new Date(b.startDate)
-                        });
-
-                        dispatch(fetchAllEventsSuccess(allEvents))
 
                     })
+
+                    allEvents.sort(function(a, b) {
+                        return new Date(a.startDate) - new Date(b.startDate)
+                    });
+                    dispatch(fetchAllEventsSuccess(allEvents))
+
 
                 }
             }
