@@ -131,7 +131,7 @@ After account creation, users will need to verify their account by inputting the
 
 ## Next Steps
 
-* When the user logged into the app for the first time, the app will direct the user to answer a survey. The survey results will be stored in
+When the user logged into the app for the first time, the app will direct the user to answer a survey. The survey results will be stored in
   a DynamoDB table to provide recommendation results in the user's 'for you' page. The survey results can  be edited in the app, if the user's
   preference changed, the user can modify their preferences there and gets personalized content.
 
