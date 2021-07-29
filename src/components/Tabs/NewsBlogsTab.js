@@ -120,6 +120,8 @@ export default function NewsBlogsTab(props) {
                                   link={item.link}
                                   description={item.excerpt}
                                   photo={item.mediaImages.mediumImage}
+                                  date={item.dateModified}
+
                 />
             </Grid>
 
@@ -157,6 +159,11 @@ export default function NewsBlogsTab(props) {
                     return new Date(a.dateModified)-new Date(b.dateModified)
                 })
                 break
+            case 2:
+                allBlogs.sort(function(a, b) {
+                    return new Date(a.dateModified)-new Date(b.dateModified)
+                })
+
             default:
                 break
 
@@ -175,6 +182,11 @@ export default function NewsBlogsTab(props) {
                     return new Date(b.dateModified)-new Date(a.dateModified)
                 })
                 break
+            case 2:
+                allBlogs.sort(function(a, b) {
+                    return new Date(b.dateModified)-new Date(a.dateModified)
+                })
+
             default:
                 break
 
@@ -203,7 +215,7 @@ export default function NewsBlogsTab(props) {
 
                 </Tabs>
             </AppBar>
-            {(value===0||value===1) ?
+            {(value===0||value===1||value===2) ?
                 <div>
                 <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                     Sort By

@@ -155,7 +155,7 @@ export default function ForYouPanel(props){
 
             {(news.length===0&&sportsNewsList.length===0)&&(
                 <Typography variant={"h6"} className={classes.divider}>
-                    Sorry, there are currently no news that match your preference
+                    Sorry, there are currently no news that match your preference. Please make sure your preferences are up to date.
                 </Typography>
             )}
             </Container>
@@ -174,7 +174,7 @@ export default function ForYouPanel(props){
 
             {events.length===0&&(
                 <Typography variant={"h6"} className={classes.divider}>
-                    Sorry, there are currently no events that match your preference
+                    Sorry, there are currently no events that match your preference. Please make sure your preferences are up to date.
                 </Typography>
             )}
             </Container>
@@ -192,7 +192,7 @@ export default function ForYouPanel(props){
 
         {blogs.length===0&&(
             <Typography variant={"h6"} className={classes.divider}>
-                Sorry, there are currently no blogs that match your preference
+                Sorry, there are currently no blogs that match your preference. Please make sure your preferences are up to date.
             </Typography>
         )}
         </Container>

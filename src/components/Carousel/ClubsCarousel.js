@@ -17,7 +17,7 @@ function ClubsCarousel(props){
             </Carousel>
             {clubLength===0&&
             <Typography variant={"h6"}>
-                Sorry, there are currently no clubs that match your preference
+                Sorry, there are currently no clubs that match your preference. Please make sure your preferences are up to date.
             </Typography>}
 
         </div>

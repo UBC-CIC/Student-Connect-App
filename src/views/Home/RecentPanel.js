@@ -117,6 +117,8 @@ export default function RecentPanel(props){
                                   link={item.link}
                                   description={item.excerpt}
                                   photo={item.mediaImages.mediumImage}
+                                  date={item.dateModified}
+
                 />
             </Grid>
         )

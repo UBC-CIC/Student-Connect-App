@@ -42,10 +42,13 @@ export const fetchAllBlogs = () => {
                 if (err) console.log(err, err.stack); // an error occurred
                 else {
                     let allBlogs = data.Items
-                    allBlogs.sort((a, b) => a.title.localeCompare(b.title))
                     allBlogs.map((item)=>{
                         item.excerpt=htmlTagCleaner(item.excerpt)
+                        item.dateModified = new Date(item.dateModified.replace(/-/g, "/")).toLocaleDateString('en-CA');
                     })
+                    allBlogs.sort(function(a, b) {
+                        return new Date(new Date(b.dateModified)-new Date(a.dateModified))
+                    });
 
                     dispatch(fetchAllBlogsSuccess(allBlogs))
                 }
