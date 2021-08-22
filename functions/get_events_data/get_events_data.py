@@ -4,7 +4,7 @@ import boto3
 import pytz
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from requests import RequestException
 from common_lib import detailed_exception, get_adjusted_unix_time
 
@@ -17,7 +17,7 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-EVENTS_TABLE = os.environ["EVENTS_TABLE_NAME"]
+DOCUMENTS_TABLE = os.environ["DOCUMENTS_TABLE_NAME"]
 EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
@@ -102,55 +102,89 @@ def get_events_items_from_web(events_link: str):
 
 def lambda_handler(event, context):
     """
+    TODO Refactor implementation to, 1) Do wordpress query by date if possible
+    2) add datatype prefix to ID
+    3) change the table to which data is persisted
     Lambda entry-point
     """
-    events_link = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
-    events_items = []
-    filtered_events_items = []
+    table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
 
-    response_items = get_events_items_from_web(events_link)
-    if len(response_items) == 0:
-        return {"status": "No items in API"}
+    itemList = [
+        {
+            "documentId": "1111",
+            "documentType": "events",
+            "name": "test event 1",
+            "categories": ["A", "B", "C"],
+            "expiresOn": int(
+                datetime.strptime("2021-08-21 12:00:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc).timestamp())
+        },
+        {
+            "documentId": "2222",
+            "documentType": "events",
+            "name": "test event 2",
+            "categories": ["A", "B", "D"],
+            "expiresOn": int(
+                datetime.strptime("2021-08-21 15:00:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc).timestamp())
+        },
+        {
+            "documentId": "3333",
+            "documentType": "events",
+            "name": "test event 3",
+            "categories": ["A", "E", "D"],
+            "expiresOn": int(
+                datetime.strptime("2021-08-21 17:00:00", "%Y-%m-%d %H:%M:%S").replace(tzinfo=timezone.utc).timestamp())
+        }
+    ]
+    for item in itemList:
+        table.put_item(Item=item)
 
-    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
-    # error to S3
-    for item in response_items:
-        try:
-            events_item = event_parser(item)
-            events_items.append(events_item)
-        except Exception as e:
-            S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
-                                 Key=f'ErrorLog/Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
-            LOGGER.error(f"Error in parsing an events item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Events")
-            detailed_exception(LOGGER)
-
-    # Filter the parsed items based on last query time to get only new items
-    try:
-        last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
-        for events_item in events_items:
-            if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
-                    < datetime.strptime(events_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
-                filtered_events_items.append(events_item)
-        SSM_CLIENT.put_parameter(Name="EventsQueryTime",
-                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
-                                 Overwrite=True)
-    except SSM_CLIENT.exceptions.InternalServerError as e:
-        LOGGER.error("Error in communicating with Parameter store")
-        detailed_exception(LOGGER)
-
-    LOGGER.debug(json.dumps(events_items, indent=4))
-    LOGGER.debug(json.dumps(filtered_events_items, indent=4))
-
-    # Save new items to central data lake S3
-    if len(filtered_events_items) != 0:
-        S3_CLIENT.put_object(Body=json.dumps(filtered_events_items), Bucket=S3_BUCKET_NAME,
-                             Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
-
-    # Insert items into DynamoDB table with appropriate TTL
-    table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
-    for events_item in filtered_events_items:
-        events_item["expiresOn"] = get_adjusted_unix_time(events_item["endDate"], "%Y-%m-%d %H:%M:%S",
-                                                          EVENTS_EXPIRY_OFFSET * 24)
-        table.put_item(Item=events_item)
+    # events_link = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
+    # events_items = []
+    # filtered_events_items = []
+    #
+    # response_items = get_events_items_from_web(events_link)
+    # if len(response_items) == 0:
+    #     return {"status": "No items in API"}
+    #
+    # # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # # error to S3
+    # for item in response_items:
+    #     try:
+    #         events_item = event_parser(item)
+    #         events_items.append(events_item)
+    #     except Exception as e:
+    #         S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
+    #                              Key=f'ErrorLog/Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
+    #         LOGGER.error(f"Error in parsing an events item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Events")
+    #         detailed_exception(LOGGER)
+    #
+    # # Filter the parsed items based on last query time to get only new items
+    # try:
+    #     last_query_time = SSM_CLIENT.get_parameter(Name="EventsQueryTime")["Parameter"]["Value"]
+    #     for events_item in events_items:
+    #         if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
+    #                 < datetime.strptime(events_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
+    #             filtered_events_items.append(events_item)
+    #     SSM_CLIENT.put_parameter(Name="EventsQueryTime",
+    #                              Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
+    #                              Overwrite=True)
+    # except SSM_CLIENT.exceptions.InternalServerError as e:
+    #     LOGGER.error("Error in communicating with Parameter store")
+    #     detailed_exception(LOGGER)
+    #
+    # LOGGER.debug(json.dumps(events_items, indent=4))
+    # LOGGER.debug(json.dumps(filtered_events_items, indent=4))
+    #
+    # # Save new items to central data lake S3
+    # if len(filtered_events_items) != 0:
+    #     S3_CLIENT.put_object(Body=json.dumps(filtered_events_items), Bucket=S3_BUCKET_NAME,
+    #                          Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
+    #
+    # # Insert items into DynamoDB table with appropriate TTL
+    # table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
+    # for events_item in filtered_events_items:
+    #     events_item["expiresOn"] = get_adjusted_unix_time(events_item["endDate"], "%Y-%m-%d %H:%M:%S",
+    #                                                       EVENTS_EXPIRY_OFFSET * 24)
+    #     table.put_item(Item=events_item)
 
     return {"status": "completed"}

@@ -13,37 +13,38 @@ Globals:
         BUCKET_NAME: !Ref DataStoreBucket
 
 Parameters:
-  deploymentBucketName:
+  documentsTable:
     Type: String
-    Description: The name of the S3 bucket that contains the zipped lambda deployment packages
-  eventsTable:
-    Type: String
-    Default: EventsTable
-    Description: DynamoDB Table name for events (Ensure you do not have a table with this name already).
-  newsTable:
-    Type: String
-    Default: NewsTable
-    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
-  athleticsNewsTable:
-    Type: String
-    Default: AthleticsNewsTable
-    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
-  blogsTable:
-    Type: String
-    Default: BlogsTable
-    Description: DynamoDB Table name for blogs (Ensure you do not have a table with this name already).
-  clubsTable:
-    Type: String
-    Default: ClubsTable
-    Description: DynamoDB Table name for clubs (Ensure you do not have a table with this name already).
-  esHashTable:
-    Type: String
-    Default: ESHashTable
-    Description: DynamoDB Table name that stores the hashes for all documents currently in Elasticsearch
-  newsExpiryDays:
-    Type: String
-    Default: 60
-    Description: Number of days after which a news article is automatically deleted from DynamoDB
+    Default: DocumentsTable
+    Description: Name of the DynamoDB table that contains all the website documents (Ensure you do not have a table with this name already).
+#  eventsTable:
+#    Type: String
+#    Default: EventsTable
+#    Description: DynamoDB Table name for events (Ensure you do not have a table with this name already).
+#  newsTable:
+#    Type: String
+#    Default: NewsTable
+#    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
+#  athleticsNewsTable:
+#    Type: String
+#    Default: AthleticsNewsTable
+#    Description: DynamoDB Table name for news (Ensure you do not have a table with this name already).
+#  blogsTable:
+#    Type: String
+#    Default: BlogsTable
+#    Description: DynamoDB Table name for blogs (Ensure you do not have a table with this name already).
+#  clubsTable:
+#    Type: String
+#    Default: ClubsTable
+#    Description: DynamoDB Table name for clubs (Ensure you do not have a table with this name already).
+#  esHashTable:
+#    Type: String
+#    Default: ESHashTable
+#    Description: DynamoDB Table name that stores the hashes for all documents currently in Elasticsearch
+#  newsExpiryDays:
+#    Type: String
+#    Default: 60
+#    Description: Number of days after which a news article is automatically deleted from DynamoDB
   blogExpiryDays:
     Type: String
     Default: 120
@@ -128,11 +129,12 @@ Resources:
                   - "dynamodb:PutItem"
                   - "dynamodb:UpdateItem"
                 Resource:
-                  - !Sub ${eventsDDBTable.Arn}
-                  - !Sub ${newsDDBTable.Arn}
-                  - !Sub ${blogsDDBTable.Arn}
-                  - !Sub ${clubsDDBTable.Arn}
-                  - !Sub ${athleticsNewsDDBTable.Arn}
+                  - !GetAtt documentsDDBTable.Arn
+#                  - !Sub ${eventsDDBTable.Arn}
+#                  - !Sub ${newsDDBTable.Arn}
+#                  - !Sub ${blogsDDBTable.Arn}
+#                  - !Sub ${clubsDDBTable.Arn}
+#                  - !Sub ${athleticsNewsDDBTable.Arn}
               - Effect: "Allow"
                 Action:
                   - "ssm:GetParameter"
@@ -143,60 +145,60 @@ Resources:
                   - "s3:*"
                 Resource: !Sub "${DataStoreBucket.Arn}/*"
 
-  esHasherLambdaIAMRole:
-    Type: "AWS::IAM::Role"
-    Properties:
-      AssumeRolePolicyDocument:
-        Version: "2012-10-17"
-        Statement:
-          - Effect: "Allow"
-            Principal:
-              Service:
-                - "lambda.amazonaws.com"
-            Action:
-              - "sts:AssumeRole"
-      Path: "/"
-      Policies:
-        - PolicyName: EsHasherPolicy
-          PolicyDocument:
-            Version: "2012-10-17"
-            Statement:
-              - Effect: "Allow"
-                Action:
-                  - 'logs:CreateLogGroup'
-                  - 'logs:CreateLogStream'
-                  - 'logs:PutLogEvents'
-                Resource:
-                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
-              - Effect: "Allow"
-                Action:
-                  - "dynamodb:Scan"
-                  - "dynamodb:GetItem"
-                  - "dynamodb:PutItem"
-                  - "dynamodb:UpdateItem"
-                Resource:
-                  - !Sub ${eventsDDBTable.Arn}
-                  - !Sub ${newsDDBTable.Arn}
-                  - !Sub ${blogsDDBTable.Arn}
-                  - !Sub ${clubsDDBTable.Arn}
-                  - !Sub ${athleticsNewsDDBTable.Arn}
-              - Effect: "Allow"
-                Action:
-                  - "dynamoDB:DeleteItem"
-                  - "dynamodb:Scan"
-                  - "dynamodb:PutItem"
-                Resource:
-                  - !Sub ${esHashDDBTable.Arn}
-              - Effect: Allow
-                Action:
-                  - 'es:ESHttpGet'
-                  - 'es:ESHttpPost'
-                  - 'es:ESHttpPut'
-                  - 'es:ESHttpHead'
-                  - 'es:ESHttpDelete'
-                Resource:
-                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
-                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
+#  esHasherLambdaIAMRole:
+#    Type: "AWS::IAM::Role"
+#    Properties:
+#      AssumeRolePolicyDocument:
+#        Version: "2012-10-17"
+#        Statement:
+#          - Effect: "Allow"
+#            Principal:
+#              Service:
+#                - "lambda.amazonaws.com"
+#            Action:
+#              - "sts:AssumeRole"
+#      Path: "/"
+#      Policies:
+#        - PolicyName: EsHasherPolicy
+#          PolicyDocument:
+#            Version: "2012-10-17"
+#            Statement:
+#              - Effect: "Allow"
+#                Action:
+#                  - 'logs:CreateLogGroup'
+#                  - 'logs:CreateLogStream'
+#                  - 'logs:PutLogEvents'
+#                Resource:
+#                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*"
+#              - Effect: "Allow"
+#                Action:
+#                  - "dynamodb:Scan"
+#                  - "dynamodb:GetItem"
+#                  - "dynamodb:PutItem"
+#                  - "dynamodb:UpdateItem"
+#                Resource:
+#                  - !Sub ${eventsDDBTable.Arn}
+#                  - !Sub ${newsDDBTable.Arn}
+#                  - !Sub ${blogsDDBTable.Arn}
+#                  - !Sub ${clubsDDBTable.Arn}
+#                  - !Sub ${athleticsNewsDDBTable.Arn}
+#              - Effect: "Allow"
+#                Action:
+#                  - "dynamoDB:DeleteItem"
+#                  - "dynamodb:Scan"
+#                  - "dynamodb:PutItem"
+#                Resource:
+#                  - !Sub ${esHashDDBTable.Arn}
+#              - Effect: Allow
+#                Action:
+#                  - 'es:ESHttpGet'
+#                  - 'es:ESHttpPost'
+#                  - 'es:ESHttpPut'
+#                  - 'es:ESHttpHead'
+#                  - 'es:ESHttpDelete'
+#                Resource:
+#                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
+#                  - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
 
   esQueryLambdaIAMRole:
     Type: "AWS::IAM::Role"
@@ -233,7 +235,8 @@ Resources:
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*'
                   - !Sub 'arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}'
 
-  StatesExecutionRole:
+#  TODO Refine role policies as needed
+  StreamHandlerRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -242,136 +245,177 @@ Resources:
           - Effect: "Allow"
             Principal:
               Service:
-                - !Sub "states.${AWS::Region}.amazonaws.com"
-            Action: "sts:AssumeRole"
+                - "lambda.amazonaws.com"
+            Action:
+              - "sts:AssumeRole"
+      Path: "/"
       Policies:
-        - PolicyName: StatesExecutionPolicy
+        - PolicyName: dynamodb-stream-responder-policy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
-              - Effect: Allow
+              - Effect: "Allow"
+                Action:
+                  - 'logs:CreateLogGroup'
+                  - 'logs:CreateLogStream'
+                  - 'logs:PutLogEvents'
+                Resource:
+                  - !Sub "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:*"
+              - Effect: "Allow"
                 Action:
                   - "lambda:InvokeFunction"
+                Resource: "*"
+              - Effect: "Allow"
+                Action:
+                  - "dynamodb:GetRecords"
+                  - "dynamodb:GetShardIterator"
+                  - "dynamodb:DescribeStream"
+                  - "dynamodb:ListStreams"
                 Resource:
-                  - !GetAtt getEventsData.Arn
-                  - !GetAtt getNewsData.Arn
-                  - !GetAtt getAthleticsNewsData.Arn
-                  - !GetAtt getBlogData.Arn
-                  - !GetAtt getClubData.Arn
-                  - !GetAtt esHasher.Arn
+                  - !GetAtt documentsDDBTable.StreamArn
+              - Effect: "Allow"
+                Action:
+                  - es:*
+                Resource: "*"
 
-  DataGrabberStateMachine:
-    Type: "AWS::StepFunctions::StateMachine"
-    Properties:
-      RoleArn: !GetAtt StatesExecutionRole.Arn
-      DefinitionString:
-        !Sub |-
-        {
-          "StartAt": "Check if Events refresh",
-          "States": {
-            "Check if Events refresh": {
-              "Type": "Choice",
-              "Choices": [
-                {
-                  "Variable": "$.dataType",
-                  "StringEquals": "Events",
-                  "Next": "Get Events Data"
-                }
-              ],
-              "Default": "Check if News refresh"
-            },
-            "Get Events Data": {
-              "Type":  "Task",
-              "Resource": "${getEventsData.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.eventsResult",
-              "Next": "Update Elasticsearch"
-            },
-            "Check if News refresh": {
-              "Type": "Choice",
-              "Choices": [
-                {
-                  "Variable": "$.dataType",
-                  "StringEquals": "News",
-                  "Next": "Get News Data"
-                }
-              ],
-              "Default": "Check if Blogs refresh"
-            },
-            "Get News Data": {
-              "Type":  "Task",
-              "Resource": "${getNewsData.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.newsResult",
-              "Next": "Update Elasticsearch"
-            },
-            "Check if Blogs refresh": {
-              "Type": "Choice",
-              "Choices": [
-                {
-                  "Variable": "$.dataType",
-                  "StringEquals": "Blogs",
-                  "Next": "Get Blogs Data"
-                }
-              ],
-              "Default": "Check if Athletics News refresh"
-            },
-            "Get Blogs Data": {
-              "Type":  "Task",
-              "Resource": "${getBlogData.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.blogResults",
-              "Next": "Update Elasticsearch"
-            },
-            "Check if Athletics News refresh": {
-              "Type": "Choice",
-              "Choices": [
-                {
-                  "Variable": "$.dataType",
-                  "StringEquals": "AthleticsNews",
-                  "Next": "Get Athletics News Data"
-                }
-              ],
-              "Default": "Check if Clubs refresh"
-            },
-            "Get Athletics News Data": {
-              "Type":  "Task",
-              "Resource": "${getAthleticsNewsData.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.athleticsNewsResults",
-              "Next": "Update Elasticsearch"
-            },
-            "Check if Clubs refresh": {
-              "Type": "Choice",
-              "Choices": [
-                {
-                  "Variable": "$.dataType",
-                  "StringEquals": "Clubs",
-                  "Next": "Get Clubs Data"
-                }
-              ],
-              "Default": "Complete"
-            },
-            "Get Clubs Data": {
-              "Type":  "Task",
-              "Resource": "${getClubData.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.clubResults",
-              "Next": "Update Elasticsearch"
-            },
-            "Update Elasticsearch": {
-              "Type": "Task",
-              "Resource": "${esHasher.Arn}",
-              "InputPath": "$",
-              "ResultPath": "$.esHasherResult",
-              "Next": "Complete"
-            },
-            "Complete": {
-              "Type": "Succeed"
-            }
-          }
-        }
+#  StatesExecutionRole:
+#    Type: "AWS::IAM::Role"
+#    Properties:
+#      AssumeRolePolicyDocument:
+#        Version: "2012-10-17"
+#        Statement:
+#          - Effect: "Allow"
+#            Principal:
+#              Service:
+#                - !Sub "states.${AWS::Region}.amazonaws.com"
+#            Action: "sts:AssumeRole"
+#      Policies:
+#        - PolicyName: StatesExecutionPolicy
+#          PolicyDocument:
+#            Version: "2012-10-17"
+#            Statement:
+#              - Effect: Allow
+#                Action:
+#                  - "lambda:InvokeFunction"
+#                Resource:
+#                  - !GetAtt getEventsData.Arn
+#                  - !GetAtt getNewsData.Arn
+#                  - !GetAtt getAthleticsNewsData.Arn
+#                  - !GetAtt getBlogData.Arn
+#                  - !GetAtt getClubData.Arn
+#                  - !GetAtt esHasher.Arn
 
+#  DataGrabberStateMachine:
+#    Type: "AWS::StepFunctions::StateMachine"
+#    Properties:
+#      RoleArn: !GetAtt StatesExecutionRole.Arn
+#      DefinitionString:
+#        !Sub |-
+#        {
+#          "StartAt": "Check if Events refresh",
+#          "States": {
+#            "Check if Events refresh": {
+#              "Type": "Choice",
+#              "Choices": [
+#                {
+#                  "Variable": "$.dataType",
+#                  "StringEquals": "Events",
+#                  "Next": "Get Events Data"
+#                }
+#              ],
+#              "Default": "Check if News refresh"
+#            },
+#            "Get Events Data": {
+#              "Type":  "Task",
+#              "Resource": "${getEventsData.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.eventsResult",
+#              "Next": "Update Elasticsearch"
+#            },
+#            "Check if News refresh": {
+#              "Type": "Choice",
+#              "Choices": [
+#                {
+#                  "Variable": "$.dataType",
+#                  "StringEquals": "News",
+#                  "Next": "Get News Data"
+#                }
+#              ],
+#              "Default": "Check if Blogs refresh"
+#            },
+#            "Get News Data": {
+#              "Type":  "Task",
+#              "Resource": "${getNewsData.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.newsResult",
+#              "Next": "Update Elasticsearch"
+#            },
+#            "Check if Blogs refresh": {
+#              "Type": "Choice",
+#              "Choices": [
+#                {
+#                  "Variable": "$.dataType",
+#                  "StringEquals": "Blogs",
+#                  "Next": "Get Blogs Data"
+#                }
+#              ],
+#              "Default": "Check if Athletics News refresh"
+#            },
+#            "Get Blogs Data": {
+#              "Type":  "Task",
+#              "Resource": "${getBlogData.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.blogResults",
+#              "Next": "Update Elasticsearch"
+#            },
+#            "Check if Athletics News refresh": {
+#              "Type": "Choice",
+#              "Choices": [
+#                {
+#                  "Variable": "$.dataType",
+#                  "StringEquals": "AthleticsNews",
+#                  "Next": "Get Athletics News Data"
+#                }
+#              ],
+#              "Default": "Check if Clubs refresh"
+#            },
+#            "Get Athletics News Data": {
+#              "Type":  "Task",
+#              "Resource": "${getAthleticsNewsData.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.athleticsNewsResults",
+#              "Next": "Update Elasticsearch"
+#            },
+#            "Check if Clubs refresh": {
+#              "Type": "Choice",
+#              "Choices": [
+#                {
+#                  "Variable": "$.dataType",
+#                  "StringEquals": "Clubs",
+#                  "Next": "Get Clubs Data"
+#                }
+#              ],
+#              "Default": "Complete"
+#            },
+#            "Get Clubs Data": {
+#              "Type":  "Task",
+#              "Resource": "${getClubData.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.clubResults",
+#              "Next": "Update Elasticsearch"
+#            },
+#            "Update Elasticsearch": {
+#              "Type": "Task",
+#              "Resource": "${esHasher.Arn}",
+#              "InputPath": "$",
+#              "ResultPath": "$.esHasherResult",
+#              "Next": "Complete"
+#            },
+#            "Complete": {
+#              "Type": "Succeed"
+#            }
+#          }
+#        }
 
   CloudwatchEventRuleIAMRole:
     Type: "AWS::IAM::Role"
@@ -386,97 +430,98 @@ Resources:
             Action:
               - "sts:AssumeRole"
       Policies:
-        - PolicyName: StartStateMachinePolicy
+        - PolicyName: InvokeLambdaPolicy
           PolicyDocument:
             Version: "2012-10-17"
             Statement:
               - Effect: Allow
                 Action:
-                  - 'states:DescribeExecution'
-                  - 'states:StartExecution'
+                  - "lambda:InvokeFunction"
                 Resource:
-                  - !Sub 'arn:aws:states:${AWS::Region}:${AWS::AccountId}:execution:${DataGrabberStateMachine.Name}:*'
-                  - !Ref DataGrabberStateMachine
+                  - !GetAtt getEventsData.Arn
+                  - !GetAtt getBlogData.Arn
 
-  EventsUpdateEvent:
-    Type: "AWS::Events::Rule"
-    DependsOn:
-      - ESDomain
-    Properties:
-      Description: Triggers the State machine to retrieve and save Events data, every day
-      Name: EventsEventRule
-      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(1440 minutes)
-      State: "ENABLED"
-      Targets:
-        - Arn: !GetAtt DataGrabberStateMachine.Arn
-          Id: EventsTarget
-          Input: '{"dataType": "Events"}'
-          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+# TODO Enable it at the end
+#  EventsUpdateEvent:
+#    Type: "AWS::Events::Rule"
+#    DependsOn:
+#      - ESDomain
+#    Properties:
+#      Description: Triggers the State machine to retrieve and save Events data, every day
+#      Name: EventsEventRule
+#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#      ScheduleExpression: rate(1440 minutes)
+#      State: "DISABLED"
+#      Targets:
+#        - Arn: !GetAtt getEventsData.Arn
+#          Id: EventsTarget
+#          Input: '{"dataType": "Events"}'
+#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
-  NewsUpdateEvent:
-    Type: "AWS::Events::Rule"
-    DependsOn:
-      - ESDomain
-    Properties:
-      Description: Triggers the State machine to retrieve and save News data, every 7 days
-      Name: NewsEventRule
-      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(1440 minutes)
-      State: "ENABLED"
-      Targets:
-        - Arn: !GetAtt DataGrabberStateMachine.Arn
-          Id: NewsTarget
-          Input: '{"dataType": "News"}'
-          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#  NewsUpdateEvent:
+#    Type: "AWS::Events::Rule"
+#    DependsOn:
+#      - ESDomain
+#    Properties:
+#      Description: Triggers the State machine to retrieve and save News data, every 7 days
+#      Name: NewsEventRule
+#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#      ScheduleExpression: rate(1440 minutes)
+#      State: "ENABLED"
+#      Targets:
+#        - Arn: !GetAtt DataGrabberStateMachine.Arn
+#          Id: NewsTarget
+#          Input: '{"dataType": "News"}'
+#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
-  BlogsUpdateEvent:
-    Type: "AWS::Events::Rule"
-    DependsOn:
-      - ESDomain
-    Properties:
-      Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
-      Name: BlogsEventRule
-      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(1440 minutes)
-      State: "ENABLED"
-      Targets:
-        - Arn: !GetAtt DataGrabberStateMachine.Arn
-          Id: BlogsTarget
-          Input: '{"dataType": "Blogs"}'
-          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#  TODO Enable it at the end
+#  BlogsUpdateEvent:
+#    Type: "AWS::Events::Rule"
+#    DependsOn:
+#      - ESDomain
+#    Properties:
+#      Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
+#      Name: BlogsEventRule
+#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#      ScheduleExpression: rate(1440 minutes)
+#      State: "DISABLED"
+#      Targets:
+#        - Arn: !GetAtt getBlogData.Arn
+#          Id: BlogsTarget
+#          Input: '{"dataType": "Blogs"}'
+#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
-  AthleticsNewsUpdateEvent:
-    Type: "AWS::Events::Rule"
-    DependsOn:
-      - ESDomain
-    Properties:
-      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
-      Name: AthleticsNewsEventRule
-      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(1440 minutes)
-      State: "ENABLED"
-      Targets:
-        - Arn: !GetAtt DataGrabberStateMachine.Arn
-          Id: AthleticsNewsTarget
-          Input: '{"dataType": "AthleticsNews"}'
-          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#  AthleticsNewsUpdateEvent:
+#    Type: "AWS::Events::Rule"
+#    DependsOn:
+#      - ESDomain
+#    Properties:
+#      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
+#      Name: AthleticsNewsEventRule
+#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#      ScheduleExpression: rate(1440 minutes)
+#      State: "ENABLED"
+#      Targets:
+#        - Arn: !GetAtt DataGrabberStateMachine.Arn
+#          Id: AthleticsNewsTarget
+#          Input: '{"dataType": "AthleticsNews"}'
+#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
-  ClubsUpdateEvent:
-    Type: "AWS::Events::Rule"
-    DependsOn:
-      - ESDomain
-    Properties:
-      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
-      Name: ClubsEventRule
-      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-      ScheduleExpression: rate(525600 minutes)
-      State: "DISABLED"
-      Targets:
-        - Arn: !GetAtt DataGrabberStateMachine.Arn
-          Id: ClubsTarget
-          Input: '{"dataType": "Clubs"}'
-          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#  ClubsUpdateEvent:
+#    Type: "AWS::Events::Rule"
+#    DependsOn:
+#      - ESDomain
+#    Properties:
+#      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
+#      Name: ClubsEventRule
+#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+#      ScheduleExpression: rate(525600 minutes)
+#      State: "DISABLED"
+#      Targets:
+#        - Arn: !GetAtt DataGrabberStateMachine.Arn
+#          Id: ClubsTarget
+#          Input: '{"dataType": "Clubs"}'
+#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
   getEventsData:
     Type: 'AWS::Serverless::Function'
@@ -490,38 +535,39 @@ Resources:
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
-          EVENTS_TABLE_NAME: !Ref eventsTable
+#          EVENTS_TABLE_NAME: !Ref eventsTable
+          DOCUMENTS_TABLE_NAME: !Ref documentsTable
           EVENTS_EXPIRY_OFFSET: !Ref eventsExpiryDays
 
-  getNewsData:
-    Type: 'AWS::Serverless::Function'
-    Properties:
-      Handler: get_news_data.lambda_handler
-      Description: >
-        Function that grabs data from the UBCO News page
-      MemorySize: 256
-      Timeout: 60
-      CodeUri: ./functions/get_news_data
-      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
-      Environment:
-        Variables:
-          NEWS_TABLE_NAME: !Ref newsTable
-          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+#  getNewsData:
+#    Type: 'AWS::Serverless::Function'
+#    Properties:
+#      Handler: get_news_data.lambda_handler
+#      Description: >
+#        Function that grabs data from the UBCO News page
+#      MemorySize: 256
+#      Timeout: 60
+#      CodeUri: ./functions/get_news_data
+#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+#      Environment:
+#        Variables:
+#          NEWS_TABLE_NAME: !Ref newsTable
+#          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
-  getAthleticsNewsData:
-    Type: 'AWS::Serverless::Function'
-    Properties:
-      Handler: get_athletics_news_data.lambda_handler
-      Description: >
-        Function that grabs data from the UBCO News page
-      MemorySize: 256
-      Timeout: 60
-      CodeUri: ./functions/get_athletics_news_data
-      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
-      Environment:
-        Variables:
-          ATHLETICS_NEWS_TABLE_NAME: !Ref athleticsNewsTable
-          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+#  getAthleticsNewsData:
+#    Type: 'AWS::Serverless::Function'
+#    Properties:
+#      Handler: get_athletics_news_data.lambda_handler
+#      Description: >
+#        Function that grabs data from the UBCO News page
+#      MemorySize: 256
+#      Timeout: 60
+#      CodeUri: ./functions/get_athletics_news_data
+#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+#      Environment:
+#        Variables:
+#          ATHLETICS_NEWS_TABLE_NAME: !Ref athleticsNewsTable
+#          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
   getBlogData:
     Type: 'AWS::Serverless::Function'
@@ -535,37 +581,63 @@ Resources:
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
         Variables:
-          BLOGS_TABLE_NAME: !Ref blogsTable
+#          BLOGS_TABLE_NAME: !Ref blogsTable
+          DOCUMENTS_TABLE_NAME: !Ref documentsTable
           DOCUMENT_EXPIRY_DAYS: !Ref blogExpiryDays
 
-  getClubData:
+
+  documentTableStreamHandler:
     Type: 'AWS::Serverless::Function'
     Properties:
-      Handler: get_club_data.lambda_handler
+      Handler: document_stream_handler.handler
       Description: >
-        Function that grabs data from the UBCO Club directory
+        Lambda function that performs actions in response to INSERT, UPDATE and DELETE events for the document table
       MemorySize: 256
       Timeout: 300
-      CodeUri: ./functions/get_club_data
-      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      CodeUri: ./functions/document_stream_handler
+      Role: !GetAtt StreamHandlerRole.Arn
       Environment:
         Variables:
-          CLUBS_TABLE_NAME: !Ref clubsTable
-
-  esHasher:
-    Type: "AWS::Serverless::Function"
-    Properties:
-      Handler: es_hasher.lambda_handler
-      Description: >
-        This function creates hashes for documents in the events, news and blogs table to update the ES indices with new data
-      MemorySize: 512
-      Timeout: 600
-      CodeUri: ./functions/es_hasher
-      Role: !GetAtt esHasherLambdaIAMRole.Arn
-      Environment:
-        Variables:
-          ES_HASH_TABLE_NAME: !Ref esHashTable
           ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
+
+
+
+  documentsTableHandlerTrigger:
+    Type: "AWS::Lambda::EventSourceMapping"
+    Properties:
+      EventSourceArn: !GetAtt documentsDDBTable.StreamArn
+      FunctionName: !GetAtt documentTableStreamHandler.Arn
+      StartingPosition: "LATEST"
+      Enabled: True
+
+#  getClubData:
+#    Type: 'AWS::Serverless::Function'
+#    Properties:
+#      Handler: get_club_data.lambda_handler
+#      Description: >
+#        Function that grabs data from the UBCO Club directory
+#      MemorySize: 256
+#      Timeout: 300
+#      CodeUri: ./functions/get_club_data
+#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+#      Environment:
+#        Variables:
+#          CLUBS_TABLE_NAME: !Ref clubsTable
+
+#  esHasher:
+#    Type: "AWS::Serverless::Function"
+#    Properties:
+#      Handler: es_hasher.lambda_handler
+#      Description: >
+#        This function creates hashes for documents in the events, news and blogs table to update the ES indices with new data
+#      MemorySize: 512
+#      Timeout: 600
+#      CodeUri: ./functions/es_hasher
+#      Role: !GetAtt esHasherLambdaIAMRole.Arn
+#      Environment:
+#        Variables:
+#          ES_HASH_TABLE_NAME: !Ref esHashTable
+#          ES_DOMAIN: !GetAtt ESDomain.DomainEndpoint
 
   getESDocuments:
     Type: "AWS::Serverless::Function"
@@ -602,40 +674,40 @@ Resources:
       Type: String
       Value: !GetAtt getESDocuments.Arn
 
-  eventsDDBArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "EventsTableArn"
-      Type: String
-      Value: !GetAtt eventsDDBTable.Arn
+#  eventsDDBArn:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "EventsTableArn"
+#      Type: String
+#      Value: !GetAtt eventsDDBTable.Arn
 
-  blogsDDBArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "BlogsTableArn"
-      Type: String
-      Value: !GetAtt blogsDDBTable.Arn
+#  blogsDDBArn:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "BlogsTableArn"
+#      Type: String
+#      Value: !GetAtt blogsDDBTable.Arn
 
-  newsDDBArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "NewsTableArn"
-      Type: String
-      Value: !GetAtt newsDDBTable.Arn
+#  newsDDBArn:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "NewsTableArn"
+#      Type: String
+#      Value: !GetAtt newsDDBTable.Arn
 
-  athleticsNewsDDBArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "AthleticsNewsTableArn"
-      Type: String
-      Value: !GetAtt athleticsNewsDDBTable.Arn
+#  athleticsNewsDDBArn:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "AthleticsNewsTableArn"
+#      Type: String
+#      Value: !GetAtt athleticsNewsDDBTable.Arn
 
-  clubsDDBArn:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "ClubsTableArn"
-      Type: String
-      Value: !GetAtt clubsDDBTable.Arn
+#  clubsDDBArn:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "ClubsTableArn"
+#      Type: String
+#      Value: !GetAtt clubsDDBTable.Arn
 
 
   eventsQueryTime:
@@ -645,19 +717,19 @@ Resources:
       Type: String
       Value: "2021-05-01 6:07:08"
 
-  newsQueryTime:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "NewsQueryTime"
-      Type: String
-      Value: "2021-05-01 06:07:08"
+#  newsQueryTime:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "NewsQueryTime"
+#      Type: String
+#      Value: "2021-05-01 06:07:08"
 
-  athleticsNewsQueryTime:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Name: "AthleticsNewsQueryTime"
-      Type: String
-      Value: "2020-01-01 06:07:08"
+#  athleticsNewsQueryTime:
+#    Type: AWS::SSM::Parameter
+#    Properties:
+#      Name: "AthleticsNewsQueryTime"
+#      Type: String
+#      Value: "2020-01-01 06:07:08"
 
   blogsQueryTime:
     Type: AWS::SSM::Parameter
@@ -666,16 +738,20 @@ Resources:
       Type: String
       Value: "2019-01-01 06:07:08"
 
-  eventsDDBTable:
+  documentsDDBTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Ref eventsTable
+      TableName: DocumentsTable
       AttributeDefinitions:
-        - AttributeName: "eventId"
+        - AttributeName: "documentType"
+          AttributeType: "S"
+        - AttributeName: "documentId"
           AttributeType: "S"
       KeySchema:
-        - AttributeName: "eventId"
+        - AttributeName: "documentType"
           KeyType: "HASH"
+        - AttributeName: "documentId"
+          KeyType: "RANGE"
       ProvisionedThroughput:
         ReadCapacityUnits:
           5
@@ -685,118 +761,143 @@ Resources:
         PointInTimeRecoveryEnabled: True
       SSESpecification:
         SSEEnabled: True
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
       TimeToLiveSpecification:
         AttributeName: "expiresOn"
         Enabled: True
 
-  newsDDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref newsTable
-      AttributeDefinitions:
-        - AttributeName: "newsId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "newsId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits:
-          5
-        WriteCapacityUnits:
-          5
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: True
-      SSESpecification:
-        SSEEnabled: True
-      TimeToLiveSpecification:
-        AttributeName: "expiresOn"
-        Enabled: True
+#  eventsDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref eventsTable
+#      AttributeDefinitions:
+#        - AttributeName: "eventId"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "eventId"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
+#      TimeToLiveSpecification:
+#        AttributeName: "expiresOn"
+#        Enabled: True
 
-  athleticsNewsDDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref athleticsNewsTable
-      AttributeDefinitions:
-        - AttributeName: "newsId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "newsId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits:
-          5
-        WriteCapacityUnits:
-          5
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: True
-      SSESpecification:
-        SSEEnabled: True
-      TimeToLiveSpecification:
-        AttributeName: "expiresOn"
-        Enabled: True
+#  newsDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref newsTable
+#      AttributeDefinitions:
+#        - AttributeName: "newsId"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "newsId"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
+#      TimeToLiveSpecification:
+#        AttributeName: "expiresOn"
+#        Enabled: True
 
-  blogsDDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref blogsTable
-      AttributeDefinitions:
-        - AttributeName: "blogId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "blogId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits:
-          5
-        WriteCapacityUnits:
-          5
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: True
-      SSESpecification:
-        SSEEnabled: True
-      TimeToLiveSpecification:
-        AttributeName: "expiresOn"
-        Enabled: True
+#  athleticsNewsDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref athleticsNewsTable
+#      AttributeDefinitions:
+#        - AttributeName: "newsId"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "newsId"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
+#      TimeToLiveSpecification:
+#        AttributeName: "expiresOn"
+#        Enabled: True
 
-  clubsDDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref clubsTable
-      AttributeDefinitions:
-        - AttributeName: "clubId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "clubId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits:
-          5
-        WriteCapacityUnits:
-          5
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: True
-      SSESpecification:
-        SSEEnabled: True
+#  blogsDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref blogsTable
+#      AttributeDefinitions:
+#        - AttributeName: "blogId"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "blogId"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
+#      TimeToLiveSpecification:
+#        AttributeName: "expiresOn"
+#        Enabled: True
 
-  esHashDDBTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Ref esHashTable
-      AttributeDefinitions:
-        - AttributeName: "documentHash"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "documentHash"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits:
-          5
-        WriteCapacityUnits:
-          5
-      PointInTimeRecoverySpecification:
-        PointInTimeRecoveryEnabled: True
-      SSESpecification:
-        SSEEnabled: True
+#  clubsDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref clubsTable
+#      AttributeDefinitions:
+#        - AttributeName: "clubId"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "clubId"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
+
+#  esHashDDBTable:
+#    Type: AWS::DynamoDB::Table
+#    Properties:
+#      TableName: !Ref esHashTable
+#      AttributeDefinitions:
+#        - AttributeName: "documentHash"
+#          AttributeType: "S"
+#      KeySchema:
+#        - AttributeName: "documentHash"
+#          KeyType: "HASH"
+#      ProvisionedThroughput:
+#        ReadCapacityUnits:
+#          5
+#        WriteCapacityUnits:
+#          5
+#      PointInTimeRecoverySpecification:
+#        PointInTimeRecoveryEnabled: True
+#      SSESpecification:
+#        SSEEnabled: True
 
   ESDomain:
     Type: AWS::Elasticsearch::Domain
