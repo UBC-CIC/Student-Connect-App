@@ -101,64 +101,58 @@ def get_blog_items_from_web(blogs_link: str):
 def lambda_handler(event, context):
     """
     TODO Refactor implementation to, 1) Do wordpress query by date if possible
-    2) add datatype prefix to ID
-    3) change the table to which data is persisted
     Lambda entry-point
     """
 
-    for item in event['payload']:
-        table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
-        LOGGER.info(f"Inserting item {item}")
-        table.put_item(Item=json.load(item))
+    blogs_link = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?_fields=id,title,guid,excerpt,categories,date,_links"
 
-    # blogs_link = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=desc"
-    # blogs_items = []
-    # filtered_blogs_items = []
-    #
-    # response_items = get_blog_items_from_web(blogs_link)
-    # if len(response_items) == 0:
-    #     return {"status": "No items in API"}
-    #
-    # # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
-    # # error to S3
-    # for item in response_items:
-    #     try:
-    #         blogs_item = blog_parser(item)
-    #         blogs_items.append(blogs_item)
-    #     except Exception as e:
-    #         S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
-    #                              Key=f'ErrorLog/Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
-    #         LOGGER.error(f"Error in parsing a blog item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Blogs")
-    #         detailed_exception(LOGGER)
-    #
-    # # Filter the parsed items based on last query time to get only new items
-    # try:
-    #     last_query_time = SSM_CLIENT.get_parameter(Name="BlogsQueryTime")["Parameter"]["Value"]
-    #     for blogs_item in blogs_items:
-    #         if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
-    #                 < datetime.strptime(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
-    #             filtered_blogs_items.append(blogs_item)
-    #     SSM_CLIENT.put_parameter(Name="BlogsQueryTime",
-    #                              Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
-    #                              Overwrite=True)
-    # except SSM_CLIENT.exceptions.InternalServerError as e:
-    #     LOGGER.error("Error in communicating with Parameter store")
-    #     detailed_exception(LOGGER)
-    #
-    # LOGGER.debug(json.dumps(blogs_items, indent=4))
-    # LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
-    #
-    # # Save new items to central data lake S3
-    # if len(filtered_blogs_items) != 0:
-    #     S3_CLIENT.put_object(Body=json.dumps(filtered_blogs_items, indent=4), Bucket=S3_BUCKET_NAME,
-    #                          Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
-    #
-    # # Insert items into DynamoDB table with appropriate TTL
-    # table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
-    # for blogs_item in filtered_blogs_items:
-    #     blogs_item["expiresOn"] = get_adjusted_unix_time(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S",
-    #                                                      EXPIRY_DAYS_OFFSET * 24)
-    #     table.put_item(Item=blogs_item)
+    blogs_items = []
+    filtered_blogs_items = []
+
+    response_items = get_blog_items_from_web(blogs_link)
+    if len(response_items) == 0:
+        return {"status": "No items in API"}
+
+    # Iterate through list of raw items and parse them, if there is a parsing error, save the raw item that throws an
+    # error to S3
+    for item in response_items:
+        try:
+            blogs_item = blog_parser(item)
+            blogs_items.append(blogs_item)
+        except Exception as e:
+            S3_CLIENT.put_object(Body=json.dumps(item, indent=4), Bucket=S3_BUCKET_NAME,
+                                 Key=f'ErrorLog/Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+            LOGGER.error(f"Error in parsing a blog item, raw item saved to {S3_BUCKET_NAME}/ErrorLog/Blogs")
+            detailed_exception(LOGGER)
+
+    # Filter the parsed items based on last query time to get only new items
+    try:
+        last_query_time = SSM_CLIENT.get_parameter(Name="BlogsQueryTime")["Parameter"]["Value"]
+        for blogs_item in blogs_items:
+            if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
+                    < datetime.strptime(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
+                filtered_blogs_items.append(blogs_item)
+        SSM_CLIENT.put_parameter(Name="BlogsQueryTime",
+                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
+                                 Overwrite=True)
+    except SSM_CLIENT.exceptions.InternalServerError as e:
+        LOGGER.error("Error in communicating with Parameter store")
+        detailed_exception(LOGGER)
+
+    LOGGER.debug(json.dumps(blogs_items, indent=4))
+    LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
+
+    # Save new items to central data lake S3
+    if len(filtered_blogs_items) != 0:
+        S3_CLIENT.put_object(Body=json.dumps(filtered_blogs_items, indent=4), Bucket=S3_BUCKET_NAME,
+                             Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
+
+    # Insert items into DynamoDB table with appropriate TTL
+    table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
+    for blogs_item in filtered_blogs_items:
+        blogs_item["expiresOn"] = get_adjusted_unix_time(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S",
+                                                         EXPIRY_DAYS_OFFSET * 24)
+        table.put_item(Item=blogs_item)
 
     return {"status": "completed"}
 

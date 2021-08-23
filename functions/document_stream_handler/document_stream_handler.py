@@ -2,15 +2,13 @@ import boto3
 import certifi
 import json
 import os
+import logging
 from aws_requests_auth.aws_auth import AWSRequestsAuth
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from boto3.dynamodb.types import TypeDeserializer
-import logging
-import time
-
-# Log level
 from common_lib import detailed_exception
 
+# Log level
 logging.basicConfig()
 LOGGER = logging.getLogger()
 if os.getenv('LOG_LEVEL') == 'DEBUG':
@@ -18,10 +16,10 @@ if os.getenv('LOG_LEVEL') == 'DEBUG':
 else:
     LOGGER.setLevel(logging.INFO)
 
-
 REGION = boto3.session.Session().region_name
 ES_ENDPOINT = os.environ['ES_DOMAIN']
-
+S3_CLIENT = boto3.client("s3")
+S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 # Create the auth token for the sigv4 signature
 SESSION = boto3.session.Session()
@@ -47,48 +45,45 @@ ES_CLIENT = Elasticsearch(
     connection_class=RequestsHttpConnection
 )
 
-# Used to convert low-level API style DynamoDB item data from streams to regular python dict style
+# Used to convert low-level API style DynamoDB item data from DynamoDB Streams to regular python dict style
 deserializer = TypeDeserializer()
 
 
 def handler(event, context):
     """
     Lambda entry point
+    Reads the DynamoDB Stream records of the document table everytime a change is made, and reflects that
+    INSERT, MODIFY or REMOVE event change into Elasticsearch accordingly
     """
     try:
         for record in event.get('Records'):
-            # document_id = record['dynamodb']['NewImage']['documentId']['S']
-            # document_type = record['dynamodb']['NewImage']['documentType']['S']
+            if record.get('eventName') == 'INSERT' or record.get('eventName') == 'MODIFY':
+                LOGGER.info(f'{record.get("eventName")} Operation')
 
-            if record.get('eventName') == 'INSERT':
-                # TODO Implement ES Insert
-                # contact_id = record['dynamodb']['NewImage']['ContactId']['S']
-                # end_time = record['dynamodb']['NewImage']['EndTime']['N']
-                # caller_transcript = record['dynamodb']['NewImage']['Transcript']['S']
-                deserialized_record = {k: deserializer.deserialize(v) for k, v in record['dynamodb']['NewImage'].items()}
+                deserialized_record = {k: deserializer.deserialize(v) for k, v in
+                                       record['dynamodb']['NewImage'].items()}
+
                 LOGGER.info(json.dumps(str(deserialized_record), indent=4))
-                # serialize the body
 
-                print("Create operation")
+                deserialized_record.pop('expiresOn')
+                deserialized_record.pop('documentType')
+                deserialized_record.pop('documentId')
 
-                # ES_CLIENT.create(index=document_type, id=document_id, body=document_body)
+                ES_CLIENT.index(index=record['dynamodb']['NewImage']['documentType']['S'],
+                                id=record['dynamodb']['NewImage']['documentId']['S'],
+                                body=deserialized_record)
 
-            elif record.get('eventName') == 'MODIFY':
-                # TODO Implement ES Modify
+            elif record.get('eventName') == 'REMOVE':
+                LOGGER.info("REMOVE Operation")
 
-                # serialize the body
-                document_body = record['dynamodb']['NewImage']
-                deserialized_record = {k: deserializer.deserialize(v) for k, v in record['dynamodb']['NewImage'].items()}
+                deserialized_record = {k: deserializer.deserialize(v) for k, v in
+                                       record['dynamodb']['OldImage'].items()}
+
                 LOGGER.info(json.dumps(str(deserialized_record), indent=4))
-                # ES_CLIENT.update(index=document_type, id=document_id, body=document_body)
 
-                print("modify operation")
-            elif record.get('eventName') == 'DELETE':
-                # TODO Implement ES Delete
-                print("delete operation")
-                deserialized_record = {k: deserializer.deserialize(v) for k, v in record['dynamodb']['OldImage'].items()}
-                LOGGER.info(json.dumps(str(deserialized_record), indent=4))
-                # ES_CLIENT.delete(index=document_type, id=document_id)
+                ES_CLIENT.delete(index=deserialized_record['documentType'], id=deserialized_record['documentId'])
 
-    except KeyError as e:
+    except KeyError as key_error:
+        detailed_exception(LOGGER)
+    except Exception as error:
         detailed_exception(LOGGER)

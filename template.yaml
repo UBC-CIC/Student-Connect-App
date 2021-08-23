@@ -441,22 +441,28 @@ Resources:
                   - !GetAtt getEventsData.Arn
                   - !GetAtt getBlogData.Arn
 
-# TODO Enable it at the end
-#  EventsUpdateEvent:
-#    Type: "AWS::Events::Rule"
-#    DependsOn:
-#      - ESDomain
-#    Properties:
-#      Description: Triggers the State machine to retrieve and save Events data, every day
-#      Name: EventsEventRule
-#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-#      ScheduleExpression: rate(1440 minutes)
-#      State: "DISABLED"
-#      Targets:
-#        - Arn: !GetAtt getEventsData.Arn
-#          Id: EventsTarget
-#          Input: '{"dataType": "Events"}'
-#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+  EventsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the get_events_data lambda to retrieve and save Events data, every day
+      Name: EventsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt getEventsData.Arn
+          Id: EventsTarget
+          Input: '{"dataType": "Events"}'
+
+  PermissionForEventsToInvokeEventsLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref getEventsData
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt EventsUpdateEvent.Arn
 
 #  NewsUpdateEvent:
 #    Type: "AWS::Events::Rule"
@@ -474,22 +480,28 @@ Resources:
 #          Input: '{"dataType": "News"}'
 #          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
 
-#  TODO Enable it at the end
-#  BlogsUpdateEvent:
-#    Type: "AWS::Events::Rule"
-#    DependsOn:
-#      - ESDomain
-#    Properties:
-#      Description: Triggers the State machine to retrieve and save Blogs data, every 7 days
-#      Name: BlogsEventRule
-#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-#      ScheduleExpression: rate(1440 minutes)
-#      State: "DISABLED"
-#      Targets:
-#        - Arn: !GetAtt getBlogData.Arn
-#          Id: BlogsTarget
-#          Input: '{"dataType": "Blogs"}'
-#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+  BlogsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the get_blogs_data lambda to retrieve and save Blogs data, every day
+      Name: BlogsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt getBlogData.Arn
+          Id: BlogsTarget
+          Input: '{"dataType": "Blogs"}'
+
+  PermissionForEventsToInvokeBlogsLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref getBlogData
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt BlogsUpdateEvent.Arn
 
 #  AthleticsNewsUpdateEvent:
 #    Type: "AWS::Events::Rule"
