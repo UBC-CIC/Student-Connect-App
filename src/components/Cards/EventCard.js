@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
         }
 
     },
+    date:{
+        fontWeight:theme.typography.fontWeightBold
+    },
 
     iconArea:{
         height: 35,
@@ -94,7 +97,7 @@ export function EventCard (props){
                     </Grid>
 
                         <Grid item xs={12}>
-                        <Typography variant="subtitle1"  align={'left'} color={'error'}>
+                        <Typography variant="subtitle1" className={classes.date}  align={'left'}>
                             {startDate} - {endDate}
                         </Typography>
                     </Grid>
@@ -136,7 +139,7 @@ export function HomeEventCard (props){
                                                     />
                             </Grid>
                             <Grid item xs={12} xl={12} lg={12} md={12}>
-                                <Typography variant="subtitle1"  align={'left'} color={'error'} >
+                                <Typography variant="subtitle1" className={classes.date}  align={'left'}>
                                     {startDate} - {endDate}
                                 </Typography>
                             </Grid>
