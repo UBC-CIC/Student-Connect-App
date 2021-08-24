@@ -71,7 +71,8 @@ def blog_parser(blog_json: dict):
         LOGGER.debug(f"No image in blog_item {blog_json['id']}")
         image_links = []
     parsed_blog = {
-        "blogId": str(blog_json["id"]),
+        "documentId": str(blog_json["id"]),
+        "documentType": "blogs",
         "title": blog_json["title"]["rendered"],
         "link": blog_json["guid"]["rendered"],
         "excerpt": blog_json["excerpt"]["rendered"],
@@ -139,8 +140,8 @@ def lambda_handler(event, context):
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
 
-    LOGGER.debug(json.dumps(blogs_items, indent=4))
-    LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
+    LOGGER.info(json.dumps(blogs_items, indent=4))
+    LOGGER.info(json.dumps(filtered_blogs_items, indent=4))
 
     # Save new items to central data lake S3
     if len(filtered_blogs_items) != 0:

@@ -141,8 +141,8 @@ def lambda_handler(event, context):
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
 
-    LOGGER.debug(json.dumps(events_items, indent=4))
-    LOGGER.debug(json.dumps(filtered_events_items, indent=4))
+    LOGGER.info(json.dumps(events_items, indent=4))
+    LOGGER.info(json.dumps(filtered_events_items, indent=4))
 
     # Save new items to central data lake S3
     if len(filtered_events_items) != 0:
