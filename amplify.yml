@@ -15,7 +15,7 @@ frontend:
     build:
       commands:
         - yum install -y jq
-        - export REACT_APP_FunctionName=$(aws ssm get-parameter --name GetESDocumentsLambdaName --query Parameter.Value --output text)
+        - export REACT_APP_FunctionName=$(aws ssm get-parameter --name /amplify/GetESDocumentsLambdaName --query Parameter.Value --output text)
         - export AWSACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
         - export PROJECT_NAME=$(cat ./amplify/.config/project-config.json | jq -r '.projectName')
         - export S3AMPLIFY=$(aws resourcegroupstaggingapi get-resources --tag-filters Key=user:Application,Values=${PROJECT_NAME} --resource-type-filters s3 --query 'ResourceTagMappingList[*].[ResourceARN]' --output text | grep -i deployment | cut -c14-)
