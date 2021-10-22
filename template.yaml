@@ -598,42 +598,42 @@ Resources:
   getESDocumentsLambdaArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "GetESDocumentsLambdaArn"
+      Name: "/amplify/GetESDocumentsLambdaArn"
       Type: String
       Value: !GetAtt getESDocuments.Arn
 
   eventsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "EventsTableArn"
+      Name: "/amplify/EventsTableArn"
       Type: String
       Value: !GetAtt eventsDDBTable.Arn
 
   blogsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "BlogsTableArn"
+      Name: "/amplify/BlogsTableArn"
       Type: String
       Value: !GetAtt blogsDDBTable.Arn
 
   newsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "NewsTableArn"
+      Name: "/amplify/NewsTableArn"
       Type: String
       Value: !GetAtt newsDDBTable.Arn
 
   athleticsNewsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "AthleticsNewsTableArn"
+      Name: "/amplify/AthleticsNewsTableArn"
       Type: String
       Value: !GetAtt athleticsNewsDDBTable.Arn
 
   clubsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "ClubsTableArn"
+      Name: "/amplify/ClubsTableArn"
       Type: String
       Value: !GetAtt clubsDDBTable.Arn
 
