@@ -41,7 +41,7 @@ function Clubs(props){
                     Clubs
                 </Typography>
                 <Typography align={'left'} variant="h5">
-                    Explore all the clubs here
+                    Explore all clubs here
                 </Typography>
                 <Divider className={classes.divider}/>
 

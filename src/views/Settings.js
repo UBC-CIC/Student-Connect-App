@@ -79,7 +79,7 @@ function Settings(props){
                     </Grid>
                     <Grid item xs={8}>
                         <Typography align={'left'} variant={"h5"} className={classes.content}>
-                            Modify my preference settings to get the best out of the recommendation
+                            Modify my preference settings to get the best out of the recommendations
                         </Typography>
 
                     </Grid>

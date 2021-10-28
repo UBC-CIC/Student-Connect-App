@@ -70,7 +70,7 @@ function Home(props) {
                     Home
                 </Typography>
                     <Typography align={'left'} variant="h5">
-                        Explore personalized and most recent items here
+                        Explore your personalized recommendations and recently posted items here 
                     </Typography>
 
                 </Container>

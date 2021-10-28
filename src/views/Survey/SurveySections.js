@@ -99,7 +99,7 @@ export function Events(props){
     return(
         <div>
             <Typography align={'left'} variant="h5" className={classes.title}>
-                Which of the following event host would you like to get the event recommendation from ?
+                Which of the following areas/departments on campus would you like to get event recommendations from?
             </Typography>
             <Divider className={classes.divider}/>
             {eventsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
