@@ -11,6 +11,9 @@ const StyledButton = withStyles({
         padding: '15px',
         marginRight:'5px',
         marginTop:'10px',
+        '&:hover': {
+            color: "#02a7de",
+        }
     },
     label: {
         textTransform: 'capitalize',

@@ -16,9 +16,16 @@ function ClubsCarousel(props){
                 {clubs.map( (item, i) =><ClubsItem key={i} item={item}/>)}
             </Carousel>
             {clubLength===0&&
-            <Typography variant={"h6"}>
-                Sorry, there are currently no clubs that match your preference. Please make sure your preferences are up to date.
-            </Typography>}
+            <div>
+                <Typography variant={"h6"}>
+                    Sorry, there are currently no clubs that match your preference. 
+                    Please make sure your preferences are up to date.
+                    <br/>
+                    In the meanwhile, here are some clubs you can check out.
+                </Typography>
+            </div>
+            }
+            
 
         </div>
 

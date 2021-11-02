@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
     bigCard:{
         padding: theme.spacing(2),
         height: "100%",
+        width: "100%",
         margin:'none',
         boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
         '&:hover':{

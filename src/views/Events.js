@@ -124,7 +124,7 @@ function Events(props){
                     Events
                 </Typography>
                 <Typography align={'left'} variant="h5">
-                    Explore all the events here
+                    Explore all events here
                 </Typography>
                 <Divider className={classes.divider}/>
 
