@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Divider, withStyles } from "@material-ui/core";
+import { Divider } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
 import React from "react";
@@ -64,12 +64,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
-
-const TitleContainer = withStyles({
-  root: {
-      marginBottom: "30px"
-  }
-})(Container);
 
 export default function ForYouPanel(props) {
   const { news, blogs, sportsNews, events, tabChange} = props;
@@ -139,18 +133,13 @@ export default function ForYouPanel(props) {
 
   return (
     <Grid container spacing={1} alignItems="stretch">
-      <TitleContainer maxWidth={"xl"}>
+      <Container maxWidth={"xl"}>
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           News
         </Typography>
-      </TitleContainer>
+      </Container>
       <Container>
-        <Grid container spacing={3}>
-          {newsList}
-          {sportsNewsList}
-        </Grid>
-
-        {news.length === 0 && sportsNewsList.length === 0 && (
+        {(news.length === 0 && sportsNewsList.length === 0) ? (
             <div className={classes.divider}>
           <Typography variant={"h6"}>
             Sorry, there are currently no news that match your preference.
@@ -159,22 +148,23 @@ export default function ForYouPanel(props) {
             In the meanwhile, you can check out news <Link to='/news'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
           </Typography>
           </div>
+        ) : (
+          <Grid container spacing={3}>
+            {newsList}
+            {sportsNewsList}
+          </Grid>
         )}
       </Container>
 
-      <TitleContainer maxWidth={"xl"}>
+      <Container maxWidth={"xl"}>
         <Divider className={classes.divider} />
 
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Events
         </Typography>
-      </TitleContainer>
+      </Container>
       <Container>
-        <Grid container spacing={4}>
-          {eventList}
-        </Grid>
-
-        {events.length === 0 && (
+        {events.length === 0 ? (
             <div>
             <Typography variant={"h6"} className={classes.divider}>
                 Sorry, there are currently no events that match your preferences.
@@ -183,22 +173,22 @@ export default function ForYouPanel(props) {
                 In the meanwhile, you can check out events <Link to='/events'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
             </Typography>
             </div>
+        ) : (
+          <Grid container spacing={4}>
+            {eventList}
+          </Grid>
         )}
       </Container>
 
-      <TitleContainer maxWidth={"xl"}>
+      <Container maxWidth={"xl"}>
         <Divider className={classes.divider} />
 
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Student Life Blogs
         </Typography>
-      </TitleContainer>
+      </Container>
       <Container>
-        <Grid container spacing={4}>
-          {blogsList}
-        </Grid>
-
-        {blogs.length === 0 && (
+        {blogs.length === 0 ? (
           <div>
             <Typography variant={"h6"} className={classes.divider}>
               Sorry, there are currently no blogs that match your preference.
@@ -207,14 +197,18 @@ export default function ForYouPanel(props) {
               In the meanwhile, you can check out Student Life Blogs under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
             </Typography>
           </div>
+        ) : (
+        <Grid container spacing={4}>
+          {blogsList}
+        </Grid>
         )}
       </Container>
-      <TitleContainer maxWidth={"xl"}>
+      <Container maxWidth={"xl"}>
         <Divider className={classes.divider} />
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Clubs
         </Typography>
-      </TitleContainer>
+      </Container>
       <Container>
         <ClubsCarousel />
       </Container>

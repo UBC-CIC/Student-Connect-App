@@ -13,7 +13,6 @@ function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
-            marginTop:'20px',
             boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
             '&:hover':{
                 boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)"

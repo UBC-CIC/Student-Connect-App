@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
     },
     divider:{
-        marginTop:'30px',
+        marginTop:'42px', // 30+12
         marginBottom:'30px',
     },
     forYouTitle:{
