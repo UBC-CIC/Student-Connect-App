@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import { Divider } from "@material-ui/core";
+import { Divider, withStyles } from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
 import React from "react";
@@ -64,6 +64,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
+
+const TitleContainer = withStyles({
+  root: {
+      marginBottom: "30px"
+  }
+})(Container);
 
 export default function ForYouPanel(props) {
   const { news, blogs, sportsNews, events, tabChange} = props;
@@ -132,12 +138,12 @@ export default function ForYouPanel(props) {
   });
 
   return (
-    <Grid container spacing={3} alignItems="stretch">
-      <Container>
+    <Grid container spacing={1} alignItems="stretch">
+      <TitleContainer maxWidth={"xl"}>
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           News
         </Typography>
-      </Container>
+      </TitleContainer>
       <Container>
         <Grid container spacing={3}>
           {newsList}
@@ -155,12 +161,15 @@ export default function ForYouPanel(props) {
           </div>
         )}
       </Container>
-      <Container>
+
+      <TitleContainer maxWidth={"xl"}>
         <Divider className={classes.divider} />
 
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Events
         </Typography>
+      </TitleContainer>
+      <Container>
         <Grid container spacing={4}>
           {eventList}
         </Grid>
@@ -177,12 +186,14 @@ export default function ForYouPanel(props) {
         )}
       </Container>
 
-      <Container maxWidth={"xl"}>
+      <TitleContainer maxWidth={"xl"}>
         <Divider className={classes.divider} />
 
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Student Life Blogs
         </Typography>
+      </TitleContainer>
+      <Container>
         <Grid container spacing={4}>
           {blogsList}
         </Grid>
@@ -198,11 +209,13 @@ export default function ForYouPanel(props) {
           </div>
         )}
       </Container>
-      <Container maxWidth={"xl"}>
+      <TitleContainer maxWidth={"xl"}>
         <Divider className={classes.divider} />
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
           Clubs
         </Typography>
+      </TitleContainer>
+      <Container>
         <ClubsCarousel />
       </Container>
     </Grid>

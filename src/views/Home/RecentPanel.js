@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {Divider} from "@material-ui/core";
+import {Divider, withStyles} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import React from "react";
 import {EventCard} from "../../components/Cards/EventCard";
@@ -47,14 +47,9 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(10),
 
     },
-    recommandationContainer: {
-        // backgroundColor: '#0055B7',
-        // borderRadius: '25px',
-    },
     divider:{
         marginTop:'30px',
         marginBottom:'30px',
-
     },
     forYouTitle:{
         fontWeight: 600,
@@ -68,10 +63,13 @@ const useStyles = makeStyles((theme) => ({
     grid:{
         display: 'flex'
     }
-
-
 }));
 
+const TitleContainer = withStyles({
+    root: {
+        marginBottom: "30px"
+    }
+})(Container);
 export default function RecentPanel(props){
     const {allNews,allEvents,allBlogs} = props
     const classes = useStyles();
@@ -125,49 +123,46 @@ export default function RecentPanel(props){
     });
 
     return(
-        <Grid container spacing={3} alignItems="stretch">
+        <Grid container spacing={1} alignItems="stretch">
 
-            <Grid container spacing={3} alignItems="stretch">
-                <Container maxWidth={'xl'}>
-
+            <TitleContainer maxWidth={'xl'}>
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     News
                 </Typography>
-                </Container>
-                <Container maxWidth={'xl'}>
+            </TitleContainer>
 
+            <Container maxWidth={'xl'}>
                 <Grid container spacing={3}>
                     {recentNewsList}
                 </Grid>
-                </Container>
+            </Container>
 
-                <Container maxWidth={'xl'}>
-                    <Divider className={classes.divider}/>
+            <TitleContainer maxWidth={'xl'}>
+                <Divider className={classes.divider}/>
 
-                    <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Events
                 </Typography>
-                </Container>
-                <Container maxWidth={'xl'}>
+            </TitleContainer>
 
+            <Container maxWidth={'xl'}>
                 <Grid container spacing={4}>
                     {recentEventList}
                 </Grid>
-                </Container>
-            </Grid>
+            </Container>
 
-            <Container maxWidth={'xl'}>
+            <TitleContainer maxWidth={'xl'}>
                 <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     Student Life Blogs
                 </Typography>
+            </TitleContainer>
 
+            <Container maxWidth={'xl'}>
                 <Grid container spacing={4}>
                     {recentBlogsList}
-
                 </Grid>
-
             </Container>
         </Grid>
 
