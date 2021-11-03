@@ -26,7 +26,7 @@ function TabPanel(props) {
         >
             {value === index && (
                 <Box p={3}>
-                    <Typography>{children}</Typography>
+                    <div>{children}</div>
                 </Box>
             )}
         </div>
@@ -132,12 +132,11 @@ export default function HomeTab(props) {
                         onChange={handleChange}
                         variant="fullWidth"
                         indicatorColor="secondary"
-                        textColor="white"
                         aria-label="icon label tabs example"
                         classes={{
                             indicator: classes.indicator
-                        }}>
-                        >
+                        }}
+                    >
                         <Tab icon={<HomeIcon/>}label="For you" {...a11yProps(0)}  />
                         <Tab icon={<RssFeedIcon/>} label="Recent" {...a11yProps(1)} />
 

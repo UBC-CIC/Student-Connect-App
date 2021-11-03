@@ -112,7 +112,7 @@ const useStyles = makeStyles((theme) => ({
     drawerPaperClose: {
     },
     nested: {
-        paddingLeft: theme.spacing.unit * 4,
+        paddingLeft: theme.spacing(4),
     },
     label:{
         fontSize:"16px"

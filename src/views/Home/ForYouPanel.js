@@ -68,9 +68,9 @@ export default function ForYouPanel(props) {
   const { news, blogs, sportsNews, events } = props;
   const classes = useStyles();
 
-  const newsList = news.map((item) => {
+  const newsList = news.map((item, index) => {
     return (
-      <Grid item xs={12} sm={6} className={classes.grid}>
+      <Grid item xs={12} sm={6} className={classes.grid} key={`news-${index}`}>
         <HomePageNewsCard
           title={item._source.title}
           categories={item._source.categories}
@@ -81,9 +81,9 @@ export default function ForYouPanel(props) {
       </Grid>
     );
   });
-  const sportsNewsList = sportsNews.map((item) => {
+  const sportsNewsList = sportsNews.map((item, index) => {
     return (
-      <Grid item xs={12} sm={6} className={classes.grid}>
+      <Grid item xs={12} sm={6} className={classes.grid} key={`sportnews-${index}`}>
         <HomePageNewsCard
           title={item._source.title}
           categories={item._source.categories}
@@ -95,13 +95,13 @@ export default function ForYouPanel(props) {
     );
   });
 
-  const eventList = events.map((item) => {
+  const eventList = events.map((item, index) => {
     if (item._source.cost === "") {
       item._source.cost = "Free";
     }
 
     return (
-      <Grid item xs={12} sm={6} className={classes.grid}>
+      <Grid item xs={12} sm={6} className={classes.grid} key={`event-${index}`}>
         <EventCard
           title={item._source.title}
           categories={item._source.categories}
@@ -116,9 +116,9 @@ export default function ForYouPanel(props) {
       </Grid>
     );
   });
-  const blogsList = blogs.map((item) => {
+  const blogsList = blogs.map((item, index) => {
     return (
-      <Grid item xs={12} sm={6} className={classes.grid}>
+      <Grid item xs={12} sm={6} className={classes.grid} key={`blog-${index}`}>
         <HomePageNewsCard
           title={item._source.title}
           categories={item._source.categories}

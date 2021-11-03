@@ -78,9 +78,9 @@ export default function RecentPanel(props){
 
 
 
-    const recentNewsList=allNews.slice(0, 6).map((item) => {
+    const recentNewsList=allNews.slice(0, 6).map((item, index) => {
         return(
-            <Grid item xs={12} sm={6} md={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={6} className={classes.grid} key={`recent-news-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -91,10 +91,10 @@ export default function RecentPanel(props){
             </Grid>
         )
     });
-    const recentEventList=allEvents.slice(0,6).map((item)=>{
+    const recentEventList=allEvents.slice(0,6).map((item, index)=>{
         return(
 
-            <Grid item xs={12} sm={6} md={4} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={4} className={classes.grid} key={`recent-event-${index}`}>
             <EventCard categories={item.categories}
                        startDate={item.startDate}
                        endDate={item.endDate}
@@ -109,9 +109,9 @@ export default function RecentPanel(props){
         )
 
     })
-    const recentBlogsList=allBlogs.slice(0, 6).map((item) => {
+    const recentBlogsList=allBlogs.slice(0, 6).map((item, index) => {
         return(
-            <Grid item xs={12} sm={6} md={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={6} className={classes.grid} key={`recent-blogs-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}

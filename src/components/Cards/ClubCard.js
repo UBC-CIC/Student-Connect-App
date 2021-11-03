@@ -65,7 +65,7 @@ function ClubCard (props){
                                         <Tag categories = {categories}/>
                                     </Grid>
 
-                                    <Grid item alignItems={'left'}>
+                                    <Grid item>
                                         {email ?
                                             <IconButton href={`mailto:${email}`} target = "_blank">
                                                 <MailOutlineIcon className={classes.emailIcon}/>

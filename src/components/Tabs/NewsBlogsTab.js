@@ -94,9 +94,9 @@ export default function NewsBlogsTab(props) {
     };
 
     const {allNews,allBlogs,allSportsNews} = props
-    const newsList= allNews.map((item)=>{
+    const newsList= allNews.map((item, index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`news-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -112,9 +112,9 @@ export default function NewsBlogsTab(props) {
         setValue(newValue);
     };
 
-    const blogList=allBlogs.map((item)=>{
+    const blogList=allBlogs.map((item, index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`blog-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -129,9 +129,9 @@ export default function NewsBlogsTab(props) {
 
     })
 
-    const sportsNewsList=allSportsNews.map((item)=>{
+    const sportsNewsList=allSportsNews.map((item,index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`sport-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -203,12 +203,11 @@ export default function NewsBlogsTab(props) {
                     onChange={handleChange}
                     variant="fullWidth"
                     indicatorColor="secondary"
-                    textColor="white"
                     aria-label="icon label tabs example"
                     classes={{
                         indicator: classes.indicator
-                    }}>
-                    >
+                    }}
+                >
                     <Tab icon={<RssFeedIcon/>}label="News" {...a11yProps(0)}  />
                     <Tab icon={<SportsBasketballIcon/>}label="Sports News" {...a11yProps(1)} />
                     <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(2)} />
