@@ -5,7 +5,7 @@ import Container from "@material-ui/core/Container";
 import ClubsCarousel from "../../components/Carousel/ClubsCarousel";
 import React from "react";
 import { EventCard } from "../../components/Cards/EventCard";
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { HomePageNewsCard } from "../../components/Cards/NewsCard";
 import { Link } from "react-router-dom";
 
@@ -44,10 +44,6 @@ const useStyles = makeStyles((theme) => ({
   container: {
     paddingLeft: theme.spacing(10),
   },
-  recommandationContainer: {
-    // backgroundColor: '#0055B7',
-    // borderRadius: '25px',
-  },
   divider: {
     marginTop: "30px",
     marginBottom: "30px",
@@ -64,6 +60,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
   },
 }));
+
+const CardsGrid = withStyles({
+  root: {
+      marginTop: "30px",
+      marginBottom: "12px"
+  }
+})(Grid);
 
 export default function ForYouPanel(props) {
   const { news, blogs, sportsNews, events, tabChange} = props;
@@ -149,10 +152,10 @@ export default function ForYouPanel(props) {
           </Typography>
           </div>
         ) : (
-          <Grid container spacing={3}>
+          <CardsGrid container spacing={3}>
             {newsList}
             {sportsNewsList}
-          </Grid>
+          </CardsGrid>
         )}
       </Container>
 
@@ -174,9 +177,9 @@ export default function ForYouPanel(props) {
             </Typography>
             </div>
         ) : (
-          <Grid container spacing={4}>
+          <CardsGrid container spacing={4}>
             {eventList}
-          </Grid>
+          </CardsGrid>
         )}
       </Container>
 
@@ -198,11 +201,12 @@ export default function ForYouPanel(props) {
             </Typography>
           </div>
         ) : (
-        <Grid container spacing={4}>
-          {blogsList}
-        </Grid>
+          <CardsGrid container spacing={4}>
+            {blogsList}
+          </CardsGrid>
         )}
       </Container>
+
       <Container maxWidth={"xl"}>
         <Divider className={classes.divider} />
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
