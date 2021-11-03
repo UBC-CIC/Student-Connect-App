@@ -160,7 +160,7 @@ export default function RecentPanel(props){
                 <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Student life blogs
+                    Student Life Blogs
                 </Typography>
 
                 <Grid container spacing={4}>

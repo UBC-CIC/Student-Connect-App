@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import Carousel from "react-material-ui-carousel";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import { Link } from "react-router-dom";
 
 function ClubsCarousel(props){
     const {clubs}=props
@@ -21,7 +22,7 @@ function ClubsCarousel(props){
                     Sorry, there are currently no clubs that match your preference. 
                     Please make sure your preferences are up to date.
                     <br/>
-                    In the meanwhile, here are some clubs you can check out.
+                    In the meanwhile, you can check out clubs <Link to='/clubs'>here</Link>.
                 </Typography>
             </div>
             }

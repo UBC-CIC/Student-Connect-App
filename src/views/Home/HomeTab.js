@@ -146,7 +146,7 @@ export default function HomeTab(props) {
 
 
             <TabPanel value={value} index={0}>
-                <ForYouPanel events={events} sportsNews={sportsNews} news={news} blogs={blogs}/>
+                <ForYouPanel events={events} sportsNews={sportsNews} news={news} blogs={blogs} tabChange={handleChange}/>
             </TabPanel>
 
 

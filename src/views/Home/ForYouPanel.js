@@ -7,6 +7,7 @@ import React from "react";
 import { EventCard } from "../../components/Cards/EventCard";
 import { makeStyles } from "@material-ui/core/styles";
 import { HomePageNewsCard } from "../../components/Cards/NewsCard";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ForYouPanel(props) {
-  const { news, blogs, sportsNews, events } = props;
+  const { news, blogs, sportsNews, events, tabChange} = props;
   const classes = useStyles();
 
   const newsList = news.map((item, index) => {
@@ -144,12 +145,12 @@ export default function ForYouPanel(props) {
         </Grid>
 
         {news.length === 0 && sportsNewsList.length === 0 && (
-            <div>
-          <Typography variant={"h6"} className={classes.divider}>
+            <div className={classes.divider}>
+          <Typography variant={"h6"}>
             Sorry, there are currently no news that match your preference.
             Please make sure your preferences are up to date.
             <br/>
-            In the meanwhile, here are some news you can check out.
+            In the meanwhile, you can check out news <Link to='/news'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
           </Typography>
           </div>
         )}
@@ -170,7 +171,7 @@ export default function ForYouPanel(props) {
                 Sorry, there are currently no events that match your preferences.
                 Please make sure your preferences are up to date.
                 <br/>
-                In the meanwhile, here are some events you can check out.
+                In the meanwhile, you can check out events <Link to='/events'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
             </Typography>
             </div>
         )}
@@ -180,7 +181,7 @@ export default function ForYouPanel(props) {
         <Divider className={classes.divider} />
 
         <Typography align={"left"} variant="h4" className={classes.forYouTitle}>
-          Student life blogs
+          Student Life Blogs
         </Typography>
         <Grid container spacing={4}>
           {blogsList}
@@ -192,7 +193,7 @@ export default function ForYouPanel(props) {
               Sorry, there are currently no blogs that match your preference.
               Please make sure your preferences are up to date.
               <br/>
-              In the meanwhile, here are some blogs you can check out.
+              In the meanwhile, you can check out Student Life Blogs under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
             </Typography>
           </div>
         )}
