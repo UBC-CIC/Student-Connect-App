@@ -18,40 +18,24 @@ export const getUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        mensSportsList {
-          baseball
-          basketball
-          crew
-          crossCountry
-          football
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          squash
-          swimming
-          tennis
-          trackAndField
-          wrestling
-        }
-        womensSportsList {
-          basketball
-          crew
-          crossCountry
-          fieldHockey
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          softball
-          squash
-          swimming
-          tennis
-          trackAndField
-          volleyball
-        }
+        baseball
+        basketball
+        crew
+        crossCountry
+        fieldHockey
+        football
+        golf
+        iceHockey
+        lacrosse
+        skiing
+        soccer
+        softball
+        squash
+        swimming
+        tennis
+        trackAndField
+        volleyball
+        wrestling
       }
       academicPreference {
         arts
@@ -110,6 +94,26 @@ export const listUserPreferences = /* GraphQL */ `
           religion
           research
           sports
+        }
+        sportsPreference {
+          baseball
+          basketball
+          crew
+          crossCountry
+          fieldHockey
+          football
+          golf
+          iceHockey
+          lacrosse
+          skiing
+          soccer
+          softball
+          squash
+          swimming
+          tennis
+          trackAndField
+          volleyball
+          wrestling
         }
         academicPreference {
           arts
