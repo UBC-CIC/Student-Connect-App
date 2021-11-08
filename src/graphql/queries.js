@@ -18,15 +18,19 @@ export const getUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        basketball
-        crossCountry
-        golf
-        soccer
-        trackAndField
-        volleyball
-        rugby
-        softball
-        ultimate
+        varsitySportsList {
+          basketball
+          crossCountry
+          golf
+          soccer
+          trackAndField
+          volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
+        }
       }
       academicPreference {
         arts
@@ -85,17 +89,6 @@ export const listUserPreferences = /* GraphQL */ `
           religion
           research
           sports
-        }
-        sportsPreference {
-          basketball
-          crossCountry
-          golf
-          soccer
-          trackAndField
-          volleyball
-          rugby
-          softball
-          ultimate
         }
         academicPreference {
           arts

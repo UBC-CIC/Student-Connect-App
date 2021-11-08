@@ -21,15 +21,19 @@ export const createUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        basketball
-        crossCountry
-        golf
-        soccer
-        trackAndField
-        volleyball
-        rugby
-        softball
-        ultimate
+        varsitySportsList {
+          basketball
+          crossCountry
+          golf
+          soccer
+          trackAndField
+          volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
+        }
       }
       academicPreference {
         arts
@@ -88,15 +92,19 @@ export const updateUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        basketball
-        crossCountry
-        golf
-        soccer
-        trackAndField
-        volleyball
-        rugby
-        softball
-        ultimate
+        varsitySportsList {
+          basketball
+          crossCountry
+          golf
+          soccer
+          trackAndField
+          volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
+        }
       }
       academicPreference {
         arts
@@ -155,15 +163,19 @@ export const deleteUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        basketball
-        crossCountry
-        golf
-        soccer
-        trackAndField
-        volleyball
-        rugby
-        softball
-        ultimate
+        varsitySportsList {
+          basketball
+          crossCountry
+          golf
+          soccer
+          trackAndField
+          volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
+        }
       }
       academicPreference {
         arts

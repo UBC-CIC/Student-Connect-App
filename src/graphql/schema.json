@@ -502,6 +502,37 @@
         "name" : "sportsPreference",
         "description" : null,
         "fields" : [ {
+          "name" : "varsitySportsList",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "varsitySportsList",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        }, {
+          "name" : "competitiveSportsList",
+          "description" : null,
+          "args" : [ ],
+          "type" : {
+            "kind" : "OBJECT",
+            "name" : "competitiveSportsList",
+            "ofType" : null
+          },
+          "isDeprecated" : false,
+          "deprecationReason" : null
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "varsitySportsList",
+        "description" : null,
+        "fields" : [ {
           "name" : "basketball",
           "description" : null,
           "args" : [ ],
@@ -567,7 +598,16 @@
           },
           "isDeprecated" : false,
           "deprecationReason" : null
-        }, {
+        } ],
+        "inputFields" : null,
+        "interfaces" : [ ],
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "OBJECT",
+        "name" : "competitiveSportsList",
+        "description" : null,
+        "fields" : [ {
           "name" : "rugby",
           "description" : null,
           "args" : [ ],
@@ -2604,6 +2644,33 @@
         "description" : null,
         "fields" : null,
         "inputFields" : [ {
+          "name" : "varsitySportsList",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "VarsitySportsListInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        }, {
+          "name" : "competitiveSportsList",
+          "description" : null,
+          "type" : {
+            "kind" : "INPUT_OBJECT",
+            "name" : "CompetitiveSportsListInput",
+            "ofType" : null
+          },
+          "defaultValue" : null
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "VarsitySportsListInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
           "name" : "basketball",
           "description" : null,
           "type" : {
@@ -2657,7 +2724,16 @@
             "ofType" : null
           },
           "defaultValue" : null
-        }, {
+        } ],
+        "interfaces" : null,
+        "enumValues" : null,
+        "possibleTypes" : null
+      }, {
+        "kind" : "INPUT_OBJECT",
+        "name" : "CompetitiveSportsListInput",
+        "description" : null,
+        "fields" : null,
+        "inputFields" : [ {
           "name" : "rugby",
           "description" : null,
           "type" : {

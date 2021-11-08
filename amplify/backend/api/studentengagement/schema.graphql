@@ -16,12 +16,20 @@ type cultureList{
   asian:Boolean
 }
 type sportsPreference {
+  varsitySportsList: varsitySportsList
+  competitiveSportsList: competitiveSportsList
+}
+
+type varsitySportsList {
   basketball: Boolean
   crossCountry: Boolean
   golf: Boolean
   soccer: Boolean
   trackAndField: Boolean
   volleyball: Boolean
+}
+
+type competitiveSportsList {
   rugby: Boolean
   softball: Boolean
   ultimate: Boolean
