@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
         marginRight:theme.spacing(1),
         '&.Mui-disabled': {
             color: "white",
+        },
+        '&:hover': {
+            color: "#0055B7",
         }
     }
 

@@ -18,24 +18,15 @@ export const getUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        baseball
         basketball
-        crew
         crossCountry
-        fieldHockey
-        football
         golf
-        iceHockey
-        lacrosse
-        skiing
         soccer
-        softball
-        squash
-        swimming
-        tennis
         trackAndField
         volleyball
-        wrestling
+        rugby
+        softball
+        ultimate
       }
       academicPreference {
         arts
@@ -96,24 +87,15 @@ export const listUserPreferences = /* GraphQL */ `
           sports
         }
         sportsPreference {
-          baseball
           basketball
-          crew
           crossCountry
-          fieldHockey
-          football
           golf
-          iceHockey
-          lacrosse
-          skiing
           soccer
-          softball
-          squash
-          swimming
-          tennis
           trackAndField
           volleyball
-          wrestling
+          rugby
+          softball
+          ultimate
         }
         academicPreference {
           arts

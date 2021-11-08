@@ -198,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email/Gender'];
+    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email, Gender, Cultures'];
 }
 
 const userPreference ={
@@ -227,39 +227,18 @@ const userPreference ={
         universityServices: false,
     },
     sportsPreference : {
-        mensSportsList: {
-            baseball: false,
+        varsitySportsList: {
             basketball: false,
-            crew: false,
             crossCountry: false,
-            football: false,
             golf: false,
-            iceHockey: false,
-            lacrosse: false,
-            skiing: false,
-            soccer: false,
-            squash: false,
-            swimming: false,
-            tennis: false,
-            trackAndField: false,
-            wrestling: false,
-        },
-        womensSportsList: {
-            basketball: false,
-            crew: false,
-            crossCountry: false,
-            fieldHockey: false,
-            golf: false,
-            iceHockey: false,
-            lacrosse: false,
-            skiing: false,
             soccer: false,
             softball: false,
-            squash: false,
-            swimming: false,
-            tennis: false,
             trackAndField: false,
-            volleyball: false,
+        },
+        competitiveSportsList: {
+            rugby: false,
+            softball: false,
+            ultimate: false,
         }
     },
     newsBlogsClubsPreference: {
@@ -291,11 +270,10 @@ const userPreference ={
     const [gender, setGender] = React.useState('');
      const [cisOrTrans, setCisOrTrans] = React.useState('');
      const handleChange=(param)=> {
-        if(param.category==="mensSportsList" || param.category==="womensSportsList"){
+        if(param.category==="varsitySportsList" || param.category==="competitiveSportsList"){
             userPreference.sportsPreference[param.category][param.backendName]=param.checked
         }else{
             userPreference[param.category][param.backendName]=param.checked
-
         }
     }
     const handleSwitchChange=(param)=>{
@@ -323,7 +301,9 @@ const userPreference ={
                 return <Sports handleChange={handleChange} userPreference={userPreference}/>
             case 5:
                 return <Email handleChange={handleChange} handleSwitchChange={handleSwitchChange} userPreference={userPreference}
-                              handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}/>
+                              handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}
+                              handleBeginning={handleBeginning}
+                              />
 
             default:
                 return <div>error</div>
@@ -337,6 +317,10 @@ const userPreference ={
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
+
+    const handleBeginning = () => {
+        setActiveStep(0);
+    }
 
     const handleSave = () => {
         createUserData(user)

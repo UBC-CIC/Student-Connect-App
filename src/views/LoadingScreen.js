@@ -17,13 +17,13 @@ function LoadingScreen(props) {
         if(userPreference){
             let academicCategory=listToString(userPreference.academicPreference)
             let newsBlogClubsCategory=listToString(userPreference.newsBlogsClubsPreference)
-            let mensSportsCategory=listToString(userPreference.sportsPreference.mensSportsList)
-            let womensSportsCategory=listToString(userPreference.sportsPreference.womensSportsList)
+            let varsitySportsCategory=listToString(userPreference.sportsPreference.varsitySportsList)
+            let competitiveSportsCategory=listToString(userPreference.sportsPreference.competitiveSportsList)
             fetchNews(academicCategory+newsBlogClubsCategory)
             fetchEvents(academicCategory+newsBlogClubsCategory)
             fetchBlogs(academicCategory+newsBlogClubsCategory)
             fetchClubs(academicCategory+newsBlogClubsCategory)
-            fetchSportsNews(mensSportsCategory+womensSportsCategory)
+            fetchSportsNews(varsitySportsCategory+competitiveSportsCategory)
 
 
         }

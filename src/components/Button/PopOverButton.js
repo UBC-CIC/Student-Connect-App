@@ -7,7 +7,7 @@ import HelpIcon from '@material-ui/icons/Help';
 
 const useStyles = makeStyles((theme) => ({
     typography: {
-        padding: theme.spacing(2),
+        margin: theme.spacing(2),
     },
     button:{
         textTransform:"none",
@@ -15,8 +15,9 @@ const useStyles = makeStyles((theme) => ({
         color:"white",
         fontSize:'13px',
         borderRadius:"3",
-        marginTop:theme.spacing(1)
-
+    },
+    cursor: {
+        cursor: "pointer"
     }
 
 }));
@@ -32,6 +33,20 @@ export default function PopOverButton(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleLinkString = () => {
+        const defaultString = props.contentLink[0].split(props.contentLink[1]);
+        const link = props.contentLink[2];
+        return (
+            <Typography className={classes.typography} variant={"subtitle1"}>
+                {defaultString[0]}
+                <span className={classes.cursor}>
+                    {link}
+                </span>
+                {defaultString[1]}
+            </Typography>
+        )
+    }
 
     const open = Boolean(anchorEl);
     const id = open ? 'simple-popover' : undefined;
@@ -55,13 +70,21 @@ export default function PopOverButton(props) {
                     vertical: 'top',
                     horizontal: 'center',
                 }}
+                PaperProps={{
+                    style: { width: "400px" },
+                }}
             >
                 <Typography className={classes.typography} variant={"subtitle1"}>
                     {props.content}
                 </Typography>
-                <Typography className={classes.typography} variant={"subtitle1"}>
-                    {props.content2}
-                </Typography>
+
+                {!!props.content2 && 
+                    <Typography className={classes.typography} variant={"subtitle1"}>
+                        {props.content2}
+                    </Typography>
+                }
+
+                {!!props.contentLink && handleLinkString()}
 
             </Popover>
         </div>

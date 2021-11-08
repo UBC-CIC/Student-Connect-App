@@ -2,14 +2,14 @@ import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider, FormControl, InputLabel, MenuItem, Select, Switch} from "@material-ui/core";
+import {Divider, FormControl, MenuItem, Select, Switch} from "@material-ui/core";
 import {
     academicOptions,
     cultureOptions,
     eventsOptions,
-    mensSportsOptions,
     newsBlogsClubsOptions,
-    womensSportsOptions
+    varsitySportsOptions,
+    competitiveSportsOptions
 } from '../../assets/SurveyCategories'
 import Grid from "@material-ui/core/Grid";
 import PopOverButton from "../../components/Button/PopOverButton";
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     },
     title:{
         color:"#0055B7",
-        marginTop: theme.spacing(1)
+        marginTop: '24px !important'
     },
     divider:{
         marginTop:'5px',
@@ -37,8 +37,8 @@ const useStyles = makeStyles((theme) => ({
         marginBottom:'20px',
     },
     formControl: {
-        margin: theme.spacing(1),
-        minWidth: 120,
+        margin: theme.spacing(1,1,1,0),
+        minWidth: 200,
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
@@ -134,29 +134,32 @@ export function Sports(props){
 
     return(
         <div>
-            <div>
-                <Typography align={'left'} variant="h5" className={classes.title}>
-                    Which of the following sports are you interested in? (for athletic news)
-                </Typography>
-                <Divider className={classes.divider}/>
-                <Typography align={'left'} variant="h6" className={classes.title}>
-                    Men's Sports
-                </Typography>
+            <Grid spacing={5}>
+                <Grid item xs={12}>
+                    <Typography align={'left'} variant="h5" className={classes.title}>
+                        Which of the following sports are you interested in? (for athletic news)
+                    </Typography>
+                    <Divider className={classes.divider}/>
+
+                    <Typography align={'left'} variant="h6" className={classes.title}>
+                        Varsity Sports
+                    </Typography>
+                    {varsitySportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                                    handleChange={props.handleChange} category={"varsitySportsList"}
+                                                                    userPreference={props.userPreference}/>)}
 
 
-                {mensSportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
-                                                                 handleChange={props.handleChange} category={"mensSportsList"}
-                                                                 userPreference={props.userPreference}/>)}
-                <Divider className={classes.divider}/>
-                <Typography align={'left'} variant="h6" className={classes.title}>
-                    Women's Sports
-                </Typography>
+                    <Typography align={'left'} variant="h6" className={classes.title}>
+                        Competitive Sports
+                    </Typography>
+                    {competitiveSportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                                    handleChange={props.handleChange} category={"competitiveSportsList"}
+                                                                    userPreference={props.userPreference}/>)}
 
-                {womensSportsOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
-                                                                   handleChange={props.handleChange} category={"womensSportsList"}
-                                                                   userPreference={props.userPreference}/>)}
-
-            </div>
+                </Grid>
+                
+                
+            </Grid>
         </div>
 
     )
@@ -199,62 +202,80 @@ export function Email(props){
                 <Typography align={'left'} variant="h6" className={classes.title}>
                     Would you like to receive emails about things that you might be interested in?
                 </Typography>
+                <Divider className={classes.divider}/>
                 </Grid>
-                <Grid item xs={5}>
+                <Grid container item direction="row" alignItems="center">
+                    <Typography>No</Typography>
                     <Switch
                         checked={state.checkedA}
                         onChange={handleChange}
                         name="checkedA"
                         color="primary"
                     />
+                    <Typography>Yes</Typography>
                 </Grid>
                 <Typography align={'left'} variant="h6" className={classes.title}>
                     Please indicate your gender
                 </Typography>
+                <Divider className={classes.divider}/>
+                <Grid container item direction="row" alignItems="center">
+                    <FormControl className={classes.formControl} size="small">
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            variant="outlined" 
+                            value={gender}
+                            onChange={handleGenderChange}
+                        >
+                            <MenuItem value={"none"} disabled>Select an option</MenuItem>
+                            <MenuItem value={"female"}>Female</MenuItem>
+                            <MenuItem value={"male"}>Male</MenuItem>
+                            <MenuItem value={"non_binary"}>Non-Binary</MenuItem>
+                            <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
 
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Select an option</InputLabel>
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={gender}
-                        onChange={handleGenderChange}
-                    >
-                        <MenuItem value={"female"}>Female Gender</MenuItem>
-                        <MenuItem value={"male"}>Male Gender</MenuItem>
-                        <MenuItem value={"non_binary"}>Non-Binary Gender</MenuItem>
-                        <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
-
-                    </Select>
-                </FormControl>
+                        </Select>
+                    </FormControl>
+                    <PopOverButton title={"Why is this information collected"}
+                                content={`
+                                            - Gender information is collected to better enhance the 
+                                                recommendations that are being provided to you. 
+                                                You can change this information anytime.
+                                        `
+                                        }
+                                contentLink={[`- Please refer back to the disclaimer to learn more about how we use the collected information.`, 'disclaimer', <a onClick={props.handleBeginning}>disclaimer</a>]}
+                                />
+                </Grid>
                 <Typography align={'left'} variant="h6" className={classes.title}>
-                    Are you/Would you say you are:
+                    Are you/ Would you say you are:
                 </Typography>
 
-                <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-simple-select-label">Select an option</InputLabel>
+                <Grid container item direction="row" alignItems="center">
+                    <FormControl className={classes.formControl} size="small">
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            variant="outlined" 
+                            value={transOrCis}
+                            onChange={handleTransOrCisChange}
+                        >
+                            <MenuItem value={"none"} disabled>Select an option</MenuItem>
+                            <MenuItem value={"cisgender"}>Cisgender</MenuItem>
+                            <MenuItem value={"transgender"}>Transgender</MenuItem>
+                            <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
 
-                    <Select
-                        labelId="demo-simple-select-label"
-                        id="demo-simple-select"
-                        value={transOrCis}
-                        onChange={handleTransOrCisChange}
-                    >
-                        <MenuItem value={"cisgender"}>Cisgender</MenuItem>
-                        <MenuItem value={"transgender"}>Transgender</MenuItem>
-                        <MenuItem value={"Prefer not to answer"}>Prefer not to answer</MenuItem>
-
-                    </Select>
-                </FormControl>
-                <PopOverButton title={"Definitions"}
-                               content={'Cisgender describes a person whose gender identity matches their assigned sex at birth.'}
-                               content2={"Transgender describes a person whose gender identity does not match their assigned sex at birth."}
-                               />
+                        </Select>
+                    </FormControl>
+                    <PopOverButton title={"Definitions"}
+                                content={'- Cisgender describes a person whose gender identity matches their assigned sex at birth.'}
+                                content2={"- Transgender describes a person whose gender identity does not match their assigned sex at birth."}
+                                />
+                </Grid>
 
 
                 <Typography align={'left'} variant="h6" className={classes.title}>
                     Which of the following cultures are you interested in?
                 </Typography>
+                <Divider className={classes.divider}/>
                 {cultureOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
                                                                    handleChange={props.handleChange} category={"culturePreference"}
                                                                    userPreference={props.userPreference}/>)}

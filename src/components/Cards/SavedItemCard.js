@@ -41,7 +41,10 @@ const useStyles = makeStyles((theme) => ({
         color:"white",
         fontSize:'11px',
         borderRadius:"3",
-        margin:theme.spacing(1,1,1,0)
+        margin:theme.spacing(1,1,1,0),
+        '&:hover': {
+            color: "#0055B7",
+        }
     },
     title:{
         fontWeight:"500",

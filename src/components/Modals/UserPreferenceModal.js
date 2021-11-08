@@ -12,9 +12,9 @@ import {
     academicOptions,
     cultureOptions,
     eventsOptions,
-    mensSportsOptions,
     newsBlogsClubsOptions,
-    womensSportsOptions
+    varsitySportsOptions,
+    competitiveSportsOptions
 } from "../../assets/SurveyCategories";
 import BookIcon from "@material-ui/icons/Book";
 import EditIcon from '@material-ui/icons/Edit';
@@ -111,10 +111,10 @@ export default function UserPreferenceModal(props){
 
                         <PreferenceListItem label={"Culture"}
                                             nestedItem={cultureOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["culturePreference"][item.backendName], userPreference:userPreference,category:"culturePreference" }) )} icon={<PublicIcon/>}/>
-                        <PreferenceListItem label={"Men's Sports"}
-                                            nestedItem={mensSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["mensSportsList"][item.backendName], userPreference:userPreference,category:"mensSportsList" }) )} icon={<Sports/>}/>
-                        <PreferenceListItem label={"Women's Sports"}
-                                            nestedItem={womensSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["womensSportsList"][item.backendName] , userPreference:userPreference,category:"womensSportsList" }) )
+                        <PreferenceListItem label={"Varsity Sports"}
+                                            nestedItem={varsitySportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["varsitySportsList"][item.backendName], userPreference:userPreference,category:"varsitySportsList" }) )} icon={<Sports/>}/>
+                        <PreferenceListItem label={"Competitive Sports"}
+                                            nestedItem={competitiveSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["competitiveSportsList"][item.backendName] , userPreference:userPreference,category:"competitiveSportsList" }) )
                                             } icon={<Sports/>}/>
                         <EmailItem icon={<EmailIcon/>} label={'Email'} userPreference={userPreference}/>
 
