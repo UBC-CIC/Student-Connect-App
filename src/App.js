@@ -138,10 +138,6 @@ function App(props) {
             )}
 
 
-            }
-
-
-
         </div>
     );
 }

@@ -232,8 +232,8 @@ const userPreference ={
             crossCountry: false,
             golf: false,
             soccer: false,
-            softball: false,
             trackAndField: false,
+            volleyball: false
         },
         competitiveSportsList: {
             rugby: false,
