@@ -2,6 +2,10 @@ import { Button, Modal, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
 import React from "react";
+import {connect, useDispatch} from "react-redux";
+
+import { closeModal } from "../../actions/disclosureModalActions";
+
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -27,8 +31,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-export default function InfoDisclosureModal(props){
-    const { open, handleClose } = props;
+function InfoDisclosureModal(props){
+    const {disclosureModalStatus} = props;
+    const dispatch = useDispatch();
+
+    const handleClose = () => {
+        dispatch(closeModal());
+    };
 
     const classes = useStyles();
 
@@ -59,7 +68,7 @@ export default function InfoDisclosureModal(props){
         <div>
             <Modal
                 className={classes.modal}
-                open={open}
+                open={disclosureModalStatus}
                 aria-labelledby="share-modal-title"
                 aria-describedby="share-modal-des"
             >
@@ -68,3 +77,12 @@ export default function InfoDisclosureModal(props){
         </div>
     );
 }
+
+const mapStateToProps = (state) => {
+    return {
+        disclosureModalStatus: state.disclosureModalStatus
+    };
+};
+
+
+export default connect(mapStateToProps, null)(InfoDisclosureModal)

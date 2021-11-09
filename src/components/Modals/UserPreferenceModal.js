@@ -25,6 +25,7 @@ import {Sports} from "@material-ui/icons";
 import {updateUserPreferenceAction} from "../../actions/userAction";
 import EmailIcon from "@material-ui/icons/Email";
 import PublicIcon from '@material-ui/icons/Public';
+import EmojiEventsIcon from '@material-ui/icons/EmojiEvents';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -115,7 +116,7 @@ export default function UserPreferenceModal(props){
                                             nestedItem={varsitySportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["varsitySportsList"][item.backendName], userPreference:userPreference,category:"varsitySportsList" }) )} icon={<Sports/>}/>
                         <PreferenceListItem label={"Competitive Sports"}
                                             nestedItem={competitiveSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["competitiveSportsList"][item.backendName] , userPreference:userPreference,category:"competitiveSportsList" }) )
-                                            } icon={<Sports/>}/>
+                                            } icon={<EmojiEventsIcon/>}/>
                         <EmailItem icon={<EmailIcon/>} label={'Email'} userPreference={userPreference}/>
 
                     </List>

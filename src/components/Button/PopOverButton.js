@@ -35,13 +35,17 @@ export default function PopOverButton(props) {
     };
 
     const handleLinkString = () => {
+        /*
+        * props.contentLink = [defaultString, string to split, function]
+        */
         const defaultString = props.contentLink[0].split(props.contentLink[1]);
-        const link = props.contentLink[2];
         return (
             <Typography className={classes.typography} variant={"subtitle1"}>
                 {defaultString[0]}
                 <span className={classes.cursor}>
-                    {link}
+                    <a onClick={props.contentLink[2]}>
+                        {props.contentLink[1]}
+                    </a>
                 </span>
                 {defaultString[1]}
             </Typography>

@@ -2,7 +2,7 @@ import {SurveyCheckbox} from "../../components/Checkboxes/Checkbox";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
 import {makeStyles} from "@material-ui/core/styles";
-import {Divider, FormControl, MenuItem, Select, Switch} from "@material-ui/core";
+import {Divider, FormControl, Grid, MenuItem, Select, Switch} from "@material-ui/core";
 import {
     academicOptions,
     cultureOptions,
@@ -11,7 +11,6 @@ import {
     varsitySportsOptions,
     competitiveSportsOptions
 } from '../../assets/SurveyCategories'
-import Grid from "@material-ui/core/Grid";
 import PopOverButton from "../../components/Button/PopOverButton";
 
 const useStyles = makeStyles((theme) => ({
@@ -242,7 +241,7 @@ export function Email(props){
                                                 You can change this information anytime.
                                         `
                                         }
-                                contentLink={[`- Please refer back to the disclaimer to learn more about how we use the collected information.`, 'disclaimer', <a onClick={props.handleBeginning}>disclaimer</a>]}
+                                contentLink={[`- Please refer back to the Welcome page to learn more about how we use the collected information.`, 'Welcome', props.handleBeginning]}
                                 />
                 </Grid>
                 <Typography align={'left'} variant="h6" className={classes.title}>

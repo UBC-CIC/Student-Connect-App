@@ -3,9 +3,11 @@ import {makeStyles} from "@material-ui/core/styles";
 import React, { useState } from 'react';
 
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
+import UserInfoModal from "../components/Modals/UserInfoModal";
 import InfoDisclosureModal from "../components/Modals/InfoDisclosureModal";
+import { openModal } from "../actions/disclosureModalActions";
 
-import {connect} from "react-redux";
+import {connect, useDispatch} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -59,28 +61,29 @@ const useStyles = makeStyles((theme) => ({
 
 function Settings(props){
     const classes = useStyles();
+    const dispatch = useDispatch();
     const{userPreference} = props
 
-    const [modalOpen, setModalOpen] = useState(false);
-
     const handleOpen = () => {
-        setModalOpen(true);
-    };
-
-    const handleClose = () => {
-        setModalOpen(false);
+        dispatch(openModal());
     };
 
     return(
 
         <div>
             <Container maxWidth={'xl'} >
-                <Typography align={'left'} variant="h4" className={classes.title}>
-                    Settings
-                </Typography>
-                <Typography align={'left'} variant="h5" >
-                    Change your preferences here
-                </Typography>
+                <Grid container spacing={2} direction={"column"}>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h4" className={classes.title}>
+                            Settings
+                        </Typography>
+                    </Grid>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h5" >
+                            Change your preferences here
+                        </Typography>
+                    </Grid>
+                </Grid>
 
                 <Divider className={classes.divider}/>
             </Container>
@@ -97,7 +100,7 @@ function Settings(props){
                             <Grid container item direction="row" spacing={1}>
                                 <Grid item>
                                     <Typography className={classes.content}>
-                                        Modify my preference settings to get the best out of the recommendations.
+                                        Modify your preference settings to get the best out of the recommendations.
                                     </Typography>
                                 </Grid>
                                 <Grid item>
@@ -111,7 +114,34 @@ function Settings(props){
                             <UserPreferenceModal userPreference={userPreference}/>
                         </Grid>
                         <Grid item>
-                            <InfoDisclosureModal open={modalOpen} handleClose={handleClose}/>
+                            <InfoDisclosureModal/>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+
+            </Card>
+
+
+            <Card className={classes.card}>
+                <Grid container spacing={3} className={classes.root} >
+                    <Grid item xs={12}>
+                            <Typography align={'left'} variant={"h5"}>
+                                Profile
+                            </Typography>
+                    </Grid>
+                    <Grid container item direction="row" spacing={4} alignItems="center">
+                        <Grid item>
+                            <Grid container item direction="row" spacing={1}>
+                                <Grid item>
+                                    <Typography className={classes.content}>
+                                        Modify your personal profile. 
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <UserInfoModal/>
                         </Grid>
                     </Grid>
 
@@ -132,4 +162,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Settings)
+export default connect(mapStateToProps, null)(Settings)
