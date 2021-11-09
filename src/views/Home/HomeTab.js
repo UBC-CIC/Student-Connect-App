@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tabBar:{
         background: '#0055B7',
-
+        margin: "30px 0"
     },
     indicator:{
         backgroundColor:"#6EC4E8"
@@ -124,8 +124,6 @@ export default function HomeTab(props) {
     return (
         <div className={classes.root}>
             <Container>
-                <Divider className={classes.divider}/>
-
                 <AppBar position="static" className={classes.tabBar}>
                     <Tabs
                         value={value}

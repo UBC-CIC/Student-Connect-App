@@ -1,12 +1,14 @@
 import {API, graphqlOperation} from "aws-amplify";
 import {getUserData, getUserPreference} from "../graphql/queries";
-import {createUserData, createUserPreference, updateUserPreference} from "../graphql/mutations";
+import {createUserData, createUserPreference, updateUserPreference, updateUserData} from "../graphql/mutations";
 
 export const getUserDataAction = (id) => {
-    return (dispatch) => {
-        API.graphql(graphqlOperation(getUserData, {input: id})).then((response) => {
+    return async (dispatch) => {
+        await API.graphql(graphqlOperation(getUserData, {id: id})).then((response) => {
             let res = response.data
-            dispatch(getUserDataSuccess(res))
+            dispatch(getUserDataSuccess(res.getUserData))
+        }).catch((err) => {
+            console.log(err);
         })
     }
 }
@@ -15,6 +17,14 @@ export const getUserDataSuccess = (payload) => {
         type: "GET_USER_DATA_SUCCESS",
         payload: payload
     }
+}
+export const updateUserDataAction = (payload) => {
+    API.graphql(graphqlOperation(updateUserData, {input: payload}))
+    .then((response) => {
+        console.log("user info updated")
+    }).catch((err) => {
+        console.log("Error updating user info: ", err);
+    })
 }
 export const getUserPreferenceAction = (id) => {
     return (dispatch) => {

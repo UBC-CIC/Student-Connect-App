@@ -43,3 +43,19 @@ export const currentCredsReducer = (currentCreds = initialCreds, action) => {
             return newUser
     }
 }
+
+const initialProfile = {}
+export const currentUserProfileReducer = (currentProfile = initialProfile, action) => {
+    const payload = action.payload;
+    switch(action.type) {
+        case "GET_USER_DATA_SUCCESS": {
+            return {
+                ...currentProfile,
+                cisOrTrans: payload.cisOrTrans,
+                gender: payload.gender
+            }
+        }
+        default:
+            return currentProfile
+    }
+}

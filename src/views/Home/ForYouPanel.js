@@ -48,6 +48,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "30px",
     marginBottom: "30px",
   },
+  textMargin: {
+    marginTop: "30px",
+  },
   forYouTitle: {
     fontWeight: 600,
     color: "#0055B7",
@@ -143,7 +146,7 @@ export default function ForYouPanel(props) {
       </Container>
       <Container>
         {(news.length === 0 && sportsNewsList.length === 0) ? (
-            <div className={classes.divider}>
+            <div className={classes.textMargin}>
           <Typography variant={"h6"}>
             Sorry, there are currently no news that match your preference.
             Please make sure your preferences are up to date.
@@ -169,7 +172,7 @@ export default function ForYouPanel(props) {
       <Container>
         {events.length === 0 ? (
             <div>
-            <Typography variant={"h6"} className={classes.divider}>
+            <Typography variant={"h6"} className={classes.textMargin}>
                 Sorry, there are currently no events that match your preferences.
                 Please make sure your preferences are up to date.
                 <br/>
@@ -193,7 +196,7 @@ export default function ForYouPanel(props) {
       <Container>
         {blogs.length === 0 ? (
           <div>
-            <Typography variant={"h6"} className={classes.divider}>
+            <Typography variant={"h6"} className={classes.textMargin}>
               Sorry, there are currently no blogs that match your preference.
               Please make sure your preferences are up to date.
               <br/>

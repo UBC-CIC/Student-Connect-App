@@ -1,7 +1,7 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import {Container, Grid} from '@material-ui/core';
 import * as PropTypes from "prop-types";
 import {connect} from "react-redux";
 import HomeTab from "./HomeTab";
@@ -66,13 +66,18 @@ function Home(props) {
 
             <Container maxWidth={'xl'} >
                 <Container>
-                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Home
-                </Typography>
-                    <Typography align={'left'} variant="h5">
-                        Explore your personalized recommendations and recently posted items here 
-                    </Typography>
-
+                    <Grid container spacing={2} direction={"column"}>
+                        <Grid item>
+                            <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                                Home
+                            </Typography>
+                        </Grid>
+                        <Grid item> 
+                            <Typography align={'left'} variant="h5">
+                                Explore your personalized recommendations and recently posted items here 
+                            </Typography>
+                        </Grid>
+                    </Grid>
                 </Container>
                 <HomeTab news={news} blogs={blogs} sportsNews={sportsNews}
                 events={events} allClubs={allClubs} allNews={allNews} allEvents={allEvents}
