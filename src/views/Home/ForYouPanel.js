@@ -62,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
   grid: {
     display: "flex",
   },
+  contentLink: {
+    borderBottom: "1px solid"
+  }
 }));
 
 const CardsGrid = withStyles({
@@ -151,7 +154,7 @@ export default function ForYouPanel(props) {
             Sorry, there are currently no news that match your preferences.
             Please make sure your preferences are up to date.
             <br/>
-            In the meanwhile, you can check out news <Link to='/news'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
+            In the meanwhile, you can <Link className={classes.contentLink} to='/news'>check out news here</Link> or under the <a className={classes.contentLink} href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
           </Typography>
           </div>
         ) : (
@@ -176,7 +179,7 @@ export default function ForYouPanel(props) {
                 Sorry, there are currently no events that match your preferences.
                 Please make sure your preferences are up to date.
                 <br/>
-                In the meanwhile, you can check out events <Link to='/events'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
+                In the meanwhile, you can <Link className={classes.contentLink} to='/events'>check out events here</Link> or under the <a className={classes.contentLink} href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
             </Typography>
             </div>
         ) : (
@@ -200,7 +203,7 @@ export default function ForYouPanel(props) {
               Sorry, there are currently no blogs that match your preferences.
               Please make sure your preferences are up to date.
               <br/>
-              In the meanwhile, you can check out Student Life Blogs under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
+              In the meanwhile, you can <a className={classes.contentLink} href='#' onClick={()=>tabChange(null, 1)}>check out Student Life Blogs under the RECENT tab</a>.
             </Typography>
           </div>
         ) : (

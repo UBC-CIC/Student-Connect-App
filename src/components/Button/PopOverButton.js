@@ -18,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     },
     cursor: {
         cursor: "pointer"
+    },
+    contentLink: {
+        borderBottom: "1px solid"
     }
 
 }));
@@ -43,7 +46,7 @@ export default function PopOverButton(props) {
             <Typography className={classes.typography} variant={"subtitle1"}>
                 {defaultString[0]}
                 <span className={classes.cursor}>
-                    <a onClick={props.contentLink[2]}>
+                    <a className={classes.contentLink} onClick={props.contentLink[2]}>
                         {props.contentLink[1]}
                     </a>
                 </span>

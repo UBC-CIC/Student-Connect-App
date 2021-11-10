@@ -11,7 +11,10 @@ const useStyles = makeStyles((theme) => ({
     divider: {
         marginTop: "30px",
         marginBottom: "30px",
-      },
+    },
+    contentLink: {
+    borderBottom: "1px solid"
+    }
 }));
 
 function ClubsCarousel(props){
@@ -29,7 +32,7 @@ function ClubsCarousel(props){
                         Sorry, there are currently no clubs that match your preferences. 
                         Please make sure your preferences are up to date.
                         <br/>
-                        In the meanwhile, you can check out clubs <Link to='/clubs'>here</Link>.
+                        In the meanwhile, you can <Link className={classes.contentLink} to='/clubs'>check out clubs here</Link>.
                     </Typography>
                 </div>
             ) : (

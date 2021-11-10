@@ -158,7 +158,7 @@ export function Sports(props){
 
 
                     <Typography align={'left'} variant="h6" className={classes.title}>
-                        Competitive Sports
+                        Competitive Club Sports
                     </Typography>
                     {competitiveSportsOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
                                                                     handleChange={props.handleChange} category={"competitiveSportsList"}

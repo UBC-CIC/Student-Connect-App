@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     title:{
         fontWeight: 600,
         color:"#0055B7"
-
     }
 
 }));

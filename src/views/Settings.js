@@ -55,7 +55,8 @@ const useStyles = makeStyles((theme) => ({
         fontSize:"16px",
         color: "blue",
         fontWeight: 500, 
-        cursor: "pointer"
+        cursor: "pointer",
+        borderBottom: "1px solid blue"
     },
 }));
 

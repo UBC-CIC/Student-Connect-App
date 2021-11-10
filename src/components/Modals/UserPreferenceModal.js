@@ -113,7 +113,7 @@ export default function UserPreferenceModal(props){
                                             nestedItem={cultureOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["culturePreference"][item.backendName], userPreference:userPreference,category:"culturePreference" }) )} icon={<PublicIcon/>}/>
                         <PreferenceListItem label={"Varsity Sports News"}
                                             nestedItem={varsitySportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["varsitySportsList"][item.backendName], userPreference:userPreference,category:"varsitySportsList" }) )} icon={<Sports/>}/>
-                        <PreferenceListItem label={"Competitive Sports News"}
+                        <PreferenceListItem label={"Competitive Club Sports News"}
                                             nestedItem={competitiveSportsOptions.map(item=>({ name: item.name, backendName: item.backendName,checked:userPreference["sportsPreference"]["competitiveSportsList"][item.backendName] , userPreference:userPreference,category:"competitiveSportsList" }) )
                                             } icon={<EmojiEventsIcon/>}/>
                         <EmailItem icon={<EmailIcon/>} label={'Email'} userPreference={userPreference}/>

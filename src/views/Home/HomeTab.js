@@ -55,8 +55,8 @@ const useStyles = makeStyles((theme) => ({
         margin: "30px 0"
     },
     indicator:{
-        backgroundColor:"#6EC4E8"
-
+        backgroundColor:"#6EC4E8",
+        height: "5px"
     },
     button:{
         backgroundColor:"#0055B7",
