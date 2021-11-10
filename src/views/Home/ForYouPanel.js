@@ -148,7 +148,7 @@ export default function ForYouPanel(props) {
         {(news.length === 0 && sportsNewsList.length === 0) ? (
             <div className={classes.textMargin}>
           <Typography variant={"h6"}>
-            Sorry, there are currently no news that match your preference.
+            Sorry, there are currently no news that match your preferences.
             Please make sure your preferences are up to date.
             <br/>
             In the meanwhile, you can check out news <Link to='/news'>here</Link> or under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.
@@ -197,7 +197,7 @@ export default function ForYouPanel(props) {
         {blogs.length === 0 ? (
           <div>
             <Typography variant={"h6"} className={classes.textMargin}>
-              Sorry, there are currently no blogs that match your preference.
+              Sorry, there are currently no blogs that match your preferences.
               Please make sure your preferences are up to date.
               <br/>
               In the meanwhile, you can check out Student Life Blogs under the <a href='#' onClick={()=>tabChange(null, 1)}>RECENT</a> tab.

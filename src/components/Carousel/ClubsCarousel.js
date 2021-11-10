@@ -26,7 +26,7 @@ function ClubsCarousel(props){
             { clubLength===0 ? (
                 <div>
                     <Typography variant={"h6"} className={classes.divider}>
-                        Sorry, there are currently no clubs that match your preference. 
+                        Sorry, there are currently no clubs that match your preferences. 
                         Please make sure your preferences are up to date.
                         <br/>
                         In the meanwhile, you can check out clubs <Link to='/clubs'>here</Link>.
