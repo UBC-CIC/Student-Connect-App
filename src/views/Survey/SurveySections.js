@@ -241,7 +241,7 @@ export function Email(props){
                                                 You can change this information anytime.
                                         `
                                         }
-                                contentLink={[`- Please refer back to the Welcome page to learn more about how we use the collected information.`, 'Welcome', props.handleBeginning]}
+                                contentLink={[`- Please refer back to the Personal Disclosure Statement on the Welcome page to learn more about how we use the collected information.`, 'Personal Disclosure Statement', props.handleBeginning]}
                                 />
                 </Grid>
                 <Typography align={'left'} variant="h6" className={classes.title}>
