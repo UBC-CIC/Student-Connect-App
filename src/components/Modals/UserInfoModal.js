@@ -51,7 +51,9 @@ const useStyles = makeStyles((theme) => ({
     divider:{
         marginTop:'30px',
     },
-
+    saveButton:{
+        fontSize:"16px",
+    }
 
 
 }));
@@ -143,7 +145,7 @@ function UserInfoModal(props){
                         <Typography variant="h5" className={classes.title}>
                             Change Profile Information
                         </Typography>
-                        <Button className={classes.listTitle} autoFocus color="inherit" onClick={handleSave} startIcon={<SaveAltIcon/>}>
+                        <Button className={classes.saveButton} autoFocus color="inherit" onClick={handleSave} startIcon={<SaveAltIcon/>}>
                             Save
                         </Button>
                     </Toolbar>

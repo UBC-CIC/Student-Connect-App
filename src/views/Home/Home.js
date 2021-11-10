@@ -65,20 +65,18 @@ function Home(props) {
 
 
             <Container maxWidth={'xl'} >
-                <Container>
-                    <Grid container spacing={2} direction={"column"}>
-                        <Grid item>
-                            <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                                Home
-                            </Typography>
-                        </Grid>
-                        <Grid item> 
-                            <Typography align={'left'} variant="h5">
-                                Explore your personalized recommendations and recently posted items here 
-                            </Typography>
-                        </Grid>
+                <Grid container spacing={2} direction={"column"}>
+                    <Grid item>
+                        <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                            Home
+                        </Typography>
                     </Grid>
-                </Container>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h5">
+                            Explore your personalized recommendations and recently posted items here 
+                        </Typography>
+                    </Grid>
+                </Grid>
                 <HomeTab news={news} blogs={blogs} sportsNews={sportsNews}
                 events={events} allClubs={allClubs} allNews={allNews} allEvents={allEvents}
                 allBlogs={allBlogs}/>

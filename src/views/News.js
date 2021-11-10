@@ -1,7 +1,5 @@
-import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import {Divider} from "@material-ui/core";
+import {Container, Divider, Grid, Typography} from "@material-ui/core";
 import React from "react";
 import NewsBlogsTab from "../components/Tabs/NewsBlogsTab";
 import {connect} from "react-redux";
@@ -39,19 +37,22 @@ function News(props){
     return(
         <div>
             <Container maxWidth={'xl'} >
-                <Typography align={'left'} variant="h4" className={classes.title}>
-                    News and Blogs
-                </Typography>
-                <Typography align={'left'} variant="h5">
-                    Explore all campus news, sports news and blogs here 
-                </Typography>
-
-                <Divider className={classes.divider}/>
+                <Grid container spacing={2} direction={"column"}>
+                    <Grid item>
+                        <Typography align={'left'} variant="h4" className={classes.title}>
+                            News and Blogs
+                        </Typography>
+                    </Grid>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h5">
+                            Explore all campus news, sports news and blogs here
+                        </Typography>
+                    </Grid>
+                </Grid>
             </Container>
-            <Container maxWidth={'xl'} >
-                <NewsBlogsTab allNews={allNews} allBlogs={allBlogs} allSportsNews={allSportsNews}/>
 
-            </Container>
+            <NewsBlogsTab allNews={allNews} allBlogs={allBlogs} allSportsNews={allSportsNews}/>
+
 
         </div>
     )

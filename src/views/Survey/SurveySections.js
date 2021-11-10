@@ -82,9 +82,12 @@ export function NewsBlogsClubs(props){
             </Typography>
             <Divider className={classes.divider}/>
 
-            {newsBlogsClubsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
-                                                                 handleChange={props.handleChange} category={"newsBlogsClubsPreference"}
-                                                                 userPreference={props.userPreference}/>)}
+            {newsBlogsClubsOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                                                                 handleChange={props.handleChange}
+                                                                 category={"newsBlogsClubsPreference"}
+                                                                 userPreference={props.userPreference}
+                                                                 key={index}
+                                                                 />)}
 
         </div>
 
@@ -101,9 +104,11 @@ export function Events(props){
                 Which of the following areas/departments on campus would you like to get event recommendations from?
             </Typography>
             <Divider className={classes.divider}/>
-            {eventsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+            {eventsOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
                                                          handleChange={props.handleChange} category={"eventsPreference"}
-                                                         userPreference={props.userPreference}/>) }
+                                                         userPreference={props.userPreference}
+                                                         key={index}
+                                                         />) }
 
         </div>
 
@@ -120,9 +125,11 @@ export function Academic(props){
                 </Typography>
                 <Divider className={classes.divider}/>
 
-                {academicOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                {academicOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
                                                                handleChange={props.handleChange} category={"academicPreference"}
-                                                               userPreference={props.userPreference}/>)}
+                                                               userPreference={props.userPreference}
+                                                               key={index}
+                                                               />)}
             </div>
         </div>
 
@@ -143,17 +150,21 @@ export function Sports(props){
                     <Typography align={'left'} variant="h6" className={classes.title}>
                         Varsity Sports
                     </Typography>
-                    {varsitySportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                    {varsitySportsOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
                                                                     handleChange={props.handleChange} category={"varsitySportsList"}
-                                                                    userPreference={props.userPreference}/>)}
+                                                                    userPreference={props.userPreference}
+                                                                    key={index}
+                                                                    />)}
 
 
                     <Typography align={'left'} variant="h6" className={classes.title}>
                         Competitive Sports
                     </Typography>
-                    {competitiveSportsOptions.map(option => <SurveyCheckbox label={option.name} backendName={option.backendName}
+                    {competitiveSportsOptions.map((option,index) => <SurveyCheckbox label={option.name} backendName={option.backendName}
                                                                     handleChange={props.handleChange} category={"competitiveSportsList"}
-                                                                    userPreference={props.userPreference}/>)}
+                                                                    userPreference={props.userPreference}
+                                                                    key={index}
+                                                                    />)}
 
                 </Grid>
                 
@@ -275,9 +286,11 @@ export function Email(props){
                     Which of the following cultures are you interested in?
                 </Typography>
                 <Divider className={classes.divider}/>
-                {cultureOptions.map(option => <SurveyCheckbox label={option.name}backendName={option.backendName}
+                {cultureOptions.map((option,index) => <SurveyCheckbox label={option.name}backendName={option.backendName}
                                                                    handleChange={props.handleChange} category={"culturePreference"}
-                                                                   userPreference={props.userPreference}/>)}
+                                                                   userPreference={props.userPreference}
+                                                                   key={index}
+                                                                   />)}
 
             </Grid>
         </div>

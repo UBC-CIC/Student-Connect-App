@@ -27,8 +27,8 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
+                <Box py={3}>
+                    <div>{children}</div>
                 </Box>
             )}
         </div>
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tabBar:{
         background: '#0055B7',
-
+        margin: "30px 0"
     },
     indicator:{
         backgroundColor:"#6EC4E8"
@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
         float:'left',
         paddingLeft:"20px",
         paddingRight:"20px",
-        marginTop: '20px',
         fontSize:"14px"
 
 
@@ -195,8 +194,7 @@ export default function NewsBlogsTab(props) {
 
     return (
         <div className={classes.root}>
-<Container>
-
+        <Container>
             <AppBar position="static" className={classes.tabBar}>
                 <Tabs
                     value={value}
@@ -214,8 +212,9 @@ export default function NewsBlogsTab(props) {
 
                 </Tabs>
             </AppBar>
-            {(value===0||value===1||value===2) ?
-                <div>
+
+            {(value===0||value===1||value===2) &&
+                <Grid container>
                 <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                     Sort By
                 </Button>
@@ -230,10 +229,11 @@ export default function NewsBlogsTab(props) {
                     <MenuItem className={classes.sortDropDown} onClick={() => sortNewToOld()}>Most recent</MenuItem>
                     <MenuItem className={classes.sortDropDown} onClick={() => sortOldToNew()}>Least Recent</MenuItem>
                 </Menu>
-                </div>
-                : null}
-</Container>
+                </Grid>
+            }
+        </Container>
 
+        <Container>
             <TabPanel value={value} index={0}>
                 <Grid container spacing={3} alignItems="stretch">
                     {newsList}
@@ -250,7 +250,7 @@ export default function NewsBlogsTab(props) {
                     {blogList}
                 </Grid>
             </TabPanel>
-
+        </Container>
 
         </div>
     );

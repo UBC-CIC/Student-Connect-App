@@ -50,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
     },
     listTitle:{
         fontSize:"16px",
-
     }
 
 

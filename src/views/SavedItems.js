@@ -45,9 +45,9 @@ function SavedItems(props){
 
     let savedItemsList
     if(savedItems!==null){
-        savedItemsList = savedItems.savedItems.map((item) => {
+        savedItemsList = savedItems.savedItems.map((item, index) => {
             return(
-                <Grid item xs={12} sm={6} className={classes.grid}>
+                <Grid item xs={12} sm={6} className={classes.grid} key={index}>
                     <SavedItemCard title={item.title}
                                    photo={item.image}
                                    link={item.link}

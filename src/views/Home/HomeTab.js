@@ -25,7 +25,7 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
+                <Box py={3}>
                     <div>{children}</div>
                 </Box>
             )}
@@ -123,24 +123,22 @@ export default function HomeTab(props) {
 
     return (
         <div className={classes.root}>
-            <Container>
-                <AppBar position="static" className={classes.tabBar}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        variant="fullWidth"
-                        indicatorColor="secondary"
-                        aria-label="icon label tabs example"
-                        classes={{
-                            indicator: classes.indicator
-                        }}
-                    >
-                        <Tab icon={<HomeIcon/>}label="For you" {...a11yProps(0)}  />
-                        <Tab icon={<RssFeedIcon/>} label="Recent" {...a11yProps(1)} />
+            <AppBar position="static" className={classes.tabBar}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="fullWidth"
+                    indicatorColor="secondary"
+                    aria-label="icon label tabs example"
+                    classes={{
+                        indicator: classes.indicator
+                    }}
+                >
+                    <Tab icon={<HomeIcon/>}label="For you" {...a11yProps(0)}  />
+                    <Tab icon={<RssFeedIcon/>} label="Recent" {...a11yProps(1)} />
 
-                    </Tabs>
-                </AppBar>
-            </Container>
+                </Tabs>
+            </AppBar>
 
 
             <TabPanel value={value} index={0}>
