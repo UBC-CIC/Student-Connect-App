@@ -9,6 +9,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - yum install -y jq
         - chmod u+x ./deployFrontend.sh
         - PROJECT_NAME=$(cat ./amplify/.config/project-config.json | jq -r '.projectName')
         - ENV_NAME=$(cat ./amplify/.config/local-env-info.json | jq -r '.envName')
