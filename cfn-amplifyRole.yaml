@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  
+  AmplifyRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: amplifyconsole-studentengagement-backend-role
+      Description: IAM Role to deploy amplify's student engagement app
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - amplify.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AdministratorAccess-Amplify
+      Policies: 
+        - PolicyName: studentengagement-extended-policy
+          PolicyDocument: # JSON policy document
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - tag:GetResources
+                  - iam:ListPolicies
+                Resource: '*'
