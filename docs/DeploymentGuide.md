@@ -122,7 +122,7 @@ Follow these instructions to deploy the frontend:
 4) Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
 
-[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp)
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
 
 ## Logging in
 
