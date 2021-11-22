@@ -24,13 +24,13 @@
 
 - Copy Edits:
     (items inside the square brackets, i.e.[], are added)
-    - Settings > General: Modify my preference settings to get the best out of the recommendation<mark>[s]</mark>
-    - Preference/Profile Survey: Which of the following <mark>[areas/departments on campus]</mark> would you like to get event recommendations from?  
-    - Under News, Events, Student life blogs, etc: “Sorry there are currently no events that match your preference<mark>[s]</mark>. Please make sure your preferences are up to date.” 
-    - News and Blogs page: Explore all <mark>[campus]</mark> news, sports news and blogs here 
-    - Events page: Explore all <mark>~~the~~</mark> events here 
-    - Clubs page: Explore all <mark>~~the~~</mark> clubs here 
-    - Home page: Explore <mark>[your]</mark> personalized <mark>[recommendations]</mark> and <mark>~~most~~ [recently posted]</mark>items here 
+    - Settings > General: Modify my preference settings to get the best out of the recommendation<b>[s]</b>
+    - Preference/Profile Survey: Which of the following <b>[areas/departments on campus]</b> would you like to get event recommendations from?  
+    - Under News, Events, Student life blogs, etc: “Sorry there are currently no events that match your preference<b>[s]</b>. Please make sure your preferences are up to date.” 
+    - News and Blogs page: Explore all <b>[campus]</b> news, sports news and blogs here 
+    - Events page: Explore all <b>~~the~~</b> events here 
+    - Clubs page: Explore all <b>~~the~~</b> clubs here 
+    - Home page: Explore <b>[your]</b> personalized <b>[recommendations]</b> and <b>~~most~~ [recently posted]</b>items here 
 <p></p>
 
 ### Bug Fixes
