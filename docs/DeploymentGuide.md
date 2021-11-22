@@ -116,10 +116,21 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Follow these instructions to deploy the frontend:
 
-1) Use the provided **1-click deployment** button below.
-2) Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
-3) Select your AWS service role in the dropdown. If you don't have one configured, Select 'Create new role' and quickly create one using the default settings.
-4) Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
+1 - Before installing Amplify we need to create the IAM Role that associate the policies need to implement this solution. From the cloned directory, execute the follow CloudFormation template: 
+
+```bash
+aws cloudformation deploy --template-file cfn-amplifyRole.yaml --stack-name studentengagement-amplify-role --capabilities CAPABILITY_NAMED_IAM
+```
+
+It creates the role name **ubco-amplifyconsole-backend-role** that will be used on the next step.
+
+2 - Use the provided **1-click deployment** button below.
+
+3 - Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
+
+4 - Select your AWS service role that we have just created (**ubco-amplifyconsole-backend-role**) in the dropdown.
+
+5 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
 
 [![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
