@@ -4,7 +4,9 @@
 ### Changes
 > Back-end
 - CWL integration:
-    - ...
+    - SAML (shibboleth) integration using Cognito has been added with instrictions to deploy here
+- DynamoDB Streams:
+    - New method of data adding using DynamoDB Streams
 <p></p>
 
 > Front-end /& UI
