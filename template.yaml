@@ -62,6 +62,14 @@ Parameters:
     Description: Name for the Amazon ES domain that will be created. Domain names must start
       with a lowercase letter and must be between 3 and 28 characters.
       Valid characters are a-z (lowercase only), 0-9.
+  ProjectName:
+    Type: String
+    Default: StudentEngagement
+    Description: A description to identify project
+  EnvironmentName:
+    Type: String
+    Default: devh
+    Description: A description to identify environment (e.g. dev, prod)
 
 Outputs:
   getESDocumentsLambdaFunction:
@@ -591,49 +599,49 @@ Resources:
   getESDocumentsLambdaName:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/GetESDocumentsLambdaName"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/GetESDocumentsLambdaName"
       Type: String
       Value: !Ref getESDocuments
 
   getESDocumentsLambdaArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/GetESDocumentsLambdaArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/GetESDocumentsLambdaArn"
       Type: String
       Value: !GetAtt getESDocuments.Arn
 
   eventsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/EventsTableArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/EventsTableArn"
       Type: String
       Value: !GetAtt eventsDDBTable.Arn
 
   blogsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/BlogsTableArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/BlogsTableArn"
       Type: String
       Value: !GetAtt blogsDDBTable.Arn
 
   newsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/NewsTableArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/NewsTableArn"
       Type: String
       Value: !GetAtt newsDDBTable.Arn
 
   athleticsNewsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/AthleticsNewsTableArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/AthleticsNewsTableArn"
       Type: String
       Value: !GetAtt athleticsNewsDDBTable.Arn
 
   clubsDDBArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "/amplify/ClubsTableArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/ClubsTableArn"
       Type: String
       Value: !GetAtt clubsDDBTable.Arn
 
