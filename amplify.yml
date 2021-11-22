@@ -10,6 +10,9 @@ frontend:
     preBuild:
       commands:
         - chmod u+x ./deployFrontend.sh
+        - PROJECT_NAME=$(cat ./amplify/.config/project-config.json | jq -r '.projectName')
+        - ENV_NAME=$(cat ./amplify/.config/local-env-info.json | jq -r '.envName')
+        - export PREFIX=/amplify/${PROJECT_NAME}/${ENV_NAME}/
         - ./deployFrontend.sh
         - npm install
     build:
