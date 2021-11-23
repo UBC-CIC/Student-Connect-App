@@ -116,13 +116,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Follow these instructions to deploy the frontend:
 
-1 - Before installing Amplify we need to create the IAM Role that associate the policies need to implement this solution. From the cloned directory, execute the follow CloudFormation template: 
+1 - Before installing Amplify we need to create the IAM Role that associates the policies needed to implement this solution. From the cloned directory, execute the following CloudFormation template: 
 
 ```bash
 aws cloudformation deploy --template-file cfn-amplifyRole.yaml --stack-name studentengagement-amplify-role --capabilities CAPABILITY_NAMED_IAM
 ```
 
-It creates the role name **ubco-amplifyconsole-backend-role** that will be used on the next step.
+It creates the role name **amplifyconsole-studentengagement-backend-role** that will be used on the next step.
 
 2 - Use the provided **1-click deployment** button below.
 
