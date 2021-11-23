@@ -9,7 +9,7 @@ To deploy this solution, deploy the ***backend*** first, and then the ***fronten
 The application can be deployed from either MacOS, Linux, Windows or Windows Subsystem for Linux.
 
 Some system installation requirements before starting deployment:
-* Have a copy of the repository downloaded into your local machine that you are running the deployment from
+* A copy of the repository downloaded onto the local machine from which you are running the deployment
 * AWS SAM installed and setup for use on your system, details on the installation can be found
   [here](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html).
   (NOTE: The third step of installing Docker is only needed for testing the lambda functions in this app locally, it
