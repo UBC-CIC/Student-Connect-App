@@ -140,7 +140,7 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 Cognito is used for user authentication. Users will need to input their email address and a password to create an account.
 After account creation, users will need to verify their account by inputting the 6-digit verification code that was sent to their provided email address before being able to log in to the system.
 
-With the SAML integration we have [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md). The instructions are to be followed after completing the deployment to enable the Shibboleth integration using One-login.
+With the SAML integration we have [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md). The instructions in the following link should be followed after completing the deployment to enable the Shibboleth integration using One-login.
 
 ## Next Steps
 
