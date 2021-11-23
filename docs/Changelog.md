@@ -4,23 +4,23 @@
 ### Changes
 > Back-end
 - CWL integration:
-    - SAML (shibboleth) integration using Cognito has been added with instrictions to deploy [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md).
+    - SAML (shibboleth) integration using Cognito has been added. The instructions to deploy can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md).
 - DynamoDB Streams:
-    - New method of data adding using DynamoDB Streams details [here](https://github.com/UBC-CIC/Student-Connect-App/blob/dynamodbstreams-aggregation/docs/StreamsAggregationWorkflow.md).
+    - A new method to add data has been implemented using DynamoDB Streams. The details can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/dynamodbstreams-aggregation/docs/StreamsAggregationWorkflow.md).
 <p></p>
 
 > Front-end /& UI
 
 - Gender information: 
-    - Add disclaimer to let users know that gender information is optional and can be changed any time. 
+    - A disclaimer was added to let users know that providing gender information is optional and can be changed any time. 
 <p></p>
 
 - Sports
-    - Remove gender differences in sports.
-    - Split sports into Varsity Sports and Competitive Club Sports.
+    - Gender differences in sports have been removed.
+    - Sports were classified into *Varsity Sports* and *Competitive Club Sports*.
 <p></p>
 
-- When there are no recommendations, show a message asking the user to update its preferences and redirect it to the Recent tab or desginated section's page.
+- A message has been added when there are no recommendations for the user. This message asks the user to update its preferences and redirects it to the Recent tab or designated section's page.
 
 <p></p>
 
