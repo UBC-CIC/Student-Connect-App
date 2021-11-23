@@ -4,9 +4,9 @@
 ### Changes
 > Back-end
 - CWL integration:
-    - SAML (shibboleth) integration using Cognito has been added with instrictions to deploy here
+    - SAML (shibboleth) integration using Cognito has been added with instrictions to deploy here.
 - DynamoDB Streams:
-    - New method of data adding using DynamoDB Streams
+    - New method of data adding using DynamoDB Streams.
 <p></p>
 
 > Front-end /& UI
@@ -16,11 +16,11 @@
 <p></p>
 
 - Sports
-    - Remove gender differences in sports
-    - Split sports into Varsity Sports and Competitive Club Sports
+    - Remove gender differences in sports.
+    - Split sports into Varsity Sports and Competitive Club Sports.
 <p></p>
 
-- When there are no recommendations, show a message asking the user to update its preferences and redirect it to the Recent tab or desginated section's page
+- When there are no recommendations, show a message asking the user to update its preferences and redirect it to the Recent tab or desginated section's page.
 
 <p></p>
 
@@ -37,7 +37,7 @@
 
 ### Bug Fixes
 > Deployment Guide
-- Extend Amplify role to include missing policies after updates in AWS Amplify
+- Extend Amplify role to include missing policies after updates in AWS Amplify.
 <p></p>
 
 > Front-end
