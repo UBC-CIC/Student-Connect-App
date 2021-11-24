@@ -128,7 +128,7 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 
 3 - Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
 
-4 - Select your AWS service role that we have just created (**ubco-amplifyconsole-backend-role**) in the dropdown.
+4 - Select your AWS service role that we have just created (**amplifyconsole-studentengagement-backend-role**) in the dropdown.
 
 5 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
