@@ -68,7 +68,7 @@ Parameters:
     Description: A description to identify project
   EnvironmentName:
     Type: String
-    Default: devh
+    Default: dev
     Description: A description to identify environment (e.g. dev, prod)
 
 Outputs:

@@ -4,6 +4,7 @@ backend:
     build:
       commands:
         - '# Execute Amplify CLI with the helper script'
+        - export USER_BRANCH=dev
         - amplifyPush --simple
 frontend:
   phases:
