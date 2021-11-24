@@ -1,31 +1,31 @@
 # Changelog
 
 ## V1.5.0 - 2021-11-XX
-### Changes
-> Back-end
+### Back-end Changes
 - CWL integration:
     - SAML (shibboleth) integration using Cognito has been added. The instructions to deploy can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md).
 - DynamoDB Streams:
     - A new method to add data has been implemented using DynamoDB Streams. The details can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/dynamodbstreams-aggregation/docs/StreamsAggregationWorkflow.md).
 <p></p>
 
-> Front-end /& UI
+### User Interface/Front-end Changes
 
 - Gender information: 
-    - A disclaimer was added to let users know that providing gender information is optional and can be changed any time. 
+    - An information statement was added to let users know that providing gender information is optional and can be changed any time.
 <p></p>
 
 - Sports
-    - Gender differences in sports have been removed.
-    - Sports were classified into *Varsity Sports* and *Competitive Club Sports*.
+    - Combined the list of men’s and women’s sports into one category.
+    - Added the distinction between *Varsity Sports* and *Competitive Club Sports*.
 <p></p>
 
-- A message has been added when there are no recommendations for the user. This message asks the user to update its preferences and redirects it to the Recent tab or designated section's page.
+- News, Events, Student life blogs
+    - A message has been added when there are no recommendations for the user. This message asks the user to update its preferences and redirects it to the *Recent tab* or designated section's page.
 
 <p></p>
 
 - Copy Edits:
-    (items inside the square brackets, i.e.[], are added)
+    (items inside the square brackets, i.e.[], have been added; strikethrough text has been removed)
     - Settings > General: Modify my preference settings to get the best out of the recommendation<b>[s]</b>
     - Preference/Profile Survey: Which of the following <b>[areas/departments on campus]</b> would you like to get event recommendations from?  
     - Under News, Events, Student life blogs, etc: “Sorry there are currently no events that match your preference<b>[s]</b>. Please make sure your preferences are up to date.” 
