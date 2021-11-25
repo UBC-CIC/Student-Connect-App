@@ -126,14 +126,20 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 
 2 - Use the provided **1-click deployment** button below.
 
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
+
 3 - Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
 
 4 - Select your AWS service role that we have just created (**amplifyconsole-studentengagement-backend-role**) in the dropdown.
 
+5 - Expand the *Environment variables* section and enter the following:
+
+    Key: USER_BRANCH
+    Value: dev
+
+![Environment variable](./AmplifyDeploymentEnvVariable.png)
+
 5 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
-
-
-[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
 
 ## Logging in
 
