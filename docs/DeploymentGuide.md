@@ -139,7 +139,7 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 
 ![Environment variable](./AmplifyDeploymentEnvVariable.png)
 
-5 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
+6 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
 ## Logging in
 
