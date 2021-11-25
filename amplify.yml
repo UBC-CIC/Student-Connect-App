@@ -1,0 +1,40 @@
+version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - '# Execute Amplify CLI with the helper script'
+        - amplifyPush --simple
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - yum install -y jq
+        - chmod u+x ./deployFrontend.sh
+        - PROJECT_NAME=$(cat ./amplify/.config/project-config.json | jq -r '.projectName')
+        - ENV_NAME=$(cat ./amplify/.config/local-env-info.json | jq -r '.envName')
+        - export PREFIX=/amplify/${PROJECT_NAME}/${ENV_NAME}/
+        - ./deployFrontend.sh
+        - npm install
+    build:
+      commands:
+        - yum install -y jq
+        - PROJECT_NAME=$(cat ./amplify/.config/project-config.json | jq -r '.projectName')
+        - ENV_NAME=$(cat ./amplify/.config/local-env-info.json | jq -r '.envName')
+        - export REACT_APP_FunctionName=$(aws ssm get-parameter --name /amplify/${PROJECT_NAME}/${ENV_NAME}/GetESDocumentsLambdaName --query Parameter.Value --output text)
+        - export AWSACCOUNTID=$(aws sts get-caller-identity --query Account --output text)
+        - export S3AMPLIFY=$(aws resourcegroupstaggingapi get-resources --tag-filters Key=user:Application,Values=${PROJECT_NAME} --resource-type-filters s3 --query 'ResourceTagMappingList[*].[ResourceARN]' --output text | grep -i deployment | cut -c14-)
+        - export AMPLIFYROLENAME=${S3AMPLIFY/deployment/authRole}
+        - export LAMBDA_DYNAMODB_POLICY=$(aws iam list-policies --query "Policies[*].[PolicyName]" --scope Local --output text | grep -i ${PROJECT_NAME}-lambda-dynamodb)
+        - if [ -z "$LAMBDA_DYNAMODB_POLICY" ]; then aws iam create-policy --policy-name ${PROJECT_NAME}-lambda-dynamodb --policy-document file://lambda-dynamodb-policy.json; fi
+        - export LAMBDA_DYNAMODB_ROLE_POLICY=$(aws iam list-attached-role-policies --role-name ${AMPLIFYROLENAME} --query 'AttachedPolicies[*].[PolicyName]' --output text | grep -i ${PROJECT_NAME}-lambda-dynamodb)
+        - if [ -z "$LAMBDA_DYNAMODB_ROLE_POLICY" ]; then aws iam attach-role-policy --role-name ${AMPLIFYROLENAME} --policy-arn arn:aws:iam::${AWSACCOUNTID}:policy/${PROJECT_NAME}-lambda-dynamodb; fi
+
+        - npm run build
+  artifacts:
+    baseDirectory: build
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
