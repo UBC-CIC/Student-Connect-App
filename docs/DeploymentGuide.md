@@ -58,7 +58,8 @@ Some system installation requirements before starting deployment:
     ```
     which will need either `y` or `Y` to confirm the deployment.
    Here are what all the deployment prompts look like for a proper deployment:
-   ![Deployment Prompts](./DeploymentPrompts.png)
+   ![Deployment Prompts](./DeploymentPrompts_1.png)
+   ![Deployment Prompts](./DeploymentPrompts_2.png)
    
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
@@ -138,6 +139,10 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
     Value: dev
 
 ![Environment variable](./AmplifyDeploymentEnvVariable.png)
+
+The **USER_BRANCH** variable defines the environment container that we would be using for the Amplify project. It has the same value that we have given to the parameter **EnvironmentName** during our SAM deployment in the back-end. 
+
+If you would like to use a different environment container, please make sure that both frontend's USER_BRANCH and backend's EnvironmentName have the same value.
 
 6 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
