@@ -25,7 +25,8 @@ Some system installation requirements before starting deployment:
    For Mac, Linux and Windows Subsystem for Linux users:
 
    ```   
-   deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
+   chmod +x deploy.sh
+   ./deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
    ```
 
    For Windows users:
