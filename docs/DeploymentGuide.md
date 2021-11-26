@@ -140,7 +140,7 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 
 ![Environment variable](./AmplifyDeploymentEnvVariable.png)
 
-The **USER_BRANCH** variable defines the environment container that we would be using for the Amplify project. It has the same value that we have given to the parameter **EnvironmentName** during our SAM deployment in the back-end. 
+The **USER_BRANCH** variable defines the environment container that we will be using for the Amplify project. It has the same value that we have given to the parameter **EnvironmentName** during our SAM deployment in the back-end. 
 
 If you would like to use a different environment container, please make sure that both frontend's USER_BRANCH and backend's EnvironmentName have the same value.
 
