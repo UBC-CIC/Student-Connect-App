@@ -8,8 +8,12 @@ sign-in,sign-out requests and as well as getting all the attributes associated t
 
 <hr>
 
-## How to combine Cognito User pool with external IDP
-Since the setup for each external IDP is different, this document will just focus on the settings on AWS Cognito itself.
+## How to combine Cognito User pool with SAML Identity Provider
+We will be focusing on the following:
+ - How to create a SAML Identity Provider using OneLogin
+ - How to setup the Cognito User Pool with SAML Identity Provider
+ - How to configure the SAML Identity Provider to use the Cognito User Pool
+
 
 Once the deployment of the backend and frontend of this app is finished, please head to
 [**Cognito**](https://console.aws.amazon.com/cognito/home)
@@ -20,6 +24,25 @@ Once the deployment of the backend and frontend of this app is finished, please 
 2. Select the User Pool which the student app is using
    ![selectUserPool](AuthImgs/selectUserPool.png)
 
+### Setup OneLogin for SAML
+
+1. Go to [Onelogin](https://www.onelogin.com/developer-signup) and sign in
+   ![onelogin](AuthImgs/saml.png)
+
+2. Once logged in go to applicatoions and click on 'Create Application'
+   ![createApplication](AuthImgs/onelogin.png)
+
+3.  Click on `Add App` and from the next page seearch for `Shibboleth`
+   ![addApp](AuthImgs/Shibboleth.png)
+
+4. Add details for the application
+   ![addAppDetails](AuthImgs/addAppDetails.png)
+
+5. Once setup is complete we will be able to see the SSO credetilas under the SSO tab
+   ![ssoCredentials](AuthImgs/ssoCredentials.png)
+
+Note: The Issuer URL is the Url highlighted in the above image
+
 ### SAML Provider Setup
 1. Click on 'Identity Providers' on the panel from the left side
    ![selectUserPool](AuthImgs/samlPanel.png)
@@ -29,7 +52,8 @@ Once the deployment of the backend and frontend of this app is finished, please 
    
 3. Fill in the IDP metadata link or upload it
    ![samlProviderSetup](AuthImgs/samlProviderSetup.png)
-   
+
+
 4. Once everything filled, click onto 'Create Provider'
 
 ### Attributes Creation
