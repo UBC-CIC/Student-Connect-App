@@ -30,7 +30,7 @@ Once the deployment of the backend and frontend of this app is finished, please 
    ![onelogin](AuthImgs/saml.png)
 
 2. Once logged in go to applicatoions and click on 'Create Application'
-   ![createApplication](AuthImgs/onelogin.png)
+   ![createApplication](AuthImgs/oneLogin.png)
 
 3.  Click on `Add App` and from the next page seearch for `Shibboleth`
    ![addApp](AuthImgs/Shibboleth.png)
