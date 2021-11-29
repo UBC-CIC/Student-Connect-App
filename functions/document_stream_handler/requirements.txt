@@ -1,0 +1,8 @@
+aws_requests_auth==0.4.1
+elasticsearch==7.10.1
+certifi==2018.4.16
+chardet==3.0.4
+idna==2.6
+urllib3>=1.26.5
+pytz>=2021.1
+common_lib
