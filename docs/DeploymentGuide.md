@@ -81,7 +81,7 @@ Some system installation requirements before starting deployment:
    * Then click on **Index Patterns** on the left Menu and then **Create Index Pattern** 
    ![Elasticsearch Index Patterns](./IndexPatterns.PNG)
    * Type in a valid index pattern (as of now, the valid options are `events`, `news`, `blogs`, `athleticsnews`, `clubs`**
-   as these are the data sources we have), then click **Next Step** and proceed with the defaults to have the index setup.
+   as these are the data sources we have), then click **Next Step** and proceed with the defaults to have the index setup. As of this step, there should only be `blogs` and `news`.
    * Use the hamburger menu on the left and navigate to the **Discover** tab, then pick an index to visualise its data.
     
     If the deployment has proceeded perfectly, some data should be shown here:
