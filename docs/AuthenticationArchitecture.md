@@ -75,6 +75,9 @@ click on 'save changes'.
    ![mapping](AuthImgs/attributeMapping2.png)
 4. Once you are done, save you changes
 
+5. Make sure to have the same attributes in your SAML provider and Cognito User Pool
+   ![mapping](AuthImgs/Onelogindetails.png)
+
 ### App Client Setup
 
 1. Click on 'App Clients' on the panel from the left side
