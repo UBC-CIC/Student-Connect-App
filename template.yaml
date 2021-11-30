@@ -70,7 +70,6 @@ Parameters:
     Type: String
     Default: dev
     Description: A description to identify environment (e.g. dev, prod)
-
 Outputs:
   getESDocumentsLambdaFunction:
     Value: !Ref getESDocuments
@@ -952,6 +951,39 @@ Resources:
       GenerateSecret: false
       RefreshTokenValidity: 2
       UserPoolId: !Ref CognitoUserPool
+      ReadAttributes:
+        - "custom:SP-PUID"
+        - "custom:preferredGivenName"
+        - "custom:studentYearLevel"
+        - "custom:studentLearnerEmail"
+        - "custom:specPrimPrgmType"
+        - "custom:locale"
+        - "custom:adwardingFaculty"
+      WriteAttributes:
+        - "custom:SP-PUID"
+        - "custom:preferredGivenName"
+        - "custom:studentYearLevel"
+        - "custom:studentLearnerEmail"
+        - "custom:specPrimPrgmType"
+        - "custom:locale"
+        - "custom:adwardingFaculty"
+
+  CognitoUserPoolIdP:
+    Type: AWS::Cognito::UserPoolIdentityProvider 
+    Properties:
+      UserPoolId: !Ref CognitoUserPool
+      ProviderName: "CWL"
+      ProviderType: "SAML"
+      ProviderDetails:
+        MetadataURL: "https://app.onelogin.com/saml/metadata/d1bba37d-897e-4e83-a9ed-846811996799"
+      AttributeMapping:
+        custom:preferredGivenName: "displayName"
+        custom:studentYearLevel: "yearLevel"
+        custom:studentLearnerEmail: "email"
+        custom:specPrimPrgmType: "primarySpecialization"
+        custom:locale: "campus"
+        custom:adwardingFaculty: "faculty"
+        custom:SP-PUID: "id"
 
   CognitoUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
