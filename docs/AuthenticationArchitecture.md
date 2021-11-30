@@ -56,8 +56,24 @@ Note: The Issuer URL is the Url highlighted in the above image
 
 4. Once everything filled, click onto 'Create Provider'
 
+### Attributes Creation
 
-We do not need to setup the attrirbute mapping for the SAML provider in the cognito user pool as it is already setup by default.
+1. Now, we need to create the attributes that you are going to capture from your external idp in Cognito.
+   Click on 'Attributes' on the panel from the left side
+   ![attributesPanel](AuthImgs/attributesPanel.png)
+2. Click onto 'Add another attribute' to add all the attributes that you want to get from your external idp. Once you are done,
+click on 'save changes'.
+   ![mapping](AuthImgs/attributesCreation.png)
+
+### Attributes Mapping
+1. Click onto 'Attributes Mapping'
+2. In the dropdown menu, make sure to select the SAML provider that you have just created
+   In our case, the SAML provider name called 'MySamlProvider'
+   ![mapping](AuthImgs/attributeMapping1.png)
+3. Click on 'Add SAML Attribute' to add a new attribute.
+   Make sure the SAML attribute name is the same as the one in the external IDP
+   ![mapping](AuthImgs/attributeMapping2.png)
+4. Once you are done, save you changes
 
 ### App Client Setup
 
@@ -103,5 +119,66 @@ First, let's create a domain name for the hosted UI
    ![client](AuthImgs/launchHostedUI.png)
 
 Congratulations, now you have finished setting up Cognito with SAML Identity Provider.
+
+### Modifications to code
+
+In order to make the app work with the SAML Identity Provider, we need to make some modifications to the code.
+
+First, we need to uncomment the 334-342 lines in the [`Survey.js`](src\views\Survey\Survey.js) file:
+
+``` javascript
+function createUserData(user){
+         let userData ={
+             //id: user.attributes.email,
+             id: user.attributes['custom:SP-PUID'],
+             SPUID: user.attributes['custom:SP-PUID'],
+             displayName: user.attributes['custom:preferredGivenName'],
+             yearLevel: user.attributes['custom:studentYearLevel'],
+             email:user.attributes['custom:studentLearnerEmail'],
+             primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+             campus: user.attributes['custom:locale'],
+             faculty:user.attributes['custom:adwardingFaculty'],
+             gender: gender,
+             cisOrTrans:cisOrTrans
+         }
+```
+
+Next inorder to setup the Custom Attribute mapping uncomment the lines 956- 982 in [`template.yml`](template.yaml)
+
+``` yaml
+CognitoApplicationClient:
+    Type: "AWS::Cognito::UserPoolClient"
+    Properties:
+      ClientName: !Sub '${AWS::StackName}-appclient'
+      GenerateSecret: false
+      RefreshTokenValidity: 2
+      UserPoolId: !Ref CognitoUserPool
+      WriteAttributes:
+        - email
+        - "custom:SP-PUID"
+        - "custom:preferredGivenName"
+        - "custom:studentYearLevel"
+        - "custom:studentLearnerEmail"
+        - "custom:specPrimPrgmType"
+        - "custom:locale"
+        - "custom:adwardingFaculty"
+
+  CognitoUserPoolIdP:
+    Type: AWS::Cognito::UserPoolIdentityProvider 
+    Properties:
+      UserPoolId: !Ref CognitoUserPool
+      ProviderName: "CWL"
+      ProviderType: "SAML"
+      ProviderDetails:
+        MetadataURL: "https://app.onelogin.com/saml/metadata/d1bba37d-897e-4e83-a9ed-846811996799"
+      AttributeMapping:
+        custom:preferredGivenName: "displayName"
+        custom:studentYearLevel: "yearLevel"
+        custom:studentLearnerEmail: "email"
+        custom:specPrimPrgmType: "primarySpecialization"
+        custom:locale: "campus"
+        custom:adwardingFaculty: "faculty"
+        custom:SP-PUID: "id"
+```
 
 <hr>
