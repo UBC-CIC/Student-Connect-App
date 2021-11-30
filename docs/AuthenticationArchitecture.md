@@ -118,6 +118,16 @@ First, let's create a domain name for the hosted UI
 3. Now, you can go back to "App Client Settings" and click 'Launch Hosted UI' to test log in/log out
    ![client](AuthImgs/launchHostedUI.png)
 
+
+4. Now back to Onelogin SAML Connector App navigate to the “Configuration” tab. There’s a few fields here and here’s what the values should be
+- “Relay State”: This is the page where your user should be directed to upon successful log in. This is the same as the “Sign in” URL from Cognito’s App client settings.
+- “Audience”: The audience value looks like this urn:amazon:cognito:sp: <cognito_user_pool_id>. You can grab the Cognito User Pool ID from the Cognito console.
+- “ACS (Consumer) URL Validator*” and “ACS (Consumer) URL*”: This two fields should contain the same URL which looks like the domain you setup in Cognito in the previous step — https://<your_domain_name>.auth.us-east-1.amazoncognito.com/login.
+- “Single Logout URL”: This is the Sign out URL where your users should be redirected to upon successful signout. Again, this should match with what you have set up in Cognito’s “Sign out” URL.
+
+![configuration](AuthImgs/userSetup.png)
+
+
 Congratulations, now you have finished setting up Cognito with SAML Identity Provider.
 
 ### Modifications to code
@@ -180,5 +190,7 @@ CognitoApplicationClient:
         custom:adwardingFaculty: "faculty"
         custom:SP-PUID: "id"
 ```
+
+The metadata URL is the metadata link that you have provided in the SAML provider setup. The URL above is for the CWL SAML provider and it has been setup with the attributes that you want to capture from the external IDP.
 
 <hr>
