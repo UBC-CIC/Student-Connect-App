@@ -18,27 +18,21 @@ We will be focusing on the following:
 Once the deployment of the backend and frontend of this app is finished, please head to
 [**Cognito**](https://console.aws.amazon.com/cognito/home)
 
-### Access User Pools
-1. Click on 'Manage User Pools'
-   ![userPoolHome](AuthImgs/userPoolHome.png)
-2. Select the User Pool which the student app is using
-   ![selectUserPool](AuthImgs/selectUserPool.png)
-
 ### Setup OneLogin for SAML
 
 1. Go to [Onelogin](https://www.onelogin.com/developer-signup) and sign in
    ![onelogin](AuthImgs/saml.png)
 
-2. Once logged in go to applicatoions and click on 'Create Application'
+2. Once logged in go to applicatoions and click on 'Application'
    ![createApplication](AuthImgs/oneLogin.png)
 
-3.  Click on `Add App` and from the next page seearch for `Shibboleth`
+3.  Click on `Add App` and from the next page search for `Shibboleth` and select `SAML Custom Connector (SP Shibboleth)`
    ![addApp](AuthImgs/Shibboleth.png)
 
 4. Add details for the application
    ![addAppDetails](AuthImgs/addAppDetails.png)
 
-5. Once setup is complete we will be able to see the SSO credetilas under the SSO tab
+5. Once setup is complete we will be able to see the SSO credentials under the SSO tab
    ![ssoCredentials](AuthImgs/ssoCredentials.png)
 
 Note: The Issuer URL is the Url highlighted in the above image
@@ -55,6 +49,12 @@ Note: The Issuer URL is the Url highlighted in the above image
 
 
 4. Once everything filled, click onto 'Create Provider'
+
+### Access User Pools
+1. Click on 'Manage User Pools'
+   ![userPoolHome](AuthImgs/userPoolHome.png)
+2. Select the User Pool which the student app is using
+   ![selectUserPool](AuthImgs/selectUserPool.png)
 
 ### Attributes Creation
 
