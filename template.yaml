@@ -943,8 +943,24 @@ Resources:
           RequireSymbols: true
           RequireUppercase: true
       UserPoolName: !Sub '${AWS::StackName}-kibana-users'
+      ## Uncomment the schema below to enable SAML integration
+      # Schema:
+      #   - AttributeDataType: String
+      #     Name: SP-PUID
+      #   - AttributeDataType: String
+      #     Name: preferredGivenName
+      #   - AttributeDataType: Number
+      #     Name: studentYearLevel
+      #   - AttributeDataType: String
+      #     Name: studentLearnerEmail
+      #   - AttributeDataType: String
+      #     Name: specPrimPrgmType
+      #   - AttributeDataType: String
+      #     Name: locale
+      #   - AttributeDataType: String
+      #     Name: adwardingFaculty
 
-## Uncomment these lines to enable SAML integration
+## Uncomment the WriteAttributes and CognitoUserPoolIdP to enable SAML integration
 
   CognitoApplicationClient:
     Type: "AWS::Cognito::UserPoolClient"
@@ -953,32 +969,32 @@ Resources:
       GenerateSecret: false
       RefreshTokenValidity: 2
       UserPoolId: !Ref CognitoUserPool
-  #    WriteAttributes:
-  #      - email
-  #      - "custom:SP-PUID"
-  #      - "custom:preferredGivenName"
-  #      - "custom:studentYearLevel"
-  #      - "custom:studentLearnerEmail"
-  #      - "custom:specPrimPrgmType"
-  #      - "custom:locale"
-  #      - "custom:adwardingFaculty"
+      # WriteAttributes:
+      #   - email
+      #   - "custom:SP-PUID"
+      #   - "custom:preferredGivenName"
+      #   - "custom:studentYearLevel"
+      #   - "custom:studentLearnerEmail"
+      #   - "custom:specPrimPrgmType"
+      #   - "custom:locale"
+      #   - "custom:adwardingFaculty"
 
-  #CognitoUserPoolIdP:
-  #  Type: AWS::Cognito::UserPoolIdentityProvider 
-  #  Properties:
-  #    UserPoolId: !Ref CognitoUserPool
-  #    ProviderName: "CWL"
-  #    ProviderType: "SAML"
-  #    ProviderDetails:
-  #      MetadataURL: "https://app.onelogin.com/saml/metadata/d1bba37d-897e-4e83-a9ed-846811996799"
-  #    AttributeMapping:
-  #      custom:preferredGivenName: "displayName"
-  #      custom:studentYearLevel: "yearLevel"
-  #      custom:studentLearnerEmail: "email"
-  #      custom:specPrimPrgmType: "primarySpecialization"
-  #      custom:locale: "campus"
-  #      custom:adwardingFaculty: "faculty"
-  #      custom:SP-PUID: "id"
+  # CognitoUserPoolIdP:
+  #   Type: AWS::Cognito::UserPoolIdentityProvider 
+  #   Properties:
+  #     UserPoolId: !Ref CognitoUserPool
+  #     ProviderName: "CWL"
+  #     ProviderType: "SAML"
+  #     ProviderDetails:
+  #       MetadataURL: "issuer_URL" # replace with the issuer URL
+  #     AttributeMapping:
+  #       custom:preferredGivenName: "displayName"
+  #       custom:studentYearLevel: "yearLevel"
+  #       custom:studentLearnerEmail: "email"
+  #       custom:specPrimPrgmType: "primarySpecialization"
+  #       custom:locale: "campus"
+  #       custom:adwardingFaculty: "faculty"
+  #       custom:SP-PUID: "id"
 
   CognitoUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain
