@@ -267,7 +267,7 @@ First, let's create a domain name for the hosted UI
 ![Get UserPoolID](AuthImgs/userPoolId.png)
 - “ACS (Consumer) URL Validator*” and “ACS (Consumer) URL*”: This two fields should contain the same URL which looks like the domain you setup in Cognito in the previous step (step 10.2) — 
    ```
-   https://<your_domain_name>.auth.<region>.amazoncognito.com/saml2/idpresponse.
+   https://<your_domain_name>.auth.<region>.amazoncognito.com/saml2/idpresponse
    ```
 - “Single Logout URL”: This is the Sign out URL where your users should be redirected to upon successful signout. Again, this should match with what you have set up in Cognito’s “Sign out” URL.
 
