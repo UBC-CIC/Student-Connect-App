@@ -78,6 +78,47 @@ click on 'save changes'.
 5. Make sure to have the same attributes in your SAML provider and Cognito User Pool
    ![mapping](AuthImgs/Onelogindetails.png)
 
+### Automatic attribute mapping using cloudformation
+
+Next inorder to setup the Custom Attribute mapping uncomment the lines 956- 982 in [`template.yml`](template.yaml)
+
+``` yaml
+CognitoApplicationClient:
+    Type: "AWS::Cognito::UserPoolClient"
+    Properties:
+      ClientName: !Sub '${AWS::StackName}-appclient'
+      GenerateSecret: false
+      RefreshTokenValidity: 2
+      UserPoolId: !Ref CognitoUserPool
+      WriteAttributes:
+        - email
+        - "custom:SP-PUID"
+        - "custom:preferredGivenName"
+        - "custom:studentYearLevel"
+        - "custom:studentLearnerEmail"
+        - "custom:specPrimPrgmType"
+        - "custom:locale"
+        - "custom:adwardingFaculty"
+
+  CognitoUserPoolIdP:
+    Type: AWS::Cognito::UserPoolIdentityProvider 
+    Properties:
+      UserPoolId: !Ref CognitoUserPool
+      ProviderName: "CWL"
+      ProviderType: "SAML"
+      ProviderDetails:
+        MetadataURL: "https://app.onelogin.com/saml/metadata/d1bba37d-897e-4e83-a9ed-846811996799"
+      AttributeMapping:
+        custom:preferredGivenName: "displayName"
+        custom:studentYearLevel: "yearLevel"
+        custom:studentLearnerEmail: "email"
+        custom:specPrimPrgmType: "primarySpecialization"
+        custom:locale: "campus"
+        custom:adwardingFaculty: "faculty"
+        custom:SP-PUID: "id"
+```
+The metadata URL is the metadata link that you have provided in the SAML provider setup. The URL above is for the CWL SAML provider and it has been setup with the attributes that you want to capture from the external IDP.
+
 ### App Client Setup
 
 1. Click on 'App Clients' on the panel from the left side
@@ -155,45 +196,5 @@ function createUserData(user){
              cisOrTrans:cisOrTrans
          }
 ```
-
-Next inorder to setup the Custom Attribute mapping uncomment the lines 956- 982 in [`template.yml`](template.yaml)
-
-``` yaml
-CognitoApplicationClient:
-    Type: "AWS::Cognito::UserPoolClient"
-    Properties:
-      ClientName: !Sub '${AWS::StackName}-appclient'
-      GenerateSecret: false
-      RefreshTokenValidity: 2
-      UserPoolId: !Ref CognitoUserPool
-      WriteAttributes:
-        - email
-        - "custom:SP-PUID"
-        - "custom:preferredGivenName"
-        - "custom:studentYearLevel"
-        - "custom:studentLearnerEmail"
-        - "custom:specPrimPrgmType"
-        - "custom:locale"
-        - "custom:adwardingFaculty"
-
-  CognitoUserPoolIdP:
-    Type: AWS::Cognito::UserPoolIdentityProvider 
-    Properties:
-      UserPoolId: !Ref CognitoUserPool
-      ProviderName: "CWL"
-      ProviderType: "SAML"
-      ProviderDetails:
-        MetadataURL: "https://app.onelogin.com/saml/metadata/d1bba37d-897e-4e83-a9ed-846811996799"
-      AttributeMapping:
-        custom:preferredGivenName: "displayName"
-        custom:studentYearLevel: "yearLevel"
-        custom:studentLearnerEmail: "email"
-        custom:specPrimPrgmType: "primarySpecialization"
-        custom:locale: "campus"
-        custom:adwardingFaculty: "faculty"
-        custom:SP-PUID: "id"
-```
-
-The metadata URL is the metadata link that you have provided in the SAML provider setup. The URL above is for the CWL SAML provider and it has been setup with the attributes that you want to capture from the external IDP.
 
 <hr>
