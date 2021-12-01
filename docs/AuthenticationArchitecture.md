@@ -23,7 +23,7 @@ Once the deployment of the backend and frontend of this app is finished, please 
 1. Go to [Onelogin](https://www.onelogin.com/developer-signup) and sign in
    ![onelogin](AuthImgs/saml.png)
 
-2. Once logged in go to applicatoions and click on 'Application'
+2. Once logged in go to applications and click on 'Application'
    ![createApplication](AuthImgs/oneLogin.png)
 
 3.  Click on `Add App` and from the next page search for `Shibboleth` and select `SAML Custom Connector (SP Shibboleth)`
@@ -37,6 +37,12 @@ Once the deployment of the backend and frontend of this app is finished, please 
 
 Note: The Issuer URL is the Url highlighted in the above image
 
+### Access User Pools
+1. Click on 'Manage User Pools'
+   ![userPoolHome](AuthImgs/userPoolHome.png)
+2. Select the User Pool which the student app is using
+   ![selectUserPool](AuthImgs/selectUserPool.png)
+ 
 ### SAML Provider Setup
 1. Click on 'Identity Providers' on the panel from the left side
    ![selectUserPool](AuthImgs/samlPanel.png)
@@ -49,12 +55,6 @@ Note: The Issuer URL is the Url highlighted in the above image
 
 
 4. Once everything filled, click onto 'Create Provider'
-
-### Access User Pools
-1. Click on 'Manage User Pools'
-   ![userPoolHome](AuthImgs/userPoolHome.png)
-2. Select the User Pool which the student app is using
-   ![selectUserPool](AuthImgs/selectUserPool.png)
 
 ### Attributes Creation
 
