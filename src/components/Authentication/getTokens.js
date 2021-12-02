@@ -22,6 +22,7 @@ export default async function getTokens() {
         body: new URLSearchParams(params)
     })
     .then(response => response.text())
+    .then(response => JSON.parse(response))
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
 
