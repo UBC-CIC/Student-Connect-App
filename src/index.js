@@ -14,7 +14,17 @@ import 'semantic-ui-css/semantic.min.css';
 const store = createStore(
     reducers, applyMiddleware(thunk)
 );
-Amplify.configure(awsConfig);
+Amplify.configure({
+    ...awsConfig
+    ,
+    oauth: {
+        domain: process.env.REACT_APP_COGNITO_APP_URL,
+        scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
+        redirectSignIn: process.env.REACT_APP_CALLBACK_URI,
+        redirectSignOut: `${process.env.REACT_APP_CALLBACK_URI}/logOut`,
+        responseType: 'code'
+    }
+});
 
 
 ReactDOM.render(
