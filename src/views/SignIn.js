@@ -10,43 +10,46 @@ import App from "../App";
 function SignIn(props) {
     const {loginState, updateLoginState,currentUser,currentCredentials} = props;
 
-    const [currentLoginState, updateCurrentLoginState] = useState(loginState);
-    const [user, setUser] = useState(null);
-    const [cred, setCred] = useState(null);
+    // const [currentLoginState, updateCurrentLoginState] = useState(loginState);
+    // const [user, setUser] = useState(null);
+    // const [cred, setCred] = useState(null);
 
 
     useEffect(() => {
         setAuthListener();
-    });
+    }, []);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        async function retrieveUser() {
-            try {
-                Auth.currentAuthenticatedUser().then(user => {
-                    setUser(user)
-                }).catch(err => {
-                    console.log(err)
-                })
+    //     async function retrieveUser() {
+    //         try {
+    //             Auth.currentAuthenticatedUser().then(user => {
+    //                 setUser(user)
+    //             }).catch(err => {
+    //                 console.log(err)
+    //             })
 
-            } catch (e) {
+    //         } catch (e) {
 
-            }
-        }
-        retrieveUser()
-        updateCurrentLoginState(loginState);
-        setCred(currentCredentials)
-        setUser(currentUser)
-    }, [loginState,currentCredentials,currentUser]);
+    //         }
+    //     }
+    //     retrieveUser()
+    //     updateCurrentLoginState(loginState);
+    //     setCred(currentCredentials)
+    //     setUser(currentUser)
+    // }, [loginState,currentCredentials,currentUser]);
 
 
-    async function setAuthListener() {
+    function setAuthListener() {
+        console.log("inside setAuthListener")
         Hub.listen('auth', (data)=> {
             switch(data.payload.event) {
                 case "signOut":
+                    console.log("signout", data.payload.event)
                     updateLoginState("signIn");
                     break;
                 default:
+                    console.log("default", data.payload.event)
                     break;
             }
         })
@@ -57,7 +60,7 @@ function SignIn(props) {
         <Grid container>
             <Grid item xs={12}>
                 {
-                    currentLoginState !== "signedIn" && (
+                    loginState !== "signedIn" && (
                         <div>
                             <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
                                    title={"Student App"} darkMode={true}
@@ -69,8 +72,8 @@ function SignIn(props) {
                     )
                 }
                 {
-                    (currentLoginState === "signedIn"&&user&&cred) && (
-                        <App propUser={user}/>
+                    (loginState === "signedIn") && (
+                        <App/>
                     )
                 }
             </Grid>
