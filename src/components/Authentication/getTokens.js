@@ -1,9 +1,13 @@
-export default async function getTokens() {
+import Auth from "@aws-amplify/auth";
+import { connect } from "react-redux";
+import {updateCredentials} from "../../actions/loginActions";
+
+async function getTokens() {
     const location = window.location;
     const client_id = process.env.REACT_APP_CLIENTID;
     const callback_uri = process.env.REACT_APP_CALLBACK_URI;
     const cognito_app_url = process.env.REACT_APP_COGNITO_APP_URL;
-    const token_url = `${cognito_app_url}/oauth2/token`;
+    const token_url = `https://${cognito_app_url}/oauth2/token`;
 
     const code = new URLSearchParams(location.search).get('code');
 
@@ -23,7 +27,18 @@ export default async function getTokens() {
     })
     .then(response => response.text())
     .then(response => JSON.parse(response))
-    .then(result => console.log(result))
+    .then(async (result) => {
+        console.log(result)
+        // updateCredentials(result)
+        const user = await Auth.currentAuthenticatedUser();
+        console.log("the user is", user)
+    })
     .catch(error => console.log('error', error));
 
 }
+
+const mapDispatchToProps = {
+    updateCredentials
+};
+
+export default connect(null, mapDispatchToProps)(getTokens);
