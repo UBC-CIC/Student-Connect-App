@@ -5,13 +5,11 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {updateCurrentUser, updateLoginState} from "../actions/loginActions";
 import App from "../App";
-import { useLocation } from 'react-router';
 import getTokens from '../components/Authentication/getTokens';
 
 
 function SignIn(props) {
     const {loginState, updateLoginState,currentUser,currentCredentials} = props;
-    const location = useLocation();
 
     // const [currentLoginState, updateCurrentLoginState] = useState(loginState);
     // const [user, setUser] = useState(null);
@@ -21,8 +19,7 @@ function SignIn(props) {
     useEffect(() => {
         (async() => {
             setAuthListener();
-            await getTokens(location);
-
+            await getTokens();
         })();
     }, []);
 

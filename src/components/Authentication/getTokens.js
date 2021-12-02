@@ -1,11 +1,11 @@
-export default async function getTokens(location) {
+export default async function getTokens() {
+    const location = window.location;
     const client_id = process.env.REACT_APP_CLIENTID;
     const callback_uri = process.env.REACT_APP_CALLBACK_URI;
     const cognito_app_url = process.env.REACT_APP_COGNITO_APP_URL;
     const token_url = `${cognito_app_url}/oauth2/token`;
 
     const code = new URLSearchParams(location.search).get('code');
-    console.log("the code is", code)
 
     const params = {
         "grant_type": "authorization_code",
@@ -21,7 +21,8 @@ export default async function getTokens(location) {
 		},
         body: new URLSearchParams(params)
     })
-    .then((response) => console.log(response))
-    .catch((err) => console.log("err", err))
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 
 }
