@@ -74,7 +74,6 @@ function App(props) {
     useEffect(  () => {
         // setUser(currentUser)
 
-        Amplify.configure(awsConfig);
         if (currentUser &&currentCredentials) {
             AWS.config.update({
                 accessKeyId: currentCredentials.accessKeyId,
