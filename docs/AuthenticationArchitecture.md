@@ -60,7 +60,7 @@ Note the Issuer URL, we will need it in later steps.
 <hr>
 
 ### ***Attributes Creation and Mapping***
-In the next step, we will create and map the custom attributes and create the app client that will be needed for the external IDP. We will first set up the attributes on the SAML provider (Section 4), then on Cognito (Section 5~8).
+In the next step, we will create and map the custom attributes and create the app client that will be needed for the external IDP. We will first set up the attributes on the SAML provider ([Section 4](#4-adding-custom-attributes-in-saml-provider)), then on Cognito ([Section 5~8](#5-automatic-attribute-mapping-using-cloudformation)).
 
 <hr>
 
@@ -90,8 +90,8 @@ In the next step, we will create and map the custom attributes and create the ap
 
 ### ***Attributes Creation and Mapping on Cognito***
 For attributes creation and mapping on Cognito, you can either 
-- redeploy the `template.yaml` file which will automatically create and map the attributes for you to Cognito using cloudformation (**Section 5**), or
-- manually add them in the Cognito UI Console (**Section 6~8**)
+- redeploy the `template.yaml` file which will automatically create and map the attributes for you to Cognito using cloudformation (**[Section 5](#5-automatic-attribute-mapping-using-cloudformation)**), or
+- manually add them in the Cognito UI Console (**[Section 6~8](#6-attributes-creation-on-cognito-ui-console)**)
 ###
 
 <hr>
@@ -178,7 +178,7 @@ See **Step 1** in [`Deployment Guide`](DeploymentGuide.md) for more details on t
 
 5.5) If successfully deployed, you can go on Cognito Console. Under **General Settings** -> **Attributes**, you can see that the attributes have been successfully added.
 
-You can skip to **Section 9**.
+You can skip to **[Section 9](#9-app-client-settings)**.
 
 ![``](AuthImgs//AutoAttributeCloudformation.png)
 
