@@ -86,6 +86,9 @@ In the next step, we will create and map the custom attributes and create the ap
 
 4.8) Repeat until all parameters are added
 
+Example:
+![mapping](AuthImgs/Onelogindetails.png)
+
 <hr>
 
 ### ***Attributes Creation and Mapping on Cognito***
@@ -190,15 +193,15 @@ You can skip to **[Section 9](#9-app-client-settings)**.
    Click on 'Attributes' on the panel from the left side
    ![attributesPanel](AuthImgs/attributesPanel.png)
 
-6.2) On the right, under **Do you want to add custom attributes?**, click onto '**Add another attribute**' to add all the attributes that you want to get from your external idp. Once you are done,
-click on '**Save changes**'.
+6.2) On the right, under **Do you want to add custom attributes?**, click onto '**Add another attribute**' to add all the attributes that you want to get from your external idp. 
    ![mapping](AuthImgs/attributesCreation.png)
+
+6.3) Once you are done, click on '**Save changes**'.
 
 ### 7. Attributes Mapping on Cognito UI Console
 7.1) Under **Federation**, click onto '**Attributes Mapping**'
 
 7.2) In the dropdown menu, make sure to select the SAML provider that you have just created.
-   ![mapping](AuthImgs/attributeMapping1.png)
 
 7.3) Click on '**Add SAML Attribute**' to add a new attribute.
    Make sure the SAML attribute name is the same as the one in the external IDP
@@ -207,11 +210,14 @@ click on '**Save changes**'.
 7.4) Once you are done, save you changes
 
 7.5) Make sure to have the same attributes in your SAML provider and Cognito User Pool
-   ![mapping](AuthImgs/Onelogindetails.png)
 
+Example:
+![attributemappingfinalexample](AuthImgs/attrMappingFinalEg.png)
 <hr>
 
 ### 8. App Client Setup on Cognito UI Console
+
+You can either use the ones that are Cognito already created for you, or you can create your own. If you would like to create your own App clients, please follow the steps below. Otherwise, skip to **[Section 9](#9-app-client-settings)**.
 
 8.1) Click on 'App Clients' on the panel from the left side
    ![client](AuthImgs/appClientPanel.png)
@@ -237,13 +243,25 @@ click on '**Save changes**'.
 9.1) Go to App Client Settings
    ![client](AuthImgs/appClientSettings.png)
 
+9.2) Choose the App Client that you would to host your login UI.
+
 9.2) Check your identity providers under 'Enabled Identity Providers'
 
-9.3) Give the Sign in and Sign out URLs. Only uses localhost for development purposes
-   
-9.4) Select the following options in OAuth Flows (checking implicit grant means you will receive a jwttoken (includes all user attributes in the call back uri when user logs in successfully)
+9.3) Give the Callback (for Sign in) and Sign out URLs. 
 
+Only uses localhost for development purposes. 
+E.g.
+``` 
+Callback URL(s): http://localhost:3000/
+Sign out URL(s): http://localhost:3000/logOut
+```
+   
+When ready for production, replace the URLs with the actual production-ready URLs, like the image below. You can grab the URL from the Amplify console (see step 11.1~11.3)
 ![client](AuthImgs/appClientSettings2.png)
+   
+9.4) Select the options in the above image for OAuth Flows (checking implicit grant means you will receive a jwttoken (includes all user attributes in the call back uri when user logs in successfully)
+
+9.5) Click on **Save**
 
 <hr/>
 
@@ -251,6 +269,7 @@ click on '**Save changes**'.
 We need to configure a hosted UI (provided by Cognito) for the user to sign-in/out 
 
 First, let's create a domain name for the hosted UI
+
 10.1) Go to Domain name on the left panel
 ![client](AuthImgs/domainPanel.png)
    
@@ -279,28 +298,31 @@ Click on **Save** when done.
 
 <hr/>
 
-### 11. Modifications to code
+### 11. Final Production
+Now that everything is working, we will connect the hosted UI to our Amplify App.
 
-In order to make the app work with the SAML Identity Provider, we need to make some modifications to the code.
+11.1) In the AWS Amplify Console, select our app
 
-First, we need to uncomment the 334-342 lines in the [`Survey.js`](src\views\Survey\Survey.js) file:
+11.2) Click on the branch under hosting environment
+![amplifyappinfo](AuthImgs/ampliyAppInfo.png)
 
-``` javascript
-function createUserData(user){
-         let userData ={
-             //id: user.attributes.email,
-             id: user.attributes['custom:SP-PUID'],
-             SPUID: user.attributes['custom:SP-PUID'],
-             displayName: user.attributes['custom:preferredGivenName'],
-             yearLevel: user.attributes['custom:studentYearLevel'],
-             email:user.attributes['custom:studentLearnerEmail'],
-             primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-             campus: user.attributes['custom:locale'],
-             faculty:user.attributes['custom:adwardingFaculty'],
-             gender: gender,
-             cisOrTrans:cisOrTrans
-         }
+11.3) Here, you will get the domain URL. Replace the localhost URL with this domain URL in Step 9.3 and 10.3. Please remember to Save! It might take a few minutes for the update to occur
+![amplifyappinfo](AuthImgs/getDomainURL.png)
+
+11.4) Under App Settings, click on **Environment variables**. On the right, click on **Manage variabled** and then add the following variables and values:
 ```
+REACT_APP_CALLBACK_URI: <Domain url from Step 11.3>
+REACT_APP_CLIENTID: <ID of the App Client for the hosted UI>
+REACT_APP_COGNITO_APP_URL: <Amazon Cognito Domain from step 10.2>
+REACT_APP_ENABLE_FEDERATE_LOGIN: true
+```
+
+11.5) Click on **Save** when finished.
+![amplifyappinfo](AuthImgs/envVar.png)
+
+11.6) Now go back to our App, and click on **Redeploy this version** and wait for the app to be rebuild and redeployed.
+
+![redeployApp](AuthImgs/redeployApp.png)
 
 <hr>
 
