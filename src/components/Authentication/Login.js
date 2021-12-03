@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '15px'
     },
     outerContainer: {
-        padding: '0 1rem 1rem 1rem !important',
+        padding: '0 1rem !important',
     },
     federateContainer: {
         background: 'white',
@@ -248,14 +248,14 @@ function Login(props) {
                                                     <p>
                                                         Please login with your UBC Account
                                                     </p>
-                                                    <Button
+                                                    <MaterialButton
                                                         variant="contained"
                                                         color="default"
                                                         onClick={() => Auth.federatedSignIn()}
                                                         className={classes.button}
                                                     >
                                                             CWL Login
-                                                    </Button>
+                                                    </MaterialButton>
                                                 </Grid.Column>
                                             )
                                             :
