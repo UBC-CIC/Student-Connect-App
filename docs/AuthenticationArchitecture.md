@@ -60,7 +60,7 @@ Note the Issuer URL, we will need it in later steps.
 <hr>
 
 ### ***Attributes Creation and Mapping***
-In the next step, we will create and map the custom attributes and create the app client that will be needed for the external IDP. We will first set up the attributes on the SAML provider ([Section 4](#4-adding-custom-attributes-in-saml-provider)), then on Cognito ([Section 5~8](#5-automatic-attribute-mapping-using-cloudformation)).
+In the next step, we will create and map the custom attributes and create the app client that will be needed for the external IDP. We will first set up the attributes on the SAML provider ([Section 4](#4-adding-custom-attributes-in-saml-provider)), then on Cognito ([Section 5~8](#attributes-creation-and-mapping-on-cognito)).
 
 <hr>
 
