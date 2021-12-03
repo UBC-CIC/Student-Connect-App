@@ -99,7 +99,8 @@ For attributes creation and mapping on Cognito, you can either
 
 <hr>
 
-### 5. Automatic attribute mapping using cloudformation
+### 5. STILL IN PROGRESS: Automatic attribute mapping using cloudformation
+Please skip this section and try the manual set up(**[Section 6~8](#6-attributes-creation-on-cognito-ui-console)**) as it is still in progress. Stay tuned!
 
 5.1) In order to setup the Custom Attribute mapping uncomment the lines 947-961 and 972-997 in [`template.yaml`](../template.yaml)
 
