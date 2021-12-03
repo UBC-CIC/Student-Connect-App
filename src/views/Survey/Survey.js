@@ -330,20 +330,27 @@ const userPreference ={
 
 
      function createUserData(user){
-         let userData ={
+         let userData = process.env.REACT_APP_ENABLE_FEDERATE_LOGIN === 'true' ? 
+         {
+            id: user.attributes['custom:SP-PUID'],
+            SPUID: user.attributes['custom:SP-PUID'],
+            displayName: user.attributes['custom:preferredGivenName'],
+            yearLevel: user.attributes['custom:studentYearLevel'],
+            email:user.attributes['custom:studentLearnerEmail'],
+            primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+            campus: user.attributes['custom:locale'],
+            faculty:user.attributes['custom:adwardingFaculty'],
+            gender: gender,
+            cisOrTrans:cisOrTrans
+         }
+         :
+         {
              id: user.attributes.email,
-             // id: user.attributes['custom:SP-PUID'],
-             // SPUID: user.attributes['custom:SP-PUID'],
-             // displayName: user.attributes['custom:preferredGivenName'],
-             // yearLevel: user.attributes['custom:studentYearLevel'],
-             // email:user.attributes['custom:studentLearnerEmail'],
-             // primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-             // campus: user.attributes['custom:locale'],
-             // faculty:user.attributes['custom:adwardingFaculty'],
              gender: gender,
              cisOrTrans:cisOrTrans
-
          }
+
+         console.log("userdata", userData)
 
          createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {

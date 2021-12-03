@@ -1,4 +1,6 @@
 import {Button, Divider, Grid, Icon, Image, Input} from "semantic-ui-react";
+import { Button as MaterialButton, makeStyles } from "@material-ui/core";
+
 import {Auth} from "aws-amplify";
 import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
@@ -9,6 +11,25 @@ import CICLogo from '../../assets/img/logo_inverse.png'
 const initialFormState = {
     email: "", password: "", authCode: "", resetCode: ""
 }
+
+const useStyles = makeStyles((theme) => ({
+    button: {
+        width: '80%',
+        padding: '15px',
+        fontSize: '15px'
+    },
+    outerContainer: {
+        padding: '0 1rem 1rem 1rem !important',
+    },
+    federateContainer: {
+        background: 'white',
+        padding: '4rem 0rem'
+    },
+    nonFederateContainer: {
+        background: 'white',
+        padding: '2rem 0rem'
+    },
+}));
 
 function Login(props) {
     const {updateCurrentUser,loginState, updateLoginState, animateTitle, type, title, darkMode, logo, themeColor, disableSignUp
@@ -24,6 +45,7 @@ function Login(props) {
 
 
 
+    const classes = useStyles();
 
     useEffect(() => {
         async function retrieveUser() {
@@ -219,8 +241,26 @@ function Login(props) {
                                                 </div>
                                             </Grid.Column>
                                         </Grid.Row>
-                                        <Grid.Row>
-                                            <Grid.Column verticalAlign={"middle"} textAlign={"center"}>
+                                        <Grid.Row className={classes.outerContainer}>
+                                            {process.env.REACT_APP_ENABLE_FEDERATE_LOGIN === 'true' ? 
+                                            (
+                                                <Grid.Column verticalAlign={"middle"} textAlign={"center"} className={classes.federateContainer}>
+                                                    <p>
+                                                        Please login with your UBC Account
+                                                    </p>
+                                                    <Button
+                                                        variant="contained"
+                                                        color="default"
+                                                        onClick={() => Auth.federatedSignIn()}
+                                                        className={classes.button}
+                                                    >
+                                                            CWL Login
+                                                    </Button>
+                                                </Grid.Column>
+                                            )
+                                            :
+                                            (
+                                                <Grid.Column verticalAlign={"middle"} textAlign={"center"} className={classes.nonFederateContainer}>
                                                 {
                                                     loginState === "signIn" && (
                                                         <Grid>
@@ -493,7 +533,9 @@ function Login(props) {
                                                         </Grid>
                                                     )
                                                 }
-                                            </Grid.Column>
+                                                </Grid.Column>
+                                            )
+                                            }
                                         </Grid.Row>
                                     </Grid>
                                 </div>

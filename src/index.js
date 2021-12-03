@@ -14,9 +14,15 @@ import 'semantic-ui-css/semantic.min.css';
 const store = createStore(
     reducers, applyMiddleware(thunk)
 );
+
+/*
+    If federate login is enabled, amplify.configure will include
+    the necessary info to set up oauth for the HostedUI
+*/
+process.env.REACT_APP_ENABLE_FEDERATE_LOGIN === 'true'
+? 
 Amplify.configure({
-    ...awsConfig
-    ,
+    ...awsConfig,
     oauth: {
         domain: process.env.REACT_APP_COGNITO_APP_URL,
         scope: ['email', 'profile', 'openid', 'aws.cognito.signin.user.admin'],
@@ -24,7 +30,9 @@ Amplify.configure({
         redirectSignOut: `${process.env.REACT_APP_CALLBACK_URI}/logOut`,
         responseType: 'code'
     }
-});
+}) 
+:
+Amplify.configure(awsConfig);
 
 
 ReactDOM.render(

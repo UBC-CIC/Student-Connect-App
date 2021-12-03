@@ -5,43 +5,41 @@ import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {updateCurrentUser, updateLoginState} from "../actions/loginActions";
 import App from "../App";
-import getTokens from '../components/Authentication/getTokens';
 
 
 function SignIn(props) {
     const {loginState, updateLoginState,currentUser,currentCredentials} = props;
 
-    // const [currentLoginState, updateCurrentLoginState] = useState(loginState);
-    // const [user, setUser] = useState(null);
-    // const [cred, setCred] = useState(null);
+    const [currentLoginState, updateCurrentLoginState] = useState(loginState);
+    const [user, setUser] = useState(null);
+    const [cred, setCred] = useState(null);
 
 
     useEffect(() => {
         (async() => {
             setAuthListener();
-            await getTokens();
         })();
     }, []);
 
-    // useEffect(() => {
+    useEffect(() => {
 
-    //     async function retrieveUser() {
-    //         try {
-    //             Auth.currentAuthenticatedUser().then(user => {
-    //                 setUser(user)
-    //             }).catch(err => {
-    //                 console.log(err)
-    //             })
+        async function retrieveUser() {
+            try {
+                Auth.currentAuthenticatedUser().then(user => {
+                    setUser(user)
+                }).catch(err => {
+                    console.log(err)
+                })
 
-    //         } catch (e) {
+            } catch (e) {
 
-    //         }
-    //     }
-    //     retrieveUser()
-    //     updateCurrentLoginState(loginState);
-    //     setCred(currentCredentials)
-    //     setUser(currentUser)
-    // }, [loginState,currentCredentials,currentUser]);
+            }
+        }
+        retrieveUser()
+        updateCurrentLoginState(loginState);
+        setCred(currentCredentials)
+        setUser(currentUser)
+    }, [loginState,currentCredentials,currentUser]);
 
 
     function setAuthListener() {
@@ -49,11 +47,9 @@ function SignIn(props) {
         Hub.listen('auth', (data)=> {
             switch(data.payload.event) {
                 case "signOut":
-                    console.log("signout", data.payload.event)
                     updateLoginState("signIn");
                     break;
                 default:
-                    console.log("default", data.payload.event)
                     break;
             }
         })

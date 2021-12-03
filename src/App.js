@@ -72,8 +72,6 @@ function App(props) {
 
 
     useEffect(  () => {
-        // setUser(currentUser)
-
         if (currentUser &&currentCredentials) {
             AWS.config.update({
                 accessKeyId: currentCredentials.accessKeyId,
