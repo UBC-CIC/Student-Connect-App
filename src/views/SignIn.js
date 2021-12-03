@@ -16,10 +16,8 @@ function SignIn(props) {
 
 
     useEffect(() => {
-        (async() => {
-            setAuthListener();
-        })();
-    }, []);
+        setAuthListener();
+    });
 
     useEffect(() => {
 
@@ -42,8 +40,7 @@ function SignIn(props) {
     }, [loginState,currentCredentials,currentUser]);
 
 
-    function setAuthListener() {
-        console.log("inside setAuthListener")
+    async function setAuthListener() {
         Hub.listen('auth', (data)=> {
             switch(data.payload.event) {
                 case "signOut":
@@ -60,7 +57,7 @@ function SignIn(props) {
         <Grid container>
             <Grid item xs={12}>
                 {
-                    loginState !== "signedIn" && (
+                    currentLoginState !== "signedIn" && (
                         <div>
                             <Login logo={"custom"} type={"image"} themeColor={"standard"} animateTitle={true}
                                    title={"Student App"} darkMode={true}
@@ -71,8 +68,8 @@ function SignIn(props) {
                     )
                 }
                 {
-                    (loginState === "signedIn") && (
-                        <App/>
+                    (currentLoginState === "signedIn"&&user&&cred) && (
+                        <App propUser={user}/>
                     )
                 }
             </Grid>

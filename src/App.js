@@ -47,12 +47,12 @@ function App(props) {
     const classes = useStyles();
     const{fetchAllClubs,fetchAllEvents,
         fetchAllNews,fetchAllBlogs, fetchAllSportsNews,getUserPreferenceAction,
-        userPreference,getSavedItems,currentCredentials,currentUser}= props
+        userPreference,getSavedItems,currentCredentials,propUser}= props
 
     const signInUrl = process.env.REACT_APP_SignInUrl
     const [UID,setUID] =  useState(null)
     const [firstTime,setFirstTime] = useState(null)
-    // const [user, setUser] = useState(null)
+    const [user, setUser] = useState(null)
     const [preference,setPreference]=useState(null)
     let pref
 
@@ -72,7 +72,10 @@ function App(props) {
 
 
     useEffect(  () => {
-        if (currentUser &&currentCredentials) {
+        setUser(propUser)
+
+        Amplify.configure(awsConfig);
+        if (propUser &&currentCredentials) {
             AWS.config.update({
                 accessKeyId: currentCredentials.accessKeyId,
                 identityId: currentCredentials.identityId,
@@ -81,10 +84,10 @@ function App(props) {
                 region: awsConfig.aws_project_region,
             });
 
-            setUID(currentUser.attributes['email'])
+            setUID(propUser.attributes['email'])
             if (UID) checkUserLogInFirstTime(UID)
-            getUserPreferenceAction(currentUser.attributes['email'])
-            getSavedItems(currentUser.attributes['email'])
+            getUserPreferenceAction(propUser.attributes['email'])
+            getSavedItems(propUser.attributes['email'])
 
             setPreference(userPreference)
             fetchAllClubs()
@@ -107,7 +110,7 @@ function App(props) {
                     <Route
                         path='/survey'
                         render={(props) => (
-                            <Survey {...props} UID={UID} user={currentUser} />
+                            <Survey {...props} UID={UID} user={user} />
                         )}
                     />
                 </div>
@@ -120,7 +123,7 @@ function App(props) {
                         <Route
                             path='/'
                             render={(props) => (
-                                <LoadingScreen {...props} preference={userPreference} user={currentUser} />
+                                <LoadingScreen {...props} preference={userPreference} user={user} />
                             )} exact component={LoadingScreen}
                         />
 
