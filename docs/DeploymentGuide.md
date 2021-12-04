@@ -128,7 +128,7 @@ It creates the role name **amplifyconsole-studentengagement-backend-role** that 
 
 2 - Use the provided **1-click deployment** button below.
 
-[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp)
 
 3 - Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
 
@@ -152,7 +152,7 @@ If you would like to use a different environment container, please make sure tha
 Cognito is used for user authentication. Users will need to input their email address and a password to create an account.
 After account creation, users will need to verify their account by inputting the 6-digit verification code that was sent to their provided email address before being able to log in to the system.
 
-AML (shibboleth) integration using Cognito has been added with instrictions to deploy [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md). The instructions in the following link should be followed after completing the deployment to enable the Shibboleth integration using One-login.
+AML (shibboleth) integration using Cognito has been added with instrictions to deploy [here](./AuthenticationArchitecture.md). The instructions in the following link should be followed after completing the deployment to enable the Shibboleth integration using One-login.
 
 ## Next Steps
 
