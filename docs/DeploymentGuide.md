@@ -25,7 +25,8 @@ Some system installation requirements before starting deployment:
    For Mac, Linux and Windows Subsystem for Linux users:
 
    ```   
-   deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
+   chmod +x deploy.sh
+   ./deploy.sh --aws-profile <AWS_PROFILE> --aws-region <AWS_REGION> --stack-name <STACK_NAME>
    ```
 
    For Windows users:
@@ -58,7 +59,8 @@ Some system installation requirements before starting deployment:
     ```
     which will need either `y` or `Y` to confirm the deployment.
    Here are what all the deployment prompts look like for a proper deployment:
-   ![Deployment Prompts](./DeploymentPrompts.png)
+   ![Deployment Prompts](./DeploymentPrompts_1.png)
+   ![Deployment Prompts](./DeploymentPrompts_2.png)
    
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
@@ -79,7 +81,7 @@ Some system installation requirements before starting deployment:
    * Then click on **Index Patterns** on the left Menu and then **Create Index Pattern** 
    ![Elasticsearch Index Patterns](./IndexPatterns.PNG)
    * Type in a valid index pattern (as of now, the valid options are `events`, `news`, `blogs`, `athleticsnews`, `clubs`**
-   as these are the data sources we have), then click **Next Step** and proceed with the defaults to have the index setup.
+   as these are the data sources we have), then click **Next Step** and proceed with the defaults to have the index setup. If you only see `blogs` and `news`, please wait for another 10-20 minutes. As of this step, you should see `events`, `news`, `blogs`, `athleticsnews`. We will add `clubs` in later steps.
    * Use the hamburger menu on the left and navigate to the **Discover** tab, then pick an index to visualise its data.
     
     If the deployment has proceeded perfectly, some data should be shown here:
@@ -116,18 +118,41 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 Follow these instructions to deploy the frontend:
 
-1) Use the provided **1-click deployment** button below.
-2) Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
-3) Select your AWS service role in the dropdown. If you don't have one configured, Select 'Create new role' and quickly create one using the default settings.
-4) Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
+1 - Before installing Amplify we need to create the IAM Role that associates the policies needed to implement this solution. From the cloned directory, execute the following CloudFormation template: 
 
+```bash
+aws cloudformation deploy --template-file cfn-amplifyRole.yaml --stack-name studentengagement-amplify-role --capabilities CAPABILITY_NAMED_IAM
+```
 
-[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp)
+It creates the role name **amplifyconsole-studentengagement-backend-role** that will be used on the next step.
+
+2 - Use the provided **1-click deployment** button below.
+
+[![One-click deployment](https://oneclick.amplifyapp.com/button.svg)](https://console.aws.amazon.com/amplify/home#/deploy?repo=https://github.com/UBC-CIC/UBCO-StudentEngagementApp/tree/phase2)
+
+3 - Select **Connect to GitHub**, and then you will be asked to connect to your GitHub account. Amplify Console will fork this repository into your GitHub account before deploying.
+
+4 - Select your AWS service role that we have just created (**amplifyconsole-studentengagement-backend-role**) in the dropdown.
+
+5 - Expand the *Environment variables* section and enter the following:
+
+    Key: USER_BRANCH
+    Value: dev
+
+![Environment variable](./AmplifyDeploymentEnvVariable.png)
+
+The **USER_BRANCH** variable defines the environment container that we will be using for the Amplify project. It has the same value that we have given to the parameter **EnvironmentName** during our SAM deployment in the back-end. 
+
+If you would like to use a different environment container, please make sure that both frontend's USER_BRANCH and backend's EnvironmentName have the same value.
+
+6 - Click Save and Deploy, and wait for deployment to complete in the Amplify console. This may take some time to complete.
 
 ## Logging in
 
 Cognito is used for user authentication. Users will need to input their email address and a password to create an account.
 After account creation, users will need to verify their account by inputting the 6-digit verification code that was sent to their provided email address before being able to log in to the system.
+
+AML (shibboleth) integration using Cognito has been added with instrictions to deploy [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md). The instructions in the following link should be followed after completing the deployment to enable the Shibboleth integration using One-login.
 
 ## Next Steps
 

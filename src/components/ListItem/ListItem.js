@@ -68,7 +68,7 @@ export  function PreferenceListItem(props){
         <Collapse in={openListItem} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
                 {nestedItem.map(option =>
-                    <ListItem button className={classes.nested}>
+                    <ListItem button className={classes.nested} key={option.name}>
                         <SettingsPageCheckbox name={option.name} backendName={option.backendName}
                                               checked={option.checked} userPreference={option.userPreference}
                         category={option.category}/>

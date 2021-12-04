@@ -47,44 +47,22 @@ const eventsOptions=
         {name: 'Subject Departments', backendName:'subjectDepartments'},
         {name: 'University Services', backendName:'universityServices'}
     ]
-const mensSportsOptions=
-    [
-        {name: 'Baseball', backendName:'baseball'},
-        {name: 'Basketball', backendName:'basketball'},
-        {name: 'Crew', backendName:'crew'},
-        {name: 'Cross Country', backendName:'crossCountry'},
-        {name: 'Football', backendName:'football'},
-        {name: 'Golf', backendName:'golf'},
-        {name: 'Ice Hockey', backendName:'iceHockey'},
-        {name: 'Lacrosse', backendName:'lacrosse'},
-        {name: 'Skiing', backendName:'skiing'},
-        {name: 'Soccer', backendName:'soccer'},
-        {name: 'Squash', backendName:'squash'},
-        {name: 'Swimming', backendName:'swimming'},
-        {name: 'Tennis', backendName:'tennis'},
-        {name: 'Track And Field', backendName:'trackAndField'},
-        {name: 'Wrestling', backendName:'wrestling'},
 
-    ]
-
-const womensSportsOptions=
+const varsitySportsOptions=
     [
         {name: 'Basketball', backendName:'basketball'},
-        {name: 'Crew', backendName:'crew'},
         {name: 'Cross Country', backendName:'crossCountry'},
-        {name: 'Field Hocky', backendName:'fieldHockey'},
         {name: 'Golf', backendName:'golf'},
-        {name: 'Ice Hockey', backendName:'iceHockey'},
-        {name: 'Lacrosse', backendName:'lacrosse'},
-        {name: 'Skiing', backendName:'skiing'},
         {name: 'Soccer', backendName:'soccer'},
-        {name: 'Softball', backendName:'softball'},
-        {name: 'Squash', backendName:'squash'},
-        {name: 'Swimming', backendName:'swimming'},
-        {name: 'Tennis', backendName:'tennis'},
         {name: 'Track And Field', backendName:'trackAndField'},
         {name: 'Volleyball', backendName:'volleyball'},
-
     ]
 
-export {cultureOptions,newsBlogsClubsOptions,academicOptions,eventsOptions,mensSportsOptions,womensSportsOptions}
+const competitiveSportsOptions=
+    [
+        {name: `Men's Rugby`, backendName:'rugby'},
+        {name: `Women's Softball`, backendName:'softball'},
+        {name: 'Ultimate', backendName:'ultimate'}
+    ]
+
+export {cultureOptions,newsBlogsClubsOptions,academicOptions,eventsOptions,varsitySportsOptions,competitiveSportsOptions}

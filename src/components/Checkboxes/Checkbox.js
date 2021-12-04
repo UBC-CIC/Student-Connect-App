@@ -1,16 +1,9 @@
 import React from 'react';
-import {makeStyles, withStyles} from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from "@material-ui/core/Typography";
-
-const useStyles = makeStyles((theme) => ({
-    label:{
-        fontSize:"14"
-    }
-
-}));
 
 const BlueCheckbox = withStyles({
     root: {
@@ -26,11 +19,10 @@ export function SurveyCheckbox(props) {
     const {label, backendName,category,userPreference} = props
 
     function checkSport() {
-        if(category==="mensSportsList" || category==="womensSportsList"){
+        if(category==="varsitySportsList" || category==="competitiveSportsList"){
             return userPreference.sportsPreference[category][backendName]
         }
         return userPreference[category][backendName]
-
     }
     const [state, setState] = React.useState({
         checked: checkSport(),
@@ -56,7 +48,7 @@ export function SurveyCheckbox(props) {
 export function SettingsPageCheckbox(props) {
     const {name, category, backendName,userPreference} = props
     function checkSport() {
-        if(category==="mensSportsList" || category==="womensSportsList"){
+        if(category==="varsitySportsList" || category==="competitiveSportsList"){
             return userPreference.sportsPreference[category][backendName]
         }
         return userPreference[category][backendName]
@@ -69,11 +61,8 @@ export function SettingsPageCheckbox(props) {
 
     const handleChange = (event) => {
         setState({ checked: event.target.checked })
-        if(category==='mensSportsList'){
-            userPreference.sportsPreference.mensSportsList[backendName]=event.target.checked
-
-        }else if(category==='womensSportsList'){
-            userPreference.sportsPreference.womensSportsList[backendName]=event.target.checked
+        if(category==="varsitySportsList" || category==="competitiveSportsList"){
+            userPreference.sportsPreference[category][backendName]=event.target.checked
         }else{
             userPreference[category][backendName]=event.target.checked
         }

@@ -3,23 +3,43 @@ import React, {useEffect, useState} from "react";
 import Carousel from "react-material-ui-carousel";
 import {connect} from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+
+import { Link } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
+    divider: {
+        marginTop: "30px",
+        marginBottom: "30px",
+    },
+    contentLink: {
+    borderBottom: "1px solid"
+    }
+}));
 
 function ClubsCarousel(props){
     const {clubs}=props
+    const classes = useStyles();
     const [clubLength,setClubLength]= useState(clubs.length)
     useEffect(()=>{
         setClubLength(clubs.length)
     })
     return (
         <div>
-            <Carousel animation={'slide'} autoPlay={false} >
-                {clubs.map( (item, i) =><ClubsItem key={i} item={item}/>)}
-            </Carousel>
-            {clubLength===0&&
-            <Typography variant={"h6"}>
-                Sorry, there are currently no clubs that match your preference. Please make sure your preferences are up to date.
-            </Typography>}
-
+            { clubLength===0 ? (
+                <div>
+                    <Typography variant={"h6"} className={classes.divider}>
+                        Sorry, there are currently no clubs that match your preferences. 
+                        Please make sure your preferences are up to date.
+                        <br/>
+                        In the meanwhile, you can <Link className={classes.contentLink} to='/clubs'>check out clubs here</Link>.
+                    </Typography>
+                </div>
+            ) : (
+                <Carousel animation={'slide'} autoPlay={false} >
+                    {clubs.map( (item, i) =><ClubsItem key={i} item={item}/>)}
+                </Carousel>
+            )}
         </div>
 
     )

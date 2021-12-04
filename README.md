@@ -23,6 +23,7 @@ from using the interests students marked as their subscribed category tags.
 | [Application Screenshots](#application-screenshots)         |    Check out the application's user interface. |
 | [Stack Details](#stack-details)         |    Learn more about each stack of the application |
 | [Deployment](#deployment)         |    Learn how to deploy this project yourself. |
+| [Changelog](#changelog)      |     Change log.     |
 | [Credits](#credits)         |    Meet the team behind this |
 | [License](#license)      |     License details.     |
 
@@ -55,8 +56,7 @@ To deploy this solution into your AWS Account please follow our [Deployment Guid
 
 
 ## Changelog
-- [X] Phase 1 Simple data aggregation and content-tag based recommendation
-- [ ] Phase 2 Content recommendation based on user data
+- [Changelog](./docs/Changelog.md)
 
 ## Credits
 This prototype was architected and developed by Edward Chen and Neelim Novo, with guidance from the [UBC CIC](https://cic.ubc.ca/)

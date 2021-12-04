@@ -63,7 +63,6 @@ function SignIn(props) {
                                    title={"Student App"} darkMode={true}
                                    disableSignUp={false}
                             />
-
                         </div>
 
                     )

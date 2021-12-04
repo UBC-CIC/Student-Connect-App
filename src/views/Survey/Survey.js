@@ -198,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email/Gender'];
+    return ['Welcome','News, Blogs, Clubs', 'Academic', 'Events', 'Sports', 'Email, Gender, Cultures'];
 }
 
 const userPreference ={
@@ -227,39 +227,18 @@ const userPreference ={
         universityServices: false,
     },
     sportsPreference : {
-        mensSportsList: {
-            baseball: false,
+        varsitySportsList: {
             basketball: false,
-            crew: false,
             crossCountry: false,
-            football: false,
             golf: false,
-            iceHockey: false,
-            lacrosse: false,
-            skiing: false,
             soccer: false,
-            squash: false,
-            swimming: false,
-            tennis: false,
             trackAndField: false,
-            wrestling: false,
+            volleyball: false
         },
-        womensSportsList: {
-            basketball: false,
-            crew: false,
-            crossCountry: false,
-            fieldHockey: false,
-            golf: false,
-            iceHockey: false,
-            lacrosse: false,
-            skiing: false,
-            soccer: false,
+        competitiveSportsList: {
+            rugby: false,
             softball: false,
-            squash: false,
-            swimming: false,
-            tennis: false,
-            trackAndField: false,
-            volleyball: false,
+            ultimate: false,
         }
     },
     newsBlogsClubsPreference: {
@@ -291,11 +270,10 @@ const userPreference ={
     const [gender, setGender] = React.useState('');
      const [cisOrTrans, setCisOrTrans] = React.useState('');
      const handleChange=(param)=> {
-        if(param.category==="mensSportsList" || param.category==="womensSportsList"){
+        if(param.category==="varsitySportsList" || param.category==="competitiveSportsList"){
             userPreference.sportsPreference[param.category][param.backendName]=param.checked
         }else{
             userPreference[param.category][param.backendName]=param.checked
-
         }
     }
     const handleSwitchChange=(param)=>{
@@ -323,7 +301,9 @@ const userPreference ={
                 return <Sports handleChange={handleChange} userPreference={userPreference}/>
             case 5:
                 return <Email handleChange={handleChange} handleSwitchChange={handleSwitchChange} userPreference={userPreference}
-                              handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}/>
+                              handleGenderChange={handleGenderChange} handleCisOrTransChange={handleCisOrTransChange}
+                              handleBeginning={handleBeginning}
+                              />
 
             default:
                 return <div>error</div>
@@ -338,6 +318,10 @@ const userPreference ={
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
+    const handleBeginning = () => {
+        setActiveStep(0);
+    }
+
     const handleSave = () => {
         createUserData(user)
         createUserPreferenceAction(userPreference)
@@ -346,20 +330,27 @@ const userPreference ={
 
 
      function createUserData(user){
-         let userData ={
+         let userData = process.env.REACT_APP_ENABLE_FEDERATE_LOGIN === 'true' ? 
+         {
+            id: user.attributes['custom:SP-PUID'],
+            SPUID: user.attributes['custom:SP-PUID'],
+            displayName: user.attributes['custom:preferredGivenName'],
+            yearLevel: user.attributes['custom:studentYearLevel'],
+            email:user.attributes['custom:studentLearnerEmail'],
+            primarySpecialization: user.attributes['custom:specPrimPrgmType'],
+            campus: user.attributes['custom:locale'],
+            faculty:user.attributes['custom:adwardingFaculty'],
+            gender: gender,
+            cisOrTrans:cisOrTrans
+         }
+         :
+         {
              id: user.attributes.email,
-             // id: user.attributes['custom:SP-PUID'],
-             // SPUID: user.attributes['custom:SP-PUID'],
-             // displayName: user.attributes['custom:preferredGivenName'],
-             // yearLevel: user.attributes['custom:studentYearLevel'],
-             // email:user.attributes['custom:studentLearnerEmail'],
-             // primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-             // campus: user.attributes['custom:locale'],
-             // faculty:user.attributes['custom:adwardingFaculty'],
              gender: gender,
              cisOrTrans:cisOrTrans
-
          }
+
+         console.log("userdata", userData)
 
          createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {

@@ -21,39 +21,18 @@ export const createUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        mensSportsList {
-          baseball
+        varsitySportsList {
           basketball
-          crew
           crossCountry
-          football
           golf
-          iceHockey
-          lacrosse
-          skiing
           soccer
-          squash
-          swimming
-          tennis
-          trackAndField
-          wrestling
-        }
-        womensSportsList {
-          basketball
-          crew
-          crossCountry
-          fieldHockey
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          softball
-          squash
-          swimming
-          tennis
           trackAndField
           volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
         }
       }
       academicPreference {
@@ -113,39 +92,18 @@ export const updateUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        mensSportsList {
-          baseball
+        varsitySportsList {
           basketball
-          crew
           crossCountry
-          football
           golf
-          iceHockey
-          lacrosse
-          skiing
           soccer
-          squash
-          swimming
-          tennis
-          trackAndField
-          wrestling
-        }
-        womensSportsList {
-          basketball
-          crew
-          crossCountry
-          fieldHockey
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          softball
-          squash
-          swimming
-          tennis
           trackAndField
           volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
         }
       }
       academicPreference {
@@ -205,39 +163,18 @@ export const deleteUserPreference = /* GraphQL */ `
         sports
       }
       sportsPreference {
-        mensSportsList {
-          baseball
+        varsitySportsList {
           basketball
-          crew
           crossCountry
-          football
           golf
-          iceHockey
-          lacrosse
-          skiing
           soccer
-          squash
-          swimming
-          tennis
-          trackAndField
-          wrestling
-        }
-        womensSportsList {
-          basketball
-          crew
-          crossCountry
-          fieldHockey
-          golf
-          iceHockey
-          lacrosse
-          skiing
-          soccer
-          softball
-          squash
-          swimming
-          tennis
           trackAndField
           volleyball
+        }
+        competitiveSportsList {
+          rugby
+          softball
+          ultimate
         }
       }
       academicPreference {

@@ -421,7 +421,7 @@ function Login(props) {
                     </video>
                     : null}
                 <Grid container item xs={12} md={6} className={`page-info ${classes.centerBox}`}>
-                    <Grid container item justify={"space-evenly"} alignItems={"center"} /*style={{height: "60vh"}}*/>
+                    <Grid container item justifyContent={"space-evenly"} alignItems={"center"} /*style={{height: "60vh"}}*/>
                         <Grid xs item className={`typewriter ${classes.marginHorizontal}`}>
                             <p className={`${classes.textAlignCenter} ${(animateTitle) ?
                                 (darkMode) ? "line anim-typewriter" : "line anim-typewriter-light lightMode"
@@ -798,13 +798,13 @@ const SubmitButtonWithLoading = (props) => {
 
 const BackAndSubmitButtons = ({backAction, ...others}) => {
     return (
-        <Grid container item xs={12} justify="space-between" spacing={1}>
+        <Grid container item xs={12} justifyContent="space-between" spacing={1}>
             <Grid container item xs>
                 <DefaultButton variant="contained" startIcon={<ArrowBackIcon />} onClick={backAction}>
                     Back
                 </DefaultButton>
             </Grid>
-            <Grid container item md={7} justify={"flex-end"}>
+            <Grid container item md={7} justifyContent={"flex-end"}>
                 <SubmitButtonWithLoading {...others}/>
             </Grid>
         </Grid>

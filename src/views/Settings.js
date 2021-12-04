@@ -1,8 +1,13 @@
 import {Card, Container, Divider, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/core/styles";
-import React from "react";
+import React, { useState } from 'react';
+
 import UserPreferenceModal from "../components/Modals/UserPreferenceModal";
-import {connect} from "react-redux";
+import UserInfoModal from "../components/Modals/UserInfoModal";
+import InfoDisclosureModal from "../components/Modals/InfoDisclosureModal";
+import { openModal } from "../actions/disclosureModalActions";
+
+import {connect, useDispatch} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -45,27 +50,41 @@ const useStyles = makeStyles((theme) => ({
     },
     content:{
         fontSize:"16px"
-    }
-
-
+    },
+    contentLink:{
+        fontSize:"16px",
+        color: "blue",
+        fontWeight: 500, 
+        cursor: "pointer",
+        borderBottom: "1px solid blue"
+    },
 }));
 
 function Settings(props){
     const classes = useStyles();
+    const dispatch = useDispatch();
     const{userPreference} = props
 
-
+    const handleOpen = () => {
+        dispatch(openModal());
+    };
 
     return(
 
         <div>
             <Container maxWidth={'xl'} >
-                <Typography align={'left'} variant="h4" className={classes.title}>
-                    Settings
-                </Typography>
-                <Typography align={'left'} variant="h5" >
-                    Change your preferences here
-                </Typography>
+                <Grid container spacing={2} direction={"column"}>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h4" className={classes.title}>
+                            Settings
+                        </Typography>
+                    </Grid>
+                    <Grid item> 
+                        <Typography align={'left'} variant="h5" >
+                            Change your preferences here
+                        </Typography>
+                    </Grid>
+                </Grid>
 
                 <Divider className={classes.divider}/>
             </Container>
@@ -77,14 +96,54 @@ function Settings(props){
                                 General
                             </Typography>
                     </Grid>
-                    <Grid item xs={8}>
-                        <Typography align={'left'} variant={"h5"} className={classes.content}>
-                            Modify my preference settings to get the best out of the recommendation
-                        </Typography>
-
+                    <Grid container item direction="row" spacing={4} alignItems="center">
+                        <Grid item>
+                            <Grid container item direction="row" spacing={1}>
+                                <Grid item>
+                                    <Typography className={classes.content}>
+                                        Modify your preference settings to get the best out of the recommendations.
+                                    </Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography className={classes.contentLink} onClick={handleOpen}>
+                                        How does it work?
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <UserPreferenceModal userPreference={userPreference}/>
+                        </Grid>
+                        <Grid item>
+                            <InfoDisclosureModal/>
+                        </Grid>
                     </Grid>
-                    <Grid item xs={4}>
-                        <UserPreferenceModal userPreference={userPreference}/>
+
+                </Grid>
+
+            </Card>
+
+
+            <Card className={classes.card}>
+                <Grid container spacing={3} className={classes.root} >
+                    <Grid item xs={12}>
+                            <Typography align={'left'} variant={"h5"}>
+                                Profile
+                            </Typography>
+                    </Grid>
+                    <Grid container item direction="row" spacing={4} alignItems="center">
+                        <Grid item>
+                            <Grid container item direction="row" spacing={1}>
+                                <Grid item>
+                                    <Typography className={classes.content}>
+                                        Modify your personal profile. 
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <UserInfoModal/>
+                        </Grid>
                     </Grid>
 
                 </Grid>
@@ -104,4 +163,4 @@ const mapStateToProps = (state) => {
     };
 };
 
-export default connect(mapStateToProps)(Settings)
+export default connect(mapStateToProps, null)(Settings)

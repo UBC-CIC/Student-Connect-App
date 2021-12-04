@@ -11,6 +11,9 @@ const StyledButton = withStyles({
         padding: '15px',
         marginRight:'5px',
         marginTop:'10px',
+        '&:hover': {
+            color: "#02a7de",
+        }
     },
     label: {
         textTransform: 'capitalize',
@@ -23,10 +26,10 @@ export function Tag(props){
     const {categories} = props
     return(
             categories ?
-                    <div>
-                    {categories.map(category =>
-                        <StyledButton>{category}</StyledButton>)}
-                    </div>
+                    <>
+                    {categories.map((category, index) =>
+                        <StyledButton key={`tag-${index}`}>{category}</StyledButton>)}
+                    </>
                 : null
 
     )

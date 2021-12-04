@@ -72,7 +72,7 @@ export default function Footer() {
             {/* Footer */}
             <Container maxWidth="xl" component="footer" className={classes.footer}>
                 <Container maxWidth="md">
-                    <Grid container spacing={4} justify="space-evenly">
+                    <Grid container spacing={4} justifyContent="space-evenly">
                         {footers.map((footer) => (
                             <Grid item md={4} xs={2} key={footer.title}>
                                 <Typography variant="body1"  gutterBottom align={'center'}  >

@@ -60,9 +60,9 @@ function ClubsTabs(props) {
     const sortedCurrentClubs = currentClubs.sort((a, b) => a.title.localeCompare(b.title))
 
 
-    const clubsList=sortedCurrentClubs.map((item)=>{
+    const clubsList=sortedCurrentClubs.map((item, index)=>{
         return(
-            <Grid item xs={12}>
+            <Grid item xs={12} key={`club-${index}`}>
                 <ClubCard title={item.title} categories={item.categories}
                           description={item.description}
                           logo={item.imageLink }
@@ -98,7 +98,7 @@ function ClubsTabs(props) {
                         <Grid item>
 
                         {clubCategories.map((option,index)=>
-                            <Button className={classes.button} label={option} onClick={()=>getCategories(option)} >
+                            <Button className={classes.button} label={option} onClick={()=>getCategories(option)} key={`club-${index}`}>
                                 {option}
                             </Button>
                         )}

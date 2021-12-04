@@ -27,8 +27,8 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
+                <Box py={3}>
+                    <div>{children}</div>
                 </Box>
             )}
         </div>
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     },
     tabBar:{
         background: '#0055B7',
-
+        margin: "30px 0"
     },
     indicator:{
         backgroundColor:"#6EC4E8"
@@ -70,7 +70,6 @@ const useStyles = makeStyles((theme) => ({
         float:'left',
         paddingLeft:"20px",
         paddingRight:"20px",
-        marginTop: '20px',
         fontSize:"14px"
 
 
@@ -94,9 +93,9 @@ export default function NewsBlogsTab(props) {
     };
 
     const {allNews,allBlogs,allSportsNews} = props
-    const newsList= allNews.map((item)=>{
+    const newsList= allNews.map((item, index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`news-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -112,9 +111,9 @@ export default function NewsBlogsTab(props) {
         setValue(newValue);
     };
 
-    const blogList=allBlogs.map((item)=>{
+    const blogList=allBlogs.map((item, index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`blog-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -129,9 +128,9 @@ export default function NewsBlogsTab(props) {
 
     })
 
-    const sportsNewsList=allSportsNews.map((item)=>{
+    const sportsNewsList=allSportsNews.map((item,index)=>{
         return(
-            <Grid item xs={12} sm={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} className={classes.grid} key={`sport-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -195,28 +194,27 @@ export default function NewsBlogsTab(props) {
 
     return (
         <div className={classes.root}>
-<Container>
-
+        <Container>
             <AppBar position="static" className={classes.tabBar}>
                 <Tabs
                     value={value}
                     onChange={handleChange}
                     variant="fullWidth"
                     indicatorColor="secondary"
-                    textColor="white"
                     aria-label="icon label tabs example"
                     classes={{
                         indicator: classes.indicator
-                    }}>
-                    >
+                    }}
+                >
                     <Tab icon={<RssFeedIcon/>}label="News" {...a11yProps(0)}  />
                     <Tab icon={<SportsBasketballIcon/>}label="Sports News" {...a11yProps(1)} />
                     <Tab icon={<BookIcon/>}label="Student Life Blogs" {...a11yProps(2)} />
 
                 </Tabs>
             </AppBar>
-            {(value===0||value===1||value===2) ?
-                <div>
+
+            {(value===0||value===1||value===2) &&
+                <Grid container>
                 <Button startIcon={<SortIcon />} className={classes.button} aria-haspopup="true" onClick={handleClick} >
                     Sort By
                 </Button>
@@ -231,10 +229,11 @@ export default function NewsBlogsTab(props) {
                     <MenuItem className={classes.sortDropDown} onClick={() => sortNewToOld()}>Most recent</MenuItem>
                     <MenuItem className={classes.sortDropDown} onClick={() => sortOldToNew()}>Least Recent</MenuItem>
                 </Menu>
-                </div>
-                : null}
-</Container>
+                </Grid>
+            }
+        </Container>
 
+        <Container>
             <TabPanel value={value} index={0}>
                 <Grid container spacing={3} alignItems="stretch">
                     {newsList}
@@ -251,7 +250,7 @@ export default function NewsBlogsTab(props) {
                     {blogList}
                 </Grid>
             </TabPanel>
-
+        </Container>
 
         </div>
     );
