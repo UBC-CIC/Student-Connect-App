@@ -6,6 +6,8 @@ Through a hostedUI provided by Cognito, the app can handle all the
 sign-in,sign-out requests and as well as getting all the attributes associated to the user from the external idp
 
 <hr>
+The following is a reference guide to implement a Cognito integration with a SAML Identity provider for this example we used a OneLogin Developer Account.
+<hr>
 
 ## How to combine Cognito User pool with SAML Identity Provider
 We will be focusing on the following:
