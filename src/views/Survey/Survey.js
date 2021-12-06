@@ -333,13 +333,13 @@ const userPreference ={
          let userData = process.env.REACT_APP_ENABLE_FEDERATE_LOGIN === 'true' ? 
          {
             id: user.attributes['custom:SP-PUID'],
-            SPUID: user.attributes['custom:SP-PUID'],
-            displayName: user.attributes['custom:preferredGivenName'],
-            yearLevel: user.attributes['custom:studentYearLevel'],
-            email:user.attributes['custom:studentLearnerEmail'],
-            primarySpecialization: user.attributes['custom:specPrimPrgmType'],
-            campus: user.attributes['custom:locale'],
-            faculty:user.attributes['custom:adwardingFaculty'],
+            SPUID: user.attributes['custom:SP-PUID'] ? user.attributes['custom:SP-PUID'] : '',
+            displayName: user.attributes['custom:preferredGivenName'] ? user.attributes['custom:preferredGivenName'] : '',
+            yearLevel: user.attributes['custom:studentYearLevel'] ? user.attributes['custom:studentYearLevel'] : '',
+            email:user.attributes['custom:studentLearnerEmail'] ? user.attributes['custom:studentLearnerEmail'] : '',
+            primarySpecialization: user.attributes['custom:specPrimPrgmType'] ? user.attributes['custom:specPrimPrgmType'] : '',
+            campus: user.attributes['custom:locale'] ? user.attributes['custom:locale'] : '',
+            faculty:user.attributes['custom:adwardingFaculty'] ? user.attributes['custom:adwardingFaculty'] : '',
             gender: gender,
             cisOrTrans:cisOrTrans
          }
@@ -349,8 +349,6 @@ const userPreference ={
              gender: gender,
              cisOrTrans:cisOrTrans
          }
-
-         console.log("userdata", userData)
 
          createUserDataAction(userData)
          API.graphql(graphqlOperation(createSavedItemsTable, {input: {id:UID,savedItems:[]}})).then((response) => {
