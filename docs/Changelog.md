@@ -3,9 +3,9 @@
 ## V1.5.0 - 2021-11-XX
 ### Back-end Changes
 - CWL integration:
-    - SAML (shibboleth) integration using Cognito has been added. The instructions to deploy can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/phase2/docs/AuthenticationArchitecture.md).
+    - SAML (shibboleth) integration using Cognito has been added. The instructions to deploy can be found [here](AuthenticationArchitecture.md).
 - DynamoDB Streams:
-    - A new method to add data has been implemented using DynamoDB Streams. The details can be found [here](https://github.com/UBC-CIC/Student-Connect-App/blob/dynamodbstreams-aggregation/docs/StreamsAggregationWorkflow.md).
+    - A new method to add data has been implemented using DynamoDB Streams. The details can be found [here](StreamsAggregationWorkflow.md).
 <p></p>
 
 ### User Interface/Front-end Changes
