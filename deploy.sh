@@ -14,9 +14,10 @@ cd functions
 \cp common_lib.py get_es_documents
 \cp common_lib.py get_events_data
 \cp common_lib.py get_news_data
+\cp common_lib.py document_stream_handler
 
 cd ..
 
 sam build
 
-sam deploy --profile ${awsProfile} --region ${awsRegion} --stack-name ${stackName} --guided
+sam deploy 

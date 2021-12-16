@@ -41,10 +41,10 @@ Parameters:
 #    Type: String
 #    Default: ESHashTable
 #    Description: DynamoDB Table name that stores the hashes for all documents currently in Elasticsearch
-#  newsExpiryDays:
-#    Type: String
-#    Default: 60
-#    Description: Number of days after which a news article is automatically deleted from DynamoDB
+  newsExpiryDays:
+    Type: String
+    Default: 60
+    Description: Number of days after which a news article is automatically deleted from DynamoDB
   blogExpiryDays:
     Type: String
     Default: 120
@@ -440,7 +440,10 @@ Resources:
                 Resource:
                   - !GetAtt getEventsData.Arn
                   - !GetAtt getBlogData.Arn
-
+                  - !GetAtt getClubData.Arn
+                  - !GetAtt getNewsData.Arn
+                  - !GetAtt getAthleticsNewsData.Arn
+                  
   EventsUpdateEvent:
     Type: "AWS::Events::Rule"
     DependsOn:
@@ -464,21 +467,28 @@ Resources:
       Principal: "events.amazonaws.com"
       SourceArn: !GetAtt EventsUpdateEvent.Arn
 
-#  NewsUpdateEvent:
-#    Type: "AWS::Events::Rule"
-#    DependsOn:
-#      - ESDomain
-#    Properties:
-#      Description: Triggers the State machine to retrieve and save News data, every 7 days
-#      Name: NewsEventRule
-#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-#      ScheduleExpression: rate(1440 minutes)
-#      State: "ENABLED"
-#      Targets:
-#        - Arn: !GetAtt DataGrabberStateMachine.Arn
-#          Id: NewsTarget
-#          Input: '{"dataType": "News"}'
-#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+  NewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save News data, every 7 days
+      Name: NewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt getNewsData.Arn
+          Id: NewsTarget
+          Input: '{"dataType": "News"}'
+
+  PermissionForNewsToInvokeNewsLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref getNewsData
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt NewsUpdateEvent.Arn
 
   BlogsUpdateEvent:
     Type: "AWS::Events::Rule"
@@ -503,37 +513,51 @@ Resources:
       Principal: "events.amazonaws.com"
       SourceArn: !GetAtt BlogsUpdateEvent.Arn
 
-#  AthleticsNewsUpdateEvent:
-#    Type: "AWS::Events::Rule"
-#    DependsOn:
-#      - ESDomain
-#    Properties:
-#      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
-#      Name: AthleticsNewsEventRule
-#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-#      ScheduleExpression: rate(1440 minutes)
-#      State: "ENABLED"
-#      Targets:
-#        - Arn: !GetAtt DataGrabberStateMachine.Arn
-#          Id: AthleticsNewsTarget
-#          Input: '{"dataType": "AthleticsNews"}'
-#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+  AthleticsNewsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
+      Name: AthleticsNewsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(1440 minutes)
+      State: "ENABLED"
+      Targets:
+        - Arn: !GetAtt getAthleticsNewsData.Arn
+          Id: AthleticsNewsTarget
+          Input: '{"dataType": "AthleticsNews"}'
 
-#  ClubsUpdateEvent:
-#    Type: "AWS::Events::Rule"
-#    DependsOn:
-#      - ESDomain
-#    Properties:
-#      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
-#      Name: ClubsEventRule
-#      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
-#      ScheduleExpression: rate(525600 minutes)
-#      State: "DISABLED"
-#      Targets:
-#        - Arn: !GetAtt DataGrabberStateMachine.Arn
-#          Id: ClubsTarget
-#          Input: '{"dataType": "Clubs"}'
-#          RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+  PermissionForEventsToInvokeAthleticsNewsLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref getAthleticsNewsData
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt AthleticsNewsUpdateEvent.Arn
+
+  ClubsUpdateEvent:
+    Type: "AWS::Events::Rule"
+    DependsOn:
+      - ESDomain
+    Properties:
+      Description: Triggers the State machine to retrieve and save Clubs data, every 365 days
+      Name: ClubsEventRule
+      RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
+      ScheduleExpression: rate(525600 minutes)
+      State: "DISABLED"
+      Targets:
+        - Arn: !GetAtt getClubData.Arn
+          Id: ClubsTarget
+          Input: '{"dataType": "Clubs"}'
+  
+  PermissionForEventsToInvokeClubsLambda:
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref getClubData
+      Action: "lambda:InvokeFunction"
+      Principal: "events.amazonaws.com"
+      SourceArn: !GetAtt ClubsUpdateEvent.Arn
 
   getEventsData:
     Type: 'AWS::Serverless::Function'
@@ -551,35 +575,35 @@ Resources:
           DOCUMENTS_TABLE_NAME: !Ref documentsTable
           EVENTS_EXPIRY_OFFSET: !Ref eventsExpiryDays
 
-#  getNewsData:
-#    Type: 'AWS::Serverless::Function'
-#    Properties:
-#      Handler: get_news_data.lambda_handler
-#      Description: >
-#        Function that grabs data from the UBCO News page
-#      MemorySize: 256
-#      Timeout: 60
-#      CodeUri: ./functions/get_news_data
-#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
-#      Environment:
-#        Variables:
-#          NEWS_TABLE_NAME: !Ref newsTable
-#          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+  getNewsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: get_news_data.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO News page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions/get_news_data
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          NEWS_TABLE_NAME: !Ref documentsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
-#  getAthleticsNewsData:
-#    Type: 'AWS::Serverless::Function'
-#    Properties:
-#      Handler: get_athletics_news_data.lambda_handler
-#      Description: >
-#        Function that grabs data from the UBCO News page
-#      MemorySize: 256
-#      Timeout: 60
-#      CodeUri: ./functions/get_athletics_news_data
-#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
-#      Environment:
-#        Variables:
-#          ATHLETICS_NEWS_TABLE_NAME: !Ref athleticsNewsTable
-#          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
+  getAthleticsNewsData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: get_athletics_news_data.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO News page
+      MemorySize: 256
+      Timeout: 60
+      CodeUri: ./functions/get_athletics_news_data
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          ATHLETICS_NEWS_TABLE_NAME: !Ref documentsTable
+          DOCUMENT_EXPIRY_DAYS: !Ref newsExpiryDays
 
   getBlogData:
     Type: 'AWS::Serverless::Function'
@@ -622,19 +646,19 @@ Resources:
       StartingPosition: "LATEST"
       Enabled: True
 
-#  getClubData:
-#    Type: 'AWS::Serverless::Function'
-#    Properties:
-#      Handler: get_club_data.lambda_handler
-#      Description: >
-#        Function that grabs data from the UBCO Club directory
-#      MemorySize: 256
-#      Timeout: 300
-#      CodeUri: ./functions/get_club_data
-#      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
-#      Environment:
-#        Variables:
-#          CLUBS_TABLE_NAME: !Ref clubsTable
+  getClubData:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: get_club_data.lambda_handler
+      Description: >
+        Function that grabs data from the UBCO Club directory
+      MemorySize: 256
+      Timeout: 300
+      CodeUri: ./functions/get_club_data
+      Role: !GetAtt DataGrabberLambdaIAMRole.Arn
+      Environment:
+        Variables:
+          CLUBS_TABLE_NAME: !Ref documentsTable
 
 #  esHasher:
 #    Type: "AWS::Serverless::Function"
@@ -729,19 +753,19 @@ Resources:
       Type: String
       Value: "2021-05-01 6:07:08"
 
-#  newsQueryTime:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "NewsQueryTime"
-#      Type: String
-#      Value: "2021-05-01 06:07:08"
+  newsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "NewsQueryTime"
+      Type: String
+      Value: "2021-05-01 06:07:08"
 
-#  athleticsNewsQueryTime:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "AthleticsNewsQueryTime"
-#      Type: String
-#      Value: "2020-01-01 06:07:08"
+  athleticsNewsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: "AthleticsNewsQueryTime"
+      Type: String
+      Value: "2020-01-01 06:07:08"
 
   blogsQueryTime:
     Type: AWS::SSM::Parameter
