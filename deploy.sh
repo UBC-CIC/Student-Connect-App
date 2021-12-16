@@ -20,4 +20,4 @@ cd ..
 
 sam build
 
-sam deploy 
+sam deploy --profile ${awsProfile} --region ${awsRegion} --stack-name ${stackName} --guided
