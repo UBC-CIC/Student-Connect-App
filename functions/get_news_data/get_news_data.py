@@ -35,7 +35,7 @@ def news_parser(news_json: dict):
     :return: JSON formatted item for DynamoDB storage
     """
     parsed_news = {
-        "documentId": str(news_json.get("post-id", "Null")),
+        "documentId": str(news_json.get("id", "Null").partition("=")[2]),
         "documentType": "news",
         "title": news_json.get("title", "Null"),
         "link": news_json.get("id", "Null"),
