@@ -157,7 +157,7 @@ def lambda_handler(event, context):
     table = DYNAMODB_RESOURCE.Table(CLUBS_TABLE)
     for club in clubs_json:
         club["documentType"] = "clubs"
-        club["clubId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
+        club["documentId"] = hashlib.md5(str(club["title"]).encode("utf-8")).hexdigest()
         table.put_item(Item=club)
 
     """
