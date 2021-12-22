@@ -78,7 +78,7 @@ def news_parser(news_json):
     categories = get_sports_categories(news_json["id"])
     parsed_news = {
         "documentId": hashlib.md5(str(news_json.get("id", "Null")).encode("utf-8")).hexdigest(),
-        "documentType": "AthleticsNews",
+        "documentType": "athleticsnews",
         "title": news_json.get("title", "Null"),
         "link": news_json.get("id", "Null"),
         "summary": news_json.get("summary", "Null"),
