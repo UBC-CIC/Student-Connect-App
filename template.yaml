@@ -752,6 +752,13 @@ Resources:
 #       Type: String
 #       Value: !GetAtt clubsDDBTable.Arn
 
+  documentsTableDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/documentsTableArn"
+      Type: String
+      Value: !GetAtt documentsDDBTable.Arn
+
   eventsQueryTime:
     Type: AWS::SSM::Parameter
     Properties:
