@@ -25,8 +25,8 @@ function TabPanel(props) {
             {...other}
         >
             {value === index && (
-                <Box p={3}>
-                    <Typography>{children}</Typography>
+                <Box py={3}>
+                    <div>{children}</div>
                 </Box>
             )}
         </div>
@@ -52,11 +52,11 @@ const useStyles = makeStyles((theme) => ({
     },
     tabBar:{
         background: '#0055B7',
-
+        margin: "30px 0"
     },
     indicator:{
-        backgroundColor:"#6EC4E8"
-
+        backgroundColor:"#6EC4E8",
+        height: "5px"
     },
     button:{
         backgroundColor:"#0055B7",
@@ -123,31 +123,26 @@ export default function HomeTab(props) {
 
     return (
         <div className={classes.root}>
-            <Container>
-                <Divider className={classes.divider}/>
+            <AppBar position="static" className={classes.tabBar}>
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    variant="fullWidth"
+                    indicatorColor="secondary"
+                    aria-label="icon label tabs example"
+                    classes={{
+                        indicator: classes.indicator
+                    }}
+                >
+                    <Tab icon={<HomeIcon/>}label="For you" {...a11yProps(0)}  />
+                    <Tab icon={<RssFeedIcon/>} label="Recent" {...a11yProps(1)} />
 
-                <AppBar position="static" className={classes.tabBar}>
-                    <Tabs
-                        value={value}
-                        onChange={handleChange}
-                        variant="fullWidth"
-                        indicatorColor="secondary"
-                        textColor="white"
-                        aria-label="icon label tabs example"
-                        classes={{
-                            indicator: classes.indicator
-                        }}>
-                        >
-                        <Tab icon={<HomeIcon/>}label="For you" {...a11yProps(0)}  />
-                        <Tab icon={<RssFeedIcon/>} label="Recent" {...a11yProps(1)} />
-
-                    </Tabs>
-                </AppBar>
-            </Container>
+                </Tabs>
+            </AppBar>
 
 
             <TabPanel value={value} index={0}>
-                <ForYouPanel events={events} sportsNews={sportsNews} news={news} blogs={blogs}/>
+                <ForYouPanel events={events} sportsNews={sportsNews} news={news} blogs={blogs} tabChange={handleChange}/>
             </TabPanel>
 
 

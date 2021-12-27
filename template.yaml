@@ -63,7 +63,14 @@ Parameters:
     Description: Name for the Amazon ES domain that will be created. Domain names must start
       with a lowercase letter and must be between 3 and 28 characters.
       Valid characters are a-z (lowercase only), 0-9.
-
+  ProjectName:
+    Type: String
+    Default: StudentEngagement
+    Description: A description to identify project
+  EnvironmentName:
+    Type: String
+    Default: dev
+    Description: A description to identify environment (e.g. dev, prod)
 Outputs:
   getESDocumentsLambdaFunction:
     Value: !Ref getESDocuments
@@ -699,52 +706,51 @@ Resources:
   getESDocumentsLambdaName:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "GetESDocumentsLambdaName"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/GetESDocumentsLambdaName"
       Type: String
       Value: !Ref getESDocuments
 
   getESDocumentsLambdaArn:
     Type: AWS::SSM::Parameter
     Properties:
-      Name: "GetESDocumentsLambdaArn"
+      Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/GetESDocumentsLambdaArn"
       Type: String
       Value: !GetAtt getESDocuments.Arn
 
-#  eventsDDBArn:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "EventsTableArn"
-#      Type: String
-#      Value: !GetAtt eventsDDBTable.Arn
+#   eventsDDBArn:
+#     Type: AWS::SSM::Parameter
+#     Properties:
+#       Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/EventsTableArn"
+#       Type: String
+#       Value: !GetAtt eventsDDBTable.Arn
 
-#  blogsDDBArn:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "BlogsTableArn"
-#      Type: String
-#      Value: !GetAtt blogsDDBTable.Arn
+#   blogsDDBArn:
+#     Type: AWS::SSM::Parameter
+#     Properties:
+#       Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/BlogsTableArn"
+#       Type: String
+#       Value: !GetAtt blogsDDBTable.Arn
 
-#  newsDDBArn:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "NewsTableArn"
-#      Type: String
-#      Value: !GetAtt newsDDBTable.Arn
+#   newsDDBArn:
+#     Type: AWS::SSM::Parameter
+#     Properties:
+#       Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/NewsTableArn"
+#       Type: String
+#       Value: !GetAtt newsDDBTable.Arn
 
-#  athleticsNewsDDBArn:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "AthleticsNewsTableArn"
-#      Type: String
-#      Value: !GetAtt athleticsNewsDDBTable.Arn
+#   athleticsNewsDDBArn:
+#     Type: AWS::SSM::Parameter
+#     Properties:
+#       Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/AthleticsNewsTableArn"
+#       Type: String
+#       Value: !GetAtt athleticsNewsDDBTable.Arn
 
-#  clubsDDBArn:
-#    Type: AWS::SSM::Parameter
-#    Properties:
-#      Name: "ClubsTableArn"
-#      Type: String
-#      Value: !GetAtt clubsDDBTable.Arn
-
+#   clubsDDBArn:
+#     Type: AWS::SSM::Parameter
+#     Properties:
+#       Name: !Sub "/amplify/${ProjectName}/${EnvironmentName}/ClubsTableArn"
+#       Type: String
+#       Value: !GetAtt clubsDDBTable.Arn
 
   eventsQueryTime:
     Type: AWS::SSM::Parameter
@@ -1073,6 +1079,24 @@ Resources:
           RequireSymbols: true
           RequireUppercase: true
       UserPoolName: !Sub '${AWS::StackName}-kibana-users'
+      ## Uncomment the schema below to enable SAML integration
+      # Schema:
+      #   - AttributeDataType: String
+      #     Name: SP-PUID
+      #   - AttributeDataType: String
+      #     Name: preferredGivenName
+      #   - AttributeDataType: Number
+      #     Name: studentYearLevel
+      #   - AttributeDataType: String
+      #     Name: studentLearnerEmail
+      #   - AttributeDataType: String
+      #     Name: specPrimPrgmType
+      #   - AttributeDataType: String
+      #     Name: locale
+      #   - AttributeDataType: String
+      #     Name: adwardingFaculty
+
+## Uncomment the WriteAttributes and CognitoUserPoolIdP to enable SAML integration
 
   CognitoApplicationClient:
     Type: "AWS::Cognito::UserPoolClient"
@@ -1081,6 +1105,32 @@ Resources:
       GenerateSecret: false
       RefreshTokenValidity: 2
       UserPoolId: !Ref CognitoUserPool
+      # WriteAttributes:
+      #   - email
+      #   - "custom:SP-PUID"
+      #   - "custom:preferredGivenName"
+      #   - "custom:studentYearLevel"
+      #   - "custom:studentLearnerEmail"
+      #   - "custom:specPrimPrgmType"
+      #   - "custom:locale"
+      #   - "custom:adwardingFaculty"
+
+  # CognitoUserPoolIdP:
+  #   Type: AWS::Cognito::UserPoolIdentityProvider 
+  #   Properties:
+  #     UserPoolId: !Ref CognitoUserPool
+  #     ProviderName: "CWL"
+  #     ProviderType: "SAML"
+  #     ProviderDetails:
+  #       MetadataURL: "issuer_URL" # replace with the issuer URL
+  #     AttributeMapping:
+  #       custom:preferredGivenName: "displayName"
+  #       custom:studentYearLevel: "yearLevel"
+  #       custom:studentLearnerEmail: "email"
+  #       custom:specPrimPrgmType: "primarySpecialization"
+  #       custom:locale: "campus"
+  #       custom:adwardingFaculty: "faculty"
+  #       custom:SP-PUID: "id"
 
   CognitoUserPoolDomain:
     Type: AWS::Cognito::UserPoolDomain

@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
     bigCard:{
         padding: theme.spacing(2),
         height: "100%",
+        width: "100%",
         margin:'none',
         boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
         '&:hover':{
@@ -40,8 +41,10 @@ const useStyles = makeStyles((theme) => ({
         color:"white",
         fontSize:'11px',
         borderRadius:"3",
-        marginRight:theme.spacing(1)
-
+        margin:theme.spacing(1,1,1,0),
+        '&:hover': {
+            color: "#0055B7",
+        }
     },
     title:{
         fontWeight:"500",
@@ -51,8 +54,6 @@ const useStyles = makeStyles((theme) => ({
     },
     alert:{
         fontSize:"14px"
-
-
     }
 
 }));

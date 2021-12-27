@@ -16,42 +16,23 @@ type cultureList{
   asian:Boolean
 }
 type sportsPreference {
-  mensSportsList: mensSportsList
-  womensSportsList: womensSportsList
+  varsitySportsList: varsitySportsList
+  competitiveSportsList: competitiveSportsList
 }
-type womensSportsList {
+
+type varsitySportsList {
   basketball: Boolean
-  crew: Boolean
   crossCountry: Boolean
-  fieldHockey: Boolean
   golf: Boolean
-  iceHockey: Boolean
-  lacrosse: Boolean
-  skiing: Boolean
   soccer: Boolean
-  softball: Boolean
-  squash: Boolean
-  swimming: Boolean
-  tennis: Boolean
   trackAndField: Boolean
   volleyball: Boolean
 }
-type mensSportsList {
-  baseball: Boolean
-  basketball: Boolean
-  crew: Boolean
-  crossCountry: Boolean
-  football: Boolean
-  golf: Boolean
-  iceHockey: Boolean
-  lacrosse: Boolean
-  skiing: Boolean
-  soccer: Boolean
-  squash: Boolean
-  swimming: Boolean
-  tennis: Boolean
-  trackAndField: Boolean
-  wrestling: Boolean
+
+type competitiveSportsList {
+  rugby: Boolean
+  softball: Boolean
+  ultimate: Boolean
 }
 type newsBlogsClubsList {
   academics: Boolean

@@ -29,7 +29,14 @@ export const fetchNewsSuccess = (payload) => {
 }
 export const fetchAllNews = () => {
     var params = {
-        TableName: "NewsTable"
+        TableName: "DocumentsTable",
+        KeyConditionExpression: "#dtype = :dname",
+        ExpressionAttributeNames:{
+            "#dtype": "documentType"
+        },
+        ExpressionAttributeValues: {
+            ":dname": "news"
+        }
     };
 
     return (dispatch) => {
@@ -99,7 +106,14 @@ export const fetchSportsNewsSuccess = (payload) => {
 }
 export const fetchAllSportsNews = () => {
     var params = {
-        TableName: "AthleticsNewsTable"
+        TableName: "DocumentsTable",
+        KeyConditionExpression: "#dtype = :dname",
+        ExpressionAttributeNames:{
+            "#dtype": "documentType"
+        },
+        ExpressionAttributeValues: {
+            ":dname": "athleticsnews"
+        }
     };
 
     return (dispatch) => {

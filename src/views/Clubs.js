@@ -1,6 +1,5 @@
 import {makeStyles} from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
-import {Divider} from "@material-ui/core";
+import {Container, Divider, Grid,} from "@material-ui/core";
 import ClubsTabs from "../components/Tabs/Tabs";
 import Typography from "@material-ui/core/Typography";
 import React from "react";
@@ -27,7 +26,6 @@ const useStyles = makeStyles((theme) => ({
     title:{
         fontWeight: 600,
         color:"#0055B7"
-
     }
 
 }));
@@ -37,13 +35,20 @@ function Clubs(props){
     return(
         <div>
             <Container maxWidth={'xl'} >
-                <Typography align={'left'} variant="h4" className={classes.title}>
-                    Clubs
-                </Typography>
-                <Typography align={'left'} variant="h5">
-                    Explore all the clubs here
-                </Typography>
+                <Grid container spacing={2} direction={"column"}>
+                        <Grid item>
+                            <Typography align={'left'} variant="h4" className={classes.title}>
+                                Clubs
+                            </Typography>
+                        </Grid>
+                        <Grid item> 
+                            <Typography align={'left'} variant="h5">
+                                Explore all clubs here
+                            </Typography>
+                        </Grid>
+                </Grid>
                 <Divider className={classes.divider}/>
+
 
             </Container>
             <Container>

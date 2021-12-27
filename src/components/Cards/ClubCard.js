@@ -13,7 +13,7 @@ function ClubCard (props){
     const useStyles = makeStyles((theme) => ({
         root: {
             flexGrow: 1,
-            marginTop:'20px',
+            margin: "30px 0px",
             boxShadow: "0 3px 5px 0 rgba(0,0,0,0.2)",
             '&:hover':{
                 boxShadow: "0 8px 16px 0 rgba(0,0,0,0.2)"
@@ -56,7 +56,7 @@ function ClubCard (props){
                     <Paper className={classes.paper}>
                         <Grid container spacing={1}>
                             <Grid item>
-                                <img className={classes.img} src={logo}/>
+                                <img className={classes.img} src={logo} alt={title}/>
                             </Grid>
                             <Grid item xs={12} sm container>
                                 <Grid item xs container direction="column" spacing={2}>
@@ -65,7 +65,7 @@ function ClubCard (props){
                                         <Tag categories = {categories}/>
                                     </Grid>
 
-                                    <Grid item alignItems={'left'}>
+                                    <Grid item>
                                         {email ?
                                             <IconButton href={`mailto:${email}`} target = "_blank">
                                                 <MailOutlineIcon className={classes.emailIcon}/>

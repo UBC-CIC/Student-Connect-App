@@ -23,7 +23,14 @@ export const fetchClubs = (categories) => {
 }
 export const fetchAllClubs = () => {
     var params = {
-        TableName: "ClubsTable"
+        TableName: "DocumentsTable",
+        KeyConditionExpression: "#dtype = :dname",
+        ExpressionAttributeNames:{
+            "#dtype": "documentType"
+        },
+        ExpressionAttributeValues: {
+            ":dname": "clubs"
+        }
     };
     return (dispatch) => {
         var dynamodb = new AWS.DynamoDB.DocumentClient()

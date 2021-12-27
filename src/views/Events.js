@@ -97,12 +97,12 @@ function Events(props){
 
     const classes = useStyles()
 
-    const eventsList= allEvents.map((item)=>{
+    const eventsList= allEvents.map((item, index)=>{
         if(item.fullImage==='false'){
             item.fullImage = defaultImg
         }
         return(
-            <Grid item xs={12} sm={6} md={4} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={4} className={classes.grid} key={`events-${index}`}>
                 <EventCard categories={item.categories}
                            startDate={item.startDate}
                            endDate={item.endDate}
@@ -119,14 +119,19 @@ function Events(props){
     })
     return(
         <Container>
-
-                <Typography align={'left'} variant="h4" className={classes.title}>
-                    Events
-                </Typography>
-                <Typography align={'left'} variant="h5">
-                    Explore all the events here
-                </Typography>
-                <Divider className={classes.divider}/>
+            <Grid container spacing={2} direction={"column"}>
+                <Grid item>
+                    <Typography align={'left'} variant="h4" className={classes.title}>
+                        Events
+                    </Typography>
+                </Grid>
+                <Grid item> 
+                    <Typography align={'left'} variant="h5">
+                        Explore all events here
+                    </Typography>
+                </Grid>
+            </Grid>
+            <Divider className={classes.divider}/>
 
     <Grid container spacing={1}>
                     <Grid item >

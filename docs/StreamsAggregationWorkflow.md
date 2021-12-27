@@ -36,4 +36,3 @@ function that operates on the stream records.
 This is the ideal data grabbing workflow that the app should aim to have, especially when all data source websites have
 been finished rebuilding. Once that is complete, the frontend can be slightly reconfigured to work fully with the
 frontend.
-

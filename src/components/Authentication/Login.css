@@ -74,7 +74,7 @@ video {
 @keyframes typewriter{
     from{width: 0;}
     /* Modify the width below to match the length of the application name*/
-    to{width: 11.5em;}
+    to{width: 5.8em;}
 }
 @keyframes blinkTextCursor{
     from{border-right-color: rgba(255,255,255,.75);}
@@ -92,7 +92,6 @@ video {
 .login-box {
     box-shadow: 0px 3px 10px -6px black;
     max-width: 600px;
-    padding: 20px 40px;
     background-color: whitesmoke;
 }
 

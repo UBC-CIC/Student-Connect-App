@@ -1,6 +1,6 @@
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import {Divider} from "@material-ui/core";
+import {Divider, withStyles} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import React from "react";
 import {EventCard} from "../../components/Cards/EventCard";
@@ -47,14 +47,9 @@ const useStyles = makeStyles((theme) => ({
         paddingLeft: theme.spacing(10),
 
     },
-    recommandationContainer: {
-        // backgroundColor: '#0055B7',
-        // borderRadius: '25px',
-    },
     divider:{
-        marginTop:'30px',
+        marginTop:'42px', // 30+12
         marginBottom:'30px',
-
     },
     forYouTitle:{
         fontWeight: 600,
@@ -68,19 +63,22 @@ const useStyles = makeStyles((theme) => ({
     grid:{
         display: 'flex'
     }
-
-
 }));
 
+const TitleContainer = withStyles({
+    root: {
+        marginBottom: "30px"
+    }
+})(Container);
 export default function RecentPanel(props){
     const {allNews,allEvents,allBlogs} = props
     const classes = useStyles();
 
 
 
-    const recentNewsList=allNews.slice(0, 6).map((item) => {
+    const recentNewsList=allNews.slice(0, 6).map((item, index) => {
         return(
-            <Grid item xs={12} sm={6} md={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={6} className={classes.grid} key={`recent-news-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -91,10 +89,10 @@ export default function RecentPanel(props){
             </Grid>
         )
     });
-    const recentEventList=allEvents.slice(0,6).map((item)=>{
+    const recentEventList=allEvents.slice(0,6).map((item, index)=>{
         return(
 
-            <Grid item xs={12} sm={6} md={4} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={4} className={classes.grid} key={`recent-event-${index}`}>
             <EventCard categories={item.categories}
                        startDate={item.startDate}
                        endDate={item.endDate}
@@ -109,9 +107,9 @@ export default function RecentPanel(props){
         )
 
     })
-    const recentBlogsList=allBlogs.slice(0, 6).map((item) => {
+    const recentBlogsList=allBlogs.slice(0, 6).map((item, index) => {
         return(
-            <Grid item xs={12} sm={6} md={6} className={classes.grid}>
+            <Grid item xs={12} sm={6} md={6} className={classes.grid} key={`recent-blogs-${index}`}>
                 <HomePageNewsCard title={item.title}
                                   categories={item.categories}
                                   link={item.link}
@@ -125,49 +123,46 @@ export default function RecentPanel(props){
     });
 
     return(
-        <Grid container spacing={3} alignItems="stretch">
+        <Grid container spacing={1} alignItems="stretch">
 
-            <Grid container spacing={3} alignItems="stretch">
-                <Container maxWidth={'xl'}>
-
+            <TitleContainer maxWidth={'xl'}>
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
                     News
                 </Typography>
-                </Container>
-                <Container maxWidth={'xl'}>
+            </TitleContainer>
 
+            <Container maxWidth={'xl'}>
                 <Grid container spacing={3}>
                     {recentNewsList}
                 </Grid>
-                </Container>
+            </Container>
 
-                <Container maxWidth={'xl'}>
-                    <Divider className={classes.divider}/>
-
-                    <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Events
-                </Typography>
-                </Container>
-                <Container maxWidth={'xl'}>
-
-                <Grid container spacing={4}>
-                    {recentEventList}
-                </Grid>
-                </Container>
-            </Grid>
-
-            <Container maxWidth={'xl'}>
+            <TitleContainer maxWidth={'xl'}>
                 <Divider className={classes.divider}/>
 
                 <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
-                    Student life blogs
+                    Events
                 </Typography>
+            </TitleContainer>
 
+            <Container maxWidth={'xl'}>
+                <Grid container spacing={4}>
+                    {recentEventList}
+                </Grid>
+            </Container>
+
+            <TitleContainer maxWidth={'xl'}>
+                <Divider className={classes.divider}/>
+
+                <Typography align={'left'} variant="h4" className={classes.forYouTitle}>
+                    Student Life Blogs
+                </Typography>
+            </TitleContainer>
+
+            <Container maxWidth={'xl'}>
                 <Grid container spacing={4}>
                     {recentBlogsList}
-
                 </Grid>
-
             </Container>
         </Grid>
 

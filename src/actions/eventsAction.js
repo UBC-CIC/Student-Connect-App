@@ -1,5 +1,11 @@
 import AWS from "aws-sdk";
-import {eventDateCleaner, eventEndDateCleaner, htmlTagCleaner} from "../helpers/HtmlTagCleaner";
+import {
+    eventDateCleaner,
+    eventEndDateCleaner,
+    eventLocationCleaner,
+    htmlDecoder,
+    htmlTagCleaner
+} from "../helpers/HtmlTagCleaner";
 
 export const fetchEvents = (categories) => {
     return (dispatch) => {
@@ -19,10 +25,14 @@ export const fetchEvents = (categories) => {
                 results=results.hits.hits
                 results.map((item)=>{
                     item._source.excerpt= htmlTagCleaner(item._source.excerpt)
+                    if(item._source.excerpt) item._source.excerpt=htmlDecoder(item._source.excerpt)
+
                     if(item._source.startDate) item._source.startDate = eventDateCleaner(item._source.startDate)
                     if(item._source.endDate) item._source.endDate = eventDateCleaner(item._source.endDate)
                     if(item._source.endDate) item._source.endDate = eventEndDateCleaner(item._source.startDate,item._source.endDate)
-
+                    if(item._source.title) item._source.title=htmlDecoder(item._source.title)
+                    if(item._source.eventLocation.venue) item._source.eventLocation.venue=htmlDecoder(item._source.eventLocation.venue)
+                    if(item._source.eventLocation) item._source.eventLocation.venue=eventLocationCleaner(item._source.eventLocation)
                 })
 
                 results.sort(function(a, b) {
@@ -42,7 +52,14 @@ export const fetchEventsSuccess = (payload) => {
 
 export const fetchAllEvents = () => {
     var params = {
-        TableName: "EventsTable"
+        TableName: "DocumentsTable",
+        KeyConditionExpression: "#dtype = :dname",
+        ExpressionAttributeNames:{
+            "#dtype": "documentType"
+        },
+        ExpressionAttributeValues: {
+            ":dname": "events"
+        }
     };
     return (dispatch) => {
         var dynamodb = new AWS.DynamoDB.DocumentClient()
@@ -56,7 +73,10 @@ export const fetchAllEvents = () => {
                         if(item.startDate) item.startDate = eventDateCleaner(item.startDate)
                         if(item.endDate) item.endDate = eventDateCleaner(item.endDate)
                         if(item.endDate) item.endDate = eventEndDateCleaner(item.startDate,item.endDate)
-                        item.startDate =  new Date(item.startDate.replace(/-/g, "/")).toLocaleDateString('en-CA')
+                        if(item.title) item.title=htmlDecoder(item.title)
+                        if(item.excerpt) item.excerpt=htmlDecoder(item.excerpt)
+                        if(item.eventLocation.venue) item.eventLocation.venue=htmlDecoder(item.eventLocation.venue)
+                        if(item.eventLocation) item.eventLocation.venue=eventLocationCleaner(item.eventLocation)
 
 
                         if(item.cost===""){

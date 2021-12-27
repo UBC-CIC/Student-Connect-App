@@ -3,9 +3,10 @@ import {allNewsReducer, allSportsNewsReducer, newsReducer, sportsNewsReducer} fr
 import {allEventsReducer, eventsReducer} from "./eventsReducer";
 import {allBlogsReducer, blogsReducer} from "./blogsReducer";
 import {allClubsReducer, clubsReducer} from "./clubsReducer";
-import {preferenceReducer} from "./userReducer";
-import {currentCredsReducer, currentUserReducer, loginReducer} from "./loginReducer";
+import {preferenceReducer} from "./userPreferenceReducer";
+import {currentCredsReducer, currentUserReducer, loginReducer, currentUserProfileReducer} from "./loginReducer";
 import {savedItemReducer} from "./savedItemReducer";
+import {disclosureModalReducer} from "./disclosureModalReducer";
 
 export default combineReducers({
     news: newsReducer,
@@ -22,6 +23,7 @@ export default combineReducers({
     loginState: loginReducer,
     currentUser:currentUserReducer,
     savedItems:savedItemReducer,
-    currentCredentials:currentCredsReducer
-
+    currentCredentials:currentCredsReducer,
+    currentUserProfile: currentUserProfileReducer,
+    disclosureModalStatus: disclosureModalReducer
 });
