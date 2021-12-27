@@ -35,7 +35,14 @@ export const fetchBlogsSuccess = (payload) => {
 export const fetchAllBlogs = () => {
     return (dispatch) => {
         var params = {
-            TableName: "BlogsTable"
+            TableName: "DocumentsTable",
+            KeyConditionExpression: "#dtype = :dname",
+            ExpressionAttributeNames:{
+                "#dtype": "documentType"
+            },
+            ExpressionAttributeValues: {
+                ":dname": "blogs"
+            }
         };
         var dynamodb = new AWS.DynamoDB.DocumentClient()
             dynamodb.scan(params, function(err, data) {

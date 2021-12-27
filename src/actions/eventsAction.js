@@ -52,7 +52,14 @@ export const fetchEventsSuccess = (payload) => {
 
 export const fetchAllEvents = () => {
     var params = {
-        TableName: "EventsTable"
+        TableName: "DocumentsTable",
+        KeyConditionExpression: "#dtype = :dname",
+        ExpressionAttributeNames:{
+            "#dtype": "documentType"
+        },
+        ExpressionAttributeValues: {
+            ":dname": "events"
+        }
     };
     return (dispatch) => {
         var dynamodb = new AWS.DynamoDB.DocumentClient()
