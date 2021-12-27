@@ -4,7 +4,7 @@ import boto3
 import pytz
 import requests
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from requests import RequestException
 from common_lib import detailed_exception, get_adjusted_unix_time
 
@@ -17,7 +17,7 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-EVENTS_TABLE = os.environ["EVENTS_TABLE_NAME"]
+DOCUMENTS_TABLE = os.environ["DOCUMENTS_TABLE_NAME"]
 EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
@@ -47,7 +47,8 @@ def event_parser(event_json: dict):
             "zip": venue.get("zip", "Null"),
         }
     parsed_event = {
-        "eventId": str(event_json.get("id", "Null")),
+        "documentId": str(event_json.get("id", "Null")),
+        "documentType": "events",
         "status": event_json.get("status", "Null"),
         "dateModified": event_json.get("modified", "Null"),
         "link": event_json.get("url", "Null"),
@@ -102,8 +103,10 @@ def get_events_items_from_web(events_link: str):
 
 def lambda_handler(event, context):
     """
+    TODO Refactor implementation to, 1) Do wordpress query by date if possible
     Lambda entry-point
     """
+
     events_link = "https://events.ok.ubc.ca/wp-json/tribe/events/v1/events"
     events_items = []
     filtered_events_items = []
@@ -138,8 +141,8 @@ def lambda_handler(event, context):
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
 
-    LOGGER.debug(json.dumps(events_items, indent=4))
-    LOGGER.debug(json.dumps(filtered_events_items, indent=4))
+    LOGGER.info(json.dumps(events_items, indent=4))
+    LOGGER.info(json.dumps(filtered_events_items, indent=4))
 
     # Save new items to central data lake S3
     if len(filtered_events_items) != 0:
@@ -147,7 +150,7 @@ def lambda_handler(event, context):
                              Key=f'Events/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
     # Insert items into DynamoDB table with appropriate TTL
-    table = DYNAMODB_RESOURCE.Table(EVENTS_TABLE)
+    table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
     for events_item in filtered_events_items:
         events_item["expiresOn"] = get_adjusted_unix_time(events_item["endDate"], "%Y-%m-%d %H:%M:%S",
                                                           EVENTS_EXPIRY_OFFSET * 24)

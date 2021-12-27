@@ -18,7 +18,7 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-NEWS_TABLE = os.environ["NEWS_TABLE_NAME"]
+DOCUMENTS_TABLE = os.environ["NEWS_TABLE_NAME"]
 EXPIRY_DAYS_OFFSET = int(os.environ["DOCUMENT_EXPIRY_DAYS"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
@@ -35,7 +35,8 @@ def news_parser(news_json: dict):
     :return: JSON formatted item for DynamoDB storage
     """
     parsed_news = {
-        "newsId": str(news_json.get("post-id", "Null")),
+        "documentId": str(news_json.get("id", "Null").partition("=")[2]),
+        "documentType": "news",
         "title": news_json.get("title", "Null"),
         "link": news_json.get("id", "Null"),
         "summary": news_json.get("summary", "Null"),
@@ -110,10 +111,11 @@ def lambda_handler(event, context):
                              Key=f'News/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13]}.json')
 
     # Insert items into DynamoDB table with appropriate TTL
-    table = DYNAMODB_RESOURCE.Table(NEWS_TABLE)
+    table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
     for events_item in filtered_news_items:
         events_item["expiresOn"] = get_adjusted_unix_time(events_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                           EXPIRY_DAYS_OFFSET * 24)
+        
         table.put_item(Item=events_item)
 
     return {"status": "completed"}

@@ -1,5 +1,8 @@
 # Student Engagement Application
 
+**NOTE: This branch contains an updated version of the backend's data aggregation process. While the backend will deploy
+and run successfully, it will not work fully with the frontend. More details of the change can be found [here](./docs/StreamsAggregationWorkflow.md).**
+
 ## Project Overview
 This prototype provides a centralised data aggregation and recommendation platform of relevant events, clubs 
 and articles for students according to their interests. Hence, it allows students to be more engaged and connected to

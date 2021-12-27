@@ -65,7 +65,7 @@ def handler(event, context):
 
                 LOGGER.info(json.dumps(str(deserialized_record), indent=4))
 
-                deserialized_record.pop('expiresOn')
+                #deserialized_record.pop('expiresOn')
                 deserialized_record.pop('documentType')
                 deserialized_record.pop('documentId')
 

@@ -17,7 +17,7 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-BLOGS_TABLE = os.environ["BLOGS_TABLE_NAME"]
+DOCUMENTS_TABLE = os.environ["DOCUMENTS_TABLE_NAME"]
 EXPIRY_DAYS_OFFSET = int(os.environ["DOCUMENT_EXPIRY_DAYS"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
@@ -71,7 +71,8 @@ def blog_parser(blog_json: dict):
         LOGGER.debug(f"No image in blog_item {blog_json['id']}")
         image_links = []
     parsed_blog = {
-        "blogId": str(blog_json["id"]),
+        "documentId": str(blog_json["id"]),
+        "documentType": "blogs",
         "title": blog_json["title"]["rendered"],
         "link": blog_json["guid"]["rendered"],
         "excerpt": blog_json["excerpt"]["rendered"],
@@ -100,9 +101,12 @@ def get_blog_items_from_web(blogs_link: str):
 
 def lambda_handler(event, context):
     """
+    TODO Refactor implementation to, 1) Do wordpress query by date if possible
     Lambda entry-point
     """
-    blogs_link = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?order=desc"
+
+    blogs_link = "https://students.ok.ubc.ca/wp-json/wp/v2/posts?_fields=id,title,guid,excerpt,categories,date,_links"
+
     blogs_items = []
     filtered_blogs_items = []
 
@@ -136,8 +140,8 @@ def lambda_handler(event, context):
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
 
-    LOGGER.debug(json.dumps(blogs_items, indent=4))
-    LOGGER.debug(json.dumps(filtered_blogs_items, indent=4))
+    LOGGER.info(json.dumps(blogs_items, indent=4))
+    LOGGER.info(json.dumps(filtered_blogs_items, indent=4))
 
     # Save new items to central data lake S3
     if len(filtered_blogs_items) != 0:
@@ -145,7 +149,7 @@ def lambda_handler(event, context):
                              Key=f'Blogs/{str(datetime.now(tz=pytz.timezone("America/Vancouver")))}.json')
 
     # Insert items into DynamoDB table with appropriate TTL
-    table = DYNAMODB_RESOURCE.Table(BLOGS_TABLE)
+    table = DYNAMODB_RESOURCE.Table(DOCUMENTS_TABLE)
     for blogs_item in filtered_blogs_items:
         blogs_item["expiresOn"] = get_adjusted_unix_time(blogs_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                          EXPIRY_DAYS_OFFSET * 24)

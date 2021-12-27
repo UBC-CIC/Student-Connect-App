@@ -62,7 +62,8 @@ def news_parser(news_json):
         item_datetime = get_datetime_without_offset(str(temp_datetime))
     categories = get_sports_categories(news_json["id"])
     parsed_news = {
-        "newsId": hashlib.md5(str(news_json.get("id", "Null")).encode("utf-8")).hexdigest(),
+        "documentId": hashlib.md5(str(news_json.get("id", "Null")).encode("utf-8")).hexdigest(),
+        "documentType": "athleticsnews",
         "title": news_json.get("title", "Null"),
         "link": news_json.get("id", "Null"),
         "summary": news_json.get("summary", "Null"),
