@@ -6,6 +6,7 @@ awsconfiguration.json
 .secret-*
 .env
 .cert
+package-lock.json
 
 #amplify
 amplify/\#current-cloud-backend
