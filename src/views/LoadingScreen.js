@@ -1,5 +1,5 @@
 import Home from "./Home/Home";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {fetchNews, fetchSportsNews} from "../actions/newsActions";
 import {fetchEvents} from "../actions/eventsAction";
 import {fetchBlogs} from "../actions/blogsAction";

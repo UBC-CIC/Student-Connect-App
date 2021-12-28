@@ -53,7 +53,7 @@ export const fetchEventsSuccess = (payload) => {
 export const fetchAllEvents = () => {
     var params = {
         TableName: "DocumentsTable",
-        KeyConditionExpression: "#dtype = :dname",
+        FilterExpression: "#dtype = :dname",
         ExpressionAttributeNames:{
             "#dtype": "documentType"
         },

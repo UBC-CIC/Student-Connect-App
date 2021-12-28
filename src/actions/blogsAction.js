@@ -36,7 +36,7 @@ export const fetchAllBlogs = () => {
     return (dispatch) => {
         var params = {
             TableName: "DocumentsTable",
-            KeyConditionExpression: "#dtype = :dname",
+            FilterExpression: "#dtype = :dname",
             ExpressionAttributeNames:{
                 "#dtype": "documentType"
             },

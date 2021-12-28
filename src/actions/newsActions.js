@@ -30,7 +30,7 @@ export const fetchNewsSuccess = (payload) => {
 export const fetchAllNews = () => {
     var params = {
         TableName: "DocumentsTable",
-        KeyConditionExpression: "#dtype = :dname",
+        FilterExpression: "#dtype = :dname",
         ExpressionAttributeNames:{
             "#dtype": "documentType"
         },
@@ -107,7 +107,7 @@ export const fetchSportsNewsSuccess = (payload) => {
 export const fetchAllSportsNews = () => {
     var params = {
         TableName: "DocumentsTable",
-        KeyConditionExpression: "#dtype = :dname",
+        FilterExpression: "#dtype = :dname",
         ExpressionAttributeNames:{
             "#dtype": "documentType"
         },

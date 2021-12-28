@@ -24,7 +24,7 @@ export const fetchClubs = (categories) => {
 export const fetchAllClubs = () => {
     var params = {
         TableName: "DocumentsTable",
-        KeyConditionExpression: "#dtype = :dname",
+        FilterExpression: "#dtype = :dname",
         ExpressionAttributeNames:{
             "#dtype": "documentType"
         },
