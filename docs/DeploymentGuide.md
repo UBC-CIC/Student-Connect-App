@@ -46,6 +46,10 @@ Some system installation requirements before starting deployment:
    <li>and finally deploy them using the cloudformation template, template.yaml </li>
    </ul>
     
+    <br/>
+
+    (Depending on your computer settings, some users might have PythonPipBuilder pointing to `python` instead of `python3`. If you run into this error, under ***line 22*** in the `deploy.sh` file , change `sam build` to `sam build --use-container`.)
+
     After running the script, at one point it will run a guided SAM deployment:
    
     Pick the default options for each prompt, except for:
@@ -67,14 +71,23 @@ Some system installation requirements before starting deployment:
    
 2) Once the deployment is complete, go on the AWS Management Console and select the Lambda service. Under the filter textbox, type in the stack name that you have given in step 1 and press enter to get lambda functions that are related to this stack. 
 
-    * The 5 functions that you need here are `getBlogData`, `getNewsData`, `getEventsData`, `getClubData`, and `getAthleticsNewsData`. Click into any one of them. ![lambda functions image](./LambdaFunctions.PNG)
+    * The 5 functions that you need here are `getBlogData`, `getNewsData`, `getEventsData`, `getAthleticsNewsData`, and `getClubData`. Click into any one of them except `getClubData`. For `getClubData`, see step 3. ![lambda functions image](./LambdaFunctions.PNG)
 
-    * Under the **Test** tab, create a new test event and click on the **Test** button. ![lambda functions image](./LambdaFunctions_2.PNG). Wait for the test event to finish successfully run. Repeat this step for the other 4 functions.
+    * Under the **Test** tab, create a new test event and click on the **Test** button. ![lambda functions image](./LambdaFunctions_2.PNG) Wait for the test event to finish successfully run. Repeat this step for the other 3 functions.
 
     * You only need to manually trigger the functions to get the data on your first deployment. Later, the lambda functions are scheduled to run every once a day to fetch new data. 
 
+3) ** This is a temporary step for this phase of the development. The club and course union website did not have categories for the clubs, so they were categorised via a non-programmatic manual process. Hence, they are manually added into the Elasticsearch index as this is not a part of the automatic data gathering process. To add the clubs data, the steps are:
+   * Login to the AWS Console and visit the S3 console. Find the bucket named 
+     `engagement-app-datastore-<AWS_REGION>-<AWS_ACCOUNT_ID>` and click on it
+   * Drag and drop the `AllUBCOClubs.json` file in the `docs` folder of this repository to the S3 bucket, then click
+    **Upload** at the bottom and leave all other options at default.
+   * Now navigate back to the Lambda Service Console, create and run a test for the `getClubData` function.
+   Once the execution is complete and successful, the clubs data should be present in Elasticsearch.
+   Ideally this step should not be manual and should be automated, the details of achieving this are mentioned
+   in the [further backend refinement section](https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/main/docs/DataAggregationArchitecture.md#further-backend-refinement)
 
-3) Next, follow the next steps to have Kibana set up (a visualisation plugin for Elasticsearch)
+4) Next, follow the next steps to have Kibana set up (a visualisation plugin for Elasticsearch)
     * Login to the AWS Console on a browser and visit the Cloudformation console. Find the application you deployed and 
       click on the **Outputs** tab.
       ![outputs tab image](./OutputsTab.PNG)
@@ -84,7 +97,7 @@ Some system installation requirements before starting deployment:
       8 letter Kibana password. After logging in, it will prompt you to change the password.
       Keep this password noted, as it is not linked to any email for resetting, it exists as part of a Cognito User.
       
-4) You can now verify that the deployment has worked properly by checking if the data has been persisted to Elasticsearch.
+5) You can now verify that the deployment has worked properly by checking if the data has been persisted to Elasticsearch.
    * Click on the hamburger menu icon on the top left, and then scroll down to **Stack Management** and click on it.
    ![Kibana Stacks](./ElasticsearchStacks.PNG)
    * Then click on **Index Patterns** on the left Menu and then **Create Index Pattern** 
@@ -95,25 +108,6 @@ Some system installation requirements before starting deployment:
     
     If the deployment has proceeded perfectly, some data should be shown here:
     ![Elasticsearch Index Visualisation](./IndexVisualisation.PNG)
-   
-5) ** This is a temporary step for this phase of the development. The club and course union website did not have categories
-   for the clubs, so they were categorised via a non-programmatic manual process. Hence, they are manually added into the
-   Elasticsearch index as this is not a part of the automatic data gathering process. To add the clubs data, the steps are:
-   * Login to the AWS Console and visit the S3 console. Find the bucket named 
-     `engagement-app-datastore-<AWS_REGION>-<AWS_ACCOUNT_ID>` and click on it
-   * Drag and drop the `AllUBCOClubs.json` file in the `docs` folder of this repository to the S3 bucket, then click
-    **Upload** at the bottom and leave all other options at default.
-   * Now navigate to the Step Functions console, and find the State machine with the name 
-     `DataGrabberStateMachine-XXXXXXXXXXXX`, then click on it      
-   * Next click on **Start Execution** and enter the input as the following
-    ```json
-    {
-        "dataType": "Clubs"
-    }
-    ```
-   Once the Step Function execution is complete and successful, the clubs data should be present in Elasticsearch.
-   Ideally this step should not be manual and should be automated, the details of achieving this are mentioned
-   in the [further backend refinement section](https://github.com/UBC-CIC/UBCO-StudentEngagementApp/blob/main/docs/DataAggregationArchitecture.md#further-backend-refinement)
        
    
 
