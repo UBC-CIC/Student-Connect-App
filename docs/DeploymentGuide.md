@@ -65,7 +65,16 @@ Some system installation requirements before starting deployment:
    This deployment step takes some time (about 20 minutes) due to creating the Elasticsearch domain, which itself takes
    about 15 minutes.
    
-2) Once the deployment is complete, follow the next steps to have Kibana set up (a visualisation plugin for Elasticsearch)
+2) Once the deployment is complete, go on the AWS Management Console and select the Lambda service. Under the filter textbox, type in the stack name that you have given in step 1 and press enter to get lambda functions that are related to this stack. 
+
+    * The 5 functions that you need here are `getBlogData`, `getNewsData`, `getEventsData`, `getClubData`, and `getAthleticsNewsData`. Click into any one of them. ![lambda functions image](./LambdaFunctions.PNG)
+
+    * Under the **Test** tab, create a new test event and click on the **Test** button. ![lambda functions image](./LambdaFunctions_2.PNG). Wait for the test event to finish successfully run. Repeat this step for the other 4 functions.
+
+    * You only need to manually trigger the functions to get the data on your first deployment. Later, the lambda functions are scheduled to run every once a day to fetch new data. 
+
+
+3) Next, follow the next steps to have Kibana set up (a visualisation plugin for Elasticsearch)
     * Login to the AWS Console on a browser and visit the Cloudformation console. Find the application you deployed and 
       click on the **Outputs** tab.
       ![outputs tab image](./OutputsTab.PNG)
@@ -75,7 +84,7 @@ Some system installation requirements before starting deployment:
       8 letter Kibana password. After logging in, it will prompt you to change the password.
       Keep this password noted, as it is not linked to any email for resetting, it exists as part of a Cognito User.
       
-3) You can now verify that the deployment has worked properly by checking if the data has been persisted to Elasticsearch.
+4) You can now verify that the deployment has worked properly by checking if the data has been persisted to Elasticsearch.
    * Click on the hamburger menu icon on the top left, and then scroll down to **Stack Management** and click on it.
    ![Kibana Stacks](./ElasticsearchStacks.PNG)
    * Then click on **Index Patterns** on the left Menu and then **Create Index Pattern** 
@@ -87,7 +96,7 @@ Some system installation requirements before starting deployment:
     If the deployment has proceeded perfectly, some data should be shown here:
     ![Elasticsearch Index Visualisation](./IndexVisualisation.PNG)
    
-4) ** This is a temporary step for this phase of the development. The club and course union website did not have categories
+5) ** This is a temporary step for this phase of the development. The club and course union website did not have categories
    for the clubs, so they were categorised via a non-programmatic manual process. Hence, they are manually added into the
    Elasticsearch index as this is not a part of the automatic data gathering process. To add the clubs data, the steps are:
    * Login to the AWS Console and visit the S3 console. Find the bucket named 

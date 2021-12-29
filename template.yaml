@@ -479,7 +479,7 @@ Resources:
     DependsOn:
       - ESDomain
     Properties:
-      Description: Triggers the State machine to retrieve and save News data, every 7 days
+      Description: Triggers the State machine to retrieve and save News data, every days
       Name: NewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(1440 minutes)
@@ -525,7 +525,7 @@ Resources:
     DependsOn:
       - ESDomain
     Properties:
-      Description: Triggers the State machine to retrieve and save Athletics News data, every 7 days
+      Description: Triggers the State machine to retrieve and save Athletics News data, every days
       Name: AthleticsNewsEventRule
       RoleArn: !GetAtt CloudwatchEventRuleIAMRole.Arn
       ScheduleExpression: rate(1440 minutes)
