@@ -572,8 +572,8 @@ Resources:
       Handler: get_events_data.lambda_handler
       Description: >
         Function that grabs data from the UBCO Events page
-      MemorySize: 256
-      Timeout: 60
+      MemorySize: 1024
+      Timeout: 120
       CodeUri: ./functions/get_events_data
       Role: !GetAtt DataGrabberLambdaIAMRole.Arn
       Environment:
