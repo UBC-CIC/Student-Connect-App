@@ -95,9 +95,6 @@ def lambda_handler(event, context):
             if datetime.strptime(last_query_time, "%Y-%m-%d %H:%M:%S") \
                     < datetime.strptime(news_item["dateModified"], "%Y-%m-%d %H:%M:%S"):
                 filtered_news_items.append(news_item)
-        SSM_CLIENT.put_parameter(Name="NewsQueryTime",
-                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
-                                 Overwrite=True)
     except SSM_CLIENT.exceptions.InternalServerError as e:
         LOGGER.error("Error in communicating with Parameter store")
         detailed_exception(LOGGER)
@@ -115,8 +112,18 @@ def lambda_handler(event, context):
     for events_item in filtered_news_items:
         events_item["expiresOn"] = get_adjusted_unix_time(events_item["dateModified"], "%Y-%m-%d %H:%M:%S",
                                                           EXPIRY_DAYS_OFFSET * 24)
-        
+        if (events_item["documentId"] == ""):
+            continue
         table.put_item(Item=events_item)
+
+    # update the date in the SSM client only when everything succeeded
+    try:
+        SSM_CLIENT.put_parameter(Name="NewsQueryTime",
+                                 Value=str(datetime.now(tz=pytz.timezone("America/Vancouver")))[:-13],
+                                 Overwrite=True)
+    except SSM_CLIENT.exceptions.InternalServerError as e:
+        LOGGER.error("Error in communicating with Parameter store")
+        detailed_exception(LOGGER)
 
     return {"status": "completed"}
 
