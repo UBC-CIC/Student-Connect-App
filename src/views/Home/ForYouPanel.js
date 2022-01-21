@@ -84,7 +84,7 @@ export default function ForYouPanel(props) {
         <HomePageNewsCard
           title={item._source.title}
           categories={item._source.categories}
-          photo={item._source.mediaThumbnail[0].url}
+          photo={item._source.mediaThumbnail ? item._source.mediaThumbnail[0] ? item._source.mediaThumbnail[0].url : "" : ""}
           link={item._source.link}
           description={item._source.summary}
         />

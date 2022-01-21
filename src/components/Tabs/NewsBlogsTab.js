@@ -100,7 +100,7 @@ export default function NewsBlogsTab(props) {
                                   categories={item.categories}
                                   link={item.link}
                                   description={item.summary}
-                                  photo={item.mediaThumbnail[0].url}
+                                  photo={item.mediaThumbnail ? item.mediaThumbnail[0] ? item.mediaThumbnail[0].url : "" : ""}
                                   date={item.dateModified}
                 />
             </Grid>
