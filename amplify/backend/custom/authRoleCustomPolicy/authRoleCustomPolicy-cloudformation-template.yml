@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters:
+  env:
+    Type: String
+  authRoleArn:
+    Type: String
+Resources:
+  CustomAuthRolePolicy:
+    Type: AWS::IAM::Policy
+    Properties:
+      PolicyName: engagement-${env}-authRoleCustomPolicy
+      Roles:
+        Ref: authRoleArn
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Sid: policy
+            Effect: Allow
+            Action:
+              - lambda:InvokeFunction
+              - dynamodb:Scan
+            Resource: '*'
+Description: >-
+  {"createdOn":"Mac","createdBy":"Amplify","createdWith":"7.6.9","stackType":"custom-customCloudformation","metadata":{}}

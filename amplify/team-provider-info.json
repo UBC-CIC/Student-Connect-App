@@ -1,0 +1,58 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-studentengagement-dev-85614-authRole",
+      "UnauthRoleArn": "arn:aws:iam::644888888035:role/amplify-studentengagement-dev-85614-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::644888888035:role/amplify-studentengagement-dev-85614-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-studentengagement-dev-85614-deployment",
+      "UnauthRoleName": "amplify-studentengagement-dev-85614-unauthRole",
+      "StackName": "amplify-studentengagement-dev-85614",
+      "StackId": "arn:aws:cloudformation:ca-central-1:644888888035:stack/amplify-studentengagement-dev-85614/d2bf9ec0-79ce-11ec-9deb-0e9b810d61ec",
+      "AmplifyAppId": "d3d084dr12de7c"
+    },
+    "categories": {
+      "auth": {
+        "studentengagement1e496f75": {}
+      }
+    }
+  },
+  "fixdev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-studentconnectapp-fixdev-01353-authRole",
+      "UnauthRoleArn": "arn:aws:iam::783814031593:role/amplify-studentconnectapp-fixdev-01353-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::783814031593:role/amplify-studentconnectapp-fixdev-01353-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-studentconnectapp-fixdev-01353-deployment",
+      "UnauthRoleName": "amplify-studentconnectapp-fixdev-01353-unauthRole",
+      "StackName": "amplify-studentconnectapp-fixdev-01353",
+      "StackId": "arn:aws:cloudformation:ca-central-1:783814031593:stack/amplify-studentconnectapp-fixdev-01353/bdde38e0-7db6-11ec-a525-028860c0bcee",
+      "AmplifyAppId": "d3ftlz4ihw89lz"
+    },
+    "categories": {
+      "auth": {
+        "studentengagement1e496f75": {}
+      },
+      "function": {
+        "getClubData": {
+          "debugMode": "true"
+        },
+        "getBlogData": {
+          "debugMode": "true"
+        },
+        "getNewsData": {
+          "debugMode": "true"
+        },
+        "getEventsData": {
+          "debugMode": "true"
+        },
+        "getESDocuments": {
+          "debugMode": "true"
+        },
+        "getAthleticsNewsData": {
+          "debugMode": "true"
+        }
+      }
+    }
+  }
+}

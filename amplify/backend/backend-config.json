@@ -23,5 +23,107 @@
         }
       }
     }
+  },
+  "custom": {
+    "authRoleCustomPolicy": {
+      "service": "customCloudformation",
+      "providerPlugin": "awscloudformation"
+    },
+    "elasticSearchBackend": {
+      "service": "customCloudformation",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": []
+    }
+  },
+  "function": {
+    "getClubData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getBlogData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getNewsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getEventsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getESDocuments": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getAthleticsNewsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentconnectappgetDataLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "studentconnectappgetDataLayer": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
+    }
   }
 }

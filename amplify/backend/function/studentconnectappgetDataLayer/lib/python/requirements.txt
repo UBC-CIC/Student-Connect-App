@@ -1,0 +1,15 @@
+requests>=2.25.1
+feedparser>=6.0.2
+pytz>=2021.1
+aws_requests_auth==0.4.1
+elasticsearch==7.10.1
+certifi==2018.4.16
+chardet==3.0.4
+idna==2.6
+urllib3>=1.26.5
+beautifulsoup4>=4.9.3
+selenium>=3.141.0
+chromedriver-py>=92.0.4515.43
+webdriver-manager>=3.4.2
+certifi==2018.4.16
+common_lib

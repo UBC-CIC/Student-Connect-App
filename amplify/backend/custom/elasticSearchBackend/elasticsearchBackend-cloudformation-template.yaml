@@ -1,0 +1,539 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >-
+  {"createdOn":"Mac","createdBy":"Amplify","createdWith":"7.6.9","stackType":"custom-customCloudformation","metadata":{}}
+Globals:
+  Function:
+    Runtime: python3.8
+    Timeout: 180
+    Environment:
+      Variables:
+        DEBUG_MODE: true
+        BUCKET_NAME:
+          Ref: DataStoreBucket
+Parameters:
+  env:
+    Type: String
+    Default: dev
+    Description: Amplify Environment
+  newsExpiryDays:
+    Type: String
+    Default: 60
+    Description: >-
+      Number of days after which a news article is automatically deleted from
+      DynamoDB
+  blogExpiryDays:
+    Type: String
+    Default: 120
+    Description: >-
+      Number of days after which a blog post is automatically deleted from
+      DynamoDB
+  eventsExpiryDays:
+    Type: String
+    Default: 2
+    Description: >-
+      Number of days after an event's end time after which the event item is
+      automatically deleted from DynamoDB
+  kibanaUser:
+    Type: String
+    Default: kibana
+    Description: The name of the user that is used to log into kibana.
+  ESDomainName:
+    Type: String
+    Default: engagement-app-data-index
+    Description: >-
+      Name for the Amazon ES domain that will be created. Domain names must
+      start with a lowercase letter and must be between 3 and 28 characters.
+      Valid characters are a-z (lowercase only), 0-9.
+  ProjectName:
+    Type: String
+    Default: StudentEngagement
+    Description: A description to identify project
+  EnvironmentName:
+    Type: String
+    Default: dev
+    Description: A description to identify environment (e.g. dev, prod)
+Outputs:
+  # getESDocumentsLambdaFunction:
+  #   Value:
+  #     Ref: getESDocuments
+  #   Description: The name of the lambda that queries elasticsearch with a given payload
+  # getESDocumentsLambdaFunctionArn:
+  #   Value:
+  #     Fn::GetAtt:
+  #       - getESDocuments
+  #       - Arn
+  #   Description: The arn of the lambda that queries elasticsearch with a given payload
+  dataLakeBucketName:
+    Value:
+      Ref: DataStoreBucket
+    Description: Name of the central Data Lake S3 bucket
+  KibanaPassword:
+    Description: The password for the kibana user
+    Value:
+      Fn::GetAtt:
+        - ESCognito
+        - KibanaPassword
+  KibanaUser:
+    Description: The username for the kibana user
+    Value:
+      Fn::GetAtt:
+        - ESCognito
+        - KibanaUser
+  KibanaUrl:
+    Description: A hyperlink to the Kibana tool
+    Value:
+      Fn::Sub: https://${ESDomain.DomainEndpoint}/_plugin/kibana/
+  ESDomainOutputName:
+    Description: The name of the deployed Elasticsearch domain
+    Value:
+      Ref: ESDomainName
+    Export:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-ESDomainName
+Resources:
+  DataStoreBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName:
+        Fn::Sub: >-
+          ${ProjectName}-${env}-engagement-app-datastore-bucket-${AWS::Region}-${AWS::AccountId}
+  DataGrabberLambdaIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: DataGrabberPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - Fn::Sub: >-
+                      arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:GetItem
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource:
+                  - Fn::GetAtt:
+                      - documentsDDBTable
+                      - Arn
+              - Effect: Allow
+                Action:
+                  - ssm:GetParameter
+                  - ssm:PutParameter
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - s3:*
+                Resource:
+                  Fn::Sub: ${DataStoreBucket.Arn}/*
+  esQueryLambdaIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName: EsQueryPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - Fn::Sub: >-
+                      arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/*
+              - Effect: Allow
+                Action:
+                  - es:ESHttpGet
+                  - es:ESHttpPost
+                  - es:ESHttpPut
+                  - es:ESHttpHead
+                Resource:
+                  - Fn::Sub: >-
+                      arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}/*
+                  - Fn::Sub: >-
+                      arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomain}
+  StreamHandlerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      Path: /
+      Policies:
+        - PolicyName:
+            Fn::Sub: ${ProjectName}-${env}-dynamodb-stream-responder-policy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - logs:CreateLogGroup
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                Resource:
+                  - Fn::Sub: >-
+                      arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:*
+              - Effect: Allow
+                Action:
+                  - lambda:InvokeFunction
+                Resource: '*'
+              - Effect: Allow
+                Action:
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                  - dynamodb:DescribeStream
+                  - dynamodb:ListStreams
+                Resource:
+                  - Fn::GetAtt:
+                      - documentsDDBTable
+                      - StreamArn
+              - Effect: Allow
+                Action:
+                  - es:*
+                Resource: '*'
+  documentTableStreamHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: document_stream_handler.handler
+      Description: >
+        Lambda function that performs actions in response to INSERT, UPDATE and
+        DELETE events for the document table
+      MemorySize: 256
+      Timeout: 300
+      CodeUri: ./functions/document_stream_handler
+      Role:
+        Fn::GetAtt:
+          - StreamHandlerRole
+          - Arn
+      Environment:
+        Variables:
+          ES_DOMAIN:
+            Fn::GetAtt:
+              - ESDomain
+              - DomainEndpoint
+  documentsTableHandlerTrigger:
+    Type: AWS::Lambda::EventSourceMapping
+    Properties:
+      EventSourceArn:
+        Fn::GetAtt:
+          - documentsDDBTable
+          - StreamArn
+      FunctionName:
+        Fn::GetAtt:
+          - documentTableStreamHandler
+          - Arn
+      StartingPosition: LATEST
+      Enabled: true
+  backendStackName:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-BackendStackName
+      Type: String
+      Value:
+        Fn::Sub: ${AWS::StackName}
+  # getESDocumentsLambdaArn:
+  #   Type: AWS::SSM::Parameter
+  #   Properties:
+  #     Name:
+  #       Fn::Sub: /amplify/${ProjectName}/${EnvironmentName}/GetESDocumentsLambdaArn
+  #     Type: String
+  #     Value:
+  #       Fn::GetAtt:
+  #         - getESDocuments
+  #         - Arn
+  documentsTableDDBArn:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: /amplify/${ProjectName}/${EnvironmentName}/documentsTableArn
+      Type: String
+      Value:
+        Fn::GetAtt:
+          - documentsDDBTable
+          - Arn
+  eventsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-EventsQueryTime
+      Type: String
+      Value: '2021-05-01 6:07:08'
+  newsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-NewsQueryTime
+      Type: String
+      Value: '2021-05-01 06:07:08'
+  athleticsNewsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-AthleticsNewsQueryTime
+      Type: String
+      Value: '2020-01-01 06:07:08'
+  blogsQueryTime:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name:
+        Fn::Sub: ${ProjectName}-${env}-BlogsQueryTime
+      Type: String
+      Value: '2019-01-01 06:07:08'
+  documentsDDBTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:
+        Fn::Sub: ${ProjectName}-${env}-DocumentsTable
+      AttributeDefinitions:
+        - AttributeName: documentType
+          AttributeType: S
+        - AttributeName: documentId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: documentType
+          KeyType: HASH
+        - AttributeName: documentId
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+      SSESpecification:
+        SSEEnabled: true
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      TimeToLiveSpecification:
+        AttributeName: expiresOn
+        Enabled: true
+  ESDomain:
+    Type: AWS::Elasticsearch::Domain
+    DependsOn:
+      - ESCognito
+    Properties:
+      CognitoOptions:
+        Enabled: true
+        IdentityPoolId:
+          Ref: CognitoIdentityPool
+        RoleArn:
+          Fn::GetAtt:
+            - CognitoAccessForAmazonES
+            - Arn
+        UserPoolId:
+          Ref: CognitoUserPool
+      DomainName:
+        Ref: ESDomainName
+      EBSOptions:
+        EBSEnabled: true
+        VolumeSize: 10
+        VolumeType: gp2
+      AdvancedOptions:
+        indices.fielddata.cache.size: ''
+        rest.action.multi.allow_explicit_index: 'true'
+      ElasticsearchClusterConfig:
+        DedicatedMasterEnabled: false
+        InstanceCount: 1
+        InstanceType: t2.small.elasticsearch
+        ZoneAwarenessEnabled: false
+      ElasticsearchVersion: '7.10'
+  CognitoUnauthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud:
+                  Ref: CognitoIdentityPool
+  CognitoAuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Federated: cognito-identity.amazonaws.com
+            Action: sts:AssumeRoleWithWebIdentity
+            Condition:
+              StringEquals:
+                cognito-identity.amazonaws.com:aud:
+                  Ref: CognitoIdentityPool
+  CognitoIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders:
+        - ClientId:
+            Ref: CognitoApplicationClient
+          ProviderName:
+            Fn::Sub: cognito-idp.${AWS::Region}.amazonaws.com/${CognitoUserPool}
+          ServerSideTokenCheck: false
+  CognitoIdentityPoolRole:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    Properties:
+      IdentityPoolId:
+        Ref: CognitoIdentityPool
+      Roles:
+        unauthenticated:
+          Fn::GetAtt:
+            - CognitoUnauthRole
+            - Arn
+        authenticated:
+          Fn::GetAtt:
+            - CognitoAuthRole
+            - Arn
+  CognitoAccessForAmazonES:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: es.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/AmazonESCognitoAccess
+  CognitoAuthKibanaPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - es:ESHttp*
+            Resource:
+              Fn::Sub: >-
+                arn:aws:es:${AWS::Region}:${AWS::AccountId}:domain/${ESDomainName}/*
+      Description: >-
+        give role used by authenticated users from the cognito user pool access
+        to the ES domain
+      Roles:
+        - Ref: CognitoAuthRole
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+        InviteMessageTemplate:
+          EmailMessage: >-
+            Welcome to the Student Engagement App. Username: {username} Pwd:
+            {####}
+          EmailSubject: Welcome to the Student Engagement App.
+          SMSMessage: >-
+            Welcome to the Student Engagement App. Username: {username} Pwd:
+            {####}
+        UnusedAccountValidityDays: 14
+      AliasAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+      EmailVerificationMessage: >-
+        Welcome to the Student Engagement App. Here is your confirmation code:
+        {####}
+      EmailVerificationSubject: The Student Engagement App Email Confirmation Code
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: true
+          RequireUppercase: true
+      UserPoolName:
+        Fn::Sub: ${ProjectName}-${env}-${AWS::StackName}-kibana-users
+  CognitoApplicationClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName:
+        Fn::Sub: ${ProjectName}-${env}-${AWS::StackName}-appclient
+      GenerateSecret: false
+      RefreshTokenValidity: 2
+      UserPoolId:
+        Ref: CognitoUserPool
+  CognitoUserPoolDomain:
+    Type: AWS::Cognito::UserPoolDomain
+    Properties:
+      Domain:
+        Fn::Sub: kibana-${AWS::StackName}-${AWS::Region}-${AWS::AccountId}
+      UserPoolId:
+        Ref: CognitoUserPool
+  # ESCognito:
+  #   Type: Custom::ESName
+  #   DependsOn:
+  #     - setupESCognitoCustomResourceLambda
+  #   Properties:
+  #     ServiceToken:
+  #       Fn::GetAtt:
+  #         - setupESCognitoCustomResourceLambda
+  #         - Arn
+  #     StackName:
+  #       Ref: AWS::StackName
+  #     EsCluster:
+  #       Ref: ESDomainName
+  #     UserPoolId:
+  #       Ref: CognitoUserPool
+  #     kibanaUser:
+  #       Ref: kibanaUser
+  # setupESCognitoCustomResourceLambda:
+  #   Type: AWS::Serverless::Function
+  #   Properties:
+  #     Handler: cognito_user_creator.configure_cognito_lambda_handler
+  #     Description: ''
+  #     MemorySize: 512
+  #     Timeout: 240
+  #     Policies:
+  #       Statement:
+  #         - Effect: Allow
+  #           Action:
+  #             - cognito-idp:AdminCreateUser
+  #             - cognito-idp:CreateUserPoolDomain
+  #             - cognito-idp:DeleteUserPoolDomain
+  #           Resource:
+  #             - Fn::GetAtt:
+  #                 - CognitoUserPool
+  #                 - Arn
+  #     CodeUri: ./functions/cognito_user_creator

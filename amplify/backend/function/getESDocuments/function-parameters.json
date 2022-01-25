@@ -1,0 +1,18 @@
+{
+  "permissions": {},
+  "lambdaLayers": [
+    {
+      "type": "ProjectLayer",
+      "resourceName": "studentconnectappgetDataLayer",
+      "env": "fixdev",
+      "version": "Always choose latest version",
+      "isLatestVersionSelected": true
+    }
+  ],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "debugMode",
+      "environmentVariableName": "DEBUG_MODE"
+    }
+  ]
+}
