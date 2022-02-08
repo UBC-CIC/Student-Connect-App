@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-studentengagement-dev-143951-authRole",
+      "UnauthRoleArn": "arn:aws:iam::783814031593:role/amplify-studentengagement-dev-143951-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::783814031593:role/amplify-studentengagement-dev-143951-authRole",
+      "Region": "ca-central-1",
+      "DeploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+      "UnauthRoleName": "amplify-studentengagement-dev-143951-unauthRole",
+      "StackName": "amplify-studentengagement-dev-143951",
+      "StackId": "arn:aws:cloudformation:ca-central-1:783814031593:stack/amplify-studentengagement-dev-143951/de1b1000-8866-11ec-b3d1-0610de36c450",
+      "AmplifyAppId": "d3vcxpb4a0x9em"
+    },
+    "categories": {
+      "auth": {
+        "studentengagement1e496f75": {}
+      }
+    }
+  }
+}

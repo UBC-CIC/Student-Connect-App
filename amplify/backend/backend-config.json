@@ -23,5 +23,50 @@
         }
       }
     }
+  },
+  "custom": {
+    "elasticsearch": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    },
+    "test": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    }
+  },
+  "function": {
+    "studentengagementfunctionsLayer": {
+      "providerPlugin": "awscloudformation",
+      "service": "LambdaLayer",
+      "build": true
+    },
+    "cognitoUserCreator": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "documentStreamHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    }
   }
 }
