@@ -31,7 +31,7 @@ def pwd_generator(size=8):
         specials)
 
 
-def configure_cognito_lambda_handler(event, context):
+def handler(event, context):
     """
     Lambda function that creates a Cognito Identity Pool user with a pre-generated password
     that is authorized to access the elasticsearch cluster via Kibana.

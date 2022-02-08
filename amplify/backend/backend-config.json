@@ -27,9 +27,29 @@
   "custom": {
     "elasticsearch": {
       "service": "customCDK",
-      "providerPlugin": "awscloudformation"
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "cognitoUserCreator",
+          "attributes": [
+            "Name",
+            "Arn",
+            "Region",
+            "LambdaExecutionRole"
+          ]
+        },
+        {
+          "category": "custom",
+          "resourceName": "StudentUserPool",
+          "attributes": [
+            "IdentityPoolOutput",
+            "UserPoolOutput"
+          ]
+        }
+      ]
     },
-    "test": {
+    "StudentUserPool": {
       "service": "customCDK",
       "providerPlugin": "awscloudformation"
     }

@@ -1,0 +1,14 @@
+Metadata-Version: 2.0
+Name: common-lib
+Version: 0.1.3
+Summary: common lib example
+Home-page: UNKNOWN
+Author: oren razon
+Author-email: oren.razon@myyellowroad.com
+License: UNKNOWN
+Keywords: sample setuptools development
+Platform: UNKNOWN
+
+full ci flow for common lib in YellowRoad
+
+

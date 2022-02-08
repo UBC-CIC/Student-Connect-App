@@ -9,6 +9,18 @@ export type AmplifyDependentResourcesAttributes = {
             "AppClientID": "string"
         }
     },
+    "api": {
+        "studentengagement": {
+            "GraphQLAPIIdOutput": "string",
+            "GraphQLAPIEndpointOutput": "string"
+        }
+    },
+    "custom": {
+        "StudentUserPool": {
+            "IdentityPoolOutput": "string",
+            "UserPoolOutput": "string"
+        }
+    },
     "function": {
         "studentengagementfunctionsLayer": {
             "Arn": "string"

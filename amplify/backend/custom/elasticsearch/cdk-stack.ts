@@ -2,10 +2,11 @@ import * as cdk from "@aws-cdk/core";
 import * as AmplifyHelpers from "@aws-amplify/cli-extensibility-helper";
 import * as es from "@aws-cdk/aws-elasticsearch";
 import * as cloudformation from "@aws-cdk/aws-cloudformation";
-import * as customresources from "@aws-cdk/custom-resources";
-import * as lambda from "@aws-cdk/aws-lambda";
+import * as iam from "@aws-cdk/aws-iam";
+import * as ec2 from "@aws-cdk/aws-ec2";
 import path from "path";
 import { AmplifyDependentResourcesAttributes } from "../../types/amplify-dependent-resources-ref";
+import { ManagedPolicy } from "@aws-cdk/aws-iam";
 //import * as iam from '@aws-cdk/aws-iam';
 //import * as sns from '@aws-cdk/aws-sns';
 //import * as subs from '@aws-cdk/aws-sns-subscriptions';
@@ -36,73 +37,55 @@ export class cdkStack extends cdk.Stack {
         [{ category: "function", resourceName: "cognitoUserCreator" }]
       );
 
-    // cognitoUserCreator.function.cognitoUserCreator.
+    const studentIdentityPool: AmplifyDependentResourcesAttributes =
+      AmplifyHelpers.addResourceDependency(
+        this,
+        amplifyResourceProps.category,
+        amplifyResourceProps.resourceName,
+        [{ category: "custom", resourceName: "StudentUserPool" }]
+      );
 
-    // Needs to depend on an Amplify function
-
-    const esName = new cdk.CustomResource(this, "ESName", {
-      serviceToken: cognitoUserCreator.function.cognitoUserCreator.Arn,
+    const esCognitoAccessRole = new iam.Role(this, "ESCognitoAccessRole", {
+      assumedBy: new iam.ServicePrincipal("es.amazonaws.com"),
+      managedPolicies: [
+        ManagedPolicy.fromManagedPolicyArn(
+          this,
+          "ESCognitoAccessRole",
+          "arn:aws:iam::aws:policy/AmazonESCognitoAccess"
+        ),
+      ],
     });
 
-    esName.node.addDependency(cognitoUserCreator.function.cognitoUserCreator);
+    const stackName = cdk.Stack.of(this).stackName;
+    const region = cdk.Stack.of(this).region;
 
-    const devDomain = new es.Domain(this, "Domain", {
+    const esDomain = new es.Domain(this, "ESDomain", {
       version: es.ElasticsearchVersion.V7_1,
+      cognitoKibanaAuth: {
+        identityPoolId:
+          studentIdentityPool.custom.StudentUserPool.IdentityPoolOutput,
+        userPoolId: studentIdentityPool.custom.StudentUserPool.UserPoolOutput,
+        role: esCognitoAccessRole,
+      },
+      domainName: `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
+        cdk.Stack.of(this).account
+      }`,
+      ebs: {
+        enabled: true,
+        volumeSize: 10,
+        volumeType: ec2.EbsDeviceVolumeType.GP2,
+      },
+      advancedOptions: {
+        "indices.fielddata.cache.size": "",
+        "rest.action.multi.allow_explicit_index": "true",
+      },
+      capacity: {
+        dataNodeInstanceType: "t2.small.elasticsearch",
+        dataNodes: 1,
+      },
+      zoneAwareness: {
+        enabled: true,
+      },
     });
-
-    /* AWS CDK code goes here - learn more: https://docs.aws.amazon.com/cdk/latest/guide/home.html */
-
-    // Example 1: Set up an SQS queue with an SNS topic
-
-    /*
-    const amplifyProjectInfo = AmplifyHelpers.getProjectInfo();
-    const sqsQueueResourceNamePrefix = `sqs-queue-${amplifyProjectInfo.projectName}`;
-    const queue = new sqs.Queue(this, 'sqs-queue', {
-      queueName: `${sqsQueueResourceNamePrefix}-${cdk.Fn.ref('env')}`
-    });
-    // 👇create sns topic
-    
-    const snsTopicResourceNamePrefix = `sns-topic-${amplifyProjectInfo.projectName}`;
-    const topic = new sns.Topic(this, 'sns-topic', {
-      topicName: `${snsTopicResourceNamePrefix}-${cdk.Fn.ref('env')}`
-    });
-    // 👇 subscribe queue to topic
-    topic.addSubscription(new subs.SqsSubscription(queue));
-    new cdk.CfnOutput(this, 'snsTopicArn', {
-      value: topic.topicArn,
-      description: 'The arn of the SNS topic',
-    });
-    */
-
-    // Example 2: Adding IAM role to the custom stack
-    /*
-    const roleResourceNamePrefix = `CustomRole-${amplifyProjectInfo.projectName}`;
-    
-    const role = new iam.Role(this, 'CustomRole', {
-      assumedBy: new iam.AccountRootPrincipal(),
-      roleName: `${roleResourceNamePrefix}-${cdk.Fn.ref('env')}`
-    }); 
-    */
-
-    // Example 3: Adding policy to the IAM role
-    /*
-    role.addToPolicy(
-      new iam.PolicyStatement({
-        actions: ['*'],
-        resources: [topic.topicArn],
-      }),
-    );
-    */
-
-    // Access other Amplify Resources
-    /*
-    const retVal:AmplifyDependentResourcesAttributes = AmplifyHelpers.addResourceDependency(this, 
-      amplifyResourceProps.category, 
-      amplifyResourceProps.resourceName, 
-      [
-        {category: <insert-amplify-category>, resourceName: <insert-amplify-resourcename>},
-      ]
-    );
-    */
   }
 }
