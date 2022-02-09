@@ -16,6 +16,9 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "custom": {
+        "elasticsearch": {
+            "ESDomainOutput": "string"
+        },
         "StudentUserPool": {
             "IdentityPoolOutput": "string",
             "UserPoolOutput": "string"
@@ -31,7 +34,43 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "documentStreamHandler": {
+        "getClubData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getBlogData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getAthleticsNewsData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getESDocuments": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getEventsData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getNewsData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "documentTableStreamHandler": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

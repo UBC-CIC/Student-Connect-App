@@ -2,6 +2,8 @@ import * as cdk from "@aws-cdk/core";
 import * as AmplifyHelpers from "@aws-amplify/cli-extensibility-helper";
 import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
+import { AmplifyDependentResourcesAttributes } from "../../types/amplify-dependent-resources-ref";
+
 export class cdkStack extends cdk.Stack {
   public identityPoolId: string;
   constructor(
@@ -22,6 +24,14 @@ export class cdkStack extends cdk.Stack {
     const accountId = cdk.Stack.of(this).account;
     const amplifyProjectInfo = AmplifyHelpers.getProjectInfo();
     const cognitoResourcePrefix = `cognito-${amplifyProjectInfo.projectName}-${amplifyProjectInfo.envName}`;
+
+    const esDomainName: AmplifyDependentResourcesAttributes =
+      AmplifyHelpers.addResourceDependency(
+        this,
+        amplifyResourceProps.category,
+        amplifyResourceProps.resourceName,
+        [{ category: "custom", resourceName: "elasticsearch" }]
+      );
 
     const studentUserPool = new cognito.CfnUserPool(this, "CognitoUserPool", {
       adminCreateUserConfig: {
@@ -104,6 +114,51 @@ export class cdkStack extends cdk.Stack {
         },
       },
     });
+
+    const cognitoAuthKibanaPolicy = new iam.CfnManagedPolicy(
+      this,
+      "CognitoAuthKibanaPolicy",
+      {
+        policyDocument: {
+          version: "2012-10-17",
+          statement: {
+            Effect: "Allow",
+            Action: ["es:ESHttp*"],
+            Resource: [
+              `arn:aws:es:${region}:${accountId}:domain/${esDomainName.custom.elasticsearch.ESDomainOutput}/*`,
+            ],
+          },
+        },
+      }
+    );
+
+    const cognitoUnauthRole = new iam.CfnRole(this, "CognitoUnauthRole", {
+      assumeRolePolicyDocument: {
+        Version: "2012-10-17",
+        Statement: {
+          Effect: "Allow",
+          Principal: { Federated: "cognito-identity.amazonaws.com" },
+          Action: ["sts:AssumeRoleWithWebIdentity"],
+          Condition: {
+            StringEquals: {
+              "cognito-identity.amazonaws.com:aud": studentIdentityPool.ref,
+            },
+          },
+        },
+      },
+    });
+
+    const cognitoIdentityPoolRole = new cognito.CfnIdentityPoolRoleAttachment(
+      this,
+      "CognitoIdentityPoolRole",
+      {
+        identityPoolId: studentIdentityPool.ref,
+        roles: {
+          unauthenticated: cognitoUnauthRole.attrArn,
+          authenticated: cognitoAuthRole.attrArn,
+        },
+      }
+    );
 
     const identityPoolOutput = new cdk.CfnOutput(this, "IdentityPoolOutput", {
       description: "Identity Pool Id",

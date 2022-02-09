@@ -1,5 +1,4 @@
 {
-  "permissions": {},
   "lambdaLayers": [
     {
       "type": "ProjectLayer",
@@ -8,5 +7,6 @@
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     }
-  ]
+  ],
+  "permissions": {}
 }

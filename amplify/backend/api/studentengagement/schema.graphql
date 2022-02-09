@@ -1,19 +1,36 @@
-type userPreference @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+type documents @model {
+  documentType: String! @primaryKey(sortKeyFields: ["documentId"])
+  documentId: String!
+  content: String!
+  allDay: Boolean
+  categories: [String!]!
+  cost: String
+  dateModified: String
+  startDate: String
+  link: String
+  description: String
+  excerpt: String
+  thumbnailImage: String
+  title: String
+}
+type userPreference
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
   newsBlogsClubsPreference: newsBlogsClubsList!
-  sportsPreference:sportsPreference!
-  academicPreference:academicList!
+  sportsPreference: sportsPreference!
+  academicPreference: academicList!
   eventsPreference: eventsList!
   culturePreference: cultureList!
   emailNotification: Boolean!
 }
-type cultureList{
-  northAmerican:Boolean
-  southAmerican:Boolean
-  european:Boolean
-  african:Boolean
-  australian:Boolean
-  asian:Boolean
+type cultureList {
+  northAmerican: Boolean
+  southAmerican: Boolean
+  european: Boolean
+  african: Boolean
+  australian: Boolean
+  asian: Boolean
 }
 type sportsPreference {
   varsitySportsList: varsitySportsList
@@ -68,26 +85,28 @@ type eventsList {
   subjectDepartments: Boolean
   universityServices: Boolean
 }
-type userData  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+type userData
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
   SPUID: ID
   displayName: String
   yearLevel: Int
   email: String
-  primarySpecialization:String
-  campus:String
+  primarySpecialization: String
+  campus: String
   faculty: String
   gender: String
-  cisOrTrans:String
-
+  cisOrTrans: String
 }
-type savedItem{
-  title:String
-  image:String
-  link:String
-
+type savedItem {
+  title: String
+  image: String
+  link: String
 }
-type savedItemsTable  @model @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
-  id:ID!
-  savedItems:[savedItem]
+type savedItemsTable
+  @model
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+  id: ID!
+  savedItems: [savedItem]
 }

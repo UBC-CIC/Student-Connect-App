@@ -1,0 +1,61 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: >
+  "Student Engagement App Backend Resources"
+
+Globals:
+  Function:
+    Runtime: python3.8
+    Timeout: 180
+    Environment:
+      Variables:
+        DEBUG_MODE: True
+        BUCKET_NAME: !Ref DataStoreBucket
+
+Parameters:
+  ESCognitoPrefix:
+    Type: String
+    Description: Prefix for ES Cognito resources
+  EnvironmentName:
+    Type: String
+    Default: dev
+    Description: A description to identify environment (e.g. dev, prod)
+  ESCognitoLambdaArn:
+    Type: String
+    Description: ARN of setupESCognitoCustomResourceLambda
+Outputs:
+  getESDocumentsLambdaFunction:
+    Value: !Ref getESDocuments
+    Description: The name of the lambda that queries elasticsearch with a given payload
+  getESDocumentsLambdaFunctionArn:
+    Value: !GetAtt getESDocuments.Arn
+    Description: The arn of the lambda that queries elasticsearch with a given payload
+  dataLakeBucketName:
+    Value: !Ref DataStoreBucket
+    Description: Name of the central Data Lake S3 bucket
+  KibanaPassword:
+    Description: The password for the kibana user
+    Value: !GetAtt ESCognito.KibanaPassword
+  KibanaUser:
+    Description: The username for the kibana user
+    Value: !GetAtt ESCognito.KibanaUser
+  KibanaUrl:
+    Description: A hyperlink to the Kibana tool
+    Value: !Sub https://${ESDomain.DomainEndpoint}/_plugin/kibana/
+  ESDomainOutputName:
+    Description: The name of the deployed Elasticsearch domain
+    Value: !Ref ESDomainName
+    Export:
+      Name: !Sub 
+      - {!Ref ESCognitoPrefix}
+      - -ESDomainName
+
+Resources:
+  ESCognito:
+      Type: Custom::ESName
+      Properties:
+        ServiceToken: !Ref ESCognitoLambdaArn
+        StackName: !Ref ESCognitoPrefix
+        EsCluster: !Ref ESDomainName
+        UserPoolId: !Ref CognitoUserPool
+        kibanaUser: !Ref kibanaUser

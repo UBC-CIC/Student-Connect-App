@@ -30,16 +30,6 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [
         {
-          "category": "function",
-          "resourceName": "cognitoUserCreator",
-          "attributes": [
-            "Name",
-            "Arn",
-            "Region",
-            "LambdaExecutionRole"
-          ]
-        },
-        {
           "category": "custom",
           "resourceName": "StudentUserPool",
           "attributes": [
@@ -50,6 +40,23 @@
       ]
     },
     "StudentUserPool": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "custom",
+          "resourceName": "elasticsearch",
+          "attributes": [
+            "ESDomainOutput"
+          ]
+        }
+      ]
+    },
+    "queryTimeParameters": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    },
+    "dataStoreBucket": {
       "service": "customCDK",
       "providerPlugin": "awscloudformation"
     }
@@ -74,7 +81,29 @@
         }
       ]
     },
-    "documentStreamHandler": {
+    "getClubData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getBlogData": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
@@ -84,6 +113,76 @@
           "resourceName": "studentengagementfunctionsLayer",
           "attributes": [
             "Arn"
+          ]
+        }
+      ]
+    },
+    "getAthleticsNewsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getESDocuments": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getEventsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "getNewsData": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        }
+      ]
+    },
+    "documentTableStreamHandler": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput"
           ]
         }
       ]

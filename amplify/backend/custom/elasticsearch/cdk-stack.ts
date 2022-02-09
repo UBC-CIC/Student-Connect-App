@@ -50,7 +50,7 @@ export class cdkStack extends cdk.Stack {
       managedPolicies: [
         ManagedPolicy.fromManagedPolicyArn(
           this,
-          "ESCognitoAccessRole",
+          "ESCognitoAccessPolicy",
           "arn:aws:iam::aws:policy/AmazonESCognitoAccess"
         ),
       ],
@@ -58,7 +58,18 @@ export class cdkStack extends cdk.Stack {
 
     const stackName = cdk.Stack.of(this).stackName;
     const region = cdk.Stack.of(this).region;
-
+    const esDomainName = `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
+      cdk.Stack.of(this).account
+    }`;
+    const esCognito = new cdk.CustomResource(this, "ESCognito", {
+      serviceToken: cognitoUserCreator.function.cognitoUserCreator.Arn,
+      properties: {
+        stackName: stackName,
+        kibanaUser: "kibana",
+        EsCluster: esDomainName,
+        UserPoolId: studentIdentityPool.custom.StudentUserPool.UserPoolOutput,
+      },
+    });
     const esDomain = new es.Domain(this, "ESDomain", {
       version: es.ElasticsearchVersion.V7_1,
       cognitoKibanaAuth: {
@@ -67,9 +78,7 @@ export class cdkStack extends cdk.Stack {
         userPoolId: studentIdentityPool.custom.StudentUserPool.UserPoolOutput,
         role: esCognitoAccessRole,
       },
-      domainName: `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
-        cdk.Stack.of(this).account
-      }`,
+      domainName: esDomainName,
       ebs: {
         enabled: true,
         volumeSize: 10,
@@ -86,6 +95,12 @@ export class cdkStack extends cdk.Stack {
       zoneAwareness: {
         enabled: true,
       },
+    });
+    esDomain.node.addDependency(esCognito);
+
+    const esDomainOutput = new cdk.CfnOutput(this, "ESDomainOutput", {
+      value: esDomain.domainName,
+      description: "Elasticsearch Domain Name",
     });
   }
 }

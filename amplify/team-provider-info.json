@@ -20,10 +20,6 @@
           "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
           "s3Key": "amplify-builds/cognitoUserCreator-5a425636337438454e76-build.zip"
         },
-        "documentStreamHandler": {
-          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
-          "s3Key": "amplify-builds/documentStreamHandler-4247423073564937444d-build.zip"
-        },
         "studentengagementfunctionsLayer": {
           "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
           "s3Key": "amplify-builds/studentengagementfunctionsLayer-LambdaLayerVersion46cb5ef3-build.zip"
