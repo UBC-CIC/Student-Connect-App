@@ -34,23 +34,15 @@
           "resourceName": "StudentUserPool",
           "attributes": [
             "IdentityPoolOutput",
-            "UserPoolOutput"
+            "UserPoolOutput",
+            "ESDomainOutput"
           ]
         }
       ]
     },
     "StudentUserPool": {
       "service": "customCDK",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "custom",
-          "resourceName": "elasticsearch",
-          "attributes": [
-            "ESDomainOutput"
-          ]
-        }
-      ]
+      "providerPlugin": "awscloudformation"
     },
     "queryTimeParameters": {
       "service": "customCDK",

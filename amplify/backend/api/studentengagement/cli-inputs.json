@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "AMAZON_COGNITO_USER_POOLS",
+      "cognitoUserPoolId": "authstudentengagement1e496f75"
+    },
+    "conflictResolution": {},
+    "apiName": "studentengagement",
+    "gqlSchemaPath": "/Users/trevorflanigan/Desktop/Projects/Student-Connect-App/amplify/backend/api/studentengagement/schema.graphql"
+  }
+}

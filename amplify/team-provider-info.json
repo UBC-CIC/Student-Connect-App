@@ -23,6 +23,34 @@
         "studentengagementfunctionsLayer": {
           "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
           "s3Key": "amplify-builds/studentengagementfunctionsLayer-LambdaLayerVersion46cb5ef3-build.zip"
+        },
+        "documentTableStreamHandler": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/documentTableStreamHandler-4863695570622f414364-build.zip"
+        },
+        "getAthleticsNewsData": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getAthleticsNewsData-486b574242656d564c48-build.zip"
+        },
+        "getBlogData": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getBlogData-4c43726d4538706c2b34-build.zip"
+        },
+        "getESDocuments": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getESDocuments-4f79666e55334f61676b-build.zip"
+        },
+        "getNewsData": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getNewsData-645a6874426931413931-build.zip"
+        },
+        "getEventsData": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getEventsData-5976682b66454f56794d-build.zip"
+        },
+        "getClubData": {
+          "deploymentBucketName": "amplify-studentengagement-dev-143951-deployment",
+          "s3Key": "amplify-builds/getClubData-504d5330477765646f4c-build.zip"
         }
       }
     }

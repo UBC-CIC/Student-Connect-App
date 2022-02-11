@@ -2,7 +2,6 @@ import * as cdk from "@aws-cdk/core";
 import * as AmplifyHelpers from "@aws-amplify/cli-extensibility-helper";
 import * as cognito from "@aws-cdk/aws-cognito";
 import * as iam from "@aws-cdk/aws-iam";
-import { AmplifyDependentResourcesAttributes } from "../../types/amplify-dependent-resources-ref";
 
 export class cdkStack extends cdk.Stack {
   public identityPoolId: string;
@@ -25,13 +24,9 @@ export class cdkStack extends cdk.Stack {
     const amplifyProjectInfo = AmplifyHelpers.getProjectInfo();
     const cognitoResourcePrefix = `cognito-${amplifyProjectInfo.projectName}-${amplifyProjectInfo.envName}`;
 
-    const esDomainName: AmplifyDependentResourcesAttributes =
-      AmplifyHelpers.addResourceDependency(
-        this,
-        amplifyResourceProps.category,
-        amplifyResourceProps.resourceName,
-        [{ category: "custom", resourceName: "elasticsearch" }]
-      );
+    const esDomainName = `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
+      cdk.Stack.of(this).account
+    }`;
 
     const studentUserPool = new cognito.CfnUserPool(this, "CognitoUserPool", {
       adminCreateUserConfig: {
@@ -125,7 +120,7 @@ export class cdkStack extends cdk.Stack {
             Effect: "Allow",
             Action: ["es:ESHttp*"],
             Resource: [
-              `arn:aws:es:${region}:${accountId}:domain/${esDomainName.custom.elasticsearch.ESDomainOutput}/*`,
+              `arn:aws:es:${region}:${accountId}:domain/${esDomainName}/*`,
             ],
           },
         },
@@ -168,6 +163,11 @@ export class cdkStack extends cdk.Stack {
     const userPoolOutput = new cdk.CfnOutput(this, "UserPoolOutput", {
       description: "User Pool Id",
       value: studentUserPool.ref,
+    });
+
+    const esDomainOutput = new cdk.CfnOutput(this, "ESDomainOutput", {
+      value: esDomainName,
+      description: "Elasticsearch Domain Name",
     });
   }
 }

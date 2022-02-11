@@ -58,9 +58,8 @@ export class cdkStack extends cdk.Stack {
 
     const stackName = cdk.Stack.of(this).stackName;
     const region = cdk.Stack.of(this).region;
-    const esDomainName = `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
-      cdk.Stack.of(this).account
-    }`;
+    const esDomainName =
+      studentIdentityPool.custom.StudentUserPool.ESDomainOutput;
     const esCognito = new cdk.CustomResource(this, "ESCognito", {
       serviceToken: cognitoUserCreator.function.cognitoUserCreator.Arn,
       properties: {
@@ -97,10 +96,5 @@ export class cdkStack extends cdk.Stack {
       },
     });
     esDomain.node.addDependency(esCognito);
-
-    const esDomainOutput = new cdk.CfnOutput(this, "ESDomainOutput", {
-      value: esDomain.domainName,
-      description: "Elasticsearch Domain Name",
-    });
   }
 }

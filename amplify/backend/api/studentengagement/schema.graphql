@@ -1,5 +1,5 @@
-type documents @model {
-  documentType: String! @primaryKey(sortKeyFields: ["documentId"])
+type documents @model @key(fields: ["documentType", "documentId"]) {
+  documentType: String!
   documentId: String!
   content: String!
   allDay: Boolean

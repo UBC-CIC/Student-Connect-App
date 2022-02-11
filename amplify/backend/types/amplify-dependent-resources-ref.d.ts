@@ -4,9 +4,11 @@ export type AmplifyDependentResourcesAttributes = {
             "IdentityPoolId": "string",
             "IdentityPoolName": "string",
             "UserPoolId": "string",
+            "UserPoolArn": "string",
             "UserPoolName": "string",
             "AppClientIDWeb": "string",
-            "AppClientID": "string"
+            "AppClientID": "string",
+            "CreatedSNSRole": "string"
         }
     },
     "api": {
@@ -16,12 +18,19 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "custom": {
-        "elasticsearch": {
-            "ESDomainOutput": "string"
-        },
         "StudentUserPool": {
             "IdentityPoolOutput": "string",
-            "UserPoolOutput": "string"
+            "UserPoolOutput": "string",
+            "ESDomainOutput": "string"
+        },
+        "queryTimeParameters": {
+            "eventsQueryParameterOutput": "string",
+            "newsQueryParameterOutput": "string",
+            "athleticsNewsQueryParameterOutput": "string",
+            "blogsQueryParameterOutput": "string"
+        },
+        "dataStoreBucket": {
+            "DataStoreBucketOutput": "string"
         }
     },
     "function": {
