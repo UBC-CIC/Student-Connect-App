@@ -1,0 +1,5 @@
+{
+  "ParentStackName": {
+    "Ref": "AWS::StackName"
+  }
+}

@@ -1,6 +1,78 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const createDocuments = /* GraphQL */ `
+  mutation CreateDocuments(
+    $input: CreateDocumentsInput!
+    $condition: ModeldocumentsConditionInput
+  ) {
+    createDocuments(input: $input, condition: $condition) {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateDocuments = /* GraphQL */ `
+  mutation UpdateDocuments(
+    $input: UpdateDocumentsInput!
+    $condition: ModeldocumentsConditionInput
+  ) {
+    updateDocuments(input: $input, condition: $condition) {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteDocuments = /* GraphQL */ `
+  mutation DeleteDocuments(
+    $input: DeleteDocumentsInput!
+    $condition: ModeldocumentsConditionInput
+  ) {
+    deleteDocuments(input: $input, condition: $condition) {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const createUserPreference = /* GraphQL */ `
   mutation CreateUserPreference(
     $input: CreateUserPreferenceInput!

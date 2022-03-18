@@ -1,6 +1,14 @@
 [
   {
-    "Action": [],
-    "Resource": []
+    "Effect": "Allow",
+    "Action": [
+      "ssm:PutParameter",
+      "ssm:GetParameter"
+    ],
+    "Resource": ["*"]
+  },
+  {
+    "Action": ["s3:GetObject", "s3:PutObject"],
+    "Resource": ["*"]
   }
 ]

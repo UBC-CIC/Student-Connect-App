@@ -1,6 +1,6 @@
 [
   {
-    "Action": [],
-    "Resource": []
+    "Action": ["s3:GetObject"],
+    "Resource": ["*"]
   }
 ]

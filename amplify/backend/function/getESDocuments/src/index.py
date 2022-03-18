@@ -1,4 +1,5 @@
 #  Needs access to ESdomain, DDB tables? other things?
+# CUSTOM_ELASTICSEARCH_ESDOMAINENDPOINTOUTPUT
 import boto3
 import certifi
 import json
@@ -18,7 +19,7 @@ else:
 
 
 REGION = boto3.session.Session().region_name
-ES_ENDPOINT = os.environ['ES_DOMAIN']
+ES_ENDPOINT = os.environ['CUSTOM_ELASTICSEARCH_ESDOMAINENDPOINTOUTPUT']
 
 
 # Create the auth token for the sigv4 signature
@@ -46,6 +47,7 @@ ES_CLIENT = Elasticsearch(
 )
 
 
+
 # Entry point into the lambda function
 def handler(event, context):
     """
@@ -54,8 +56,8 @@ def handler(event, context):
     - index: Elasticsearch index to search
     - categories: Categories to search for
     """
-    query_categories = event["categories"]
-    es_index = event["index"]
+    query_categories = event["arguments"]["categories"]
+    es_index = event["arguments"]["index"]
     return search_es_index(es_index, query_categories)
 
 

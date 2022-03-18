@@ -1,6 +1,10 @@
 [
   {
-    "Action": [],
-    "Resource": []
+    "Effect": "Allow",
+    "Action": [
+      "ssm:PutParameter",
+      "ssm:GetParameter"
+    ],
+    "Resource": ["*"]
   }
 ]

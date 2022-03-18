@@ -1,6 +1,69 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const onCreateDocuments = /* GraphQL */ `
+  subscription OnCreateDocuments {
+    onCreateDocuments {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateDocuments = /* GraphQL */ `
+  subscription OnUpdateDocuments {
+    onUpdateDocuments {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteDocuments = /* GraphQL */ `
+  subscription OnDeleteDocuments {
+    onDeleteDocuments {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateUserPreference = /* GraphQL */ `
   subscription OnCreateUserPreference {
     onCreateUserPreference {

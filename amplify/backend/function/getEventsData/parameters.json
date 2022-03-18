@@ -1,1 +1,8 @@
-{}
+{
+  "DatastoreBucketName": {
+    "Fn::GetAtt": [
+      "customdataStoreBucket",
+      "Outputs.DataStoreBucketOutput"
+    ]
+  }
+}

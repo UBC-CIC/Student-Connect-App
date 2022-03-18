@@ -1,1 +1,8 @@
-{}
+{
+  "ESDomainEndpoint": {
+    "Fn::GetAtt": [
+      "customelasticsearch",
+      "Outputs.ESDomainEndpointOutputNoExport"
+    ]
+  }
+}

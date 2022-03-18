@@ -1,3 +1,7 @@
+# API_STUDENTENGAGEMENT_DOCUMENTSTABLE_ARN
+# API_STUDENTENGAGEMENT_DOCUMENTSTABLE_NAME
+# API_STUDENTENGAGEMENT_GRAPHQLAPIENDPOINTOUTPUT
+# API_STUDENTENGAGEMENT_GRAPHQLAPIIDOUTPUT
 import boto3
 import certifi
 import json
@@ -17,9 +21,8 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 REGION = boto3.session.Session().region_name
-ES_ENDPOINT = os.environ['ES_DOMAIN']
+ES_ENDPOINT = os.environ['CUSTOM_ELASTICSEARCH_ESDOMAINENDPOINTOUTPUT']
 S3_CLIENT = boto3.client("s3")
-S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
 
 # Create the auth token for the sigv4 signature
 SESSION = boto3.session.Session()

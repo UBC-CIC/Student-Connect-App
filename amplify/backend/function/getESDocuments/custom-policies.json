@@ -1,6 +1,14 @@
 [
   {
-    "Action": [],
-    "Resource": []
+    "Action": [
+      "es:ESHttpHead",
+      "es:ESHttpPost",
+      "es:ESHttpGet",
+      "es:ESHttpPatch",
+      "es:ESHttpDelete"
+    ],
+    "Resource": [
+      "*"
+    ]
   }
 ]

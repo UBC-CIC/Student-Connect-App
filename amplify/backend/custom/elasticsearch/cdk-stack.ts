@@ -7,6 +7,7 @@ import * as ec2 from "@aws-cdk/aws-ec2";
 import path from "path";
 import { AmplifyDependentResourcesAttributes } from "../../types/amplify-dependent-resources-ref";
 import { ManagedPolicy } from "@aws-cdk/aws-iam";
+import { Aws } from "@aws-cdk/core";
 //import * as iam from '@aws-cdk/aws-iam';
 //import * as sns from '@aws-cdk/aws-sns';
 //import * as subs from '@aws-cdk/aws-sns-subscriptions';
@@ -29,15 +30,13 @@ export class cdkStack extends cdk.Stack {
       description: "Current Amplify CLI env name",
     });
 
-    const cognitoUserCreator: AmplifyDependentResourcesAttributes =
-      AmplifyHelpers.addResourceDependency(
-        this,
-        amplifyResourceProps.category,
-        amplifyResourceProps.resourceName,
-        [{ category: "function", resourceName: "cognitoUserCreator" }]
-      );
+    const parentStackName = new cdk.CfnParameter(this, "ParentStackName", {
+      type: "String",
+      description:
+        "The name of the amplify stack that this stack is a child of",
+    });
 
-    const studentIdentityPool: AmplifyDependentResourcesAttributes =
+    const dependencies: AmplifyDependentResourcesAttributes =
       AmplifyHelpers.addResourceDependency(
         this,
         amplifyResourceProps.category,
@@ -55,26 +54,22 @@ export class cdkStack extends cdk.Stack {
         ),
       ],
     });
-
     const stackName = cdk.Stack.of(this).stackName;
+    const amplifyProjectInfo = AmplifyHelpers.getProjectInfo();
+    const projectName = amplifyProjectInfo.projectName;
+    const env = amplifyProjectInfo.envName;
+    const esDomainName = `${projectName.substring(0, 10).toLowerCase()}-es-idx`;
     const region = cdk.Stack.of(this).region;
-    const esDomainName =
-      studentIdentityPool.custom.StudentUserPool.ESDomainOutput;
-    const esCognito = new cdk.CustomResource(this, "ESCognito", {
-      serviceToken: cognitoUserCreator.function.cognitoUserCreator.Arn,
-      properties: {
-        stackName: stackName,
-        kibanaUser: "kibana",
-        EsCluster: esDomainName,
-        UserPoolId: studentIdentityPool.custom.StudentUserPool.UserPoolOutput,
-      },
-    });
+
     const esDomain = new es.Domain(this, "ESDomain", {
       version: es.ElasticsearchVersion.V7_1,
       cognitoKibanaAuth: {
-        identityPoolId:
-          studentIdentityPool.custom.StudentUserPool.IdentityPoolOutput,
-        userPoolId: studentIdentityPool.custom.StudentUserPool.UserPoolOutput,
+        identityPoolId: cdk.Fn.ref(
+          dependencies.custom.StudentUserPool.IdentityPoolOutputNoExport
+        ),
+        userPoolId: cdk.Fn.ref(
+          dependencies.custom.StudentUserPool.UserPoolOutputNoExport
+        ),
         role: esCognitoAccessRole,
       },
       domainName: esDomainName,
@@ -89,12 +84,20 @@ export class cdkStack extends cdk.Stack {
       },
       capacity: {
         dataNodeInstanceType: "t2.small.elasticsearch",
-        dataNodes: 1,
+        dataNodes: 2,
       },
       zoneAwareness: {
         enabled: true,
       },
     });
-    esDomain.node.addDependency(esCognito);
+
+    const esDomainEndpointOutputNoExport = new cdk.CfnOutput(
+      this,
+      "ESDomainEndpointOutputNoExport",
+      {
+        value: esDomain.domainEndpoint,
+        description: "Elasticsearch Domain Endpoint",
+      }
+    );
   }
 }

@@ -6,6 +6,14 @@
         "Mutation",
         "Subscription"
       ]
+    },
+    "storage": {
+      "clubs:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
     }
   },
   "lambdaLayers": [

@@ -34,7 +34,8 @@
           "resourceName": "StudentUserPool",
           "attributes": [
             "IdentityPoolOutput",
-            "UserPoolOutput",
+            "IdentityPoolOutputNoExport",
+            "UserPoolOutputNoExport",
             "ESDomainOutput"
           ]
         }
@@ -49,6 +50,10 @@
       "providerPlugin": "awscloudformation"
     },
     "dataStoreBucket": {
+      "service": "customCDK",
+      "providerPlugin": "awscloudformation"
+    },
+    "querytimes": {
       "service": "customCDK",
       "providerPlugin": "awscloudformation"
     }
@@ -92,6 +97,13 @@
           "attributes": [
             "Arn"
           ]
+        },
+        {
+          "category": "custom",
+          "resourceName": "dataStoreBucket",
+          "attributes": [
+            "DataStoreBucketOutput"
+          ]
         }
       ]
     },
@@ -100,6 +112,14 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
         {
           "category": "function",
           "resourceName": "studentengagementfunctionsLayer",
@@ -114,6 +134,14 @@
       "providerPlugin": "awscloudformation",
       "service": "Lambda",
       "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
         {
           "category": "function",
           "resourceName": "studentengagementfunctionsLayer",
@@ -134,6 +162,13 @@
           "attributes": [
             "Arn"
           ]
+        },
+        {
+          "category": "custom",
+          "resourceName": "elasticsearch",
+          "attributes": [
+            "ESDomainEndpointOutput"
+          ]
         }
       ]
     },
@@ -143,10 +178,25 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        },
+        {
           "category": "function",
           "resourceName": "studentengagementfunctionsLayer",
           "attributes": [
             "Arn"
+          ]
+        },
+        {
+          "category": "custom",
+          "resourceName": "dataStoreBucket",
+          "attributes": [
+            "DataStoreBucketOutput"
           ]
         }
       ]
@@ -171,10 +221,33 @@
       "service": "Lambda",
       "dependsOn": [
         {
+          "category": "function",
+          "resourceName": "studentengagementfunctionsLayer",
+          "attributes": [
+            "Arn"
+          ]
+        },
+        {
           "category": "api",
           "resourceName": "studentengagement",
           "attributes": [
-            "GraphQLAPIIdOutput"
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
+          ]
+        }
+      ]
+    },
+    "fetchAllDocuments": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "api",
+          "resourceName": "studentengagement",
+          "attributes": [
+            "GraphQLAPIIdOutput",
+            "GraphQLAPIEndpointOutput"
           ]
         }
       ]

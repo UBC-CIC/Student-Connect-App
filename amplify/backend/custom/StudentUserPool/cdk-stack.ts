@@ -24,10 +24,6 @@ export class cdkStack extends cdk.Stack {
     const amplifyProjectInfo = AmplifyHelpers.getProjectInfo();
     const cognitoResourcePrefix = `cognito-${amplifyProjectInfo.projectName}-${amplifyProjectInfo.envName}`;
 
-    const esDomainName = `engagement-app-data-index-${stackName.toLowerCase()}-${region}-${
-      cdk.Stack.of(this).account
-    }`;
-
     const studentUserPool = new cognito.CfnUserPool(this, "CognitoUserPool", {
       adminCreateUserConfig: {
         allowAdminCreateUserOnly: false,
@@ -115,14 +111,21 @@ export class cdkStack extends cdk.Stack {
       "CognitoAuthKibanaPolicy",
       {
         policyDocument: {
-          version: "2012-10-17",
-          statement: {
-            Effect: "Allow",
-            Action: ["es:ESHttp*"],
-            Resource: [
-              `arn:aws:es:${region}:${accountId}:domain/${esDomainName}/*`,
-            ],
-          },
+          Version: "2012-10-17",
+          Statement: [
+            {
+              Sid: "VisualEditor0",
+              Effect: "Allow",
+              Action: [
+                "es:ESHttpHead",
+                "es:ESHttpPost",
+                "es:ESHttpGet",
+                "es:ESHttpPatch",
+                "es:ESHttpDelete",
+              ],
+              Resource: "*",
+            },
+          ],
         },
       }
     );
@@ -158,12 +161,28 @@ export class cdkStack extends cdk.Stack {
     const identityPoolOutput = new cdk.CfnOutput(this, "IdentityPoolOutput", {
       description: "Identity Pool Id",
       value: studentIdentityPool.ref,
+      exportName: "StudentIdentityPoolRef",
     });
 
-    const userPoolOutput = new cdk.CfnOutput(this, "UserPoolOutput", {
-      description: "User Pool Id",
-      value: studentUserPool.ref,
-    });
+    const identityPoolOutputNoExport = new cdk.CfnOutput(
+      this,
+      "IdentityPoolOutputNoExport",
+      {
+        description: "Identity Pool Id",
+        value: studentIdentityPool.ref,
+      }
+    );
+
+    const userPoolOutputNoExport = new cdk.CfnOutput(
+      this,
+      "UserPoolOutputNoExport",
+      {
+        description: "User Pool Id",
+        value: studentUserPool.ref,
+      }
+    );
+
+    const esDomainName = `${stackName.toLowerCase()}-es-idx`;
 
     const esDomainOutput = new cdk.CfnOutput(this, "ESDomainOutput", {
       value: esDomainName,

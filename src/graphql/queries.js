@@ -1,6 +1,75 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getESDocuments = /* GraphQL */ `
+  query GetESDocuments($index: String!, $categories: String!) {
+    getESDocuments(index: $index, categories: $categories)
+  }
+`;
+export const fetchAllDocuments = /* GraphQL */ `
+  query FetchAllDocuments($docType: String!) {
+    fetchAllDocuments(docType: $docType)
+  }
+`;
+export const getDocuments = /* GraphQL */ `
+  query GetDocuments($documentType: String!, $documentId: String!) {
+    getDocuments(documentType: $documentType, documentId: $documentId) {
+      documentType
+      documentId
+      content
+      allDay
+      categories
+      cost
+      dateModified
+      startDate
+      link
+      description
+      excerpt
+      thumbnailImage
+      title
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listDocumentss = /* GraphQL */ `
+  query ListDocumentss(
+    $documentType: String
+    $documentId: ModelStringKeyConditionInput
+    $filter: ModeldocumentsFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listDocumentss(
+      documentType: $documentType
+      documentId: $documentId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        documentType
+        documentId
+        content
+        allDay
+        categories
+        cost
+        dateModified
+        startDate
+        link
+        description
+        excerpt
+        thumbnailImage
+        title
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
 export const getUserPreference = /* GraphQL */ `
   query GetUserPreference($id: ID!) {
     getUserPreference(id: $id) {

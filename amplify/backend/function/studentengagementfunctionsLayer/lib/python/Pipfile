@@ -1,12 +1,9 @@
 [[source]]
-name = "pypi"
 url = "https://pypi.org/simple"
 verify_ssl = true
-
-[dev-packages]
+name = "pypi"
 
 [packages]
-cfnresponse = "*"
 aws-requests-auth = "==0.4.1"
 elasticsearch = "==7.10.1"
 certifi = "==2018.4.16"
@@ -22,5 +19,7 @@ selenium = ">=3.141.0"
 chromedriver-py = ">=92.0.4515.43"
 webdriver-manager = ">=3.4.2"
 
+[dev-packages]
+
 [requires]
-python_version = "3.8"
+python_version = "3.9"

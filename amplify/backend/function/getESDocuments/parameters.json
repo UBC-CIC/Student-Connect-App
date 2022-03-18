@@ -1,1 +1,11 @@
-{}
+{
+  "ParentStackName": {
+    "Ref": "AWS::StackName"
+  },
+  "ESDomainEndpoint": {
+    "Fn::GetAtt": [
+      "customelasticsearch",
+      "Outputs.ESDomainEndpointOutputNoExport"
+    ]
+  }
+}

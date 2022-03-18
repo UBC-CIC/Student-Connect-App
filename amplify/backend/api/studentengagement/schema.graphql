@@ -13,6 +13,28 @@ type documents @model @key(fields: ["documentType", "documentId"]) {
   thumbnailImage: String
   title: String
 }
+
+type athleticsNews @model @key(fields:["newsId"]) {
+  categories: [String!]!
+  dateModified: String
+  expiresOn: String
+  link: String
+  mediaThumbnail: String
+  summary: String
+  title: String
+}
+
+type clubs @model @key(fields: ["clubId"]){
+  clubId: String!
+  categories: [String!]!
+  description: String
+  email: String!
+  facebook: String
+  imageLink: String
+  title: String!
+  twitter: String
+  website: String
+}
 type userPreference
   @model
   @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
@@ -109,4 +131,11 @@ type savedItemsTable
   @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
   id: ID!
   savedItems: [savedItem]
+}
+
+type Query {
+  getESDocuments(index: String!, categories: String!): String
+    @function(name: "getESDocuments-${env}")
+  fetchAllDocuments(docType: String!): String
+    @function(name: "fetchAllDocuments-${env}")
 }

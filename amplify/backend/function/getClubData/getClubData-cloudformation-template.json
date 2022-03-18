@@ -16,6 +16,10 @@
     "s3Key": {
       "Type": "String"
     },
+    "DatastoreBucketName": {
+      "Type": "String",
+      "Default": "NONE"
+    },
     "apistudentengagementGraphQLAPIIdOutput": {
       "Type": "String",
       "Default": "apistudentengagementGraphQLAPIIdOutput"
@@ -87,6 +91,35 @@
             },
             "API_STUDENTENGAGEMENT_GRAPHQLAPIENDPOINTOUTPUT": {
               "Ref": "apistudentengagementGraphQLAPIEndpointOutput"
+            },
+            "API_STUDENTENGAGEMENT_CLUBSTABLE_NAME": {
+              "Fn::ImportValue": {
+                "Fn::Sub": "${apistudentengagementGraphQLAPIIdOutput}:GetAtt:clubsTable:Name"
+              }
+            },
+            "API_STUDENTENGAGEMENT_CLUBSTABLE_ARN": {
+              "Fn::Join": [
+                "",
+                [
+                  "arn:aws:dynamodb:",
+                  {
+                    "Ref": "AWS::Region"
+                  },
+                  ":",
+                  {
+                    "Ref": "AWS::AccountId"
+                  },
+                  ":table/",
+                  {
+                    "Fn::ImportValue": {
+                      "Fn::Sub": "${apistudentengagementGraphQLAPIIdOutput}:GetAtt:clubsTable:Name"
+                    }
+                  }
+                ]
+              ]
+            },
+            "DATASTORE_BUCKET_NAME": {
+              "Ref": "DatastoreBucketName"
             }
           }
         },
@@ -96,7 +129,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "Runtime": "python3.9",
         "Layers": [
           {
             "Ref": "functionstudentengagementfunctionsLayerArn"
@@ -265,6 +298,68 @@
                         "Ref": "apistudentengagementGraphQLAPIIdOutput"
                       },
                       "/types/Subscription/*"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:Put*",
+                "dynamodb:Create*",
+                "dynamodb:BatchWriteItem",
+                "dynamodb:Get*",
+                "dynamodb:BatchGetItem",
+                "dynamodb:List*",
+                "dynamodb:Describe*",
+                "dynamodb:Scan",
+                "dynamodb:Query",
+                "dynamodb:Update*",
+                "dynamodb:RestoreTable*",
+                "dynamodb:Delete*"
+              ],
+              "Resource": [
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apistudentengagementGraphQLAPIIdOutput}:GetAtt:clubsTable:Name"
+                        }
+                      }
+                    ]
+                  ]
+                },
+                {
+                  "Fn::Join": [
+                    "",
+                    [
+                      "arn:aws:dynamodb:",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      ":",
+                      {
+                        "Ref": "AWS::AccountId"
+                      },
+                      ":table/",
+                      {
+                        "Fn::ImportValue": {
+                          "Fn::Sub": "${apistudentengagementGraphQLAPIIdOutput}:GetAtt:clubsTable:Name"
+                        }
+                      },
+                      "/index/*"
                     ]
                   ]
                 }

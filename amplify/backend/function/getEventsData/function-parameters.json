@@ -7,5 +7,22 @@
       "version": "Always choose latest version",
       "isLatestVersionSelected": true
     }
-  ]
+  ],
+  "permissions": {
+    "api": {
+      "studentengagement": [
+        "Query",
+        "Mutation",
+        "Subscription"
+      ]
+    },
+    "storage": {
+      "documents:@model(appsync)": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  }
 }

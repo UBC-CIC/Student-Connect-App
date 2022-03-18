@@ -18,12 +18,16 @@ export type AmplifyDependentResourcesAttributes = {
         }
     },
     "custom": {
+        "elasticsearch": {
+            "ESDomainEndpointOutputNoExport": "string"
+        },
         "StudentUserPool": {
             "IdentityPoolOutput": "string",
-            "UserPoolOutput": "string",
+            "IdentityPoolOutputNoExport": "string",
+            "UserPoolOutputNoExport": "string",
             "ESDomainOutput": "string"
         },
-        "queryTimeParameters": {
+        "querytimes": {
             "eventsQueryParameterOutput": "string",
             "newsQueryParameterOutput": "string",
             "athleticsNewsQueryParameterOutput": "string",
@@ -43,12 +47,6 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "getClubData": {
-            "Name": "string",
-            "Arn": "string",
-            "Region": "string",
-            "LambdaExecutionRole": "string"
-        },
         "getBlogData": {
             "Name": "string",
             "Arn": "string",
@@ -56,6 +54,18 @@ export type AmplifyDependentResourcesAttributes = {
             "LambdaExecutionRole": "string"
         },
         "getAthleticsNewsData": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "documentTableStreamHandler": {
+            "Name": "string",
+            "Arn": "string",
+            "Region": "string",
+            "LambdaExecutionRole": "string"
+        },
+        "getClubData": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",
@@ -79,7 +89,7 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "documentTableStreamHandler": {
+        "fetchAllDocuments": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

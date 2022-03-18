@@ -19,6 +19,13 @@
     "functionstudentengagementfunctionsLayerArn": {
       "Type": "String",
       "Default": "functionstudentengagementfunctionsLayerArn"
+    },
+    "ParentStackName": {
+      "Type": "String"
+    },
+    "ESDomainEndpoint": {
+      "Type": "String",
+      "Default": "ESDomainEndpoint"
     }
   },
   "Conditions": {
@@ -73,6 +80,9 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "CUSTOM_ELASTICSEARCH_ESDOMAINENDPOINTOUTPUT": {
+              "Ref": "ESDomainEndpoint"
             }
           }
         },
@@ -82,7 +92,7 @@
             "Arn"
           ]
         },
-        "Runtime": "python3.8",
+        "Runtime": "python3.9",
         "Layers": [
           {
             "Ref": "functionstudentengagementfunctionsLayerArn"
@@ -194,6 +204,36 @@
           ]
         }
       }
+    },
+    "CustomLambdaExecutionPolicy": {
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "custom-lambda-execution-policy",
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Action": [
+                "es:ESHttpHead",
+                "es:ESHttpPost",
+                "es:ESHttpGet",
+                "es:ESHttpPatch",
+                "es:ESHttpDelete"
+              ],
+              "Resource": [
+                "*"
+              ],
+              "Effect": "Allow"
+            }
+          ]
+        },
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ]
+      },
+      "DependsOn": "LambdaExecutionRole"
     }
   },
   "Outputs": {

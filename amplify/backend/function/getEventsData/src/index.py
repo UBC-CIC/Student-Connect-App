@@ -1,4 +1,8 @@
 # Needs access to DDB, data bucket, events expiry
+# API_STUDENTENGAGEMENT_DOCUMENTSTABLE_ARN
+# API_STUDENTENGAGEMENT_DOCUMENTSTABLE_NAME
+# API_STUDENTENGAGEMENT_GRAPHQLAPIENDPOINTOUTPUT
+# API_STUDENTENGAGEMENT_GRAPHQLAPIIDOUTPUT
 import logging
 import os
 import boto3
@@ -18,12 +22,12 @@ else:
     LOGGER.setLevel(logging.INFO)
 
 # Get AWS region and necessary clients
-DOCUMENTS_TABLE = os.environ["DOCUMENTS_TABLE_NAME"]
+DOCUMENTS_TABLE = os.environ["API_STUDENTENGAGEMENT_DOCUMENTSTABLE_NAME"]
 EVENTS_EXPIRY_OFFSET = int(os.environ["EVENTS_EXPIRY_OFFSET"])
 DYNAMODB_RESOURCE = boto3.resource("dynamodb")
 SSM_CLIENT = boto3.client("ssm")
 S3_CLIENT = boto3.client("s3")
-S3_BUCKET_NAME = os.environ["BUCKET_NAME"]
+S3_BUCKET_NAME = os.environ["DATASTORE_BUCKET_NAME"]
 
 
 def event_parser(event_json: dict):
